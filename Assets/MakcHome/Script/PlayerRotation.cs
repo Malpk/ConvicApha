@@ -25,7 +25,7 @@ namespace PlayerSpace
         {
             if (direction != Vector2.zero)
             {
-                _previousTargetAngel -= GetTargetAngel(direction, _previousTargetAngel);
+                _previousTargetAngel = GetTargetAngel(direction, _previousTargetAngel);
                 _curretAngel = Mathf.MoveTowards(_curretAngel, _previousTargetAngel, speedRotation);
             }
             return Quaternion.Euler(Vector3.forward * _curretAngel);

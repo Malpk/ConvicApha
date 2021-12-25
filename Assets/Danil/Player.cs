@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private IRotate _rotate;
 
 
+
     private void Awake()
     {
         _controller = _pcCpntroller;
@@ -31,24 +32,24 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         var rigidbody = GetComponent<Rigidbody2D>();
         _movement = new PhysicMovement(rigidbody, _speedMovement);
-        _rotate = new TransformRotate(_speedRotation);
+        _rotate = new PlayerRotation(_speedRotation);
     }
 
     void Start()
     {
         Time.timeScale = 1;
-    }
-    private void Update()
-    {
-       
-    }
+    } 
     void FixedUpdate()
     {
         if (!_isDead)
         {
             var direction = _controller.MovementInput;
-            transform.rotation *= Quaternion.Inverse( _rotate.Rotate(_controller.MovementInput));
-           _movement.Move(direction);
+            transform.rotation = Quaternion.Inverse(_rotate.Rotate(_controller.MovementInput));
+            _movement.Move(direction);
+        }
+        else 
+        {
+            _movement.Move(Vector2.zero);
         }
 
     }
