@@ -25,7 +25,7 @@ namespace PlayerSpace
         {
             if (direction != Vector2.zero)
             {
-                _previousTargetAngel = GetTargetAngel(direction, _previousTargetAngel);
+                _previousTargetAngel -= GetTargetAngel(direction, _previousTargetAngel);
                 _curretAngel = Mathf.MoveTowards(_curretAngel, _previousTargetAngel, speedRotation);
             }
             return Quaternion.Euler(Vector3.forward * _curretAngel);
@@ -43,6 +43,18 @@ namespace PlayerSpace
                 return lostAngel;
             }
         }
+        private float DefineDirection(float targetAngle, float curretAngle)
+        {
+            var subtraction = curretAngle - targetAngle;
+            var addition = curretAngle + targetAngle;
+            if (subtraction < addition)
+                return subtraction;
+            else if (subtraction > addition)
+                return addition;
+            else
+                return targetAngle;
+
+        }
         private int GetIndex(float direction)
         {
             if (direction > 0)
@@ -53,3 +65,4 @@ namespace PlayerSpace
         }
     }
 }
+

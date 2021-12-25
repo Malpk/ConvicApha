@@ -1221,6 +1221,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1267038088 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8550337475206062119, guid: fd16415036ddeea45ac791ab57092605, type: 3}
+  m_PrefabInstance: {fileID: 8550337474165814636}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1267038089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267038088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415a085131a64504fb755e9377215b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delay: 2
+  _trap: {fileID: 7955783422767213867, guid: 8ce357097e68f8944980e80015d0f590, type: 3}
+  _instate: {fileID: 2039748037}
 --- !u!114 &1410213290 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4370817137462951787, guid: 6ca995d4d58672b45a187338c7338262, type: 3}
@@ -1351,8 +1371,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2039748035}
-  - component: {fileID: 2039748036}
   - component: {fileID: 2039748037}
+  - component: {fileID: 2039748036}
   - component: {fileID: 2039748038}
   m_Layer: 0
   m_Name: Map
@@ -1360,7 +1380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2039748035
 Transform:
   m_ObjectHideFlags: 0
@@ -1474,6 +1494,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8550337475206062114, guid: fd16415036ddeea45ac791ab57092605, type: 3}
+      propertyPath: _trap
+      value: 
+      objectReference: {fileID: 7955783422767213867, guid: 8ce357097e68f8944980e80015d0f590, type: 3}
+    - target: {fileID: 8550337475206062114, guid: fd16415036ddeea45ac791ab57092605, type: 3}
       propertyPath: _delay
       value: 2
       objectReference: {fileID: 0}
@@ -1493,7 +1517,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8550337475206062114, guid: fd16415036ddeea45ac791ab57092605, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fd16415036ddeea45ac791ab57092605, type: 3}
 --- !u!4 &9114053100569075753
 Transform:

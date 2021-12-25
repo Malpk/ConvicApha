@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     private Animator _animator;
     private IMovement _movement;
     private IRotate _rotate;
-    private PlayerRotation _playerRotate;
 
 
     private void Awake()
@@ -32,7 +31,7 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         var rigidbody = GetComponent<Rigidbody2D>();
         _movement = new PhysicMovement(rigidbody, _speedMovement);
-        _rotate = new PlayerRotation(_speedRotation);
+        _rotate = new TransformRotate(_speedRotation);
     }
 
     void Start()
@@ -48,7 +47,7 @@ public class Player : MonoBehaviour
         if (!_isDead)
         {
             var direction = _controller.MovementInput;
-            transform.rotation = Quaternion.Inverse( _rotate.Rotate(_controller.MovementInput));
+            transform.rotation *= Quaternion.Inverse( _rotate.Rotate(_controller.MovementInput));
            _movement.Move(direction);
         }
 
