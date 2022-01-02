@@ -1,22 +1,21 @@
 using System.Collections;
 using UnityEngine;
+using Trident;
 using Zenject;
 public class InstateTrident : MonoBehaviour
 {
+    [SerializeField] private int[] _angel;
     [SerializeField] private float _delay;
-    [SerializeField] private GameObject _trap;
-
     [SerializeField] private InstatePlit _instate;
+    [SerializeField] private TridentSetting _trident;
+    [SerializeField] private DeadLineHolder _holder;
 
-    private int []  _direction = new int [] { 1,-1 };
-    private DeadLinePoint[] _point;
     private IGameRandom _random;
     private UnderWorldMode _curretMode;
 
     private void Awake()
     {
         _random = new NotRepeatsRandom();
-        _point = GetComponentsInChildren<DeadLinePoint>();
     }
     private void OnEnable()
     {
@@ -47,19 +46,11 @@ public class InstateTrident : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => (_curretMode == UnderWorldMode.OneFire));
-            foreach (var direction in _direction)
+            foreach (var angel in _angel)
             {
-                ChoosePoint(direction);
+                _holder.InstateTrident(angel, _trident);
             }
             yield return new WaitForSeconds(_delay);
         }
-    }
-    private void ChoosePoint(int direction)
-    {
-        int id = _random.GetValue(0, _point.Length);
-        if (!_point[id].IsStart)
-            _point[id].InstateTrap(_trap, direction);
-        else
-            ChoosePoint(direction);
     }
 }

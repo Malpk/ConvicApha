@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Trizmove : MonoBehaviour
 {
+    [SerializeField] private float _timeDestroy;
+    [SerializeField] private float _speeMovementd;
 
-    public float speed =15;
-    // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 2f);
+        if(_timeDestroy!=0)
+            Destroy(gameObject, _timeDestroy);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        transform.Translate(Vector2.up * speed * Time.fixedDeltaTime);
+        transform.Translate(Vector2.down * _speeMovementd * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
