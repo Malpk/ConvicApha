@@ -10,41 +10,59 @@ public class TermTile : MonoBehaviour
     [SerializeField] private GameObject _fire;
     [SerializeField] private Vector3 _firePosition;
 
-    private Collider2D _coliider;
+    private GameObject _fireInstiate;
+    private TernState _state = TernState.Warning;
+    private TernState _lostState;
 
-    private void Awake()
-    {
-        _coliider = GetComponent<Collider2D>();
-        //_coliider.enabled = false;
-    }
     private void Start()
     {
-        //StartCoroutine(WarningAnimation());
+        StartCoroutine(WarningAnimation());
     }
     private IEnumerator WarningAnimation()
     {
         yield return new WaitForSeconds(_warningTime);
-        _coliider.enabled = true;
         _animator.SetInteger("State", 1);
-        var fire = Instantiate(_fire, transform);
-        fire.transform.parent = transform;
-        fire.transform.localPosition = _firePosition;
-        yield return new WaitUntil(() => (fire == null));
+        _fireInstiate = Instantiate(_fire, transform);
+        _fireInstiate.transform.parent = transform;
+        _fireInstiate.transform.localPosition = _firePosition;
+        if (_state == TernState.Deactive)
+        {
+            SetState(false);
+            _lostState = TernState.Fire;
+        }
+        else
+        {
+            _state = TernState.Fire;
+        }
+        yield return new WaitUntil(() => (_fireInstiate == null));
         Destroy(gameObject);
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         var player = collision.GetComponent<Player>();
-        if (player != null)
+        if (player != null && _state == TernState.Fire)
             player.Term();
         var cleaner = collision.GetComponent<Cleaner>();
         if (cleaner != null)
-            GetComponent<SpriteRenderer>().enabled = false;
+        {
+            _lostState = _state;
+            _state = TernState.Deactive;
+            SetState(false);
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         var cleaner = collision.GetComponent<Cleaner>();
         if (cleaner != null)
-            GetComponent<SpriteRenderer>().enabled = true;
+        {
+            _state = _lostState;
+            SetState(true);
+        }
+    }
+    private void SetState(bool value)
+    {
+        if (_fireInstiate != null)
+            _fireInstiate.GetComponent<SpriteRenderer>().enabled = value;
+        GetComponent<SpriteRenderer>().enabled = value;
     }
 }

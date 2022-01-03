@@ -36,11 +36,11 @@ namespace PlayerSpace
         public int GetNearestAngel(float curretAngel,int target)
         {
             var inverse = AngelInverse(target);
-            var baseValue = Mathf.Abs(target - curretAngel);
-            var InversValue = Mathf.Abs(inverse - curretAngel);
-            if (baseValue > InversValue)
+            var targetLocal = Mathf.Abs(target - curretAngel);
+            var iversLocal = Mathf.Abs(inverse - curretAngel);
+            if (targetLocal > iversLocal)
                 return inverse;
-            else if (baseValue < InversValue)
+            else if (targetLocal < iversLocal)
                 return target;
             else
                 return target;
