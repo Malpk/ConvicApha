@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 
-public interface IGraph 
+public interface IGraph
 {
-    public List<IGraph> Vertexs { get; }
+    public List<IGraph> edges { get;}
+    public void AddVertex(IGraph vertex);
+    public void RemoveVertex(IGraph vertex);
 
-    public void AddVertex();
-    public void RemoveVertex();
-    public IGraph GetVertex();
 }
