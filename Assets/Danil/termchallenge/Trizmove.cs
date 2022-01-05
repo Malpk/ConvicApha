@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerSpace;
 
 public class Trizmove : MonoBehaviour
 {
+    [Header("TridentSetting")]
     [SerializeField] private float _timeDestroy;
     [SerializeField] private float _speeMovementd;
 
