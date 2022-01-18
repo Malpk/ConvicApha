@@ -35,7 +35,7 @@ public class DeadlinePoint : MonoBehaviour
         yield return StartCoroutine(Indicator(trident.startDelay));
         foreach (var direction in _offsetDirection)
         {
-            Quaternion rotation = Quaternion.Euler(Vector3.forward * angel);
+            Quaternion rotation = Quaternion.Inverse(Quaternion.Euler(Vector3.forward * angel));
             var offset = new Vector3(trident.OffSet.x * direction, trident.OffSet.y);
             var instatePosition = transform.position + RotateVector(offset, angel);
             Instantiate(trident.InstateObject, instatePosition, rotation);

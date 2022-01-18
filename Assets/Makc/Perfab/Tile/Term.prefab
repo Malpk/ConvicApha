@@ -145,10 +145,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f93681a1e7044d64c963258047937ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _warningTime: 1
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fireOffset: {x: 0.169, y: -0.024, z: 0}
+  _warningTime: 1.5
   _animator: {fileID: 6640783164648510625}
   _fire: {fileID: 8448741414524485903, guid: ada2592a64f9e9d4192a41f2e9061a54, type: 3}
-  _firePosition: {x: 0.185, y: -0.002, z: 0}
 --- !u!95 &6640783164648510625
 Animator:
   serializedVersion: 3

@@ -27,12 +27,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _angel: 5a000000a6ffffff
   _delay: 2
-  _instate: {fileID: 0}
+  _instate: {fileID: 8128868068809110989}
   _trident:
-    _delay: 5
+    _delay: 1
     _offset: {x: 0.8, y: -30, z: 0}
     _trident: {fileID: 7955783422767213867, guid: 8ce357097e68f8944980e80015d0f590, type: 3}
   _holder: {fileID: 3444116598844379523}
+--- !u!114 &3198023870415527452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7433189796740958274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 438859f0a4bb67347a9a974ecc943388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8128868068809110986
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,7 +56,7 @@ GameObject:
   - component: {fileID: 8128868068809110987}
   - component: {fileID: 8128868068809110989}
   m_Layer: 0
-  m_Name: FirstMode
+  m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,8 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 6
-  _delay: 0.05
-  _duratuinOneRound: 10
+  _delay: 0.1
+  _duratuinOneRound: 7
   _underworldTile:
     _tile: {fileID: 9066640869195009282, guid: 164e59b44a33a7c44b3058403f3d7228, type: 3}
 --- !u!1001 &4362247478953824917
@@ -248,5 +260,10 @@ GameObject:
 --- !u!4 &5341610391103140533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8550337475206062112, guid: fd16415036ddeea45ac791ab57092605, type: 3}
+  m_PrefabInstance: {fileID: 4362247478953824917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7433189796740958274 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6606268575335275223, guid: fd16415036ddeea45ac791ab57092605, type: 3}
   m_PrefabInstance: {fileID: 4362247478953824917}
   m_PrefabAsset: {fileID: 0}

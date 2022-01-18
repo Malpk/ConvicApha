@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6232676207491169256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6232676207491169270}
+  - component: {fileID: 6232676207491169271}
+  m_Layer: 0
+  m_Name: Example
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6232676207491169270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232676207491169256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.965941, y: 1.2044022, z: -5.4223056}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6232676207491169271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232676207491169256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437dc3b0ae4c191469edec34710f4715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delay: 3
+  _mods:
+  - _modeName: Base
+    _delay: 3
+    _mode: {fileID: 8128868068809110986, guid: 9a0b672eb08697e46a7265e868158483, type: 3}
+  - _modeName: TotalFire
+    _delay: 0
+    _mode: {fileID: 4110862898659708260, guid: 7494f6a2eaf9bca408736b52462921c5, type: 3}
+  - _modeName: TridentMode
+    _delay: 0
+    _mode: {fileID: 8573791422393429302, guid: bddd4b781746e3146958692bf38a90fa, type: 3}
+  - _modeName: Circul
+    _delay: 0
+    _mode: {fileID: 1006556711639274299, guid: 8953f21104bd1c044ac61187be75aa3e, type: 3}
+  - _modeName: ViseMode
+    _delay: 0
+    _mode: {fileID: 916709158494407678, guid: 5b64d1ac95d0ff54b9854cc75cc83c01, type: 3}
+  - _modeName: Box
+    _delay: 0
+    _mode: {fileID: 3684427775290007181, guid: 21d2e1c7eeac93e4ab1e17009a431c4d, type: 3}

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2053607728274607994}
   - component: {fileID: 2053607728274607999}
   - component: {fileID: 2053607728274607998}
-  - component: {fileID: 2053607728274607997}
   - component: {fileID: 2053607728274607996}
   - component: {fileID: -5684176946191421217}
   m_Layer: 9
@@ -110,29 +109,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.25, y: 1.25}
   m_EdgeRadius: 0
---- !u!50 &2053607728274607997
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053607728274607993}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!95 &2053607728274607996
 Animator:
   serializedVersion: 3
@@ -164,7 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f93681a1e7044d64c963258047937ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _warningTime: 1
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fireOffset: {x: 0.169, y: -0.024, z: 0}
+  _warningTime: 0.5
   _animator: {fileID: 2053607728274607996}
   _fire: {fileID: 5107354388449562451, guid: 9a2a459c4a0b332489310eb49e9db58c, type: 3}
-  _firePosition: {x: 0.185, y: -0.002, z: 0}

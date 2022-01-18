@@ -37,9 +37,7 @@ public class SteamScript : MonoBehaviour
                // else if (down) { rb.MovePosition(rb.position + -Vector2.up * PlayerWasd._speedMovement * Time.fixedDeltaTime); PlayerWasd.CanMove = false;  }
               //  else if (left) { rb.MovePosition(rb.position + -Vector2.right * PlayerWasd._speedMovement * Time.fixedDeltaTime); PlayerWasd.CanMove = false; }
                 
-                Debug.Log(Player);
-                Debug.Log(rb);
-                Debug.Log(PlayerWasd.CanMove);
+        
             }
         }
         else
@@ -66,7 +64,7 @@ public class SteamScript : MonoBehaviour
         {
             PushReload = PushReloadtime;
             CanPush = false;
-            PlayerWasd.CanMove = true;
+           // PlayerWasd.CanMove = true;
         }
     }
 }

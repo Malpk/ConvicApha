@@ -33,6 +33,7 @@ namespace Trident
             }
             _deadLinaSprite.color = new Color(color.r, color.g, color.b, 0f);
             var trident = InstateObject(_trident);
+            trident.transform.parent = transform;
             yield return new WaitUntil(() => (trident == null));
             Destroy(gameObject);
         }

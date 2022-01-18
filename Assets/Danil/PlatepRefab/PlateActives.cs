@@ -43,7 +43,7 @@ public class PlateActives : MonoBehaviour
           //  if (PlateC14) Playerwasd.C14();
           //  if (PlateTI81) Playerwasd.TI81();
           //  if (PlateU92) Playerwasd.U92();
-          if (PlateTerm) Playerwasd.Term();
+         // if (PlateTerm) Playerwasd.Term();
         }
     }
 }

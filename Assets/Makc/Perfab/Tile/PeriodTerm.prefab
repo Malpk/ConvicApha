@@ -110,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.25, y: 1.25}
   m_EdgeRadius: 0
 --- !u!50 &2263252791198867102
 Rigidbody2D:
@@ -164,6 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2305e35c0ef4324c847e660906d7234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fireOffset: {x: 0.169, y: -0.024, z: 0}
   _fire: {fileID: 11400000, guid: 232df07b75780f347be1a01bafa27190, type: 2}
   _animator: {fileID: 4509036316922300219}
-  _firePosition: {x: 0.185, y: -0.002, z: 0}

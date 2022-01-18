@@ -5,6 +5,8 @@ namespace Underworld
 {
     public abstract class GameMode : MonoBehaviour
     {
+        public abstract bool statusWork { get; }
+
         private void Update()
         {
             ModeUpdate();

@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 using TileSpace;
+using SwitchMode;
 
-public class InstateTileInRadius : MonoBehaviour
+public class InstateTileInRadius : MonoBehaviour, ISequence
 {
     [Header("Game Setting")]
     [SerializeField] private int _radius;
@@ -12,8 +12,9 @@ public class InstateTileInRadius : MonoBehaviour
     [SerializeField] private float _duratuinOneRound;
     [SerializeField] private UnderworldTile _underworldTile;
 
-    [Inject] private Transform _player;
-    [Inject] private GameMap _map;
+    private GameMap _map;
+    private Coroutine _coroutine;
+    private Transform _player;
 
     private IGetTileMap _tiles;
 
@@ -22,9 +23,13 @@ public class InstateTileInRadius : MonoBehaviour
         _tiles = _underworldTile;
     }
 
-    void Start()
+    public void Constructor(SwitchMods swictMode)
     {
-        StartCoroutine(Spawn());
+        if (_coroutine != null)
+            return;
+        _player = swictMode.playerTransform;
+        _map = swictMode.map;
+        _coroutine = StartCoroutine(Spawn());
     }
 
     IEnumerator Spawn()
@@ -37,6 +42,7 @@ public class InstateTileInRadius : MonoBehaviour
             {
                 int index = Random.Range(0, list.Count);
                 var tile = Instantiate(_tiles.GetTypeTile(), list[index].VertixPosition, Quaternion.identity);
+                tile.transform.parent = transform.parent;
                 list[index].SetTile(tile);
                 yield return new WaitForSeconds(_delay);
                 progress += _delay / _duratuinOneRound;
@@ -49,4 +55,6 @@ public class InstateTileInRadius : MonoBehaviour
         Destroy(gameObject);
         yield return null;
     }
+
+
 }

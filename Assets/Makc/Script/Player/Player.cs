@@ -16,14 +16,10 @@ namespace PlayerSpace
 
         public GameObject DieMenu;
 
-        public bool CanMove = true;
-
         private bool _isDead;
         private Animator _animator;
         private IMovement _movement;
         private IRotate _rotate;
-
-
 
         private void Awake()
         {
@@ -38,6 +34,26 @@ namespace PlayerSpace
         void Start()
         {
             Time.timeScale = 1;
+        }
+        private void Update()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward);
+            if (hit)
+            {
+                if (hit.transform.TryGetComponent<ITileType>(out ITileType tile))
+                    DefineTile(tile);
+            }
+        }
+        private void  DefineTile(ITileType tile)
+        {
+            switch (tile.tileType)
+            {
+                case TypeTile.TernTile:
+                    Term();
+                    return;
+                default:
+                    break;
+            }
         }
         void FixedUpdate()
         {
@@ -63,7 +79,6 @@ namespace PlayerSpace
         }
         public void Dead()
         {
-            Debug.Log("ss");
             DieMenu.SetActive(true);
             Time.timeScale = 0;
         }

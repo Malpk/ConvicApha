@@ -22,19 +22,20 @@ namespace Underworld
             Vector3.down, Vector3.one, -Vector3.one,
             new Vector3(1,-1), new Vector3(-1,1)
         };
+        private bool _status = true;
         private Vector3 _lostDireciton = Vector3.zero;
         private BoxCollider2D _collider;
+
+        public override bool statusWork => _status;
 
         private void Awake()
         {
             _collider = GetComponent<BoxCollider2D>();
         }
-
         private void Start()
         {
             StartCoroutine(Scale());
         }
-
         protected override void ModeUpdate()
         {
         }
@@ -72,8 +73,9 @@ namespace Underworld
                     progress += Time.deltaTime / duration;
                     yield return null;
                 }
-                yield return null;
+                yield return new WaitForSeconds(0.1f);
             }
+            _status = false;
         }
         private List<Vector3> GetDirection(Vector3 [] direction)
         {

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3684427775290007182}
   - component: {fileID: 3684427775290007183}
+  - component: {fileID: 2440434224507831047}
   - component: {fileID: 3684427775290007177}
   - component: {fileID: 3684427775290007180}
   m_Layer: 0
@@ -57,8 +58,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 25, y: 25}
+  m_Size: {x: 26, y: 26}
   m_EdgeRadius: 0
+--- !u!50 &2440434224507831047
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3684427775290007181}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 7
 --- !u!114 &3684427775290007177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,10 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4cf2c0eba74f94c9c451043b023039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countMove: 100
-  _scaleDuration: 3
+  _countMove: 3
+  _scaleDuration: 4
   _delay: 2
-  _speedMovement: 5
+  _speedMovement: 4.5
   _minSize: {x: 6, y: 6}
   _maxOffset: {x: 10, y: 10, z: 0}
 --- !u!114 &3684427775290007180
@@ -90,3 +112,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tile: {fileID: 1191650566951800710, guid: 06210b9bf4e86264aa02bf5e04d02058, type: 3}
+  _paternMode: {fileID: 3684427775290007177}

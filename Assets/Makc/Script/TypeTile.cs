@@ -5,5 +5,5 @@ using UnityEngine;
 public enum TypeTile 
 {
     WarningPanel,
-    TernoPanel
+    TernTile
 }

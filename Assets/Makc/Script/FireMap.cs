@@ -3,27 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using TileSpace;
+using SwitchMode;
 
-public class FireMap : MonoBehaviour
+public class FireMap : MonoBehaviour, ISequence
 {
     [SerializeField] private int _countIsland;
     [SerializeField] private int _maxCountTile;
     [SerializeField] private GameObject _tile;
-   // [SerializeField] private Transform player;
 
-    [Inject] private GameMap _map;
+    private GameMap _map = null;
 
     private List<IVertex> _allMap;
     private IVertex[,] _vertexs;
 
-    private void Start()
+    public void Constructor(SwitchMods swictMode)
+    {
+        if (_map == null)
+        {
+            _map = swictMode.map;
+            StartCoroutine(ModeRun());
+        }
+    }
+
+    private IEnumerator ModeRun()
     {
         var mapSpawn = GetMapSpawn();
+        GameObject endTile = null;
         foreach (var vertex in mapSpawn)
         {
-            Instantiate(_tile, vertex.VertixPosition, Quaternion.identity);
+            endTile = Instantiate(_tile, vertex.VertixPosition, Quaternion.identity);
+            endTile.transform.parent = transform; 
         }
-        GetMapSpawn();
+        yield return new WaitWhile(() => (endTile!=null));
+        Destroy(gameObject);
     }
 
     private List<IVertex> GetMapSpawn()
@@ -106,5 +118,6 @@ public class FireMap : MonoBehaviour
         }
         return islandsOnMap;
     }
+
 
 }

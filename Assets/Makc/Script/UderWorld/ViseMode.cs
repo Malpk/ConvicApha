@@ -1,19 +1,24 @@
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using SwitchMode;
 
 namespace Underworld
 {
-    public class ViseMode : MonoBehaviour
+    public class ViseMode : MonoBehaviour,ISequence
     {
         [SerializeField] private GameObject _tile;
 
-        [Inject] private GameMap _map;
+        private GameMap _map = null;
 
-        private void Start()
+        public void Constructor(SwitchMods swictMode)
         {
+            if (_map != null)
+                return;
+            _map = swictMode.map;
             StartCoroutine(RunMode());
         }
+
         private IEnumerator RunMode()
         {
             var map = _map.Map;
@@ -28,6 +33,7 @@ namespace Underworld
                 }
                 yield return new WaitWhile(() => (tile != null));
             }
+            Destroy(gameObject);
         }
     }
 }
