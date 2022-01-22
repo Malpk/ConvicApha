@@ -9,10 +9,12 @@ namespace Underworld
     {
         [Header("Game Setting")]
         [SerializeField] private float _speedRotation;
-        [SerializeField] private float _delayDestroy;
+        [SerializeField] private float _duration;
+
+        [Header("Perfab Setting")]
+        [SerializeField] private TrisMode _trisMode;
 
         private int[] _direction = new int[] { -1, 1 };
-
         private bool _status = true;
 
         public override bool statusWork => _status;
@@ -26,29 +28,28 @@ namespace Underworld
             ChooseDirection();
             StartCoroutine(RunMode());
         }
-
+        private void ChooseDirection()
+        {
+            int index = Random.Range(0, _direction.Length);
+            _speedRotation *= _direction[index];
+        }
         private float CorrectAngel(float angel,Vector2 player)
         {
             if (player.y < transform.position.y)
                 return -angel;
             return angel;
         }
-        private void ChooseDirection()
-        {
-            int index = Random.Range(0, _direction.Length);
-            _speedRotation *= _direction[index];
-        }
-        protected override void ModeUpdate()
-        {
-            transform.rotation *= Quaternion.Euler(Vector3.forward * _speedRotation * Time.deltaTime);
-        }
-
         private IEnumerator RunMode()
         {
-            yield return new WaitForSeconds(_delayDestroy);
+            yield return new WaitWhile(() => _trisMode.state != TernState.Fire);
+            float progress = 0f;
+            while (progress <= 1)
+            {
+                progress += Time.deltaTime / _duration;
+                transform.rotation *= Quaternion.Euler(Vector3.forward * _speedRotation * Time.deltaTime);
+                yield return null;
+            }
             _status = false;
         }
-
-
     }
 }

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1078996803756881646}
+  - component: {fileID: 1936748753342849830}
   - component: {fileID: 1078996803756881647}
   - component: {fileID: 1078996803756881645}
-  - component: {fileID: 1936748753342849830}
   m_Layer: 0
   m_Name: RayMode
   m_TagString: Untagged
@@ -33,36 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1078996803756881647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1078996803756881640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae871756d0c9cb14ebdedcfa0e5d3f8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _countRay: 8
-  _duration: 10
-  _speedRotation: 26
-  _ray: {fileID: 8306110263009516393, guid: 3b222d1958422514aa8d103e291d737b, type: 3}
---- !u!114 &1078996803756881645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1078996803756881640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15154fec10a944342bd368adc33aa80e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tile: {fileID: 1191650566951800710, guid: 06210b9bf4e86264aa02bf5e04d02058, type: 3}
-  _paternMode: {fileID: 1078996803756881647}
 --- !u!50 &1936748753342849830
 Rigidbody2D:
   serializedVersion: 4
@@ -84,3 +54,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
+--- !u!114 &1078996803756881647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078996803756881640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae871756d0c9cb14ebdedcfa0e5d3f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _countRay: 8
+  _duration: 10
+  _speedRotation: 26
+  _ray: {fileID: 8306110263009516393, guid: 3b222d1958422514aa8d103e291d737b, type: 3}
+  _trisMode: {fileID: 1078996803756881645}
+--- !u!114 &1078996803756881645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078996803756881640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15154fec10a944342bd368adc33aa80e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tile: {fileID: 1191650566951800710, guid: 06210b9bf4e86264aa02bf5e04d02058, type: 3}
+  _paternMode: {fileID: 1078996803756881647}

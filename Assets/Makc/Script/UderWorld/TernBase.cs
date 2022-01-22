@@ -5,7 +5,7 @@ using PlayerSpace;
 namespace Underworld
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public abstract class TernBase : MonoBehaviour,IDetectMode
+    public abstract class TernBase : MonoBehaviour, IDetectMode
     {
         [Header("Pefab Setting")]
         [SerializeField] private LayerMask _playerLayer;
@@ -21,6 +21,7 @@ namespace Underworld
         private Vector3 _sizeCollider;
 
         public TypeTile tileType => TypeTile.TernTile;
+        public abstract TernState state { get; }
 
         private void Awake()
         {

@@ -13,7 +13,7 @@ namespace Underworld
 
         [Header("Scene Setting")]
         [SerializeField] private GameObject _ray;
-
+        [SerializeField] private TrisMode _trisMode;
 
         private bool _status = true;
 
@@ -21,11 +21,12 @@ namespace Underworld
 
         private void Start()
         {
-            CreateRay();
-            StartCoroutine(Rotation());
+            var rayList  = CreateRay();
+            StartCoroutine(Rotation(rayList));
         }
-        private void CreateRay()
+        private List<RayPoint> CreateRay()
         {
+            var list = new List<RayPoint>();
             var steepRotation = 360 / _countRay;
             var lostSteep = 0f;
             for (int i = 0; i < _countRay; i++)
@@ -33,15 +34,17 @@ namespace Underworld
                 var ray = Instantiate(_ray).transform;
                 ray.parent = transform;
                 ray.rotation = Quaternion.Euler(Vector3.forward * lostSteep);
+                if (ray.TryGetComponent<RayPoint>(out RayPoint point))
+                    list.Add(point);
                 lostSteep += steepRotation;
             }
-        }
-        protected override void ModeUpdate()
-        {
+            return list;
         }
 
-        private IEnumerator Rotation()
+        private IEnumerator Rotation(List<RayPoint> rayList)
         {
+            yield return new WaitWhile(() => _trisMode.state != TernState.Fire);
+            TurnOnAnimation(rayList);
             var progress = 0f;
             while (progress < 1f)
             {
@@ -51,6 +54,13 @@ namespace Underworld
                 yield return null;
             }
             _status = false;
+        }
+        private void TurnOnAnimation(List<RayPoint> rayList)
+        {
+            foreach (var ray in rayList)
+            {
+                ray.StartScaleAnimation();
+            }
         }
     }
 }

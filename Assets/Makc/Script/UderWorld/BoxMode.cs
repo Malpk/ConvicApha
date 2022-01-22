@@ -12,9 +12,11 @@ namespace Underworld
         [SerializeField] private float _scaleDuration;
         [SerializeField] private float _delay;
         [SerializeField] private float _speedMovement;
-        [Header("Scene Setting")]
+
+        [Header("Perfab Setting")]
         [SerializeField] private Vector2 _minSize;
         [SerializeField] private Vector3 _maxOffset;
+        [SerializeField] private TrisMode _trisMode;
 
         private Vector3[] _moveDirection = new Vector3[]
         {
@@ -23,7 +25,6 @@ namespace Underworld
             new Vector3(1,-1), new Vector3(-1,1)
         };
         private bool _status = true;
-        private Vector3 _lostDireciton = Vector3.zero;
         private BoxCollider2D _collider;
 
         public override bool statusWork => _status;
@@ -36,11 +37,21 @@ namespace Underworld
         {
             StartCoroutine(Scale());
         }
-        protected override void ModeUpdate()
+        private IEnumerator Move(Vector3 target, float duration)
         {
+            float progress = 0f;
+            var startPosition = transform.position;
+            while (progress < 1f)
+            {
+                transform.position = Vector2.Lerp(startPosition, target, progress);
+                progress += Time.deltaTime / duration;
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.1f);
         }
         private IEnumerator Scale()
         {
+            yield return new WaitWhile(() => _trisMode.state != TernState.Fire);
             float progress = 0f;
             var baseSize = _collider.size;
             var lostPosition = transform.position;
@@ -57,35 +68,15 @@ namespace Underworld
         }
         private IEnumerator MoveSqurt()
         {
+            Vector3 direction = Vector3.zero;
             for (int i = 0; i < _countMove; i++)
             {
-                var listDirection = GetDirection(_moveDirection);
-                var index = Random.Range(0, listDirection.Count);
-                var direction = listDirection[index];
-                _lostDireciton = direction;
+                direction = ChooseDirection(direction);
                 var target = direction.x * _maxOffset.x * Vector3.right + Vector3.up * direction.y * _maxOffset.y;
-                var duration = Mathf.Abs(Vector3.Distance(target,transform.position) / (_speedMovement));
-                float progress = 0f;
-                var lostPostion = transform.position;
-                while (progress < 1f)
-                {
-                    transform.position = Vector2.Lerp(lostPostion, target, progress);
-                    progress += Time.deltaTime / duration;
-                    yield return null;
-                }
-                yield return new WaitForSeconds(0.1f);
+                var duration = CalculateDuration(target, _speedMovement);
+                yield return StartCoroutine(Move(target, duration));
             }
             _status = false;
-        }
-        private List<Vector3> GetDirection(Vector3 [] direction)
-        {
-            List<Vector3> list = new List<Vector3>();
-            for (int i = 0; i < direction.Length; i++)
-            {
-                if (direction[i] != _lostDireciton)
-                    list.Add(direction[i]);
-            }
-            return list;
         }
         private Vector3 GetOffset(Vector3 offset)
         {
@@ -93,9 +84,30 @@ namespace Underworld
             var y = GetOffset(offset.y);
             return new Vector3(x, y, 0);
         }
+        private Vector3 ChooseDirection(Vector3 lostDirection)
+        {
+            var listDirection = FiltreDirection(_moveDirection, lostDirection);
+            var index = Random.Range(0, listDirection.Count); 
+            return listDirection[index];
+        }
+        private List<Vector3> FiltreDirection(Vector3[] direction, Vector3 lostDirection)
+        {
+            List<Vector3> list = new List<Vector3>();
+            for (int i = 0; i < direction.Length; i++)
+            {
+                if (direction[i] != lostDirection)
+                    list.Add(direction[i]);
+            }
+            return list;
+        }
         private float GetOffset(float offset)
         {
             return Random.Range(-offset, offset);
+        }
+        private float CalculateDuration(Vector3 target, float speed)
+        {
+            var distance = Vector3.Distance(target, transform.position);
+            return Mathf.Abs(distance / speed);
         }
     }
 }

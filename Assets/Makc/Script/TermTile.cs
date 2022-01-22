@@ -17,6 +17,8 @@ namespace Underworld
         private TernState _state = TernState.Warning;
         private GameObject _fireInstiate;
 
+        public override TernState state => _state;
+
         private void Start()
         {
             StartCoroutine(Work());

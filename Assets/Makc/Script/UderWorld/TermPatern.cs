@@ -19,6 +19,7 @@ namespace Underworld
         private TernState _lostState;
         private Animator _animator;
 
+        public override TernState state => _state == TernState.Deactive ? _lostState : _state;
 
         private void Start()
         {

@@ -37,14 +37,7 @@ namespace SwitchMode
                     var sequence = GetMode().sequence;
                     var instateSequence = Instantiate(sequence, Vector3.zero, Quaternion.identity);
                     instateSequence.transform.parent = transform;
-                    if (instateSequence.TryGetComponent<ISequence>(out ISequence sequense))
-                    {
-                        sequense.Constructor(this);
-                    }
-                    else
-                    {
-                        Debug.Log("notConstr");
-                    }
+                    IntializateSequence(instateSequence.GetComponents<ISequence>());
                     yield return new WaitWhile(() => (instateSequence != null));
                 }
                 else 
@@ -53,16 +46,13 @@ namespace SwitchMode
                 }
             }
         }
-        private List<SettingSequence> GetList()
+        private void IntializateSequence(ISequence[] list)
         {
-            var list = new List<SettingSequence>();
-            foreach (var sequence in _sequences)
+            foreach (var sequence in list)
             {
-                list.Add(sequence);
+                sequence.Constructor(this);
             }
-            return list;
         }
-
         private SettingSequence GetMode()
         {
             if (_curretList.Count > 0)
@@ -76,6 +66,15 @@ namespace SwitchMode
             {
                 return null;
             }
+        }
+        private List<SettingSequence> GetList()
+        {
+            var list = new List<SettingSequence>();
+            foreach (var sequence in _sequences)
+            {
+                list.Add(sequence);
+            }
+            return list;
         }
 
     }

@@ -12,6 +12,8 @@ public class TTile : TernBase
 
     private TernState _state = TernState.Warning;
 
+    public override TernState state => _state;
+
     private void Start()
     {
         StartCoroutine(Work());
