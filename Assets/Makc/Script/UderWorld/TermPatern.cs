@@ -5,6 +5,7 @@ using PlayerSpace;
 
 namespace Underworld
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class TermPatern : TernBase
     {
         [Header("Game Setting")]
@@ -14,12 +15,18 @@ namespace Underworld
         [Header("Pefab Setting")]
         [SerializeField] private GameObject _fire;
 
+        private SpriteRenderer _sprite;
         private GameObject _fireInstiate;
         private TernState _state = TernState.Warning;
         private TernState _lostState;
         private Animator _animator;
 
         public override TernState state => _state == TernState.Deactive ? _lostState : _state;
+
+        private void Awake()
+        {
+            _sprite = GetComponent<SpriteRenderer>();
+        }
 
         private void Start()
         {
@@ -34,8 +41,8 @@ namespace Underworld
             _fireInstiate = InstatiateFire(_fire);
             _animator = _fireInstiate.GetComponent<Animator>();
             ChangeState();
-            if (_state == TernState.Deactive)
-                SetState(false);
+            if (!_sprite.enabled)
+                 SetState(false);
             yield return new WaitWhile(() => (_fireInstiate != null));
             Destroy(gameObject);
         }
@@ -84,13 +91,14 @@ namespace Underworld
             _state = TernState.Deactive;
             SetState(false);
         }
-        private void SetState(bool value)
+        public void SetState(bool value)
         {
+            Debug.Log(value);
             if (_fireInstiate != null)
             {
                 _fireInstiate.GetComponent<SpriteRenderer>().enabled = value;
             }
-            GetComponent<SpriteRenderer>().enabled = value;
+            _sprite.enabled = value;
         }
         public void SetTurnMode(bool mode)
         {
@@ -103,7 +111,7 @@ namespace Underworld
         protected override void Damage(Player player)
         {
             if (_state == TernState.Fire)
-                player.Term();
+                player.Incineration();
         }
     }
 }

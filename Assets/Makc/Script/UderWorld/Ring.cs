@@ -8,25 +8,51 @@ namespace Underworld
     {
         [SerializeField] private bool _inversMode;
 
+        private bool _visable = false;
+        private List<TermPatern> _ternList = new List<TermPatern>();
+
+        public bool invetsMode => _inversMode;
+
+        public void OnVisableTile(bool value)
+        {
+            _visable = true;
+            foreach (var tile in _ternList)
+            {
+                tile.SetMode(value);
+            }
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<TermPatern>(out TermPatern tern))
             {
                 if (!_inversMode)
-                    tern.TurnOff();
+                    TurnOff(tern);
                 else
-                    tern.TurnOn(TernState.Fire);
+                    TurnOn(tern);
             }
-    }
+        }
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.TryGetComponent<TermPatern>(out TermPatern tern))
             {
                 if (!_inversMode)
-                    tern.TurnOn(TernState.Fire);
+                    TurnOn(tern);
                 else
-                    tern.TurnOff();
+                    TurnOff(tern);
             }
+        }
+        private void TurnOn(TermPatern tern)
+        {
+            if(_visable)
+                tern.TurnOn(TernState.Fire);
+            _ternList.Add(tern);
+        }
+        private void TurnOff(TermPatern tern)
+        {
+            if (_visable)
+                tern.TurnOff();
+            _ternList.Remove(tern);
         }
     }
 }

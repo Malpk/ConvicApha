@@ -35,7 +35,7 @@ public class TTile : TernBase
     protected override void Damage(Player player)
     {
         if (_state == TernState.Fire)
-            player.Term();
+            player.Incineration();
     }
 }
 

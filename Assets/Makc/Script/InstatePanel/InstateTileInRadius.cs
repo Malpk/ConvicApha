@@ -22,7 +22,6 @@ public class InstateTileInRadius : MonoBehaviour, ISequence
     {
         _tiles = _underworldTile;
     }
-
     public void Constructor(SwitchMods swictMode)
     {
         if (_coroutine != null)

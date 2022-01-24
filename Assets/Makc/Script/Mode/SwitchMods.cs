@@ -10,10 +10,10 @@ namespace SwitchMode
     {
         [SerializeField] private Transform _player;
         [SerializeField] private List<SettingSequence> _sequences = new List<SettingSequence>();
-        
 
         [Inject] private GameMap _map;
         [Inject] private TridentSetting _trident;
+        [Inject] private CameraAnimation _cameraAnimation;
         [Inject] private Tilemap _tileMap;
 
         private List<SettingSequence> _curretList = new List<SettingSequence>();
@@ -23,7 +23,15 @@ namespace SwitchMode
         public TridentSetting trident => _trident;
         public Tilemap tileMap => _tileMap;
 
-        private void Start()
+        private void OnEnable()
+        {
+            _cameraAnimation.CompliteAction += StartCorotine;
+        }
+        private void OnDisable()
+        {
+            _cameraAnimation.CompliteAction -= StartCorotine;
+        }
+        private void StartCorotine()
         {
             StartCoroutine(RunSwitchMode());
         }

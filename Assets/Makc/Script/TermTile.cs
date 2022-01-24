@@ -36,7 +36,7 @@ namespace Underworld
         protected override void Damage(Player player)
         {
             if (_state == TernState.Fire)
-                player.Term();
+                player.Incineration();
         }
     }
 }
