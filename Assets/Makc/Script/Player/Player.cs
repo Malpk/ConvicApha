@@ -81,6 +81,9 @@ public class Player : MonoBehaviour
     private void SetGameState()
     {
         _curretState = GameState.Play;
+        var x = _cameraAnimation.cameraPosition.x;
+        var y = _cameraAnimation.cameraPosition.y;
+        transform.position = new Vector3(x,y,transform.position.z);
     }
     public void Incineration()
     {
