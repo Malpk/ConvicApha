@@ -4,6 +4,7 @@ using UnityEngine;
 using PlayerSpace;
 using GameMode;
 using Zenject;
+using System.IO;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -65,7 +66,6 @@ public class Player : MonoBehaviour
         {
             _movement.Move(Vector2.zero);
         }
-
     }
     private void DefineTile(ITileType tile)
     {

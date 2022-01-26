@@ -11,7 +11,7 @@ public class Trizmove : MonoBehaviour
 
     void Start()
     {
-        if(_timeDestroy!=0)
+        if(_timeDestroy != 0)
             Destroy(gameObject, _timeDestroy);
     }
 

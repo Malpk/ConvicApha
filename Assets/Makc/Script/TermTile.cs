@@ -28,6 +28,7 @@ namespace Underworld
             yield return new WaitForSeconds(_warningTime);
             _animator.SetInteger("State", 1);
             _fireInstiate = InstatiateFire(_fire);
+            yield return new WaitForSeconds(0.1f);
             _state = TernState.Fire;
             yield return new WaitUntil(() => (_fireInstiate == null));
             Destroy(gameObject);
@@ -36,7 +37,9 @@ namespace Underworld
         protected override void Damage(Player player)
         {
             if (_state == TernState.Fire)
+            {
                 player.Incineration();
+            }
         }
     }
 }

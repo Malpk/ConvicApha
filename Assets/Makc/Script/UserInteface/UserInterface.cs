@@ -56,7 +56,7 @@ namespace UIInteface
         }
         public void OnRestart()
         {
-            InvateEvent(GameState.Restart);
+            InvateEvent(GameState.Play);
             LoadScene();
         }
         private void InvateEvent(GameState state)

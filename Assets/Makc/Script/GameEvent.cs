@@ -4,6 +4,7 @@ using UnityEngine;
 using UIInteface;
 using Zenject;
 
+
 namespace GameMode
 {
     public class GameEvent : MonoBehaviour
@@ -21,7 +22,7 @@ namespace GameMode
 
         public GameState state => _state;
 
-        private void Awake()
+        private void Start()
         {
             if (_objetToScene.ContainsKey(_id))
             {

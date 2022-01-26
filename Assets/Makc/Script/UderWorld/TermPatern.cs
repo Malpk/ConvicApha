@@ -93,7 +93,6 @@ namespace Underworld
         }
         public void SetState(bool value)
         {
-            Debug.Log(value);
             if (_fireInstiate != null)
             {
                 _fireInstiate.GetComponent<SpriteRenderer>().enabled = value;

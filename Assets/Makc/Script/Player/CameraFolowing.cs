@@ -10,8 +10,6 @@ public class CameraFolowing : MonoBehaviour
     
     void LateUpdate()
     {
-        var x = Mathf.Clamp(_target.position.x, -_offset.x, _offset.x);
-        var y = Mathf.Clamp(_target.position.y, -_offset.y, _offset.y);
-        transform.position = new Vector3(x, y,transform.position.z);
+        transform.position = new Vector3(_target.position.x, _target.position.y, transform.position.z);
     }
 }

@@ -49,7 +49,6 @@ namespace Underworld
             while (progress < 1f)
             {
                 transform.rotation *= Quaternion.Euler(Vector3.forward * _speedRotation*Time.deltaTime);
-                Debug.Log(Vector3.forward * _speedRotation * Time.deltaTime);
                 progress += Time.deltaTime / _duration;
                 yield return null;
             }
