@@ -1,21 +1,34 @@
 ﻿using Zenject;
-using GameMode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using TMPro;
+using GameMode;
+using SwitchMode;
 
-public class DeadMenu : MonoBehaviour
+namespace Underworld
 {
-    public void OnRestart()
+    public class DeadMenu : MonoBehaviour
     {
-        LoadScene();
-    }
-    private void OnExit()
-    {
-        LoadScene();
-    }
-    private void LoadScene()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        [SerializeField] private TextMeshProUGUI _headDeadMenu;
+        [SerializeField] private ModeMessange _messange;
+
+        [Inject] private GameEvent _gameEvent;
+        [Inject] private SwitchMods _modeSwich;
+
+        private void OnEnable()
+        {
+            _gameEvent.DeadAction += EnterMessange;
+        }
+        private void OnDisable()
+        {
+            _gameEvent.DeadAction -= EnterMessange;
+        }
+
+        private void EnterMessange()
+        {
+            var typeMode = ModeType.None;
+            if (_modeSwich.curreqSequence.TryGetComponent<UnderworldSequnce>(out UnderworldSequnce sequence))
+                typeMode = sequence.curretTypeMode;
+            _headDeadMenu.text = _messange.GetMessgange(typeMode);
+        }
     }
 }

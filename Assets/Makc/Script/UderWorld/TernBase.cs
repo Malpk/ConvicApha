@@ -26,8 +26,9 @@ namespace Underworld
         private void Awake()
         {
             _sizeCollider = GetComponent<BoxCollider2D>().size;
+            Intializate();
         }
-
+        protected abstract void Intializate();
         protected GameObject InstatiateFire(GameObject fire)
         {
             var fireInstatiate = Instantiate(fire, transform);

@@ -37,6 +37,10 @@ public class TTile : TernBase
         if (_state == TernState.Fire)
             player.Incineration();
     }
+
+    protected override void Intializate()
+    {
+    }
 }
 
 

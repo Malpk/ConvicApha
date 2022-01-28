@@ -41,5 +41,9 @@ namespace Underworld
                 player.Incineration();
             }
         }
+
+        protected override void Intializate()
+        {
+        }
     }
 }

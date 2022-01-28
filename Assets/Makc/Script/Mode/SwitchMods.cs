@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Underworld;
 using Zenject;
 
 namespace SwitchMode
@@ -22,6 +23,8 @@ namespace SwitchMode
         public Transform playerTransform => _player;
         public TridentSetting trident => _trident;
         public Tilemap tileMap => _tileMap;
+        public GameObject curreqSequence { get; private set; }
+
 
         private void OnEnable()
         {
@@ -45,6 +48,7 @@ namespace SwitchMode
                     var sequence = GetMode().sequence;
                     var instateSequence = Instantiate(sequence, Vector3.zero, Quaternion.identity);
                     instateSequence.transform.parent = transform;
+                    curreqSequence = instateSequence;
                     IntializateSequence(instateSequence.GetComponents<ISequence>());
                     yield return new WaitWhile(() => (instateSequence != null));
                 }

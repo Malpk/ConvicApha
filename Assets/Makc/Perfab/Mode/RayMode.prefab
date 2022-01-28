@@ -67,8 +67,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countRay: 8
-  _duration: 10
-  _speedRotation: 26
+  _speedOffset: 20
+  _offset: 45
+  _delay: 1
+  _duration: 100
   _ray: {fileID: 8306110263009516393, guid: 3b222d1958422514aa8d103e291d737b, type: 3}
   _trisMode: {fileID: 1078996803756881645}
 --- !u!114 &1078996803756881645

@@ -20,6 +20,9 @@ namespace GameMode
         public delegate void State(GameState State);
         public event State StatusUpdate;
 
+        public delegate void Dead();
+        public event Dead DeadAction;
+
         public GameState state => _state;
 
         private void Start()
@@ -40,12 +43,12 @@ namespace GameMode
         }
         private void OnEnable()
         {
-            _player.DeadAction += InvateStateUpdate;
+            _player.DeadAction += MessangePlayerDead;
             _inteface.CommandsAction += InvateStateUpdate;
         }
         private void OnDisable()
         {
-            _player.DeadAction -= InvateStateUpdate;
+            _player.DeadAction -= MessangePlayerDead;
             _inteface.CommandsAction -= InvateStateUpdate;
         }
         private GameState Choose(GameState state)
@@ -59,6 +62,13 @@ namespace GameMode
                 default:
                     return state;
             }
+        }
+
+        public void MessangePlayerDead()
+        {
+            if (DeadAction != null)
+                DeadAction();
+            InvateStateUpdate(GameState.Dead);
         }
 
         private void InvateStateUpdate(GameState state)

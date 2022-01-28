@@ -44,7 +44,6 @@ public class CameraAnimation : MonoBehaviour
         Move(false);
         enabled = false;
         _cameraFolowing.enabled = true;
-        Debug.Log("Complite");
     }
     private void Move(bool value)
     {

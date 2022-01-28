@@ -8,13 +8,19 @@ namespace Underworld
     {
         [Header("Game Setting")]
         [SerializeField] private int _countRay;
+        [SerializeField] private float _speedOffset;
+        [SerializeField] private float _offset;
+        [SerializeField] private float _delay;
         [SerializeField] private float _duration;
-        [SerializeField] private float _speedRotation;
 
         [Header("Scene Setting")]
         [SerializeField] private GameObject _ray;
         [SerializeField] private TrisMode _trisMode;
 
+        private int[] _direction = new int[]
+        {
+            1,-1
+        };
         private bool _status = true;
 
         public override bool statusWork => _status;
@@ -44,22 +50,25 @@ namespace Underworld
         private IEnumerator Rotation(List<RayPoint> rayList)
         {
             yield return new WaitWhile(() => _trisMode.state != TernState.Fire);
-            TurnOnAnimation(rayList);
             var progress = 0f;
             while (progress < 1f)
             {
-                transform.rotation *= Quaternion.Euler(Vector3.forward * _speedRotation*Time.deltaTime);
-                progress += Time.deltaTime / _duration;
-                yield return null;
+                var offsetProgress = 0f;
+                var index = Random.Range(0, _direction.Length);
+                var offset = _offset * _direction[index];
+                while (offsetProgress != offset)
+                {
+                    var previousOffset = offsetProgress;
+                    offsetProgress = Mathf.MoveTowards(offsetProgress, offset, _speedOffset*Time.deltaTime);
+                    var steep = offsetProgress - previousOffset;
+                    transform.rotation *= Quaternion.Euler(Vector3.forward * steep);
+                    progress += Time.deltaTime / _duration;
+                    yield return null;
+                }
+                yield return new WaitForSeconds(_delay);
+                progress += _delay / _duration;
             }
             _status = false;
-        }
-        private void TurnOnAnimation(List<RayPoint> rayList)
-        {
-            foreach (var ray in rayList)
-            {
-                ray.StartScaleAnimation();
-            }
         }
     }
 }

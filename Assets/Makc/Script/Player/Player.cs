@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private IMovement _movement;
     private IRotate _rotate;
 
-    public delegate void Dead(GameState state);
+    public delegate void Dead();
     public event Dead DeadAction;
 
     private void Awake()
@@ -96,6 +96,6 @@ public class Player : MonoBehaviour
     {
         Time.timeScale = 0f;
         if (DeadAction != null)
-            DeadAction(GameState.Dead);
+            DeadAction();
     }
 }

@@ -23,11 +23,6 @@ namespace Underworld
 
         public override TernState state => _state == TernState.Deactive ? _lostState : _state;
 
-        private void Awake()
-        {
-            _sprite = GetComponent<SpriteRenderer>();
-        }
-
         private void Start()
         {
             if (_inverMode)
@@ -111,6 +106,11 @@ namespace Underworld
         {
             if (_state == TernState.Fire)
                 player.Incineration();
+        }
+
+        protected override void Intializate()
+        {
+            _sprite = GetComponent<SpriteRenderer>();
         }
     }
 }
