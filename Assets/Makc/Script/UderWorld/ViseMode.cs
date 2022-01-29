@@ -10,8 +10,8 @@ namespace Underworld
     {
         [Header("Game Setting")]
         [SerializeField] private int _lenght;
-        [SerializeField] private float _fireTime;
-        [SerializeField] private float _warnigTime;
+        [SerializeField] private Vector2 _fireTime;
+        [SerializeField] private Vector2 _warnigTime;
         [SerializeField] private bool _dubleMode = false;
 
         [Header("Perfab Setting")]
@@ -29,14 +29,14 @@ namespace Underworld
 
         private IEnumerator CreateVise()
         {
-            GameObject lostVise = null;
+            var viseList = new List<GameObject>();
             if (_dubleMode)
             {
                 foreach (var direction in _direction)
                 {
                     foreach (var angle in _angls)
                     {
-                        lostVise = InstateViseLine(angle * direction);
+                        viseList.Add(InstateViseLine(angle * direction));
                     }
                 }
             }
@@ -45,11 +45,25 @@ namespace Underworld
                 var index = Random.Range(0, _angls.Length);
                 foreach (var direction in _direction)
                 {
-                    lostVise = InstateViseLine(_angls[index] * direction);
+                    viseList.Add(InstateViseLine(_angls[index] * direction));
                 }
             }
-            yield return new WaitWhile(() => lostVise != null);
+            yield return StartCoroutine(CheakList(viseList));
             Destroy(gameObject);
+        }
+        private IEnumerator CheakList(List<GameObject> list)
+        {
+            while (list.Count > 0)
+            {
+                var cheakList = new List<GameObject>();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] != null)
+                        cheakList.Add(list[i]);
+                }
+                list = cheakList;
+                yield return new WaitForSeconds(0.1f);
+            }
         }
         private GameObject InstateViseLine(Vector3 direction)
         {
@@ -57,7 +71,9 @@ namespace Underworld
             viseInstate.transform.parent = transform;
             if (viseInstate.TryGetComponent<Vise>(out Vise vise))
             {
-                vise.Constructor(_lenght, _offset.x, direction, _fireTime, _warnigTime);
+                var fireTime = Random.Range(_fireTime.x, _fireTime.y);
+                var warningTime = Random.Range(_warnigTime.x, _warnigTime.y);
+                vise.Constructor(_lenght, _offset.x, direction, fireTime, warningTime);
             }
             return viseInstate;
         }
