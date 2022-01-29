@@ -12,9 +12,12 @@ namespace UIInteface
         [SerializeField] private Canvas _curreCanvas;
         [SerializeField] private Canvas _deadMenu;
         [SerializeField] private Canvas _HUD;
+        [SerializeField] private string _vkUrl = "https://vk.com/nestestate";
+        [SerializeField] private string _youTubeUrl = "https://www.youtube.com/channel/UCkCJRNGvuwb8JmoF3vqvtcw";
 
         [Inject] private GameEvent _eventMap;
 
+        
         private List<Canvas> _showHistor = new List<Canvas>();
         private List<Canvas> _closeHistor = new List<Canvas>();
 
@@ -82,6 +85,14 @@ namespace UIInteface
         {
             Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        public void OpenYouTubeCannel()
+        {
+            Application.OpenURL(_youTubeUrl);
+        }
+        public void OpenVkGroup()
+        {
+            Application.OpenURL(_vkUrl);
         }
     }
 }
