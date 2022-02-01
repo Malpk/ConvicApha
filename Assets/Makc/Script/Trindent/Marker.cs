@@ -7,43 +7,52 @@ namespace Trident
     [RequireComponent(typeof(SpriteRenderer))]
     public class Marker : SpawnPoint
     {
-        [SerializeField] private int[] _angels;
-        [SerializeField] private float _duration;
-        [SerializeField] private TridentSetting _trident;
-
-        private SpriteRenderer _deadLinaSprite;
-
-        private void Awake()
+        public bool Constructor(int[] angls, float warningTime, Vector3 offset, GameObject trident)
         {
-            _deadLinaSprite = GetComponent<SpriteRenderer>();
-        }
-        private void Start()
-        {
-            StartCoroutine(Indicator(_duration));
-        }
-        private IEnumerator Indicator(float duration)
-        {
-            float progress = 0;
-            Color color = _deadLinaSprite.color;
-            while (progress < 1)
+            if (angls != null)
             {
-                progress += Time.deltaTime / duration;
-                _deadLinaSprite.color = new Color(color.r, color.g, color.b, 0.4f * progress);
-                yield return null;
+                StartCoroutine(Indicator(warningTime, angls, offset, trident));
+                return true;
             }
-            _deadLinaSprite.color = new Color(color.r, color.g, color.b, 0f);
-            var trident = InstateObject(_trident);
-            trident.transform.parent = transform;
-            yield return new WaitUntil(() => (trident == null));
+            else 
+            {
+                return false;
+            }
+        }
+        private IEnumerator Indicator(float warningTime,int[] angls, Vector3 offset, GameObject trident)
+        {
+            yield return StartCoroutine(ColorAnimation(warningTime));
+            var index = Random.Range(0, angls.Length);
+            var newTrident = InstateObject(trident, angls[index], offset);
+            newTrident.transform.parent = transform;
+            newTrident.transform.localPosition = Rotate(angls[index], offset);
+            yield return new WaitWhile(() => (newTrident != null));
             Destroy(gameObject);
         }
-
-        public override GameObject InstateObject(TridentSetting trident)
+        private IEnumerator ColorAnimation(float warningTime)
         {
-            var angel = GetAngel(_angels);
-            var offset = RotateVector(trident.OffSet,angel);
-            var rotate = Quaternion.Euler(Vector3.forward * angel);
-            return Instantiate(trident.InstateObject, transform.position + offset, rotate);
+            float progress = 0;
+            var deadLinaSprite = GetComponent<SpriteRenderer>();
+            Color color = deadLinaSprite.color;
+            while (progress < 1)
+            {
+                progress += Time.deltaTime / warningTime;
+                deadLinaSprite.color = new Color(color.r, color.g, color.b, 0.4f * progress);
+                yield return null;
+            }
+            deadLinaSprite.color = new Color(color.r, color.g, color.b, 0f);
+        }
+        public override GameObject InstateObject(GameObject trident,int angle, Vector3 offset)
+        {
+            var rotate = Quaternion.Inverse(Quaternion.Euler(Vector3.forward * angle));
+            return Instantiate(trident, transform.position, rotate);
+        }
+        private Vector3 Rotate(float angel, Vector3 vector)
+        {
+            angel *= Mathf.Deg2Rad;
+            var x = vector.x * Mathf.Cos(angel) - vector.y * Mathf.Sin(angel);
+            var y = vector.x * Mathf.Sin(angel) + vector.y * Mathf.Cos(angel);
+            return new Vector3(x, y, vector.z);
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Trident;
 using Zenject;
+
 public class InstateTrident : MonoBehaviour
 {
     [SerializeField] private int[] _angel;

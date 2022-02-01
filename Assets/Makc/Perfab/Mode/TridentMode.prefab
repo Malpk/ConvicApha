@@ -43,10 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 114069405b341cd4ab3db363c6fe329d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _offset: 30
+  _delay: 1
+  _duration: 5
+  _warningTime: 1.5
+  _trident: {fileID: 7955783422767213867, guid: 8ce357097e68f8944980e80015d0f590, type: 3}
   _sizeMap: {x: 16, y: 16}
   _setting:
     _isDebug: 1
     _duration: 5
     _point: {fileID: 4947770815674354160, guid: 0cfb79d94c3044b4886dbdc71fb0fe4b, type: 3}
-  _verticalSpawner: {fileID: 8802325376363665861, guid: ade2af1869fdbbe48b2e817bd3331d65, type: 3}
-  _horizontalSpawner: {fileID: 8075186958583068764, guid: 2793eb5ff3499954fbcc23ab364dea69, type: 3}
+  _spawner: {fileID: 8075186958583068764, guid: 2793eb5ff3499954fbcc23ab364dea69, type: 3}
+  _tridentSetting:
+  - _verticalMode: 1
+  - _verticalMode: 0

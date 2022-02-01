@@ -5,7 +5,7 @@ namespace Trident
 {
     public abstract class SpawnPoint : MonoBehaviour
     {
-        public abstract GameObject InstateObject(TridentSetting trident);
+        public abstract GameObject InstateObject(GameObject trident, int angle, Vector3 offset);
 
         protected int GetAngel(int[] angel)
         {

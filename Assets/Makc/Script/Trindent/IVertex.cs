@@ -9,6 +9,6 @@ namespace Trident
         public Vector2 position { get; }
         public VertexState state { get; }
 
-        public bool InstateObject(GameObject instateObject,Transform parent = null);
+        public GameObject InstateObject(GameObject instateObject,Transform parent = null);
     }
 }

@@ -13,6 +13,7 @@ namespace Underworld
 
         [Header("Perfab Setting")]
         [SerializeField] private TrisMode _trisMode;
+        [SerializeField] private GameObject _trident;
 
         private int[] _direction = new int[] { -1, 1 };
         private bool _status = true;
@@ -24,6 +25,7 @@ namespace Underworld
             Vector3 player = swictMode.playerTransform.position;
             var angel = Vector2.Angle(transform.right, player);
             angel = CorrectAngel(angel, player);
+            Instantiate(_trident, transform.position, Quaternion.identity).transform.parent = transform.parent;
             transform.rotation = Quaternion.Euler(Vector3.forward * angel);
             ChooseDirection();
             StartCoroutine(RunMode());
@@ -41,7 +43,6 @@ namespace Underworld
         }
         private IEnumerator RunMode()
         {
-            yield return new WaitWhile(() => _trisMode.state != TernState.Fire);
             float progress = 0f;
             while (progress <= 1)
             {

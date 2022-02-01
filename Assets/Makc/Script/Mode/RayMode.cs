@@ -16,6 +16,7 @@ namespace Underworld
         [Header("Scene Setting")]
         [SerializeField] private GameObject _ray;
         [SerializeField] private TrisMode _trisMode;
+        [SerializeField] private GameObject _trident;
 
         private int[] _direction = new int[]
         {
@@ -28,6 +29,7 @@ namespace Underworld
         private void Start()
         {
             var rayList  = CreateRay();
+            Instantiate(_trident, transform.position, Quaternion.identity).transform.parent = transform.parent;
             StartCoroutine(Rotation(rayList));
         }
         private List<RayPoint> CreateRay()
@@ -49,7 +51,6 @@ namespace Underworld
 
         private IEnumerator Rotation(List<RayPoint> rayList)
         {
-            yield return new WaitWhile(() => _trisMode.state != TernState.Fire);
             var progress = 0f;
             while (progress < 1f)
             {

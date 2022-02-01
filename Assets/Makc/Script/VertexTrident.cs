@@ -16,11 +16,13 @@ namespace Trident
         public Vector2 position => _position;
         public VertexState state => _instateObject == null ? VertexState.UnBusy : VertexState.Busy;
 
-        public bool InstateObject(GameObject instateObject, Transform parent = null)
+        public GameObject InstateObject(GameObject instateObject, Transform parent = null)
         {
+            if (_instateObject != null)
+                return _instateObject;
             _instateObject = MonoBehaviour.Instantiate(instateObject, _position, Quaternion.identity);
             _instateObject.transform.parent = parent;
-            return true;
+            return _instateObject;
         }
     }
 }

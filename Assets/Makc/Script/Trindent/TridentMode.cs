@@ -6,35 +6,45 @@ using SwitchMode;
 
 namespace Trident 
 {
-    public class TridentMode : MonoBehaviour,ISequence
+    public class TridentMode : MonoBehaviour, ISequence
     {
+        [Header("Game Setting")]
+        [SerializeField] private int _offset;
+        [SerializeField] private float _delay;
+        [SerializeField] private float _duration;
+        [SerializeField] private float _warningTime;
+        [SerializeField] private GameObject _trident;
+        [Header("Perfab Setting")]
         [SerializeField] private Vector2Int _sizeMap;
         [SerializeField] private Mode _setting;
-        [SerializeField] private GameObject _verticalSpawner;
-        [SerializeField] private GameObject _horizontalSpawner;
+        [SerializeField] private GameObject _spawner;
+        [SerializeField] private MarkerSetting[] _tridentSetting;
 
         private Tilemap _tileMap;
-        private TridentSetting _trident;
         private Coroutine _coroutine;
-
-        private List<IVertex> _horizontal = new List<IVertex>();
-        private List<IVertex> _vertical = new List<IVertex>();
-
 
         public void Constructor(SwitchMods swictMode)
         {
-            if(_coroutine != null)
+            if (_coroutine != null)
                 return;
             _tileMap = swictMode.tileMap;
-            _trident = swictMode.trident;
             Intializate();
             _coroutine = StartCoroutine(RunMode());
         }
 
         private void Intializate()
         {
-            _horizontal = Intializate(_sizeMap.y / 2, Vector3Int.up);
-            _vertical = Intializate(_sizeMap.x / 2, Vector3Int.right);
+            foreach (var setting in _tridentSetting)
+            {
+                setting.VertexList = Intializate(SizeMap(setting.VerticalMode), setting.Direction);
+            }
+        }
+        private int SizeMap(bool vertical)
+        {
+            if (vertical)
+                return _sizeMap.x / 2;
+            else
+                return _sizeMap.y / 2;
         }
         private List<IVertex> Intializate(int sizeAxis, Vector3Int maskDirection)
         {
@@ -56,19 +66,26 @@ namespace Trident
         private IEnumerator RunMode()
         {
             float progress = 0;
+            GameObject lostTrident = null;
             while (progress <= 1f)
             {
-                var point = ChooseVertex(_horizontal);
-                if (point != null)
+                foreach (var setting in _tridentSetting)
                 {
-                    point.InstateObject(_horizontalSpawner,transform.parent);
+                    var point = ChooseVertex(setting.VertexList);
+                    if (point != null)
+                    {
+                        lostTrident = point.InstateObject(_spawner, transform.parent);
+                        lostTrident.transform.rotation = Quaternion.Euler(Vector3.forward * setting.MarkerAngle);
+                        if (lostTrident.TryGetComponent<Marker>(out Marker marker))
+                        {
+                            marker.Constructor(setting.Angls, _warningTime, setting.Direction * _offset, _trident);
+                        }
+                    }
                 }
-                point = ChooseVertex(_vertical);
-                if (point != null)
-                    point.InstateObject(_verticalSpawner,transform);
-                yield return new WaitForSeconds(_trident.startDelay);
-                progress += _trident.startDelay / _setting.duration;
+                yield return new WaitForSeconds(_delay);
+                progress += _delay / _duration;
             }
+            yield return new WaitWhile(() => lostTrident != null);
             Destroy(gameObject);
         }
 
