@@ -20,6 +20,8 @@ namespace Underworld
 
         public override bool statusWork => 0 == 0;
 
+        public bool IsAttackMode => true;
+
         public void Constructor(SwitchMods swictMode)
         {
             _map = swictMode.map.Map;

@@ -16,6 +16,8 @@ public class FireMap : MonoBehaviour, ISequence
     private List<IVertex> _allMap;
     private IVertex[,] _vertexs;
 
+    public bool IsAttackMode => true;
+
     public void Constructor(SwitchMods swictMode)
     {
         if (_map == null)

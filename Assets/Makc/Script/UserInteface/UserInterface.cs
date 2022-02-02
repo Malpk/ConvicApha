@@ -12,6 +12,7 @@ namespace UIInteface
         [SerializeField] private Canvas _curreCanvas;
         [SerializeField] private Canvas _deadMenu;
         [SerializeField] private Canvas _HUD;
+        [SerializeField] private Canvas _exitGameMenu;
         [SerializeField] private string _vkUrl = "https://vk.com/nestestate";
         [SerializeField] private string _youTubeUrl = "https://www.youtube.com/channel/UCkCJRNGvuwb8JmoF3vqvtcw";
 
@@ -30,6 +31,26 @@ namespace UIInteface
         private void OnDisable()
         {
             _eventMap.StatusUpdate -= ShowMenu;
+        }
+
+        private void Update()
+        {
+            if (Input.GetKey(KeyCode.Escape))
+                ShowExitGameNenu();
+        }
+        private void ShowExitGameNenu()
+        {
+            Time.timeScale = 0;
+            _exitGameMenu.enabled = true;
+        }
+        public void OnExitGame()
+        {
+            Application.Quit();
+        }
+        public void OnReturnInGame()
+        {
+            Time.timeScale = 1;
+            _exitGameMenu.enabled = false;
         }
         public void OnShow(Canvas canvas)
         {

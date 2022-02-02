@@ -21,6 +21,8 @@ namespace Underworld
         private int[] _direction = new int[] { 1, -1 };
         private Vector3[] _angls = new Vector3[] { Vector3.right, Vector3.up };
 
+        public bool IsAttackMode => true;
+
         public void Constructor(SwitchMods swictMode)
         {
             _offset = swictMode.tileMap.cellSize;

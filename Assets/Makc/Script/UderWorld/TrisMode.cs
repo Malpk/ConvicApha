@@ -17,6 +17,8 @@ namespace Underworld
 
         public TernState state => _term == null ? TernState.Deactive : _term.state;
 
+        public bool IsAttackMode => true;
+
         public void Constructor(SwitchMods swictMode)
         {
             if (_map != null)

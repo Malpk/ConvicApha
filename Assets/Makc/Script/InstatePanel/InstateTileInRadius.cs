@@ -18,6 +18,8 @@ public class InstateTileInRadius : MonoBehaviour, ISequence
 
     private IGetTileMap _tiles;
 
+    public bool IsAttackMode => true;
+
     private void Awake()
     {
         _tiles = _underworldTile;

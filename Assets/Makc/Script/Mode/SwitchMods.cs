@@ -9,6 +9,7 @@ namespace SwitchMode
 {
     public class SwitchMods : MonoBehaviour
     {
+        [Header("Perfab Setting")]
         [SerializeField] private Transform _player;
         [SerializeField] private List<SettingSequence> _sequences = new List<SettingSequence>();
 
@@ -19,6 +20,7 @@ namespace SwitchMode
 
         private List<SettingSequence> _curretList = new List<SettingSequence>();
 
+        public bool isAttackMode => GetSequenceStatus(curreqSequence);
         public GameMap map => _map;
         public Transform playerTransform => _player;
         public TridentSetting trident => _trident;
@@ -38,7 +40,15 @@ namespace SwitchMode
         {
             StartCoroutine(RunSwitchMode());
         }
-
+        private bool GetSequenceStatus(GameObject curretSecunce)
+        {
+            if (curretSecunce == null)
+                return false;
+            if (curretSecunce.TryGetComponent<ISequence>(out ISequence sequnce))
+                return sequnce.IsAttackMode;
+            else
+                return false;
+        }
         private IEnumerator RunSwitchMode()
         {
             while (true)

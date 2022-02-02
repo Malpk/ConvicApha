@@ -20,6 +20,8 @@ namespace Underworld
 
         public override bool statusWork => _status;
 
+        public bool IsAttackMode => true;
+
         public void Constructor(SwitchMods swictMode)
         {
             Vector3 player = swictMode.playerTransform.position;

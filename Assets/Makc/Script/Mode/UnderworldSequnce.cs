@@ -10,9 +10,11 @@ namespace Underworld
         [SerializeField] private float _delay; 
         [SerializeField] private List<Mode> _mods = new List<Mode>();
 
+        private GameObject _mode;
         private SwitchMods _switchMode;
         private Coroutine _coroutine = null;
 
+        public bool IsAttackMode => _mode != null;
         public ModeType curretTypeMode { get; private set; }
 
         public void Constructor(SwitchMods swictMode)
@@ -28,14 +30,14 @@ namespace Underworld
             foreach (var mode in _mods)
             {
                 curretTypeMode = mode.type;
-                var instateMode =  Instantiate(mode.mode, Vector3.zero, Quaternion.identity);
-                instateMode.transform.parent = transform;
-                var mods = instateMode.GetComponents<ISequence>();
+                _mode =  Instantiate(mode.mode, Vector3.zero, Quaternion.identity);
+                _mode.transform.parent = transform;
+                var mods = _mode.GetComponents<ISequence>();
                 for (int i = 0; i < mods.Length; i++)
                 {
                     mods[i].Constructor(_switchMode);
                 }
-                yield return new WaitWhile(() => (instateMode != null));
+                yield return new WaitWhile(() => (_mode != null));
                 yield return new WaitForSeconds(GetDelay(mode.delay));
             }
             yield return new WaitForSeconds(_delay);
