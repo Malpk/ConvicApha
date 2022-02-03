@@ -14,9 +14,8 @@ namespace Underworld
         private Animator _tileAnimator;
         private Animator _fireAniamtor;
         private Coroutine _turnOff = null;
-        private TernState _state;
 
-        public override TernState state => _state;
+        public override TernState state => _instateFire == null ? TernState.Deactive : TernState.Fire;
 
         protected override void Intializate()
         {
@@ -46,10 +45,6 @@ namespace Underworld
             yield return new WaitWhile(() => _instateFire != null);
             _tileAnimator.SetInteger("State", 0);
         }
-        private void SetDeactiveState()
-        {
-            _state = TernState.Deactive;
-        }
         public void TurnOffTile()
         {
             if (_turnOff == null)
@@ -72,7 +67,6 @@ namespace Underworld
             _tileAnimator.SetInteger("State", 1);
             _instateFire = InstatiateFire(_fire);
             _fireAniamtor = _instateFire.GetComponent<Animator>();
-            _state = TernState.Fire;
             yield return null;
         }
     }

@@ -14,7 +14,7 @@ namespace Underworld
         private bool _mode = false;
         private Vector3[] _offset = new Vector3[]
         {
-            Vector3.right, Vector3.left, Vector3.up, Vector3.down,
+            Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.zero,
             new Vector3(1,1),  new Vector3(-1,1),  new Vector3(1,-1),  new Vector3(-1,-1)
         };
         private Coroutine _coroutine = null;

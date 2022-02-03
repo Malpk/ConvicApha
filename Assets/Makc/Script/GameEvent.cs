@@ -14,6 +14,7 @@ namespace GameMode
         private static Dictionary<int, GameEvent> _objetToScene = new Dictionary<int, GameEvent>();
 
         private Player _player;
+
         private UserInterface _inteface;
         private GameState _state = GameState.Pause;
         
@@ -23,7 +24,10 @@ namespace GameMode
         public delegate void Dead();
         public event Dead DeadAction;
 
+   
         public GameState state => _state;
+
+
 
         private void Start()
         {
@@ -77,5 +81,6 @@ namespace GameMode
             if (StatusUpdate != null)
                 StatusUpdate(state);
         }
+
     }
 }

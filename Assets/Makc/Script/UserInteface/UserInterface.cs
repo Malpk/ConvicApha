@@ -35,8 +35,13 @@ namespace UIInteface
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.Escape))
-                ShowExitGameNenu();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (!_exitGameMenu.enabled)
+                    ShowExitGameNenu();
+                else
+                    OnReturnInGame();
+            }
         }
         private void ShowExitGameNenu()
         {
