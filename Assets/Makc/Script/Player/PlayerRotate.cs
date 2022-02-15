@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlayerSpace
+namespace PlayerComponent
 {
     public class PlayerRotate : IRotate
     {

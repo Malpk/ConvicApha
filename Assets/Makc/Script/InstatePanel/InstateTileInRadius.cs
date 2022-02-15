@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TileSpace;
-using SwitchMode;
+using SwitchModeComponent;
 
 public class InstateTileInRadius : MonoBehaviour, ISequence
 {

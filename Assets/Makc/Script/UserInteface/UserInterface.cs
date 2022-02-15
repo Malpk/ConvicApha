@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameMode;
 using Zenject;
 using UnityEngine.SceneManagement;
+using Underworld;
 
 namespace UIInteface
 {
@@ -13,10 +13,11 @@ namespace UIInteface
         [SerializeField] private Canvas _deadMenu;
         [SerializeField] private Canvas _HUD;
         [SerializeField] private Canvas _exitGameMenu;
+        [SerializeField] private Canvas _titleMenu;
         [SerializeField] private string _vkUrl = "https://vk.com/nestestate";
         [SerializeField] private string _youTubeUrl = "https://www.youtube.com/channel/UCkCJRNGvuwb8JmoF3vqvtcw";
 
-        [Inject] private GameEvent _eventMap;
+        [Inject] private UnderWorldEvent _eventMap;
 
         
         private List<Canvas> _showHistor = new List<Canvas>();
@@ -26,11 +27,15 @@ namespace UIInteface
 
         private void OnEnable()
         {
-            _eventMap.StatusUpdate += ShowMenu;
+            _eventMap.StartAction += () => OnShow(_HUD);
+            _eventMap.DeadAction += ShowDeadMenu;
+            _eventMap.WinAction += ShowTitle;
         }
         private void OnDisable()
         {
-            _eventMap.StatusUpdate -= ShowMenu;
+            _eventMap.StartAction -= () => OnShow(_HUD);
+            _eventMap.DeadAction -= ShowDeadMenu;
+            _eventMap.WinAction -= ShowTitle;
         }
 
         private void Update()
@@ -76,37 +81,24 @@ namespace UIInteface
         }
         public void OnPause()
         {
-            InvateEvent(GameState.MainMenu);
+            InvateEvent(TypeGameEvent.MainMenu);
             LoadScene();
         }
         public void OnPlay()
         {
-            InvateEvent(GameState.Play);
+            InvateEvent(TypeGameEvent.Start);
         }
         public void OnRestart()
         {
-            InvateEvent(GameState.Play);
+            InvateEvent(TypeGameEvent.Start);
             LoadScene();
         }
-        private void InvateEvent(GameState state)
+        private void InvateEvent(TypeGameEvent state)
         {
             if (CommandsAction != null)
                 CommandsAction(state);
         }
-        private void ShowMenu(GameState state)
-        {
-            switch (state)
-            {
-                case GameState.Pause:
-                    return;
-                case GameState.Play:
-                    OnShow(_HUD);
-                    return;
-                case GameState.Dead:
-                    ShowDeadMenu();
-                    return;
-            }
-        }
+
         private void LoadScene()
         {
             Time.timeScale = 1f;
@@ -119,6 +111,10 @@ namespace UIInteface
         public void OpenVkGroup()
         {
             Application.OpenURL(_vkUrl);
+        }
+        private void ShowTitle()
+        {
+            _titleMenu.enabled = true;
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PlayerSpace
+namespace PlayerComponent
 {
     public class PlayerRotation : IRotate
     {

@@ -9,13 +9,7 @@ public class GasIsolScript : MonoBehaviour
     private bool ActiveRotate = false;
     private float zrot;
     public float LiveTime = 7;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         if (Vector2.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, transform.position) < 3)

@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using PlayerSpace;
+using PlayerComponent;
 using Underworld;
 
 public class TTile : TernBase
@@ -23,9 +23,11 @@ public class TTile : TernBase
         while (true)
         {
             _animator.SetInteger("State", 1);
+            soundSource.Play();
             var fire = InstatiateFire(_fire.tile);
             _state = TernState.Fire;
             yield return new WaitUntil(() => (fire == null));
+            soundSource.Stop();
             _state = TernState.Warning;
             _animator.SetInteger("State", 0);
             yield return new WaitForSeconds(_fire.timeActive);

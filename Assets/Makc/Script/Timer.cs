@@ -9,10 +9,5 @@ public abstract class Timer : MonoBehaviour
 
     public abstract int TimeValue { get; }
 
-    private void Start()
-    {
-        StartCoroutine(RunTimer());
-    }
-
     protected abstract IEnumerator RunTimer();
 }

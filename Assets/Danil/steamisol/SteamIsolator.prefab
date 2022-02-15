@@ -121,7 +121,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5, y: 2.5}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -268,7 +268,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5, y: 2.5}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -415,7 +415,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5, y: 2.5}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -476,6 +476,7 @@ Transform:
   - {fileID: 9004236511193878286}
   - {fileID: 9004236512482090116}
   - {fileID: 9004236513227653139}
+  - {fileID: 971521797026063971}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -518,7 +519,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2937377693416806436, guid: b0433cb4297e38940885a3c45e5e6c9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -547,7 +548,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.7777778, y: 1.7777778}
+    oldSize: {x: 1.1428572, y: 1.1428572}
     newSize: {x: 1.7777778, y: 1.7777778}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -573,7 +574,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.7777778, y: 1.7777778}
+    oldSize: {x: 1.1428572, y: 1.1428572}
     newSize: {x: 1.7777778, y: 1.7777778}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -720,7 +721,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5, y: 2.5}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -746,3 +747,65 @@ MonoBehaviour:
   right: 1
   down: 0
   left: 0
+--- !u!1001 &8105782823597925037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 9004236513093149618}
+    m_Modifications:
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.6157837
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.43601656
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008905032951514418, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+      propertyPath: m_Name
+      value: IsolatorGas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+--- !u!4 &971521797026063971 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9008905032951514318, guid: a179f7a7e97c3ee4e89feb90073efd30, type: 3}
+  m_PrefabInstance: {fileID: 8105782823597925037}
+  m_PrefabAsset: {fileID: 0}

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace PlayerSpace
+namespace PlayerComponent
 {
     public interface IMovement 
     {

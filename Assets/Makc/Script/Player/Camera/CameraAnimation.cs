@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using GameMode;
 using Zenject;
+using Underworld;
 
 [RequireComponent(typeof(Animator))]
 public class CameraAnimation : MonoBehaviour
@@ -24,21 +24,19 @@ public class CameraAnimation : MonoBehaviour
     }
     private void OnEnable()
     {
-        _gameEvent.StatusUpdate += Deactive;
+        _gameEvent.StartAction += Deactive;
     }
     private void OnDisable()
     {
-        _gameEvent.StatusUpdate -= Deactive;
+        _gameEvent.StartAction -= Deactive;
     }
     private void Start()
     {
-        var value = _gameEvent.state == GameState.Play;
-        Move(!value);
+        var value = _gameEvent.TypeEvent ==  TypeGameEvent.MainMenu;
+        Move(value);
     }
-    private void Deactive(GameState state)
+    private void Deactive()
     {
-        if (state != GameState.Play)
-            return;
         if (CompliteAction != null)
             CompliteAction();
         Move(false);

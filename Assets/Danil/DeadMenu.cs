@@ -1,8 +1,7 @@
 ﻿using Zenject;
 using UnityEngine;
 using TMPro;
-using GameMode;
-using SwitchMode;
+using SwitchModeComponent;
 
 namespace Underworld
 {

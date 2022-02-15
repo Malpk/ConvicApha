@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFolowing : MonoBehaviour
 {
     [Header("Scene Setting")]
-    [SerializeField] private Transform _target;
+    [SerializeField] private Player _target;
     [SerializeField] private Vector2 _offset;
-    
+
+    public Vector3 CameraPosition => transform.position;
+
     void LateUpdate()
     {
-        transform.position = new Vector3(_target.position.x, _target.position.y, transform.position.z);
+        transform.position = new Vector3(_target.Position.x, _target.Position.y, transform.position.z);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using SwitchMode;
+using SwitchModeComponent;
 using UnityEngine.Tilemaps;
 namespace Underworld
 {

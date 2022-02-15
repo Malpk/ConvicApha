@@ -1,16 +1,18 @@
 using System.Collections;
 using UnityEngine;
-using PlayerSpace;
+using PlayerComponent;
 
 namespace Underworld
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(BoxCollider2D),typeof(AudioSource))]
     public abstract class TernBase : MonoBehaviour, IDetectMode
     {
         [Header("Pefab Setting")]
         [SerializeField] private LayerMask _playerLayer;
         [SerializeField] protected Vector3 fireOffset;
+        [SerializeField] protected AudioClip audioClip;
 
+        protected AudioSource soundSource;
         private bool _mode = false;
         private Vector3[] _offset = new Vector3[]
         {
@@ -26,6 +28,10 @@ namespace Underworld
         private void Awake()
         {
             _sizeCollider = GetComponent<BoxCollider2D>().size;
+            soundSource = GetComponent<AudioSource>();
+            soundSource.playOnAwake = false;
+            soundSource.loop = true;
+            soundSource.clip = audioClip;
             Intializate();
         }
         protected abstract void Intializate();
@@ -43,7 +49,7 @@ namespace Underworld
         public bool SetMode(bool mode)
         {
             _mode = mode;
-            if(_coroutine == null)
+            if(_coroutine == null && gameObject.activeSelf)
                 _coroutine = StartCoroutine(Tracking());
             return true;
         }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerSpace;
+using PlayerComponent;
 
 namespace Underworld
 {
@@ -34,11 +34,13 @@ namespace Underworld
         {
             yield return new WaitForSeconds(_delay);
             _fireInstiate = InstatiateFire(_fire);
+            soundSource.Play();
             _animator = _fireInstiate.GetComponent<Animator>();
             ChangeState();
             if (!_sprite.enabled)
                  SetState(false);
             yield return new WaitWhile(() => (_fireInstiate != null));
+            soundSource.Stop();
             Destroy(gameObject);
         }
 
@@ -73,16 +75,19 @@ namespace Underworld
         private void TurnOn()
         {
             _state = _lostState;
+            soundSource.Play();
             SetState(true);
         }
         public void TurnOn(TernState state)
         {
             _state = state;
+            soundSource.Play();
             SetState(true);
         }
         public void TurnOff()
         {
             _lostState = _state;
+            soundSource.Stop();
             _state = TernState.Deactive;
             SetState(false);
         }

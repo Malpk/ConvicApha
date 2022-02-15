@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Animator),typeof(AudioSource))]
     public class TernForVise : TernBase
     {
         [Header("Perfab Setting")]
@@ -36,13 +36,19 @@ namespace Underworld
         private void FireFadingAnimation()
         {
             if (_fireAniamtor != null)
+            {
                 _fireAniamtor.SetTrigger("turnOff");
+            }
             else if (_instateFire = null)
+            {
+                soundSource.Stop();
                 Destroy(_instateFire);
+            }
         }    
         private IEnumerator WaitDestroyFire()
         {
             yield return new WaitWhile(() => _instateFire != null);
+            soundSource.Stop(); 
             _tileAnimator.SetInteger("State", 0);
         }
         public void TurnOffTile()
@@ -66,6 +72,7 @@ namespace Underworld
         {
             _tileAnimator.SetInteger("State", 1);
             _instateFire = InstatiateFire(_fire);
+            soundSource.Play();
             _fireAniamtor = _instateFire.GetComponent<Animator>();
             yield return null;
         }
