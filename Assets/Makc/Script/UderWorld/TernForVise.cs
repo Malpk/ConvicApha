@@ -41,14 +41,12 @@ namespace Underworld
             }
             else if (_instateFire = null)
             {
-                soundSource.Stop();
                 Destroy(_instateFire);
             }
         }    
         private IEnumerator WaitDestroyFire()
         {
             yield return new WaitWhile(() => _instateFire != null);
-            soundSource.Stop(); 
             _tileAnimator.SetInteger("State", 0);
         }
         public void TurnOffTile()
@@ -72,7 +70,6 @@ namespace Underworld
         {
             _tileAnimator.SetInteger("State", 1);
             _instateFire = InstatiateFire(_fire);
-            soundSource.Play();
             _fireAniamtor = _instateFire.GetComponent<Animator>();
             yield return null;
         }

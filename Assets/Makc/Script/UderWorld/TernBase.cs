@@ -4,15 +4,13 @@ using PlayerComponent;
 
 namespace Underworld
 {
-    [RequireComponent(typeof(BoxCollider2D),typeof(AudioSource))]
+    [RequireComponent(typeof(BoxCollider2D))]
     public abstract class TernBase : MonoBehaviour, IDetectMode
     {
         [Header("Pefab Setting")]
         [SerializeField] private LayerMask _playerLayer;
         [SerializeField] protected Vector3 fireOffset;
-        [SerializeField] protected AudioClip audioClip;
 
-        protected AudioSource soundSource;
         private bool _mode = false;
         private Vector3[] _offset = new Vector3[]
         {
@@ -28,10 +26,6 @@ namespace Underworld
         private void Awake()
         {
             _sizeCollider = GetComponent<BoxCollider2D>().size;
-            soundSource = GetComponent<AudioSource>();
-            soundSource.playOnAwake = false;
-            soundSource.loop = true;
-            soundSource.clip = audioClip;
             Intializate();
         }
         protected abstract void Intializate();

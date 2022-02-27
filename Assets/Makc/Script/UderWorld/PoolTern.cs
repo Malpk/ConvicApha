@@ -34,7 +34,6 @@ namespace Underworld
         }
         public bool StartTile()
         {
-            soundSource.Play();
             _tileAnimator.SetInteger("State", 1);
             if (_instateFire == null)
             {
@@ -62,7 +61,6 @@ namespace Underworld
             }
             else
             {
-                soundSource.Stop();
                 return false;
             }
         }
@@ -74,7 +72,6 @@ namespace Underworld
                 Destroy(_instateFire);
             yield return new WaitWhile(() => _instateFire != null);
             _tileAnimator.SetInteger("State", 0);
-            soundSource.Stop();
             gameObject.SetActive(false);
         }
 

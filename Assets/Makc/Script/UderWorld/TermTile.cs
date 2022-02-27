@@ -28,11 +28,9 @@ namespace Underworld
             yield return new WaitForSeconds(_warningTime);
             _animator.SetInteger("State", 1);
             _fireInstiate = InstatiateFire(_fire);
-            soundSource.Play();
             yield return new WaitForSeconds(0.1f);
             _state = TernState.Fire;
             yield return new WaitUntil(() => (_fireInstiate == null));
-            soundSource.Stop();
             Destroy(gameObject);
         }
 

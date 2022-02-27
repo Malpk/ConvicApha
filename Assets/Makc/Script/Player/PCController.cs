@@ -12,6 +12,7 @@ namespace PlayerComponent
 
         private Vector2 GetInputMovement()
         {
+
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
             return new Vector2(x, y);

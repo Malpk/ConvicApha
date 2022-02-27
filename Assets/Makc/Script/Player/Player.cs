@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speedRotation;
     [Header("Perfab Setting")]
     [SerializeField] private PCController _pcCpntroller;
+    [SerializeField] private AndroidControl _android;
     [SerializeField] private CameraFolowing _camera;
     [SerializeField] private AudioClip _deadSound;
 
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
         _soundSource.playOnAwake = false;
         _soundSource.loop = false;
         _soundSource.clip = _deadSound;
-        _controller = _pcCpntroller;
+        _controller = _android;
         _animator = GetComponent<Animator>();
         var rigidbody = GetComponent<Rigidbody2D>();
         _movement = new PhysicMovement(rigidbody, _speedMovement);
