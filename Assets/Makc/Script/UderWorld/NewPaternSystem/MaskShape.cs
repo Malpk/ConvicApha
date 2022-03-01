@@ -13,7 +13,8 @@ namespace Underworld
         {
             Vector2Int.right, Vector2Int.up,Vector2Int.zero,Vector2Int.one
         };
-        private TetrisMode mode;
+        private readonly TetrisMode mode;
+        private readonly Vector2Int bounds; 
 
         private Vector2Int _curretPOsition;
         private List<Point> _priviusShape = new List<Point>();
@@ -26,13 +27,16 @@ namespace Underworld
             this.mode = mode;
             this.points = points;
             this.shape = NormalizeShape(shape);
+            bounds = new Vector2Int(points.GetLength(0),
+            points.GetLength(1));
             _curretPOsition = DefinePosition(this.shape, points);
         }
-        public int Delth => _curretPOsition.x;
+        public int Delth => _curretPOsition.y;
         private Vector2Int DefinePosition(TermMode[,] shape, Point[,] points)
         {
-            var position = Random.Range(0, (points.GetLength(1)) - shape.GetLength(1) + 1);
-            return Vector2Int.up * position;
+            var position = Random.Range(0,points.GetLength(1) - shape.GetLength(1));
+
+            return Vector2Int.right * position;
         }
         private TermMode[,] NormalizeShape(Shape shape)
         {
@@ -91,22 +95,18 @@ namespace Underworld
         private List<Point> DrawShape(Vector2Int startPosition, int curretDethDeadLine)
         {
             var list = new List<Point>();
-            var y = shape.GetLength(0) - 1;
-            for (int j = 0; j < shape.GetLength(1); j++)
+            for (int i = 0; i < shape.GetLength(0); i++)
             {
-                int delth = 0;
-                for (int i = 0; i < shape.GetLength(0); i++)
+                for (int j = 0; j < shape.GetLength(1); j++)
                 {
-                    if (startPosition.x - y + i >= 0)
+                    if (shape[i, j] == TermMode.AttackMode)
                     {
-                        var curretPosition = startPosition.x - delth + curretDethDeadLine;
-                        if (shape[delth, j] == TermMode.AttackMode && curretPosition < points.GetLength(1))
+                        var x = startPosition.y + i;
+                        var y = startPosition.x + j;
+                        if (x < bounds.x - curretDethDeadLine && y < bounds.y )
                         {
-                            var point = points[startPosition.y + j, startPosition.x - delth];
-                            list.Add(point);
-                            point.SetAtiveObject(true);
+                            list.Add(points[x, y]);
                         }
-                        delth++;
                     }
                 }
             }
@@ -115,32 +115,27 @@ namespace Underworld
 
         public void MoveUpdate()
         {
-            if (CheakOutToMap(_curretPOsition,mode.CurretDeadLineHeight))
+            if (CheakOutToMap(_curretPOsition, mode.CurretDeadLineHeight))
+            {
+                mode.OffPoint(_priviusShape);
                 return;
+            }
             var newDrawShape = DrawShape(_curretPOsition, mode.CurretDeadLineHeight);
             foreach (var point in newDrawShape)
             {
                 if (!_priviusShape.Remove(point))
                 {
+                    point.SetAtiveObject(true);
                     point.Animation.StartTile();
-                    point.Animation.IdleMode();
                 }
             }
-            if (_priviusShape != null)
-            {
-                foreach (var point in _priviusShape)
-                {
-                    point.SetAtiveObject(false);
-                }
-            }
+            mode.OffPoint(_priviusShape);
             _priviusShape = newDrawShape;
-            _curretPOsition += Vector2Int.right; 
-           
+            _curretPOsition += Vector2Int.up;
         }
-
         private bool CheakOutToMap(Vector2Int curretPosition,int curretDelth)
         {
-            if (curretPosition.x - shape.Length + curretDelth > points.GetLength(0) - 1)
+            if (curretPosition.y - shape.GetLength(0) >= points.GetLength(0) - 1 - curretDelth)
             {
                 if (OutTioMapAction != null)
                     OutTioMapAction(this);

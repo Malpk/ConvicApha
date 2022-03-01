@@ -17,6 +17,7 @@ namespace Underworld
         }
 
         public bool IsBusy => _tile != null;
+        public bool IsActive => _tile.activeSelf;
         public ITileAnimation Animation => _aniamtion;
 
         public GameObject CreateObject(GameObject createObject)

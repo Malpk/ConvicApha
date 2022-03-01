@@ -11,7 +11,6 @@ namespace Underworld
     {
         [SerializeField] protected GameObject _tileTern;
 
-
         private Point[,] _pointsMap;
 
         public Point[,] Map => _pointsMap;
@@ -31,11 +30,11 @@ namespace Underworld
             var countLine = tileMap.GetLength(0);
             var countColumen = tileMap.GetLength(1);
             var points = new Point[countColumen, countLine];
-            for (int i = 0; i < countColumen; i++)
+            for (int i = 0; i < countLine; i++)
             {
-                for (int j = 0; j < countLine; j++)
+                for (int j = 0; j < countColumen; j++)
                 {
-                    points[i, j] = new Point(tileMap[i, j].VertixPosition);
+                    points[i, j] = new Point(tileMap[j, i].VertixPosition);
                     points[i, j].CreateObject(_tileTern);
                     points[i, j].SetAtiveObject(false);
                 }
@@ -73,12 +72,16 @@ namespace Underworld
                     break;
             }
         }
-        public void TurnOffAllTile()
+        public Point TurnOffAllTile()
         {
+            Point lost = null;
+            Debug.Log("sss");
             foreach (var point in _pointsMap)
             {
                 point.Animation.Stop();
+                lost = point;
             }
+            return lost;
         }
     }
 }

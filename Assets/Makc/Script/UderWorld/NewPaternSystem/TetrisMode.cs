@@ -24,6 +24,8 @@ namespace Underworld
         private List<MaskShape> _listShaps = new List<MaskShape>();
         private List<MaskShape> _deleteShape = new List<MaskShape>();
         private Coroutine _coroutine;
+        private List<Point> _deadLine = new List<Point>();
+
 
         public int CurretDeadLineHeight { get; private set; }
 
@@ -67,9 +69,11 @@ namespace Underworld
                 yield return new WaitForSeconds(_shapeSpeed);
                 DeleyShape();
             }
-            _builder.TurnOffAllTile();
-            _coroutine = null;
+            Debug.Log("stop");
+            var lostPoint = _builder.TurnOffAllTile();
+            yield return new WaitWhile(() => lostPoint.IsActive);
             Destroy(gameObject);
+            _coroutine = null;
             yield return null;
         }
         private IEnumerator MoveDeadLine()
@@ -82,9 +86,18 @@ namespace Underworld
                 yield return new WaitForSeconds(_delayMoveDeadLine);
                 for (int j = 0; j < _points.GetLength(0); j++)
                 {
-                    _points[j, maxDelth - i].SetAtiveObject(true);
-                    _points[j, maxDelth - i].Animation.StartTile();
+                    _points[maxDelth - i, j].SetAtiveObject(true);
+                    _points[maxDelth - i, j].Animation.StartTile();
+                    _deadLine.Add(_points[maxDelth - i, j]);
                 }
+            }
+        }
+        public void OffPoint(List<Point> listPoints)
+        {
+            for (int i = 0; i < listPoints.Count; i++)
+            {
+                if (!_deadLine.Contains(listPoints[i]))
+                    listPoints[i].SetAtiveObject(false);
             }
         }
         private void AddInDelateList(MaskShape shape)

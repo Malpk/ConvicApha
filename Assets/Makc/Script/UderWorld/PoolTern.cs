@@ -34,9 +34,9 @@ namespace Underworld
         }
         public bool StartTile()
         {
-            _tileAnimator.SetInteger("State", 1);
             if (_instateFire == null)
             {
+                _tileAnimator.SetInteger("state", 1);
                 _instateFire = InstatiateFire(_fire);
                 _fireAnimator = _instateFire.GetComponent<Animator>();
                 return true;
@@ -71,8 +71,9 @@ namespace Underworld
             else
                 Destroy(_instateFire);
             yield return new WaitWhile(() => _instateFire != null);
-            _tileAnimator.SetInteger("State", 0);
+            _tileAnimator.SetInteger("state", 0);
             gameObject.SetActive(false);
+            _offTile = null;
         }
 
         public bool IdleMode()

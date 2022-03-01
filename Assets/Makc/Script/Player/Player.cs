@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         _soundSource.playOnAwake = false;
         _soundSource.loop = false;
         _soundSource.clip = _deadSound;
-        _controller = _android;
+        _controller = _pcCpntroller;
         _animator = GetComponent<Animator>();
         var rigidbody = GetComponent<Rigidbody2D>();
         _movement = new PhysicMovement(rigidbody, _speedMovement);
