@@ -276,7 +276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4036389950904396897, guid: 03e72501dfcb11e4786fb72887fe7bb6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4036389950904396899, guid: 03e72501dfcb11e4786fb72887fe7bb6, type: 3}
       propertyPath: m_RootOrder
@@ -5261,69 +5261,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1037416554
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1037416556}
-  - component: {fileID: 1037416555}
-  m_Layer: 0
-  m_Name: TetrisMode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1037416555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1037416554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3453dae039765d942bf1edb11f842e92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxDeadLineHeight: 5
-  _minDistanseBothShape: 4
-  _countShape: 10
-  _shapeSpeed: 0.25
-  _delayMoveDeadLine: 2
-  _inversMode: 0
-  _mapShape: {fileID: 3290322031033287091, guid: b2626166da053354d97093dd1aa07b70, type: 3}
-  _shape:
-  - _name: Corner
-    _sizeShape: {x: 3, y: 2}
-    _startPixel: {x: 0, y: 0}
-  - _name: Squart
-    _sizeShape: {x: 2, y: 2}
-    _startPixel: {x: 8, y: 0}
-  - _name: Line
-    _sizeShape: {x: 3, y: 1}
-    _startPixel: {x: 11, y: 0}
-  - _name: Unknow
-    _sizeShape: {x: 3, y: 2}
-    _startPixel: {x: 4, y: 0}
---- !u!4 &1037416556
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1037416554}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.48185, y: -9.039374, z: -40.063354}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067296987
 GameObject:
   m_ObjectHideFlags: 0
@@ -6767,7 +6704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 18638039516468243, guid: 4bef8d60e63eb9e468480ada0a1c199a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bef8d60e63eb9e468480ada0a1c199a, type: 3}
@@ -6899,7 +6836,7 @@ MonoBehaviour:
   _player: {fileID: 916709158494407648, guid: 5b64d1ac95d0ff54b9854cc75cc83c01, type: 3}
   _sequences:
   - _name: 
-    _sequence: {fileID: 1037416554}
+    _sequence: {fileID: 0}
 --- !u!1 &1513960224
 GameObject:
   m_ObjectHideFlags: 0
@@ -8535,7 +8472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1680081634236678102, guid: 85c9f2947613e1749b8e4a6ccfc2cc3f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1680081634236678110, guid: 85c9f2947613e1749b8e4a6ccfc2cc3f, type: 3}
       propertyPath: _camera

@@ -8,14 +8,18 @@ namespace Underworld
 {
     public class TetrisMode : MonoBehaviour,ISequence
     {
-        [Header("Game Setting")]
-        [SerializeField] private int _maxDeadLineHeight;
-        [SerializeField] private int _minDistanseBothShape;
-        [SerializeField] private int _countShape;
-        [SerializeField] private float _shapeSpeed;
+        [Header("DeadLine Setting")] [Min(0)]
+        [SerializeField] private int _countUpDeadLine;
+        [Min(0)]
         [SerializeField] private float _delayMoveDeadLine;
-        [SerializeField] private bool _inversMode;
+        [Header("Shape Setting")] [Min(0)]
+        [SerializeField] private int _minDistanseBothShape;
+        [Min(0)]
+        [SerializeField] private float _shapeSpeed;
+        [Min(1)]
+        [SerializeField] private int _countShape;
         [Header("Layout Setting")]
+        [SerializeField] private bool _inversMode;
         [SerializeField] private Sprite _mapShape;
         [SerializeField] private Shape[] _shape;
 
@@ -25,7 +29,6 @@ namespace Underworld
         private List<MaskShape> _deleteShape = new List<MaskShape>();
         private Coroutine _coroutine;
         private List<Point> _deadLine = new List<Point>();
-
 
         public int CurretDeadLineHeight { get; private set; }
 
@@ -69,7 +72,6 @@ namespace Underworld
                 yield return new WaitForSeconds(_shapeSpeed);
                 DeleyShape();
             }
-            Debug.Log("stop");
             var lostPoint = _builder.TurnOffAllTile();
             yield return new WaitWhile(() => lostPoint.IsActive);
             Destroy(gameObject);
@@ -80,7 +82,7 @@ namespace Underworld
         {
             var maxDelth = _points.GetLength(0) - 1;
             yield return new WaitWhile(() => _listShaps.Count == 0);
-            for (int i = 0; i < _maxDeadLineHeight && _listShaps.Count > 0; i++)
+            for (int i = 0; i < _countUpDeadLine && _listShaps.Count > 0; i++)
             {
                 CurretDeadLineHeight = i;
                 yield return new WaitForSeconds(_delayMoveDeadLine);
