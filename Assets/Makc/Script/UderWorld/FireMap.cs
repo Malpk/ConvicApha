@@ -5,121 +5,160 @@ using Zenject;
 using TileSpace;
 using SwitchModeComponent;
 
-public class FireMap : MonoBehaviour, ISequence
+namespace Underworld
 {
-    [SerializeField] private int _countIsland;
-    [SerializeField] private int _maxCountTile;
-    [SerializeField] private GameObject _tile;
-
-    private GameMap _map = null;
-
-    private List<IVertex> _allMap;
-    private IVertex[,] _vertexs;
-
-    public bool IsAttackMode => true;
-
-    public void Constructor(SwitchMods swictMode)
+    public class FireMap : MonoBehaviour, ISequence
     {
-        if (_map == null)
-        {
-            _map = swictMode.map;
-            StartCoroutine(ModeRun());
-        }
-    }
+        [Header("Tile Setting")] [Min(0)]
+        [SerializeField] private float _warningTime;
+        [Min(0)]
+        [SerializeField] private float _attackTime;
+        [Header("Mode Setting")]
+        [Min(0)]
+        [SerializeField] private int _countIsland;
+        [Min(0)]
+        [SerializeField] private int _maxCountTile;
 
-    private IEnumerator ModeRun()
-    {
-        var mapSpawn = GetMapSpawn();
-        GameObject endTile = null;
-        foreach (var vertex in mapSpawn)
-        {
-            endTile = Instantiate(_tile, vertex.VertixPosition, Quaternion.identity);
-            endTile.transform.parent = transform; 
-        }
-        yield return new WaitWhile(() => (endTile!=null));
-        Destroy(gameObject);
-    }
+        private GameMap _map = null;
+        private MapBuilder _mapBuilder;
+        private Point[,] _poolMap;
 
-    private List<IVertex> GetMapSpawn()
-    {
-        _vertexs = _map.Map;
-        _allMap = GetVertexList(_vertexs);
-        var map = GetVertexList(_vertexs);
-        var seed = GetSeeds(map);
-        seed = SetIslandSize(seed);
-        foreach (var item in seed)
-        {
-            _allMap.Remove(item);
-        }
-        return _allMap;
-    }
+        private List<Vector2Int> _allMap;
+        private IVertex[,] _vertexs;
 
-    private List<IVertex> GetSeeds(List<IVertex> list)
-    {
-        List<IVertex> seeds = new List<IVertex>();
-        int interval = Mathf.RoundToInt(_map.MapSize / Mathf.Sqrt(_countIsland));
-        for (int i = 0; i < _countIsland && list.Count > 0; i++)
+        public bool IsAttackMode => true;
+
+        public void Constructor(SwitchMods swictMode)
         {
-            int index = Random.Range(0, list.Count);
-            int curretInterval = Random.Range(interval - 1, interval);
-            seeds.Add(list[index]);
-            list = CutRadius(list[index], list, _vertexs, curretInterval);
-        }
-        return seeds;
-    }
-    private List<IVertex> CutRadius(IVertex chooseVertex, List<IVertex> mapList,IVertex [,] vertexs,int interval)
-    {
-        interval /= 2;
-        var index = chooseVertex.ArryaPostion;
-        for (int i =-interval; i <= interval; i++)
-        {
-            int x = Mathf.Clamp(index.x + i, 0 ,_map.MapSize-1);
-            for (int j = -interval; j <= interval; j++)
+            if (_map == null)
             {
-                int y = Mathf.Clamp(index.y + j, 0, _map.MapSize-1);
-                mapList.Remove(vertexs[x,y]);
+                _map = swictMode.map;
+                _mapBuilder = swictMode.builder;
+                StartCoroutine(ModeRun());
             }
         }
-        return mapList;
-    }
-    private List<IVertex> GetVertexList(IVertex[,] vertexs)
-    {
-        List<IVertex> map = new List<IVertex>();
-        for (int i = 0; i < _map.MapSize; i++)
+
+        private IEnumerator ModeRun()
         {
-            for (int j = 0; j < _map.MapSize; j++)
+            var mapSpawn = GetMapSpawn();
+            _poolMap = _mapBuilder.Map;
+            List<Point> activeMap = new List<Point>();
+            foreach (var vertex in mapSpawn)
             {
-                if(vertexs[i, j].State == TileState.Empty)
-                    map.Add(vertexs[i, j]);
+                var index = vertex;
+                _poolMap[index.x, index.y].SetAtiveObject(true);
+                activeMap.Add(_poolMap[index.x, index.y]);
             }
+            yield return StartCoroutine(AttackMode(activeMap));
+            Destroy(gameObject);
         }
-        return map;
-    }
-    private List<IVertex> SetIslandSize(List<IVertex> seeds)
-    {
-        List<IVertex> islandsOnMap = new List<IVertex>();
-        int count = seeds.Count;
-        for (int i = 0; i < count; i++)
+        private IEnumerator AttackMode(List<Point> activeMap)
         {
-            List<IVertex> island = new List<IVertex>();
-            List<IVertex> accessForExtension = new List<IVertex>();
-            island.Add(seeds[i]);
-            int countTile = Random.Range(1, _maxCountTile);
-            for (int j = 0; j < countTile; j++)
+            yield return new WaitForSeconds(_warningTime);
+            foreach (var point in activeMap)
             {
-                int seedsID = Random.Range(0, island.Count);
-                foreach (var vertex in island[seedsID].Edge)
+                point.Animation.StartTile();
+            }
+            yield return new WaitForSeconds(_attackTime);
+            yield return StartCoroutine(StopMode(activeMap));
+        }
+        private IEnumerator StopMode(List<Point> activeMap)
+        {
+            if (activeMap.Count > 0)
+            {
+                Point lost = activeMap[0];
+                foreach (var point in activeMap)
                 {
-                    accessForExtension.Add(vertex);
+                    point.Animation.Stop();
+                    lost = point;
                 }
-                int index = Random.Range(0, accessForExtension.Count);
-                island.Add(accessForExtension[index]);
-                accessForExtension.Remove(accessForExtension[index]);
+                yield return new WaitWhile(() => lost.IsActive);
             }
-            islandsOnMap.AddRange(island);
+            else
+            {
+                yield return null;
+            }
         }
-        return islandsOnMap;
+        private List<Vector2Int> GetMapSpawn()
+        {
+            _vertexs = _map.Map;
+            _allMap = GetVertexList(_vertexs);
+            var map = GetVertexList(_vertexs);
+            var seed = GetSeeds(map);
+            seed = SetIslandSize(seed);
+            foreach (var item in seed)
+            {
+                _allMap.Remove(item);
+            }
+            return _allMap;
+        }
+        private List<Vector2Int> GetSeeds(List<Vector2Int> list)
+        {
+            List<Vector2Int> seeds = new List<Vector2Int>();
+            int interval = Mathf.RoundToInt(_map.MapSize / Mathf.Sqrt(_countIsland));
+            for (int i = 0; i < _countIsland && list.Count > 0; i++)
+            {
+                int index = Random.Range(0, list.Count);
+                int curretInterval = Random.Range(interval - 1, interval);
+                seeds.Add(list[index]);
+                list = CutRadius(list[index], list, _vertexs, curretInterval);
+            }
+            return seeds;
+        }
+        private List<Vector2Int> CutRadius(Vector2Int chooseVertex, List<Vector2Int> mapList, IVertex[,] vertexs, int interval)
+        {
+            interval /= 2;
+            for (int i = -interval; i <= interval; i++)
+            {
+                int x = Mathf.Clamp(chooseVertex.x + i, 0, _map.MapSize - 1);
+                for (int j = -interval; j <= interval; j++)
+                {
+                    int y = Mathf.Clamp(chooseVertex.y + j, 0, _map.MapSize - 1);
+                    mapList.Remove(vertexs[x, y].ArryaPostion);
+                }
+            }
+            return mapList;
+        }
+        private List<Vector2Int> GetVertexList(IVertex[,] vertexs)
+        {
+            List<Vector2Int> map = new List<Vector2Int>();
+            for (int i = 0; i < _map.MapSize; i++)
+            {
+                for (int j = 0; j < _map.MapSize; j++)
+                {
+                    if (vertexs[i, j].State == TileState.Empty)
+                        map.Add(vertexs[i, j].ArryaPostion);
+                }
+            }
+            return map;
+        }
+        private List<Vector2Int> SetIslandSize(List<Vector2Int> seeds)
+        {
+            List<Vector2Int> islandsOnMap = new List<Vector2Int>();
+            int count = seeds.Count;
+            for (int i = 0; i < count; i++)
+            {
+                List<IVertex> island = new List<IVertex>();
+                List<IVertex> accessForExtension = new List<IVertex>();
+                island.Add(_vertexs[seeds[i].x,seeds[i].y]);
+                int countTile = Random.Range(1, _maxCountTile);
+                for (int j = 0; j < countTile; j++)
+                {
+                    int seedsID = Random.Range(0, island.Count);
+                    foreach (var vertex in island[seedsID].Edge)
+                    {
+                        accessForExtension.Add(vertex);
+                    }
+                    int index = Random.Range(0, accessForExtension.Count);
+                    island.Add(accessForExtension[index]);
+                    accessForExtension.Remove(accessForExtension[index]);
+                }
+                foreach (var vertex in island)
+                {
+                    islandsOnMap.Add(vertex.ArryaPostion);
+                }
+            }
+            return islandsOnMap;
+        }
     }
-
-
 }

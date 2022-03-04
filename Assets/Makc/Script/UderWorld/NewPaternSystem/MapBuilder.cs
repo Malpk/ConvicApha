@@ -12,34 +12,33 @@ namespace Underworld
         [SerializeField] protected GameObject _tileTern;
 
         private Point[,] _pointsMap;
-
         public Point[,] Map => _pointsMap;
-        public void Intialiate(GameMap map)
-        {
-            _pointsMap = Intializate(map.Map);
-        }
+
         public void OnDestroy()
         {
             foreach (var point in _pointsMap)
             {
                 point.DestroyObject();
             }
+            _pointsMap = null;
         }
-        private Point[,] Intializate(IVertex[,] tileMap)
+        public bool Intializate(IVertex[,] tileMap,Transform parent = null)
         {
+            if (_pointsMap != null)
+                return false;
             var countLine = tileMap.GetLength(0);
             var countColumen = tileMap.GetLength(1);
-            var points = new Point[countColumen, countLine];
+            _pointsMap = new Point[countColumen, countLine];
             for (int i = 0; i < countLine; i++)
             {
                 for (int j = 0; j < countColumen; j++)
                 {
-                    points[i, j] = new Point(tileMap[j, i].VertixPosition);
-                    points[i, j].CreateObject(_tileTern);
-                    points[i, j].SetAtiveObject(false);
+                    _pointsMap[i, j] = new Point(tileMap[j, i].VertixPosition);
+                    _pointsMap[i, j].CreateObject(_tileTern).transform.parent = parent;
+                    _pointsMap[i, j].SetAtiveObject(false);
                 }
             }
-            return points;
+            return true;
         }
 
         public void MapUpdate(TermMode[,] paternMap)
@@ -75,7 +74,6 @@ namespace Underworld
         public Point TurnOffAllTile()
         {
             Point lost = null;
-            Debug.Log("sss");
             foreach (var point in _pointsMap)
             {
                 point.Animation.Stop();

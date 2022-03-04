@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Underworld
 {
-    [RequireComponent(typeof(Animator))]
-    public class PoolTern : TernBase, ITileAnimation
+    [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
+    public class PoolTerm : TernBase, ITileAnimation
     {
         [Header("Game Setting")]
         [SerializeField] private GameObject _fire;
@@ -14,7 +14,9 @@ namespace Underworld
         private Animator _fireAnimator;
         private GameObject _instateFire;
         private Coroutine _offTile = null;
+        private SpriteRenderer _spriteBody;
 
+        public bool IsActive => _spriteBody.enabled;
         public override TernState state => _instateFire != null ? TernState.Fire : TernState.Deactive;
 
         protected override void Damage(Player player)
@@ -26,11 +28,21 @@ namespace Underworld
         protected override void Intializate()
         {
             _tileAnimator = GetComponent<Animator>();
+            _spriteBody = GetComponent<SpriteRenderer>();
         }
 
         protected override IEnumerator Work()
         {
             yield return null;
+        }
+        public void SetActiveMode(bool mode)
+        {
+            _spriteBody.enabled = mode;
+            _tileAnimator.enabled = mode;
+            if (!mode)
+            {
+                Destroy(_instateFire);
+            }
         }
         public bool StartTile()
         {
@@ -49,7 +61,7 @@ namespace Underworld
 
         public bool Stop()
         {
-            if (!gameObject.activeSelf)
+            if (!_spriteBody.enabled)
             {
                 Destroy(_instateFire);
                 return true;
@@ -72,7 +84,7 @@ namespace Underworld
                 Destroy(_instateFire);
             yield return new WaitWhile(() => _instateFire != null);
             _tileAnimator.SetInteger("state", 0);
-            gameObject.SetActive(false);
+            SetActiveMode(false);
             _offTile = null;
         }
 

@@ -11,14 +11,14 @@ public class CheakTile : MonoBehaviour
         if (collision.TryGetComponent<IDetectMode>(out IDetectMode tile))
         {
             _iDetecetMode.Add(tile);
-            tile.SetMode(true);
+            tile.SetTrackingMode(true);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent<IDetectMode>(out IDetectMode tile))
         {
-            tile.SetMode(false);
+            tile.SetTrackingMode(false);
             _iDetecetMode.Remove(tile);
         }
     }

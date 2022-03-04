@@ -18,7 +18,7 @@ namespace Underworld
             _visable = true;
             foreach (var tile in _ternList)
             {
-                tile.SetMode(value);
+                tile.SetTrackingMode(value);
             }
         }
 

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDetectMode 
 {
-    public bool SetMode(bool mode);
+    public void SetTrackingMode(bool mode);
 }

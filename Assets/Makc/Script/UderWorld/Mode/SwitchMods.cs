@@ -11,13 +11,13 @@ namespace SwitchModeComponent
     {
         [Header("Perfab Setting")]
         [SerializeField] private Transform _player;
+        [SerializeField] private MapBuilder _builder;
         [SerializeField] private List<SettingSequence> _sequences = new List<SettingSequence>();
 
         [Inject] private GameMap _map;
         [Inject] private TridentSetting _trident;
         [Inject] private CameraAnimation _cameraAnimation;
         [Inject] private Tilemap _tileMap;
-        [Inject] private MapBuilder _builder;
 
         private List<SettingSequence> _curretList = new List<SettingSequence>();
 
@@ -40,7 +40,7 @@ namespace SwitchModeComponent
         }
         private void Start()
         {
-            _builder.Intialiate(_map);
+            _builder.Intializate(_map.Map, transform);
         }
         private void StartCorotine()
         {

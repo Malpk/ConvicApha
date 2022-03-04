@@ -23,8 +23,6 @@ namespace Underworld
         
         [SerializeField] private Win _win;
         [SerializeField] private LvlTimer _timer;
-        [Header("New System")]
-        [SerializeField] protected MapBuilder mapBuilder;
         public override void InstallBindings()
         {
             Container.Bind<Win>().FromInstance(_win).AsSingle();
@@ -38,7 +36,6 @@ namespace Underworld
             Container.Bind<UserInterface>().FromInstance(_inteface).AsSingle();
             Container.Bind<TridentSetting>().FromInstance(_trident).AsSingle();
             Container.Bind<IGameController>().FromInstance(_pcController).AsSingle();
-            Container.Bind<MapBuilder>().FromInstance(mapBuilder).AsSingle();
             Container.Bind<CameraAnimation>().FromInstance(_cameraAnimation).AsSingle();
      
         }

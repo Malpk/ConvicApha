@@ -17,8 +17,8 @@ namespace Underworld
             Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.zero,
             new Vector3(1,1),  new Vector3(-1,1),  new Vector3(1,-1),  new Vector3(-1,-1)
         };
-        private Coroutine _coroutine = null;
         private Vector3 _sizeCollider;
+        private Coroutine _coroutine = null;
 
         public TypeTile tileType => TypeTile.TernTile;
         public abstract TernState state { get; }
@@ -40,12 +40,12 @@ namespace Underworld
 
         protected abstract void Damage(Player player);
 
-        public bool SetMode(bool mode)
+        public void SetTrackingMode(bool mode)
         {
             _mode = mode;
             if(_coroutine == null && gameObject.activeSelf)
                 _coroutine = StartCoroutine(Tracking());
-            return true;
+            return;
         }
         private IEnumerator Tracking()
         {
@@ -63,7 +63,9 @@ namespace Underworld
         private void Cheak(Vector3 hitPosition)
         {
             RaycastHit2D hit = Physics2D.Raycast(hitPosition, Vector3.forward, 2f, _playerLayer);
+#if UNITY_EDITOR
             Debug.DrawLine(hitPosition, hitPosition + Vector3.forward * 2f,Color.green);
+#endif
             if (hit)
             {
                 if (hit.transform.TryGetComponent<Player>(out Player player))

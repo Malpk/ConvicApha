@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3684427775290007183}
   - component: {fileID: 2440434224507831047}
   - component: {fileID: 3684427775290007177}
-  - component: {fileID: 3684427775290007180}
   m_Layer: 0
   m_Name: BoxMode
   m_TagString: Untagged
@@ -94,23 +93,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countMove: 3
+  _speedMovement: 4.5
   _scaleDuration: 4
   _delay: 2
-  _speedMovement: 4.5
   _minSize: {x: 6, y: 6}
   _maxOffset: {x: 10, y: 10, z: 0}
-  _trisMode: {fileID: 3684427775290007180}
---- !u!114 &3684427775290007180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3684427775290007181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15154fec10a944342bd368adc33aa80e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tile: {fileID: 1191650566951800710, guid: 06210b9bf4e86264aa02bf5e04d02058, type: 3}
-  _paternMode: {fileID: 3684427775290007177}

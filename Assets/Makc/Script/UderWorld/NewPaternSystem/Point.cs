@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class Point : IPoint
+    public class Point 
     {
         private readonly Vector3 _poistion;
 
         private ITileAnimation _aniamtion;
-        private GameObject _tile;
+        private PoolTerm _tile;
 
         public Point(Vector3 position)
         {
@@ -17,14 +17,15 @@ namespace Underworld
         }
 
         public bool IsBusy => _tile != null;
-        public bool IsActive => _tile.activeSelf;
+        public bool IsActive => _tile.IsActive;
         public ITileAnimation Animation => _aniamtion;
 
-        public GameObject CreateObject(GameObject createObject)
+        public PoolTerm CreateObject(GameObject createObject)
         {
             if (!IsBusy)
             {
-                _tile = MonoBehaviour.Instantiate(createObject, _poistion ,Quaternion.identity);
+                var tile = MonoBehaviour.Instantiate(createObject, _poistion ,Quaternion.identity);
+                _tile = tile.GetComponent<PoolTerm>();
                 _aniamtion = _tile.GetComponent<ITileAnimation>();
             }
             return _tile;
@@ -32,13 +33,13 @@ namespace Underworld
 
         public void DestroyObject()
         {
-            MonoBehaviour.Destroy(_tile);
+            MonoBehaviour.Destroy(_tile.gameObject);
         }
 
         public void SetAtiveObject(bool mode)
         {
-            if(_tile.activeSelf != mode)
-                _tile.SetActive(mode);
+            if(_tile.IsActive != mode)
+                _tile.SetActiveMode(mode);
         }
     }
 }
