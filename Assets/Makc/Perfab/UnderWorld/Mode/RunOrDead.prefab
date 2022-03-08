@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4262258909528142277}
   - component: {fileID: 2133971350208510337}
   - component: {fileID: 3058030354801704805}
-  - component: {fileID: 7175792732915738037}
   m_Layer: 0
   m_Name: RunOrDead
   m_TagString: Untagged
@@ -96,20 +95,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speedRotation: 30
+  _warningTime: 0.2
   _duration: 10
-  _trisMode: {fileID: 7175792732915738037}
-  _trident: {fileID: 7518888631027235276, guid: 1d4f7d46f40301f4194f12bcdcec0be8, type: 3}
---- !u!114 &7175792732915738037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3058030354801704806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15154fec10a944342bd368adc33aa80e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tile: {fileID: 1191650566951800710, guid: 06210b9bf4e86264aa02bf5e04d02058, type: 3}
-  _paternMode: {fileID: 3058030354801704805}

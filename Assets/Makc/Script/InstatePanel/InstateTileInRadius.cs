@@ -4,7 +4,7 @@ using UnityEngine;
 using TileSpace;
 using SwitchModeComponent;
 
-public class InstateTileInRadius : MonoBehaviour, ISequence
+public class InstateTileInRadius : MonoBehaviour, IModeForSwitch
 {
     [Header("Game Setting")]
     [SerializeField] private int _radius;
@@ -16,7 +16,7 @@ public class InstateTileInRadius : MonoBehaviour, ISequence
     private Coroutine _coroutine;
     private Transform _player;
 
-    private IGetTileMap _tiles;
+    private UnderworldTile _tiles;
 
     public bool IsAttackMode => true;
 
@@ -24,7 +24,7 @@ public class InstateTileInRadius : MonoBehaviour, ISequence
     {
         _tiles = _underworldTile;
     }
-    public void Constructor(SwitchMods swictMode)
+    public void Constructor(SwitchMode swictMode)
     {
         if (_coroutine != null)
             return;

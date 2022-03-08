@@ -15,9 +15,8 @@ namespace Underworld
         [SerializeField] private GameMap _map;
         [SerializeField] private UnderWorldEvent _gameEvent;
         [SerializeField] private Transform _playerTransform;
-        [SerializeField] private SwitchMods _switchMode;
+        [SerializeField] private SwitchMode _switchMode;
         [SerializeField] private PCController _pcController;
-        [SerializeField] private TridentSetting _trident;
         [SerializeField] private UserInterface _inteface;
         [SerializeField] private CameraAnimation _cameraAnimation;
         
@@ -32,9 +31,8 @@ namespace Underworld
             Container.Bind<LvlTimer>().FromInstance(_timer).AsSingle();
             Container.Bind<GameEvent>().FromInstance(_gameEvent).AsSingle();
             Container.Bind<UnderWorldEvent>().FromInstance(_gameEvent).AsSingle();
-            Container.Bind<SwitchMods>().FromInstance(_switchMode).AsSingle();
+            Container.Bind<SwitchMode>().FromInstance(_switchMode).AsSingle();
             Container.Bind<UserInterface>().FromInstance(_inteface).AsSingle();
-            Container.Bind<TridentSetting>().FromInstance(_trident).AsSingle();
             Container.Bind<IGameController>().FromInstance(_pcController).AsSingle();
             Container.Bind<CameraAnimation>().FromInstance(_cameraAnimation).AsSingle();
      

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1078996803756881646}
   - component: {fileID: 1936748753342849830}
   - component: {fileID: 1078996803756881647}
-  - component: {fileID: 1078996803756881645}
   m_Layer: 0
   m_Name: RayMode
   m_TagString: Untagged
@@ -67,23 +66,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countRay: 8
-  _speedOffset: 17
   _offset: 45
+  _speedOffset: 17
+  _warningTime: 2
   _delay: 1
   _duration: 10
   _ray: {fileID: 8306110263009516393, guid: 3b222d1958422514aa8d103e291d737b, type: 3}
-  _trisMode: {fileID: 1078996803756881645}
---- !u!114 &1078996803756881645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1078996803756881640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15154fec10a944342bd368adc33aa80e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tile: {fileID: 1191650566951800710, guid: 06210b9bf4e86264aa02bf5e04d02058, type: 3}
-  _paternMode: {fileID: 1078996803756881647}

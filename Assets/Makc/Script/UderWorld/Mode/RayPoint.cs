@@ -4,15 +4,13 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class RayPoint : GameMode
+    public class RayPoint : MonoBehaviour
     {
         [Header("Game Setting")]
         [SerializeField] private float _period;
         [SerializeField] private Vector3[] _amplituds;
 
         private Coroutine _coroutine = null;
-
-        public override bool statusWork => true;
 
         public bool StartScaleAnimation()
         {

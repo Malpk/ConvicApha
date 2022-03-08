@@ -9,6 +9,13 @@ public static class VectorExtension
         float yOffset = offset.x * Mathf.Sin(angel) + offset.y * Mathf.Cos(angel);
         return new Vector3(xOffset, yOffset);
     }
+    public static Vector2 Rotate(this Vector2 offset, float angel)
+    {
+        angel *= Mathf.Deg2Rad;
+        float xOffset = offset.x * Mathf.Cos(angel) - offset.y * Mathf.Sin(angel);
+        float yOffset = offset.x * Mathf.Sin(angel) + offset.y * Mathf.Cos(angel);
+        return new Vector3(xOffset, yOffset);
+    }
     public static Vector2Int Clamp(this Vector2Int value, Vector2Int min, Vector2Int max)
     {
         var x = Mathf.Clamp(value.x, min.x, max.x);

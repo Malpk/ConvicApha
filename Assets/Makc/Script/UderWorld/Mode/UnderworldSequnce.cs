@@ -5,19 +5,19 @@ using SwitchModeComponent;
 
 namespace Underworld
 {
-    public class UnderworldSequnce : MonoBehaviour,ISequence
+    public class UnderworldSequnce : MonoBehaviour,IModeForSwitch
     {
         [SerializeField] private float _delay; 
         [SerializeField] private List<Mode> _mods = new List<Mode>();
 
         private GameObject _mode;
-        private SwitchMods _switchMode;
+        private SwitchMode _switchMode;
         private Coroutine _coroutine = null;
 
         public bool IsAttackMode => _mode != null;
         public ModeType curretTypeMode { get; private set; }
 
-        public void Constructor(SwitchMods swictMode)
+        public void Constructor(SwitchMode swictMode)
         {
             if (_coroutine != null)
                 return;
@@ -32,7 +32,7 @@ namespace Underworld
                 curretTypeMode = mode.type;
                 _mode =  Instantiate(mode.mode, Vector3.zero, Quaternion.identity);
                 _mode.transform.parent = transform;
-                var mods = _mode.GetComponents<ISequence>();
+                var mods = _mode.GetComponents<IModeForSwitch>();
                 for (int i = 0; i < mods.Length; i++)
                 {
                     mods[i].Constructor(_switchMode);

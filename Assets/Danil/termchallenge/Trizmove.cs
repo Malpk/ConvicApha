@@ -24,7 +24,7 @@ public class Trizmove : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            collision.GetComponent<Player>().Incineration();
+            collision.GetComponent<Player>().DeadIncineration();
         }
     }
 }

@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         switch (tile.tileType)
         {
             case TypeTile.TernTile:
-                Incineration();
+                DeadIncineration();
                 return;
             default:
                 break;
@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
         var y = _camera.CameraPosition.y;
         transform.position = new Vector3(x,y,transform.position.z);
     }
-    public void Incineration()
+    public void DeadIncineration()
     {
         _soundSource.Play();
         if (_playerState == PlayerSate.Dead || _immortalityMode)

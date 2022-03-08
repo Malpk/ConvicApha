@@ -22,7 +22,7 @@ namespace Underworld
         protected override void Damage(Player player)
         {
             if (state == TernState.Fire)
-                player.Incineration();
+                player.DeadIncineration();
         }
 
         protected override void Intializate()
@@ -58,7 +58,6 @@ namespace Underworld
                 return false;
             }
         }
-
         public bool Stop()
         {
             if (!_spriteBody.enabled)
@@ -87,7 +86,6 @@ namespace Underworld
             SetActiveMode(false);
             _offTile = null;
         }
-
         public bool IdleMode()
         {
             if (_fireAnimator != null)

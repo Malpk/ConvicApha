@@ -11,7 +11,7 @@ namespace Underworld
         [SerializeField] private ModeMessange _messange;
 
         [Inject] private GameEvent _gameEvent;
-        [Inject] private SwitchMods _modeSwich;
+        [Inject] private SwitchMode _modeSwich;
 
         private void OnEnable()
         {

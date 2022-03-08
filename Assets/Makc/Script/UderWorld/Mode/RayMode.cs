@@ -1,73 +1,98 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SwitchModeComponent;
+using System.Linq;
 
 namespace Underworld
 {
-    public class RayMode : GameMode
+    public class RayMode : GameMode, IModeForSwitch
     {
-        [Header("Game Setting")]
-        [SerializeField] private int _countRay;
-        [SerializeField] private float _speedOffset;
+        [Header("Count Setting")]
+        [Min(1)]
+        [SerializeField] private int _countRay = 1;
+        [Header("Offset Setting")]
         [SerializeField] private float _offset;
+        [SerializeField] private float _speedOffset;
+        [Header("Time Setting")]
+        [Min(0)]
+        [SerializeField] private float _warningTime;
+        [Min(0)]
         [SerializeField] private float _delay;
+        [Min(0)]
         [SerializeField] private float _duration;
-
-        [Header("Scene Setting")]
+        [Header("Ray Setting")]
         [SerializeField] private GameObject _ray;
-        [SerializeField] private TrisMode _trisMode;
 
-        private int[] _direction = new int[]
+        private int[] _direction = new int[] { 1, -1 };
+        private Point[,] _map = null;
+        private List<RayPoint> _points = new List<RayPoint>();
+        public bool IsAttackMode => _points.Count > 0;
+
+        private void Awake()
         {
-            1,-1
-        };
-        private bool _status = true;
-
-        public override bool statusWork => _status;
-
-        private void Start()
-        {
-            var rayList  = CreateRay();
-            StartCoroutine(Rotation(rayList));
+            _points = CreateRay(_countRay).ToList();
         }
-        private List<RayPoint> CreateRay()
+        public void Constructor(SwitchMode swictMode)
         {
-            var list = new List<RayPoint>();
-            var steepRotation = 360 / _countRay;
-            var lostSteep = 0f;
-            for (int i = 0; i < _countRay; i++)
+            if (startMode == null)
             {
-                var ray = Instantiate(_ray).transform;
-                ray.parent = transform;
-                ray.rotation = Quaternion.Euler(Vector3.forward * lostSteep);
-                if (ray.TryGetComponent<RayPoint>(out RayPoint point))
-                    list.Add(point);
+                _map = swictMode.builder.Map;
+                startMode = StartCoroutine(Rotation(_points));
+                TurnOnPoints(_map);
+            }
+        }
+        private IEnumerable<RayPoint> CreateRay(int count)
+        {
+            var lostSteep = 0f;
+            var steepRotation = 360 / count;
+            for (int i = 0; i < count; i++)
+            {
+                var ray = CreateRay(lostSteep);
+                if (ray != null)
+                    yield return ray;
                 lostSteep += steepRotation;
             }
-            return list;
         }
-
         private IEnumerator Rotation(List<RayPoint> rayList)
         {
+            yield return new WaitForSeconds(_warningTime);
             var progress = 0f;
             while (progress < 1f)
             {
-                var offsetProgress = 0f;
-                var index = Random.Range(0, _direction.Length);
-                var offset = _offset * _direction[index];
-                while (offsetProgress != offset)
+                var curretOffset = 0f;
+                var offset = _offset * GetDirection();
+                while (curretOffset != offset)
                 {
-                    var previousOffset = offsetProgress;
-                    offsetProgress = Mathf.MoveTowards(offsetProgress, offset, _speedOffset*Time.deltaTime);
-                    var steep = offsetProgress - previousOffset;
-                    transform.rotation *= Quaternion.Euler(Vector3.forward * steep);
+                    curretOffset = RotateRays(curretOffset, offset);
                     progress += Time.deltaTime / _duration;
                     yield return null;
                 }
                 yield return new WaitForSeconds(_delay);
                 progress += _delay / _duration;
             }
-            _status = false;
+            yield return new WaitWhile(() => TurnOffPoints(_map).IsActive);
+            startMode = null;
+            Destroy(gameObject);
+        }
+        private int GetDirection()
+        {
+            var index = Random.Range(0, _direction.Length);
+            return _direction[index];
+        }
+        private float RotateRays(float previsious,float ofsset)
+        {
+            var curretOffset = Mathf.MoveTowards(previsious, ofsset, _speedOffset * Time.deltaTime);
+            var steep = curretOffset - previsious;
+            transform.rotation *= Quaternion.Euler(Vector3.forward * steep);
+            return curretOffset;
+        }
+        private RayPoint CreateRay(float lostSteep)
+        {
+            var ray = Instantiate(_ray).transform;
+            ray.parent = transform;
+            ray.rotation = Quaternion.Euler(Vector3.forward * lostSteep);
+            return GetComponent<RayPoint>();
         }
     }
 }

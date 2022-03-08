@@ -492,31 +492,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45739722}
   m_CullTransparentMesh: 1
---- !u!1 &47804725 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 18638039516468243, guid: 4bef8d60e63eb9e468480ada0a1c199a, type: 3}
-  m_PrefabInstance: {fileID: 1376147606}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &47804726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47804725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff379004fbf3f1349a4b4146943d8a81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startDelay: 120
-  _tridentMode: {fileID: 2392899943256907919, guid: d8d6dd1adcfa1fc4b95dd2af3f37c128, type: 3}
 --- !u!114 &47804727 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 18638039516468240, guid: 4bef8d60e63eb9e468480ada0a1c199a, type: 3}
   m_PrefabInstance: {fileID: 1376147606}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47804725}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4025abeb00320e46a309b8ec4d2bed4, type: 3}
@@ -4988,7 +4969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &839419160
 Transform:
   m_ObjectHideFlags: 0
@@ -6832,17 +6813,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459245773}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4025abeb00320e46a309b8ec4d2bed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 916709158494407648, guid: 5b64d1ac95d0ff54b9854cc75cc83c01, type: 3}
-  _builder:
-    _tileTern: {fileID: 1333059954608903435, guid: eb1e0c99abc0c284e8e8776b5b69a482, type: 3}
+  _builder: {_tileTern: {fileID: 1333059954608903435, guid: eb1e0c99abc0c284e8e8776b5b69a482, type: 3}}
   _sequences:
   - _name: 
-    _sequence: {fileID: 3468715773357789379, guid: db44cf9ba30d94b4d98ed138e9422b62, type: 3}
+    _sequence: {fileID: 0}
+  _map: {fileID: 0}
+  _cameraAnimation: {fileID: 0}
+  _tileMap: {fileID: 0}
+  _curretList: []
+  <curreqSequence>k__BackingField: {fileID: 0}
 --- !u!1 &1513960224
 GameObject:
   m_ObjectHideFlags: 0
@@ -7657,10 +7642,6 @@ MonoBehaviour:
   _playerTransform: {fileID: 6126168957804108411}
   _switchMode: {fileID: 47804727}
   _pcController: {fileID: 22646898}
-  _trident:
-    _delay: 0.35
-    _offset: {x: 0, y: 30, z: 0}
-    _trident: {fileID: 7955783422767213867, guid: 8ce357097e68f8944980e80015d0f590, type: 3}
   _inteface: {fileID: 839419161}
   _cameraAnimation: {fileID: 454813005}
   _win: {fileID: 468163495}

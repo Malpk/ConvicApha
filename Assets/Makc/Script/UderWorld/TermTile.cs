@@ -38,7 +38,7 @@ namespace Underworld
         {
             if (_state == TernState.Fire)
             {
-                player.Incineration();
+                player.DeadIncineration();
             }
         }
 

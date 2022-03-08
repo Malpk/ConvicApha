@@ -20,7 +20,6 @@ namespace Underworld
         private Vector3 _sizeCollider;
         private Coroutine _coroutine = null;
 
-        public TypeTile tileType => TypeTile.TernTile;
         public abstract TernState state { get; }
 
         private void Awake()

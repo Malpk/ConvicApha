@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public class UnderworldTile : IGetTileMap
+public class UnderworldTile
 {
     [SerializeField] private GameObject _tile;
 
