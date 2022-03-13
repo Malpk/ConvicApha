@@ -22,25 +22,34 @@ namespace Underworld
             }
             _pointsMap = null;
         }
-        public bool Intializate(IVertex[,] tileMap,Transform parent = null)
+        public bool Intializate(Vector2 unitSize, int size ,Transform parent = null)
         {
             if (_pointsMap != null)
                 return false;
-            var countLine = tileMap.GetLength(0);
-            var countColumen = tileMap.GetLength(1);
-            _pointsMap = new Point[countColumen, countLine];
-            for (int i = 0; i < countLine; i++)
+            parent = GetHolder("PointHolder", parent);
+            var radius = size / 2 - 1;
+            var startPosition = new Vector2(-unitSize.x / 2 - unitSize.x * radius,
+                unitSize.y / 2 + unitSize.y * radius);
+            _pointsMap = new Point[size, size];
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j < countColumen; j++)
+                for (int j = 0; j < size; j++)
                 {
-                    _pointsMap[i, j] = new Point(tileMap[j, i].VertixPosition);
+                    _pointsMap[i, j] = new Point(startPosition +
+                        new Vector2(unitSize.x* j,-unitSize.y * i));
                     _pointsMap[i, j].CreateObject(_tileTern).transform.parent = parent;
                     _pointsMap[i, j].SetAtiveObject(false);
                 }
             }
             return true;
         }
-
+        private Transform GetHolder(string name, Transform parent)
+        {
+            var holder = new GameObject("PointHolder").transform;
+            holder.parent = parent;
+            holder.localPosition = Vector2.zero;
+            return holder;
+        }
         public void MapUpdate(TermMode[,] paternMap)
         {
             for (int i = 0; i < paternMap.GetLength(0); i++)

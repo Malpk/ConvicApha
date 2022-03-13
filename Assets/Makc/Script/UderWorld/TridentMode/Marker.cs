@@ -23,7 +23,7 @@ namespace Underworld
         }
         public bool ActiveMarker(Vector3 position, float angle, float warningTime)
         {
-            if (_startCorotine != null)
+            if (_startCorotine != null || warningTime == 0)
                 return false;
             _sprite.enabled = true;
             transform.position = position;
@@ -33,6 +33,7 @@ namespace Underworld
         }
         private IEnumerator ColorAniamtion(float duration)
         {
+
             float progress = 0f;
             Color startColor = _sprite.color;
             while (progress < 1f)

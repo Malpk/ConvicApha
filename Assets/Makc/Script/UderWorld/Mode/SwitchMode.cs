@@ -10,9 +10,12 @@ namespace SwitchModeComponent
     public class SwitchMode : MonoBehaviour
     {
         [Header("Perfab Setting")]
-        [SerializeField] private Transform _player;
+        [SerializeField] private Player _player;
         [SerializeField] private MapBuilder _builder;
         [SerializeField] private List<SettingSequence> _sequences = new List<SettingSequence>();
+        [Header("Map Setting")]
+        [SerializeField] private int _mapSize;
+        [SerializeField] private Vector2 _unitSize;
 
         [Inject] private GameMap _map;
         [Inject] private CameraAnimation _cameraAnimation;
@@ -22,11 +25,15 @@ namespace SwitchModeComponent
 
         public bool isAttackMode => GetSequenceStatus(curreqSequence);
         public GameMap map => _map;
-        public Transform playerTransform => _player;
+        public Player Player => _player;
         public Tilemap tileMap => _tileMap;
         public GameObject curreqSequence { get; private set; }
         public MapBuilder builder => _builder;
-        
+        public Vector2 UnitSize => _unitSize;
+        private void Awake()
+        {
+            _builder.Intializate(_unitSize, _mapSize, transform);
+        }
         private void OnEnable()
         {
             _cameraAnimation.CompliteAction += StartCorotine;
@@ -34,10 +41,6 @@ namespace SwitchModeComponent
         private void OnDisable()
         {
             _cameraAnimation.CompliteAction -= StartCorotine;
-        }
-        private void Start()
-        {
-            _builder.Intializate(_map.Map, transform);
         }
         private void StartCorotine()
         {

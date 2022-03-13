@@ -1,83 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 using SwitchModeComponent;
-using UnityEngine.Tilemaps;
+using System.Linq;
+
 namespace Underworld
 {
-    public class ViseMode : MonoBehaviour, IModeForSwitch
+    public class ViseMode : MonoBehaviour,IModeForSwitch
     {
-        [Header("Game Setting")]
-        [SerializeField] private int _lenght;
-        [SerializeField] private Vector2 _fireTime;
-        [SerializeField] private Vector2 _warnigTime;
-        [SerializeField] private bool _dubleMode = false;
+        [Header("Mods Setting")]
+        [SerializeField] private float _minTimeOffset;
+        [SerializeField] private float _maxTimeOffset;
+        [Header("Time setting")]
+        [SerializeField] private float _warningTime;
+        [Header("Requrid Perfab")]
+        [SerializeField] private GameObject _poolTern;
 
-        [Header("Perfab Setting")]
-        [SerializeField] private GameObject _vise;
+        private List<Coroutine> _runMods = new List<Coroutine>();
+        private int[] _angls = new int[] { 0, 90 };
+        private Vise[] _viseHolders = null;
 
-        Vector3 _offset;
-        private int[] _direction = new int[] { 1, -1 };
-        private Vector3[] _angls = new Vector3[] { Vector3.right, Vector3.up };
-
-        public bool IsAttackMode => true;
+        public bool IsAttackMode => _runMods.Count > 0;
 
         public void Constructor(SwitchMode swictMode)
         {
-            _offset = swictMode.tileMap.cellSize;
-            StartCoroutine(CreateVise());
-        }
-
-        private IEnumerator CreateVise()
-        {
-            var viseList = new List<GameObject>();
-            if (_dubleMode)
+            if (_runMods.Count >  0!)
+                return;
+            if (_viseHolders == null)
             {
-                foreach (var direction in _direction)
+                _viseHolders = new Vise[2];
+                for (int i = 0; i < _angls.Length; i++)
                 {
-                    foreach (var angle in _angls)
-                    {
-                        viseList.Add(InstateViseLine(angle * direction));
-                    }
+                    var holder = GetHolder("ViseHOlder");
+                    _viseHolders[i] = holder.gameObject.AddComponent<Vise>();
+                    _viseHolders[i].CreateVise(_poolTern, swictMode.builder.Map, _angls[i]);
                 }
             }
-            else
+            foreach (var vise in _viseHolders)
             {
-                var index = Random.Range(0, _angls.Length);
-                foreach (var direction in _direction)
-                {
-                    viseList.Add(InstateViseLine(_angls[index] * direction));
-                }
-            }
-            yield return StartCoroutine(CheakList(viseList));
-            Destroy(gameObject);
-        }
-        private IEnumerator CheakList(List<GameObject> list)
-        {
-            while (list.Count > 0)
-            {
-                var cheakList = new List<GameObject>();
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i] != null)
-                        cheakList.Add(list[i]);
-                }
-                list = cheakList;
-                yield return new WaitForSeconds(0.1f);
+                var timeOffset = Random.Range(_minTimeOffset, _maxTimeOffset);
+                vise.StartMove(timeOffset,swictMode.UnitSize.x);
+                 _runMods.Add(StartCoroutine(MoveVise(vise, timeOffset)));
             }
         }
-        private GameObject InstateViseLine(Vector3 direction)
+        private IEnumerator MoveVise(Vise vise,float timeOffset)
         {
-            var viseInstate = Instantiate(_vise, transform.position, Quaternion.identity);
-            viseInstate.transform.parent = transform;
-            if (viseInstate.TryGetComponent<Vise>(out Vise vise))
+            while (vise.IsMoveVise)
             {
-                var fireTime = Random.Range(_fireTime.x, _fireTime.y);
-                var warningTime = Random.Range(_warnigTime.x, _warnigTime.y);
-                vise.Constructor(_lenght, _offset.x, direction, fireTime, warningTime);
+                if (vise.IsMoveVise)
+                {
+                    yield return StartCoroutine(vise.SetIdleMode());
+                }
+                yield return new WaitForSeconds(_warningTime);
+                if (vise.IsMoveVise)
+                {
+                    vise.SetFireMode();
+                }
+                yield return new WaitForSeconds(timeOffset * 2);
             }
-            return viseInstate;
+            _runMods.Remove(_runMods[0]);
+            if (_runMods.Count == 0)
+                Destroy(gameObject);
+            yield return null;
+        }
+        private Transform GetHolder(string name)
+        {
+            var holder = new GameObject(name).transform;
+            holder.parent = transform;
+            return holder;
         }
     }
 }

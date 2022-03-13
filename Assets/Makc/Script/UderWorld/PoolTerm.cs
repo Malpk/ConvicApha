@@ -16,7 +16,7 @@ namespace Underworld
         private Coroutine _offTile = null;
         private SpriteRenderer _spriteBody;
 
-        public bool IsActive => _spriteBody.enabled;
+        public bool IsActive => _instateFire != null;
         public override TernState state => _instateFire != null ? TernState.Fire : TernState.Deactive;
 
         protected override void Damage(Player player)
@@ -91,6 +91,13 @@ namespace Underworld
             if (_fireAnimator != null)
                 _fireAnimator.SetBool("IdleMode", true);
             return _fireAnimator;
+        }
+        public IEnumerator WarningMode()
+        {
+            if (_fireAnimator != null)
+                _fireAnimator.SetTrigger("Fading");
+            yield return new WaitWhile(() => _instateFire != null);
+            _tileAnimator.SetInteger("state", 0);
         }
     }
 }

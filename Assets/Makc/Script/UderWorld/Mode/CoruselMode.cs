@@ -27,7 +27,7 @@ namespace Underworld
             _map = swictMode.builder.Map;
             ActivateTile(_map);
             transform.rotation = Quaternion.Euler(Vector3.forward * 
-                DefineStartAngel(swictMode.playerTransform.position));
+                DefineStartAngel(swictMode.Player.Position));
             startMode = StartCoroutine(RunMode());
         }
         private int ChooseDirection()

@@ -18,6 +18,7 @@ namespace Underworld
 
         public bool IsBusy => _tile != null;
         public bool IsActive => _tile.IsActive;
+        public Vector2 Position => _poistion;
         public ITileAnimation Animation => _aniamtion;
 
         public PoolTerm CreateObject(GameObject createObject)
@@ -38,8 +39,7 @@ namespace Underworld
 
         public void SetAtiveObject(bool mode)
         {
-            if(_tile.IsActive != mode)
-                _tile.SetActiveMode(mode);
+            _tile.SetActiveMode(mode);
         }
     }
 }
