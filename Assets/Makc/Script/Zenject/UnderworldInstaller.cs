@@ -11,8 +11,6 @@ namespace Underworld
     public class UnderworldInstaller : MonoInstaller
     {
         [SerializeField] private Player _player;
-        [SerializeField] private Tilemap _tileMap;
-        [SerializeField] private GameMap _map;
         [SerializeField] private UnderWorldEvent _gameEvent;
         [SerializeField] private Transform _playerTransform;
         [SerializeField] private SwitchMode _switchMode;
@@ -25,9 +23,7 @@ namespace Underworld
         public override void InstallBindings()
         {
             Container.Bind<Win>().FromInstance(_win).AsSingle();
-            Container.Bind<GameMap>().FromInstance(_map).AsSingle();
             Container.Bind<Player>().FromInstance(_player).AsSingle();
-            Container.Bind<Tilemap>().FromInstance(_tileMap).AsSingle();
             Container.Bind<LvlTimer>().FromInstance(_timer).AsSingle();
             Container.Bind<GameEvent>().FromInstance(_gameEvent).AsSingle();
             Container.Bind<UnderWorldEvent>().FromInstance(_gameEvent).AsSingle();

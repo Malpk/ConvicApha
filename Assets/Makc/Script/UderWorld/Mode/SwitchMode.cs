@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using Underworld;
 using Zenject;
 
@@ -14,25 +13,19 @@ namespace SwitchModeComponent
         [SerializeField] private MapBuilder _builder;
         [SerializeField] private List<SettingSequence> _sequences = new List<SettingSequence>();
         [Header("Map Setting")]
-        [SerializeField] private int _mapSize;
-        [SerializeField] private Vector2 _unitSize;
 
-        [Inject] private GameMap _map;
         [Inject] private CameraAnimation _cameraAnimation;
-        [Inject] private Tilemap _tileMap;
 
         private List<SettingSequence> _curretList = new List<SettingSequence>();
 
         public bool isAttackMode => GetSequenceStatus(curreqSequence);
-        public GameMap map => _map;
         public Player Player => _player;
-        public Tilemap tileMap => _tileMap;
         public GameObject curreqSequence { get; private set; }
         public MapBuilder builder => _builder;
-        public Vector2 UnitSize => _unitSize;
+        public Vector2 UnitSize => _builder.UnitSize;
         private void Awake()
         {
-            _builder.Intializate(_unitSize, _mapSize, transform);
+            _builder.Intializate(transform);
         }
         private void OnEnable()
         {

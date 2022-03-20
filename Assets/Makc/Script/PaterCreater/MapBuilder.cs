@@ -9,11 +9,17 @@ namespace Underworld
     [System.Serializable]
     public class MapBuilder
     {
-        [SerializeField] protected GameObject _tileTern;
+        [Header("Map Setting")]
+        [Min(1)]
+        [SerializeField] protected int mapSize = 1;
+        [SerializeField] protected Vector2 unitSize;
+        [SerializeField] protected GameObject tileTern;
 
         private Point[,] _pointsMap;
+        
+        public Vector2 UnitSize => unitSize;
         public Point[,] Map => _pointsMap;
-
+        
         public void OnDestroy()
         {
             foreach (var point in _pointsMap)
@@ -22,26 +28,38 @@ namespace Underworld
             }
             _pointsMap = null;
         }
-        public bool Intializate(Vector2 unitSize, int size ,Transform parent = null)
+        public bool Intializate(Transform parent = null)
         {
             if (_pointsMap != null)
                 return false;
+            CheakValue();
             parent = GetHolder("PointHolder", parent);
-            var radius = size / 2 - 1;
+            var radius = mapSize / 2 - 1;
             var startPosition = new Vector2(-unitSize.x / 2 - unitSize.x * radius,
                 unitSize.y / 2 + unitSize.y * radius);
-            _pointsMap = new Point[size, size];
-            for (int i = 0; i < size; i++)
+            _pointsMap = new Point[mapSize, mapSize];
+            for (int i = 0; i < mapSize; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < mapSize; j++)
                 {
-                    _pointsMap[i, j] = new Point(startPosition +
-                        new Vector2(unitSize.x* j,-unitSize.y * i));
-                    _pointsMap[i, j].CreateObject(_tileTern).transform.parent = parent;
-                    _pointsMap[i, j].SetAtiveObject(false);
+                    _pointsMap[i, j] = new Point(startPosition + new Vector2(unitSize.x* j,-unitSize.y * i));
+                    if (tileTern != null)
+                    {
+                        _pointsMap[i, j].CreateObject(tileTern).transform.parent = parent;
+                        _pointsMap[i, j].SetAtiveObject(false);
+                    }
                 }
             }
+            if (tileTern == null)
+                Debug.LogWarning("Points is Empty");
             return true;
+        }
+        private void CheakValue()
+        {
+            if (mapSize <= 0)
+                throw new System.Exception("Map Size is can't be <= 0");
+            if(unitSize == Vector2.zero || unitSize.x < 0 || unitSize.y < 0)
+                throw new System.Exception("UnitSize Size is can't be <= 0");
         }
         private Transform GetHolder(string name, Transform parent)
         {
