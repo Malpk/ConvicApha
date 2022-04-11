@@ -14,7 +14,7 @@ namespace Underworld
         private SwitchMode _switchMode;
         private Coroutine _coroutine = null;
 
-        public bool IsAttackMode => _mode != null;
+        public bool IsActive => _mode != null;
         public ModeType curretTypeMode { get; private set; }
 
         public void Constructor(SwitchMode swictMode)

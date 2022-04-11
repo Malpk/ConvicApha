@@ -32,7 +32,7 @@ namespace Underworld
 
         public int CurretDeadLineHeight { get; private set; }
 
-        public bool IsAttackMode => _coroutine!=null;
+        public bool IsActive => _coroutine!=null;
 
         public void Constructor(SwitchMode swictMode)
         {

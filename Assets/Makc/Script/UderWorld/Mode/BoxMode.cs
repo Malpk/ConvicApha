@@ -29,7 +29,7 @@ namespace Underworld
         private Point[,] _map;
         private BoxCollider2D _collider;
 
-        public bool IsAttackMode => throw new System.NotImplementedException();
+        public bool IsActive => throw new System.NotImplementedException();
 
         private void Awake()
         {

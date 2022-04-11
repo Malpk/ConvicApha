@@ -20,7 +20,7 @@ namespace Underworld
         private int[] _angls = new int[] { 0, 90 };
         private Vise[] _viseHolders = null;
 
-        public bool IsAttackMode => _runMods.Count > 0;
+        public bool IsActive => _runMods.Count > 0;
 
         public void Constructor(SwitchMode swictMode)
         {
