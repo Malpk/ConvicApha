@@ -5,16 +5,16 @@ using UnityEngine;
 public abstract class Device : MonoBehaviour
 {
     [SerializeField]
-    protected float _timeOfAction;
+    protected GameObject _effectPrefab;
 
-    protected abstract void ActivateDeviceOnPlayer(PlayerController playerController);
+    protected abstract void ActivateDevice(EffectsHandler effectsHandler);
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerController playerController = collision.attachedRigidbody?.GetComponent<PlayerController>();
-        if (playerController)
+        EffectsHandler effectsHandler = collision.attachedRigidbody?.GetComponent<EffectsHandler>();
+        if (effectsHandler)
         {
-            ActivateDeviceOnPlayer(playerController);
+            ActivateDevice(effectsHandler);
         }
     }
 }

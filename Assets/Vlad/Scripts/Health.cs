@@ -1,18 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    protected int _healthPoints = 5;
+    [SerializeField]
+    public int _maxHealthPoint = 7;
+
+
+    public UnityEvent EventOnTakeDamage;
+    public UnityEvent EventOnDie;
+
+    public virtual void TakeDamage(int damageValue)
     {
-        
+        _healthPoints -= damageValue;
+        if (_healthPoints <= 0)
+        {
+            Die();
+        }
+        EventOnTakeDamage.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void AddHealth(int healthValue)
     {
-        
+        _healthPoints = _healthPoints + healthValue > _maxHealthPoint ? _maxHealthPoint : _healthPoints + healthValue;
+    }
+
+    public virtual void Die()
+    {
+        EventOnDie.Invoke();
     }
 }
