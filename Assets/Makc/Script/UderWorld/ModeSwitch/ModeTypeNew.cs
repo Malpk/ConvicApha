@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Underworld.Editor
+namespace Underworld
 {
-    public enum ModeType
+    public enum ModeTypeNew
     {
         BaseMode,
         IslandMode,
