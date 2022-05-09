@@ -40,7 +40,7 @@ namespace Underworld
         private List<Trident[]> _vertivalTrident = new List<Trident[]>();
         private List<Trident[]> _horizontalTrident = new List<Trident[]>();
 
-        public bool IsActive => _countCorotine > 0;
+        public bool IsAttackMode => _countCorotine > 0;
 
         private void Awake()
         {
@@ -68,7 +68,7 @@ namespace Underworld
         }
         public void Constructor(SwitchMode swictMode)
         {
-            if (IsActive)
+            if (IsAttackMode)
                 return;
             if(_horizontalMode)
                 StartCoroutine(ShootTrident(_horizontalTrident, _horizontalAngls));

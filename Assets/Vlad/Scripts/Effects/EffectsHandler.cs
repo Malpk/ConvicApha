@@ -6,7 +6,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(UnitMove))]
 public class EffectsHandler : MonoBehaviour
 {
-
     private UnitMove _unitMove;
     private Health _health;
 
@@ -24,7 +23,7 @@ public class EffectsHandler : MonoBehaviour
         int indexEffect = 0;
         if(IsFindeEffect(effect, out indexEffect))
         {
-            _effectsOnUnit[indexEffect].StopEffect();
+            return;
         }
         _effectsOnUnit.Add(effect);
         effect.OnStopEffect.AddListener(RemoveEffect);
@@ -53,6 +52,5 @@ public class EffectsHandler : MonoBehaviour
             _effectsOnUnit.RemoveAt(indexEffect);
         }
         effect.OnStopEffect.RemoveListener(RemoveEffect);
-        Destroy(effect.gameObject);
     }
 }

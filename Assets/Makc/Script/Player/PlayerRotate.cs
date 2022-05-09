@@ -5,7 +5,6 @@ namespace PlayerComponent
 {
     public class PlayerRotate : IRotate
     {
-
         private float _curretAngel = 0;
 
         private readonly float _speedRotation;

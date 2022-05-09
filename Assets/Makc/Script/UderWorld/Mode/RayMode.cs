@@ -27,7 +27,7 @@ namespace Underworld
         private int[] _direction = new int[] { 1, -1 };
         private Point[,] _map = null;
         private List<RayPoint> _points = new List<RayPoint>();
-        public bool IsActive => _points.Count > 0;
+        public bool IsAttackMode => _points.Count > 0;
 
         private void Awake()
         {

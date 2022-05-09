@@ -44,7 +44,7 @@ namespace SwitchModeComponent
             if (curretSecunce == null)
                 return false;
             if (curretSecunce.TryGetComponent<IModeForSwitch>(out IModeForSwitch sequnce))
-                return sequnce.IsActive;
+                return sequnce.IsAttackMode;
             else
                 return false;
         }

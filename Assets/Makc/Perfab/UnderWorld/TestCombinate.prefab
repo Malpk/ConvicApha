@@ -45,9 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 916709158494407648, guid: 5b64d1ac95d0ff54b9854cc75cc83c01, type: 3}
   _builder:
-    _tileTern: {fileID: 1333059954608903435, guid: eb1e0c99abc0c284e8e8776b5b69a482, type: 3}
+    mapSize: 1
+    unitSize: {x: 0, y: 0}
+    tileTern: {fileID: 0}
   _sequences:
   - _name: 
     _sequence: {fileID: 8263527212579409574}
-  _mapSize: 0
-  _unitSize: {x: 0, y: 0}

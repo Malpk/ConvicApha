@@ -7,11 +7,11 @@ namespace Underworld
     public enum ModeType
     {
         None,
-        DeffoutMode,
-        IslandMap,
+        Base,
+        TotalMap,
         Trident,
         Watch,
-        RayMode,
+        RayOffset,
         Vise,
         Box
     }

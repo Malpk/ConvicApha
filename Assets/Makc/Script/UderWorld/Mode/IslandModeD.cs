@@ -32,7 +32,7 @@ namespace Underworld
             Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down 
         };
 
-        public bool IsActive => _runMode != null;
+        public bool IsAttackMode => _runMode != null;
 
         private void Awake()
         {

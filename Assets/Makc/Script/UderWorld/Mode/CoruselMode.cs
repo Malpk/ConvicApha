@@ -18,7 +18,7 @@ namespace Underworld
         private int[] _direction = new int[] { -1, 1 };
         private Point[,] _map;
 
-        public bool IsActive => true;
+        public bool IsAttackMode => true;
 
         public void Constructor(SwitchMode swictMode)
         {

@@ -21,7 +21,7 @@ namespace Underworld
         protected Color deactiveColor;
         protected Point[,] _map;
 
-        public bool IsActive => true;
+        public bool IsAttackMode => true;
 
         private void Awake()
         {

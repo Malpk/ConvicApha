@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GasIsolScript : MonoBehaviour
 {
-
     public GameObject GasCloud;
     private bool ActiveRotate = false;
     private float zrot;

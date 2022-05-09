@@ -44,7 +44,10 @@ public abstract class DestructiveEffect : MonoBehaviour
     }
     public virtual void StopEffect()
     {
-        StopCoroutine(_activateEffectCoroutine);
+        if (_activateEffectCoroutine != null)
+        {
+            StopCoroutine(_activateEffectCoroutine);
+        }
         OnStopEffect.Invoke(this);
     }
     public void ActivateTheDisplayEffect(Image[] effectImages)

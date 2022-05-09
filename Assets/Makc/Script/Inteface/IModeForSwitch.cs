@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
-
-namespace Underworld
+namespace SwitchModeComponent
 {
     public interface IModeForSwitch
     {
-        public bool IsActive { get; }
+        public bool IsAttackMode { get; }
         public void Constructor(SwitchMode swictMode);
     }
 }

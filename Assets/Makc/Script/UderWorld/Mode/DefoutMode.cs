@@ -27,7 +27,7 @@ namespace Underworld
         private Vector2Int _mapLimit;
         private Coroutine _startMode;
 
-        public bool IsActive => _startMode != null;
+        public bool IsAttackMode => _startMode != null;
 
         public void Constructor(SwitchMode swictMode)
         {
