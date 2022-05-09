@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &792147722769356492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792147722769356495}
+  - component: {fileID: 792147722769356494}
+  - component: {fileID: 792147722769356493}
+  m_Layer: 0
+  m_Name: BaseMode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &792147722769356495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792147722769356492}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &792147722769356494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792147722769356492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26dcf83671a5cfe4e873f2ae7ffab5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnDistance: 5
+  _player: {fileID: 0}
+  _delay: 0.066
+  _timeFireActive: 1
+  _workDuration: 10
+  _unitSize: {x: 1.6, y: 1.6}
+--- !u!114 &792147722769356493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792147722769356492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7021650a37e87a849865e823de3cae84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedMovement: 40
+  _moveDistance: 40
+  _horizontalMode: 1
+  _verticalMode: 0
+  _shootDelay: 0.05
+  _groupShootDelay: 0.6
+  _warningTime: 1
+  _workDuration: 10
+  _countTridentInGroup: 2
+  _radius: 4
+  _unitSize: {x: 1.6, y: 1.6}
+  _marker: {fileID: 7905483864581599279, guid: 55cf426f2c2d4ca49b9608bf95ae0299, type: 3}
+  _trident: {fileID: 471845234174259781, guid: 14b89b9194e4f1944905d9071bd86414, type: 3}
