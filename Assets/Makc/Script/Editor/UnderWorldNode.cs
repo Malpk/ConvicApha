@@ -5,21 +5,32 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 
-namespace Underworld.Editor
+namespace Underworld.Editors
 {
     public class UnderWorldNode : Node,IBinding
     {
+        public readonly int id;
+
         private EnumField _typeField;
         private NodeSetting _setting;
 
         public Edge Edge = null;
-        public UnderWorldNode(Vector2 position,ModeTypeNew type,bool firstNode)
+        public UnderWorldNode(Vector2 position,ModeTypeNew type,bool firstNode,int id)
         {
+            this.id = id;
             SetPosition(new Rect(position, Vector2.zero));
             DrawNode(firstNode,type);
             SetMode(type);
+            _setting.Position = position;
         }
-
+        public UnderWorldNode(Vector2 position, NodeSetting setting, bool firstNode, int id)
+        {
+            this.id = id;
+            SetPosition(new Rect(position, Vector2.zero));
+            DrawNode(firstNode, setting.TypeMode);
+            _setting = setting;
+            _setting.Position = position;
+        }
         public string NodeName { get; set; }
         public NodeSetting NodeSetting => _setting;
 
@@ -57,19 +68,38 @@ namespace Underworld.Editor
         }
         public void SetMode(ModeTypeNew mode)
         {
-            Vector2 curretPositon = _setting != null ? _setting.Position : Vector2.zero;
+            var position = NodeSetting != null ? NodeSetting.Position : Vector2.zero;
             switch (mode)
             {
                 case ModeTypeNew.BaseMode:
-                    _setting = new BaseNodeSetting(curretPositon);
+                    _setting = new BaseNodeSetting();
                     break;
                 case ModeTypeNew.IslandMode:
-                    _setting = new IslandNodeSetting(curretPositon);
+                    _setting = new IslandNodeSetting();
+                    break;
+                case ModeTypeNew.BoxMode:
+                    _setting = new BoxNodeSetting();
+                    break;
+                case ModeTypeNew.CoruselMode:
+                    _setting = new CoruselNodeSetting();
+                    break;
+                case ModeTypeNew.PaternCreater:
+                    _setting = new PaternCreaterNodeSetting();
+                    break;
+                case ModeTypeNew.TrindetMode:
+                    _setting = new TridenNodeSetting();
+                    break;
+                case ModeTypeNew.RayMode:
+                    _setting = new RayNodeSetting();
+                    break;
+                case ModeTypeNew.ViseMode:
+                    _setting = new ViseNodeSetting();
                     break;
                 default:
-                    _setting = new BaseNodeSetting(curretPositon);
+                    _setting = new BaseNodeSetting();
                     break;
             }
+            _setting.Constructor(position);
         }
         public void SetMode(NodeSetting setting)
         {
@@ -81,7 +111,7 @@ namespace Underworld.Editor
         }
         public void PreUpdate()
         {
-            if (_typeField.value is ModeTypeNew type && _setting.type != type) 
+            if (_typeField.value is ModeTypeNew type && _setting.TypeMode != type) 
                 SetMode(type);
             else
                 return;

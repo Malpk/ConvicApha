@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 
-namespace Underworld.Editor
+namespace Underworld.Editors
 {
     public class SeqcunceEdit : GraphView
     {
         private int _countNode = 0;
-        private Sequnce _secunce;
+        private Seqcunce _secunce;
         private GraphElement _mainElement = null;
 
 
@@ -44,9 +44,9 @@ namespace Underworld.Editor
             });
             return compatiblePorts;
         }
-        public void OutputSecunce(Sequnce secunce)
+        public void OutputSecunce(Seqcunce secunce)
         {
-            _countNode = secunce.Elements.Count;
+            _countNode = 0;
             if(_secunce != null)
                 SaveSecunce();
             _secunce = secunce;
@@ -54,38 +54,55 @@ namespace Underworld.Editor
             {
                 RemoveElement(node);
             });
+            var nods = new List<UnderWorldNode>();
             for (int i = 0; i < secunce.Elements.Count; i++)
             {
-                LoadNode(secunce.Elements[i]);
+                nods.Add(LoadNode(secunce.Elements[i]));
             }
-            for (int i = 0; i < secunce.Elements.Count; i++)
+            for (int i = 0; i < nods.Count; i++)
             {
-                if (secunce.Elements[i].outputContainer[0] is Port port && secunce.Elements[i].Edge != null)
+                try
                 {
-                    AddElement(secunce.Elements[i].Edge);
-                    port.Connect(secunce.Elements[i].Edge);
+                    if (nods[i].outputContainer[0] is Port output &&
+                   nods[secunce.Elements[i].NextNode].inputContainer[0] is Port input)
+                    {
+                        var edge = new Edge();
+                        edge.output = output;
+                        edge.input = input;
+                        output.Connect(edge);
+                        Add(edge);
+                    }
                 }
+                catch
+                {
+                }
+               
             }
         }
         private void SaveSecunce()
         {
             UnSelect();
-            var list = new List<UnderWorldNode>();
+            var list = new List<NodeSetting>();
             graphElements.ForEach(node =>
             {
                 if (node is UnderWorldNode underworldNode)
                 {
-                    if(underworldNode.outputContainer[0] is Port output)
+                    if (underworldNode.outputContainer[0] is Port output)
                     {
                         var conection = output.connections.ToList();
                         if (conection.Count > 0)
                         {
-                            underworldNode.Edge = conection[0];
+                            underworldNode.NodeSetting.NextNode = (conection[0].input.node as UnderWorldNode).id;
+                        }
+                        else
+                        {
+                            underworldNode.NodeSetting.NextNode = -1;
                         }
                     }
+                    underworldNode.NodeSetting.Position = underworldNode.GetPosition().position;
                     underworldNode.SelectNodeAction -= SelectNode;
                     underworldNode.UnSelectNodeAction -= UnSelect;
-                    list.Add(underworldNode);
+                    list.Add(underworldNode.NodeSetting);
                 }
             });
             _secunce.Elements = list;
@@ -103,7 +120,7 @@ namespace Underworld.Editor
         }
         private SerializedObject GetSerilizeSetting(NodeSetting setting)
         {
-            switch (setting.type)
+            switch (setting.TypeMode)
             {
                 case ModeTypeNew.BaseMode:
                     if (setting is BaseNodeSetting baseSetting)
@@ -112,7 +129,31 @@ namespace Underworld.Editor
                 case ModeTypeNew.IslandMode:
                     if (setting is IslandNodeSetting islandSetting)
                         return new SerializedObject(islandSetting);
-                    throw new System.NullReferenceException("BaseNodeSetting is null");
+                    throw new System.NullReferenceException("IslandNodeSetting is null");
+                case ModeTypeNew.BoxMode:
+                    if (setting is BoxNodeSetting boxNode)
+                        return new SerializedObject(boxNode);
+                    throw new System.NullReferenceException("BoxNodeSetting is null");
+                case ModeTypeNew.CoruselMode:
+                    if (setting is CoruselNodeSetting coruselNode)
+                        return new SerializedObject(coruselNode);
+                    throw new System.NullReferenceException("CoruselNodeSetting is null");
+                case ModeTypeNew.PaternCreater:
+                    if (setting is PaternCreaterNodeSetting paternCreaterNode)
+                        return new SerializedObject(paternCreaterNode);
+                    throw new System.NullReferenceException("PaternCreaterNodeSetting is null");
+                case ModeTypeNew.TrindetMode:
+                    if (setting is TridenNodeSetting tridenNode)
+                        return new SerializedObject(tridenNode);
+                    throw new System.NullReferenceException("TridenNodeSetting is null"); ;
+                case ModeTypeNew.RayMode:
+                    if (setting is RayNodeSetting rayNode)
+                        return new SerializedObject(rayNode);
+                    throw new System.NullReferenceException("RayNodeSetting is null");
+                case ModeTypeNew.ViseMode:
+                    if (setting is ViseNodeSetting viseNode)
+                        return new SerializedObject(viseNode);
+                    throw new System.NullReferenceException("ViseNodeSetting is null");
             }
             throw new System.NullReferenceException();
         }
@@ -136,31 +177,27 @@ namespace Underworld.Editor
         private IManipulator CreateSecunceNode()
         {
             var seqcunceNode = new ContextualMenuManipulator(mainMenu =>
-                 mainMenu.menu.AppendAction("Add Mode", addNode => CreateNode(addNode.eventInfo.mousePosition)));
+                 mainMenu.menu.AppendAction("Add Mode", addNode => CreateNode(
+                     contentContainer.WorldToLocal(addNode.eventInfo.mousePosition))));
             return seqcunceNode;
         }
         private void CreateNode(Vector2 position)
         {
-            var node = new UnderWorldNode(position, ModeTypeNew.BaseMode ,_countNode == 0);
-            AddElement(node);
-            node.SelectNodeAction += SelectNode;
-            _countNode++;
+            var node = new UnderWorldNode(position, ModeTypeNew.BaseMode ,_countNode == 0, _countNode);
+            CreateNodeBase(node);
         }
-        private UnderWorldNode CreateNode(NodeSetting setting,bool firstElement)
+        private void CreateNodeBase(UnderWorldNode node)
         {
-            var node = new UnderWorldNode(setting.Position, setting.type, firstElement);
-            node.SetMode(setting);
+            AddElement(node);
             node.SelectNodeAction += SelectNode;
             node.UnSelectNodeAction += UnSelect;
-            AddElement(node);
-            return node;
-        }
-
-        private void LoadNode(UnderWorldNode node)
-        {
-            AddElement(node);
-            node.SelectNodeAction += SelectNode;
             _countNode++;
+        }
+        private UnderWorldNode LoadNode(NodeSetting nodSetting)
+        {
+            var node = new UnderWorldNode(nodSetting.Position, nodSetting, _countNode == 0, _countNode);
+            CreateNodeBase(node);
+            return node;
         }
     }
 }

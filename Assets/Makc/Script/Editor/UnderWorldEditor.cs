@@ -3,25 +3,36 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEditor;
+using Underworld.Save;
 
-namespace Underworld.Editor
+namespace Underworld.Editors
 {
     public class UnderWorldEditor : EditorWindow
     {
         private Button _addNewSecunce;
         private Button _focusButton = null;
-        private Sequnce _curretSecunce;
-        private Dictionary<Button,Sequnce> _listSecunce = new Dictionary<Button, Sequnce> ();
+        private Seqcunce _curretSecunce;
+        private ModeSwitchController _secunceContainer;
+        private Dictionary<VisualElement, Seqcunce> _listSecunce = new Dictionary<VisualElement, Seqcunce>();
         private VisualElement _container;
         private VisualElement _inspector;
         private SeqcunceEdit _secunce = null;
 
-        [MenuItem("Window/UnderWorldEditor")]
-        public static void Intializate()
+        public static UnderWorldEditor Intializate()
         {
             var window = (UnderWorldEditor)EditorWindow.GetWindow(typeof(UnderWorldEditor));
             window.Show();
             window.position = new Rect(0, 0, 1000, 1000);
+            EditorUtility.SetDirty(window);
+            return window;
+        }
+        public void SetParent(ModeSwitchController parent)
+        {
+            _secunceContainer = parent;
+            foreach (var sequnce in parent.Seqcuncs)
+            {
+                AddSecunce(sequnce);
+            }
         }
         private void CreateGUI()
         {
@@ -29,6 +40,9 @@ namespace Underworld.Editor
             _secunce.SetEnabled(false);
             _secunce.UnSelectNodeAction += () => _inspector.Clear();
             _secunce.ChoiseNodeAction += OutputSetting;
+        }
+        private void OnDisable()
+        {
         }
         private void OnDestroy()
         {
@@ -69,12 +83,17 @@ namespace Underworld.Editor
             panel.Add(_addNewSecunce);
             panel.Add(removeSecunce);
         }
-        public void AddSecunce()
+        private void AddSecunce()
         {
-            var button = CreateButton("Sequnce", "buttonSequnce");
-            var secunce = new Sequnce();
+            var seqcunce = new Seqcunce();
+            AddSecunce(seqcunce);
+            _secunceContainer.Add(seqcunce);
+        }
+        private void AddSecunce(Seqcunce seqcunce)
+        {
+            var button = CreateButton($"Sequnce{_container.childCount+1}", "buttonSequnce");
             _container.Add(button);
-            _listSecunce.Add(button, secunce);
+            _listSecunce.Add(button, seqcunce);
             button.clicked += () => OnClickButton(button);
         }
         private void OnClickButton(Button button)
@@ -95,10 +114,18 @@ namespace Underworld.Editor
         }
         private void Delete()
         {
-            if(_focusButton != null)
-                _container.Remove(_focusButton);
+            VisualElement deleteButton = null;
+            if (_focusButton != null)
+            {
+                deleteButton = _focusButton;
+            }
             else if (_container.childCount > 0)
-                _container.Remove(_container[_container.childCount - 1]);
+            {
+                deleteButton = _container[(_container.childCount - 1)];
+            }
+            _secunceContainer.Remove(_listSecunce[deleteButton]);
+            _listSecunce.Remove(deleteButton);
+            _container.Remove(deleteButton);
         }
         private Button CreateButton(string name, string style = null)
         {

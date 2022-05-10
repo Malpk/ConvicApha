@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEditor.UIElements;
+using Underworld.Editors;
 
 namespace Underworld
 {
     [System.Serializable]
-    public class BaseSetting 
+    public class BaseSetting : IModeSetting
     {
         [Header("Spawn Setting")]
         [Min(0)]
@@ -27,7 +23,6 @@ namespace Underworld
         public float Delay => _delay;
         public float TimeFireActive => _timeFireActive;
         public float WorDuration => _workDuration;
-
 
 
         //public VisualElement[] Fields =>

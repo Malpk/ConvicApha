@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using Underworld.Editors;
 
 namespace Underworld
 {
     [System.Serializable]
-    public class IslandSetting
+    public class IslandSetting : IModeSetting
     {
         [Header("Mode Setting")]
         [Min(0)]

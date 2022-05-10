@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-
-namespace Underworld
+namespace Underworld.Editors
 {
     public interface IModeSetting
     {
-        public abstract ModeTypeNew type { get; }
+        public ModeTypeNew type { get; }
     }
 }

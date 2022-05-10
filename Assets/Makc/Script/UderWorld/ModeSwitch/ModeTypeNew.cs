@@ -9,9 +9,10 @@ namespace Underworld
         BaseMode,
         IslandMode,
         BoxMode,
-        RunMode,
-        RingMode,
-        ViseMode,
-        ImageMode
+        CoruselMode,
+        PaternCreater,
+        TrindetMode,
+        RayMode,
+        ViseMode
     }
 }
