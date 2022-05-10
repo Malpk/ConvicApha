@@ -10,7 +10,6 @@ public class PlayerHealth : Health
 
     public AudioSource AddHealthSound;
     
-
     public void Start()
     {
         _healthUI.Setup(_maxHealthPoint);

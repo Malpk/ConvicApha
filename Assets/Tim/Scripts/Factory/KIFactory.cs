@@ -15,7 +15,7 @@ public class KIFactory : ObjectFactroy
 
     public void DebugCreateDevice()
     {
-        var instance = GetGun(GunsEnum.Gun);
+        var instance = GetGun(GunsEnum.RocketLauncher);
     }
 
     public Device GetDevice(DeviceEnum type)

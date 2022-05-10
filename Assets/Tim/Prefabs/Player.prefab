@@ -13,12 +13,14 @@ GameObject:
   - component: {fileID: 9201862873868157247}
   - component: {fileID: 9201862873868157240}
   - component: {fileID: 9201862873868157241}
-  - component: {fileID: 9201862873868157242}
-  - component: {fileID: 9201862873868157243}
-  - component: {fileID: 9201862873868157244}
-  m_Layer: 0
+  - component: {fileID: 7811300758488102047}
+  - component: {fileID: 2130170945966079714}
+  - component: {fileID: 8450605888749250668}
+  - component: {fileID: 1758408048579439613}
+  - component: {fileID: 8508106193675589874}
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 2742977498245288598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.16, y: -1.48, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5252, y: 2.9227, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -76,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 605161e24470f704798815c40a910f13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -221,7 +223,58 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &9201862873868157242
+--- !u!95 &7811300758488102047
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742977498245288598}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2130170945966079714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742977498245288598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5cc3ad28df3d047adfc28e51f8e459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthPoints: 5
+  _maxHealthPoint: 7
+  EventOnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  EventOnDie:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8450605888749250668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742977498245288598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312c17860add66e46a0668210861e87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1758408048579439613
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,37 +290,19 @@ MonoBehaviour:
   _maxMultiplierSpeed: 10
   _multiplierSpeedRotation: 10
   _multiplierSpeedCamera: 10
---- !u!114 &9201862873868157243
-MonoBehaviour:
+--- !u!58 &8508106193675589874
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2742977498245288598}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b282dc366c48394c9a49b65d26a5cf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthPoints: 5
-  _maxHealthPoint: 7
-  EventOnTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
-  EventOnDie:
-    m_PersistentCalls:
-      m_Calls: []
-  _healthUI: {fileID: 0}
-  AddHealthSound: {fileID: 0}
---- !u!114 &9201862873868157244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2742977498245288598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 312c17860add66e46a0668210861e87d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4.83

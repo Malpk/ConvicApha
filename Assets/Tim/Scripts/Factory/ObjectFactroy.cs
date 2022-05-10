@@ -23,7 +23,7 @@ public abstract class ObjectFactroy : ScriptableObject
                 scene = SceneManager.CreateScene(name);
             }
         }
-        T instance = Instantiate(prefab,Vector3.zero,Quaternion.identity);
+        T instance = Instantiate(prefab);
         SceneManager.MoveGameObjectToScene(instance.gameObject, scene);
         return instance;
     }
