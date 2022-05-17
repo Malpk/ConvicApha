@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class Gun : MonoBehaviour
+public class Gun : KI
 {
     [SerializeField] protected GunsEnum gunType = GunsEnum.Gun;
     public GunsEnum GunType => gunType;
@@ -35,7 +35,6 @@ public class Gun : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    
     protected virtual IEnumerator Rotate()
     {
         _time = _firingRateOnSeconds;

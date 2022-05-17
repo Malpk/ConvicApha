@@ -2,5 +2,8 @@ public enum DeviceEnum
 {
     Izolator,
     Stream,
-    SignalTile
+    SignalTile,
+    Bullet,
+    Laser,
+    Rocket
 }

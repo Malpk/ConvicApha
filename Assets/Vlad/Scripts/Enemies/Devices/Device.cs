@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Device : MonoBehaviour
+public abstract class Device : KI
 {
     [SerializeField] protected DeviceEnum deviceType;
     public DeviceEnum DeviceType => deviceType;

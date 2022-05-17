@@ -7,7 +7,6 @@ public class randomPlateSpawn : MonoBehaviour
 {
     public GameObject plate;
     
-    
     public LayerMask isPlate;
     private Vector2[] FreePlatePlace = new Vector2[0];
   
