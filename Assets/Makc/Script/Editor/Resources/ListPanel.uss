@@ -7,6 +7,7 @@
 	min-width : 100;
 	min-height : 20;
 }
+
 .button-control
 {
 	position : absolute;
@@ -19,6 +20,15 @@
 	border-width : 1px;
 	border-color :  rgba(0,0,0,255);
 	background-color : rgba(64,64,64,255);
+}
+.buttonSequnce-focus
+{
+	background-color : rgba(150,150,150,255);
+}
+.proprty-field
+{
+	width : 95%;
+	left : 5px;
 }
 .button-control-minus
 {
