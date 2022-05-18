@@ -149,11 +149,9 @@ namespace Underworld.Editors
         }
         private void OnDisable()
         {
-            Debug.Log("disable");
         }
         private void OnDestroy()
         {
-            Debug.Log("destroy");
         }
         public ModeTypeNew TypeMode { get; private set; }
         public abstract string SettingSeirilize { get; }

@@ -79,7 +79,6 @@ namespace Underworld
         }
         public void OnAfterDeserialize()
         {
-            Debug.Log("Desirilize");
             _dataSetting.Clear();
             foreach (var element in SaveData)
             {
