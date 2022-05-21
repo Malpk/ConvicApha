@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BaseMode;
 
 [CreateAssetMenu] 
 public class KIFactory : ObjectFactroy
@@ -21,8 +22,6 @@ public class KIFactory : ObjectFactroy
     {
         switch (type)
         {
-            case DeviceEnum.Izolator:
-                return Get(izolatorPrefab);
             //case DeviceEnum.Stream:
             //    return Get(streamPrefab);
         }

@@ -16,7 +16,7 @@ public class Rocket : Bullet
         base.Start();
     }
 
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
 
@@ -24,14 +24,6 @@ public class Rocket : Bullet
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radiusArea);
         foreach (Collider2D collider in colliders)
         {
-            EffectsHandler effectsHandler = collider.attachedRigidbody?.GetComponent<EffectsHandler>();
-            if (effectsHandler)
-            {
-                foreach (DestructiveEffect effect in _effectsOnArea)
-                {
-                    effectsHandler.AddEffect(effect);
-                }
-            }
         }
     }
 

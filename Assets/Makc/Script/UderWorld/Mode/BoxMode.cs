@@ -28,7 +28,7 @@ namespace Underworld
         private Point[,] _map;
         private BoxCollider2D _collider;
 
-        public bool IsActive => startMode != null;
+        public bool IsAttackMode => startMode != null;
 
         private void Awake()
         {

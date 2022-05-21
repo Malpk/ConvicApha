@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class Bullet : DeviceWithNegativeEffect
+public class Bullet : MonoBehaviour
 {
     [SerializeField]
     protected float _speed;
@@ -17,13 +17,8 @@ public class Bullet : DeviceWithNegativeEffect
         Destroy(gameObject, 5f);
     }
 
-    protected override void ActivateDevice(EffectsHandler effectsHandler)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
-        base.ActivateDevice(effectsHandler);
-    }
-    protected override void OnCollisionEnter2D(Collision2D collision)
-    {
-        base.OnCollisionEnter2D(collision);
         Destroy(gameObject);
     }
 }

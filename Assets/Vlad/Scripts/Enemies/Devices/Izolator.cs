@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BaseMode;
 
 public class Izolator : Device
 {
@@ -10,13 +11,13 @@ public class Izolator : Device
     private Animator[] _animators;
 
     private bool _isActive;
-    protected override void ActivateDevice(EffectsHandler effectsHandler)
+    protected void ActivateDevice()
     {
         if (_isActive)
         {
             return;
         }
-        foreach(Animator animator in _animators)
+        foreach (Animator animator in _animators)
         {
             animator.SetTrigger("Activate");
         }

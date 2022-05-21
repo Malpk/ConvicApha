@@ -6,7 +6,7 @@ namespace Underworld
 {
     public interface IModeForSwitch
     {
-        public bool IsActive { get; }
+        public bool IsAttackMode { get; }
         public void Constructor(SwitchMode swictMode);
         public void SetSetting(string jsonSetting);
     }

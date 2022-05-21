@@ -2,15 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeviceWithNegativeEffect : Device
+public class DeviceWithNegativeEffect : MonoBehaviour
 {
     [SerializeField]
     protected DestructiveEffect[] _directionalEffects;
-    protected override void ActivateDevice(EffectsHandler effectsHandler)
-    {
-        foreach(DestructiveEffect effect in _directionalEffects)
-        {
-            effectsHandler.AddEffect(effect);
-        }
-    }
+
 }

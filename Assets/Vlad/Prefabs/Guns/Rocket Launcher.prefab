@@ -361,7 +361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0caeb2a5207b8bb4489855ce3599f13e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 3, y: 3}
   gunType: 3
   _activeTime: 0
   _activationTime: 4
@@ -379,7 +378,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 940189542548376968}
-  - component: {fileID: 940189542548376970}
   - component: {fileID: 940189542548376969}
   m_Layer: 9
   m_Name: Signal Tile (2)
@@ -403,21 +401,6 @@ Transform:
   m_Father: {fileID: 940189542759612253}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &940189542548376970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940189542548376967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  size: {x: 1, y: 1}
-  deviceType: 2
-  _parentGun: {fileID: 940189542473468732}
 --- !u!61 &940189542548376969
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -489,9 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 1, y: 1}
-  deviceType: 2
-  _parentGun: {fileID: 940189542473468732}
+  _parentGun: {fileID: 0}
 --- !u!61 &940189542656817183
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -698,8 +679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 1, y: 1}
-  deviceType: 2
   _parentGun: {fileID: 940189542473468732}
 --- !u!61 &940189542988427750
 BoxCollider2D:

@@ -22,7 +22,7 @@ namespace Underworld
 
         protected Coroutine startMode = null;
 
-        public bool IsActive => startMode != null;
+        public bool IsAttackMode => startMode != null;
 
         private void Awake()
         {

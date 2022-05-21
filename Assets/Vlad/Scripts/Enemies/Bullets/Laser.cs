@@ -12,11 +12,7 @@ public class Laser : DeviceWithNegativeEffect
         if (Physics2D.Raycast(transform.position, transform.up, _contactFilter2D, hit, 50f) > 0)
         {
             transform.localScale = new Vector3(1f, hit[0].distance, 1f);
-            EffectsHandler effectsHandler = hit[0].rigidbody?.GetComponent<EffectsHandler>();
-            if (effectsHandler)
-            {
-                ActivateDevice(effectsHandler);
-            }
+
         }
     }
 

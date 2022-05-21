@@ -85,7 +85,7 @@ namespace Underworld
                         {
                             switchMode.SetSetting(_curretMode.Setting);
                             switchMode.Constructor(this);
-                            yield return new WaitWhile(() => switchMode.IsActive);
+                            yield return new WaitWhile(() => switchMode.IsAttackMode);
                         }
                         mode.SetActive(false);
                     }

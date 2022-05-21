@@ -27,7 +27,6 @@ public class Gun : KI
 
     protected Rigidbody2D _rigidbody;
     protected bool _isActive;
-    protected EffectsHandler _effectsHandler;
     private float _time;
 
     protected void Start()
@@ -59,14 +58,13 @@ public class Gun : KI
         }
     }
 
-    public virtual void ActivateGun(EffectsHandler effectsHandler)
+    public virtual void ActivateGun()
     {
         if(_isActive)
         {
             return;
         }
         _isActive = true;
-        _effectsHandler = effectsHandler;
         StartCoroutine(Rotate());
     }
 }
