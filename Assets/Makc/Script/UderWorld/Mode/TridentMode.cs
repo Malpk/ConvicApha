@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
 using System.Linq;
 
 namespace Underworld
@@ -115,6 +114,8 @@ namespace Underworld
                 yield return new WaitForSeconds(_groupShootDelay);
             }
             _countCorotine--;
+            if (_countCorotine == 0)
+                gameObject.SetActive(false);
             yield return null;
         }
         private Trident[] GetGroup(List<Trident[]> list,int[] angels)
@@ -166,6 +167,19 @@ namespace Underworld
                 throw new System.NullReferenceException($"{marker.name} is no component \" Marker \" ");
             else
                 return markerComponent;
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<TridetSetting>(jsonSetting);
+            _warningTime = setting.WarningTime;
+            _workDuration = setting.WorkDuration;
+            _verticalMode = setting.Vertical;
+            _horizontalMode = setting.Horizontal;
+            _moveDistance = setting.MoveDistance;
+            _shootDelay = setting.ShootDelay;
+            _speedMovement = setting.SpeedMovement;
+            _groupShootDelay = setting.GroundShootDelay;
         }
     }
 }

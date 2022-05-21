@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
 using System.Linq;
 
 namespace Underworld
@@ -94,6 +93,7 @@ namespace Underworld
             }
             yield return new WaitWhile(() => mapActive[mapActive.Count - 1].IsActive);
             _runMode = null;
+            gameObject.SetActive(false);
         }
         private IEnumerable<Point> GetMapActive(Point[,] map,IReadOnlyList<Vector2Int> islands)
         {
@@ -216,6 +216,16 @@ namespace Underworld
                 bounds[i] = boundsNormalize[i] * mapSize;
             }
             return bounds;
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<IslandSetting>(jsonSetting);
+            _maxSizeIsland = setting.MaxSizeIsland;
+            _minSizeIsland = setting.MinSizeIsland;
+            _minDistanceBothIsland = setting.MinDistanceBothIsland;
+            _warningTime = setting.WarningTime;
+            _workTime = setting.WorkTime;
         }
     }
 }

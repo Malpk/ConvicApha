@@ -1,24 +1,33 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-[RequireComponent(typeof(AudioSource))]
-public class PlayerMove : UnitMove
+
+public class PlayerMove : MonoBehaviour, IMoveEffect
 {
+    [SerializeField]
+    private float _speedMovement = 5f;
+    [SerializeField]
+    private float _multiplierSpeedRotation = 10f;
+    [SerializeField]
+    private float _multiplierSpeedCamera = 10f;
+
+
+    private float _currentSpeed;
+
     private Rigidbody2D _rb2d;
-    private AudioSource _audioSrc;
     private Camera _mainCamera;
     private Vector2 _currentDirection;
 
-    [SerializeField]
-    protected float _multiplierSpeedCamera = 10f;
+    private Coroutine _stopMoveCorotine;
+    private Coroutine _utpdateMoveCorotine;
 
-    protected override void Awake()
+    protected void Awake()
     {
+        _currentSpeed = _speedMovement;
         _rb2d = GetComponent<Rigidbody2D>();
-        _audioSrc = GetComponent<AudioSource>();
         _mainCamera = Camera.main;
-        base.Awake();
     }
 
     private void FixedUpdate()
@@ -32,10 +41,8 @@ public class PlayerMove : UnitMove
 
     private void LateUpdate()
     {
-       PullTheCamera();
+       FollowingTheCamera();
     }
-
-    // Движение игрока
     private void Move()
     {
         _currentDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -46,26 +53,47 @@ public class PlayerMove : UnitMove
         }
 
     }
-
-    // Поворот модельки относительно движения
     private void Rotate()
     {
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            //if (!_audioSrc.isPlaying)
-            //{
-            //    _audioSrc.Play();
-            //}
-
             Quaternion rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, _currentDirection), _multiplierSpeedRotation * Time.deltaTime);
             _rb2d.MoveRotation(rotation);
         }
     }
 
-    // Следование камеры за игроком
-    private void PullTheCamera()
+    private void FollowingTheCamera()
     {
         Vector2 newPosition = Vector2.Lerp(_mainCamera.transform.position, transform.position, _multiplierSpeedCamera * Time.deltaTime);
         _mainCamera.transform.position = new Vector3(newPosition.x, newPosition.y, _mainCamera.transform.position.z);
+    }
+
+    public void StopMove(float duration)
+    {
+        if(_stopMoveCorotine == null)
+            _stopMoveCorotine = StartCoroutine(StopMovement(duration));
+    }
+
+    public void ChangeSpeed(float duration,float value = 1)
+    {
+        if(_utpdateMoveCorotine == null)
+            _utpdateMoveCorotine = StartCoroutine(UpdateSpeed(duration,value));
+    }
+
+    private IEnumerator StopMovement(float duratuin)
+    {
+        var temp = _currentSpeed;
+        _currentSpeed = 0f;
+        yield return new WaitForSeconds(duratuin);
+        _currentSpeed = temp;
+        _stopMoveCorotine = null;
+    }
+    private IEnumerator UpdateSpeed(float duration, float value)
+    {
+        var temp = _currentSpeed;
+        _currentSpeed *= value;
+        yield return new WaitForSeconds(duration);
+        _currentSpeed = temp;
+        _utpdateMoveCorotine = null;
     }
 }

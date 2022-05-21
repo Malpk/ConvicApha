@@ -147,12 +147,6 @@ namespace Underworld.Editors
             TypeMode = type;
             Position = position;
         }
-        private void OnDisable()
-        {
-        }
-        private void OnDestroy()
-        {
-        }
         public ModeTypeNew TypeMode { get; private set; }
         public abstract string SettingSeirilize { get; }
         public abstract IModeSetting Setting {get;}

@@ -22,6 +22,10 @@ namespace Underworld.Editors
             Insert(0, grid);
             AddManipulate();
         }
+        ~SeqcunceEdit()
+        {
+            SaveSecunce();
+        }
         public delegate void ChoiseNode(SerializedObject scriptableObject);
         public delegate void UnSelectNode();
 
@@ -79,9 +83,8 @@ namespace Underworld.Editors
                
             }
         }
-        private void SaveSecunce()
+        public void SaveSecunce()
         {
-            UnSelect();
             var list = new List<NodeSetting>();
             graphElements.ForEach(node =>
             {
@@ -105,7 +108,18 @@ namespace Underworld.Editors
                     list.Add(underworldNode.NodeSetting);
                 }
             });
+            if (list.Count == 0)
+                return;
+            var sequnce = new List<SettingSerilize>();
+            sequnce.Add(new SettingSerilize(list[0].TypeMode, list[0].SettingSeirilize));
+            int index = list[0].NextNode;
+            while (index != -1)
+            {
+                sequnce.Add(new SettingSerilize(list[index].TypeMode, list[index].SettingSeirilize));
+                index = list[index].NextNode;
+            }
             _secunce.Elements = list;
+            _secunce.SettingSequnce = sequnce;
         }
         private void SelectNode(NodeSetting setting)
         {

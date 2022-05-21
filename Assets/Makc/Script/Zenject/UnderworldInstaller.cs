@@ -2,7 +2,6 @@ using UnityEngine;
 using Zenject;
 using PlayerComponent;
 using Underworld;
-using SwitchModeComponent;
 using UnityEngine.Tilemaps;
 using UIInteface;
 

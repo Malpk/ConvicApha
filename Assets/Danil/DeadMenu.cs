@@ -1,7 +1,6 @@
 ﻿using Zenject;
 using UnityEngine;
 using TMPro;
-using SwitchModeComponent;
 
 namespace Underworld
 {
@@ -24,9 +23,8 @@ namespace Underworld
 
         private void EnterMessange()
         {
-            var typeMode = ModeType.None;
-            if (_modeSwich.curreqSequence.TryGetComponent<UnderworldSequnce>(out UnderworldSequnce sequence))
-                typeMode = sequence.curretTypeMode;
+            var typeMode = ModeTypeNew.BaseMode;
+               // typeMode = _modeSwich.Type;
             _headDeadMenu.text = _messange.GetMessgange(typeMode);
         }
     }

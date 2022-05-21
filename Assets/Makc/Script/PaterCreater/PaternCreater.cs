@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
 using System.Linq;
 
 namespace Underworld
@@ -21,7 +20,9 @@ namespace Underworld
         protected Color deactiveColor;
         protected Point[,] _map;
 
-        public bool IsAttackMode => true;
+        protected Coroutine startMode = null;
+
+        public bool IsActive => startMode != null;
 
         private void Awake()
         {
@@ -30,7 +31,7 @@ namespace Underworld
         public void Constructor(SwitchMode swictMode)
         {
             _map = swictMode.builder.Map;
-            StartCoroutine(RunPatern());
+            startMode = StartCoroutine(RunPatern());
         }
         private IEnumerator RunPatern()
         {
@@ -47,7 +48,8 @@ namespace Underworld
                     yield return new WaitForSeconds(oneSecond / changeSpeed);
                 }
             }
-            Destroy(gameObject);
+            startMode = null;
+            gameObject.SetActive(false);
         }
         private IEnumerable<Point> ReadTexture(Texture2D texture, Vector2Int startPosition)
         {
@@ -107,6 +109,15 @@ namespace Underworld
             var x = _spriteAtlas.texture.width / _unitySprite.x;
             var y = _spriteAtlas.texture.height / _unitySprite.y;
             return new Vector2Int(x, y);
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<PaternCraterSetting>(jsonSetting);
+            changeSpeed = setting.ChangeSpeed;
+            errorColorDefaout = setting.ErroColorDefout;
+            iversionMode = setting.InversionMode;
+            _spriteAtlas = setting.SpriteAtlas;
         }
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
 
 namespace Underworld
 {
@@ -18,7 +17,7 @@ namespace Underworld
         private int[] _direction = new int[] { -1, 1 };
         private Point[,] _map;
 
-        public bool IsAttackMode => true;
+        public bool IsActive => startMode != null;
 
         public void Constructor(SwitchMode swictMode)
         {
@@ -30,6 +29,15 @@ namespace Underworld
                 DefineStartAngel(swictMode.Player.Position));
             startMode = StartCoroutine(RunMode());
         }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<CoruselSetting>(jsonSetting);
+            _duration = setting.Duration;
+            _warningTime = setting.WarningTime;
+            _speedRotation = setting.SpeedRotation;
+        }
+
         private int ChooseDirection()
         {
             int index = Random.Range(0, _direction.Length);
@@ -56,6 +64,7 @@ namespace Underworld
             }
             yield return new WaitWhile(() => TurnOffPoints(_map).IsActive);
             startMode = null;
+            gameObject.SetActive(false);
         }
     }
 }

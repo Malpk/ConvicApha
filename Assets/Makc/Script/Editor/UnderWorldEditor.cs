@@ -12,7 +12,7 @@ namespace Underworld.Editors
         private Button _addNewSecunce;
         private Button _focusButton = null;
         private Seqcunce _curretSecunce;
-        private ModeSwitchController _secunceContainer;
+        private ModeSwitchController _controller;
         private Dictionary<VisualElement, Seqcunce> _listSecunce = new Dictionary<VisualElement, Seqcunce>();
         private VisualElement _container;
         private VisualElement _inspector;
@@ -28,24 +28,33 @@ namespace Underworld.Editors
         }
         public void SetParent(ModeSwitchController parent)
         {
-            _secunceContainer = parent;
+            _controller = parent;
+            _inspector.Clear();
+            _container.Clear();
             foreach (var sequnce in parent.Seqcuncs)
             {
                 AddSecunce(sequnce);
+            }
+            if (_controller.Seqcuncs.Count > 0)
+            {
+                _secunce.SetEnabled(true);
+                _secunce.OutputSecunce(_controller.Seqcuncs[0]);
             }
         }
         private void CreateGUI()
         {
             CreateBaseInterface();
+        }
+        private void OnEnable()
+        {
+            _secunce = new SeqcunceEdit();
             _secunce.SetEnabled(false);
             _secunce.UnSelectNodeAction += () => _inspector.Clear();
             _secunce.ChoiseNodeAction += OutputSetting;
         }
         private void OnDisable()
         {
-        }
-        private void OnDestroy()
-        {
+            _secunce.SaveSecunce();
             _secunce.ChoiseNodeAction -= OutputSetting;
             _secunce.UnSelectNodeAction -= () => _inspector.Clear();
         }
@@ -66,7 +75,6 @@ namespace Underworld.Editors
             rootVisualElement.styleSheets.Add((StyleSheet)Resources.Load("EditorViewStyle"));
             var panel = new VisualElement();
             _inspector = new VisualElement();
-            _secunce = new SeqcunceEdit();
             _container = new VisualElement();
             panel.AddToClassList("horizontal-container");
             _secunce.AddToClassList("view-size");
@@ -87,7 +95,7 @@ namespace Underworld.Editors
         {
             var seqcunce = new Seqcunce();
             AddSecunce(seqcunce);
-            _secunceContainer.Add(seqcunce);
+            _controller.Add(seqcunce);
         }
         private void AddSecunce(Seqcunce seqcunce)
         {
@@ -123,7 +131,7 @@ namespace Underworld.Editors
             {
                 deleteButton = _container[(_container.childCount - 1)];
             }
-            _secunceContainer.Remove(_listSecunce[deleteButton]);
+            _controller.Remove(_listSecunce[deleteButton]);
             _listSecunce.Remove(deleteButton);
             _container.Remove(deleteButton);
         }

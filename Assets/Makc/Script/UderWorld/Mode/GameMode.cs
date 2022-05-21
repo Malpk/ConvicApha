@@ -8,8 +8,6 @@ namespace Underworld
     {
         protected Coroutine startMode = null;
 
-        public bool StatusWork => startMode != null;
-
         protected void TurnOnPoints(Point[,] map)
         {
             foreach (var point in map)
@@ -27,17 +25,17 @@ namespace Underworld
         }
         protected Point TurnOffPoints(Point[,] map)
         {
-            int i = map.GetLength(0) - 1;
-            int j = map.GetLength(1) - 1;
+            Point lostPoint = null;
             foreach (var point in map)
             {
                 point.Animation.Stop();
+                lostPoint = point;
             }
-            return map[i, j];
+            return lostPoint;
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent<PoolTerm>(out PoolTerm term))
+            if (collision.TryGetComponent<PoolTerm>(out PoolTerm term) && startMode!=null)
             {
                 term.SetActiveMode(false);
                 term.Stop();
@@ -45,7 +43,7 @@ namespace Underworld
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.TryGetComponent<PoolTerm>(out PoolTerm term))
+            if (collision.TryGetComponent<PoolTerm>(out PoolTerm term) && startMode != null)
             {
                 term.SetActiveMode(true);
                 term.StartTile();

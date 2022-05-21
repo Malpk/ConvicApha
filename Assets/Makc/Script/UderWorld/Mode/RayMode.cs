@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
 using System.Linq;
 
 namespace Underworld
@@ -27,7 +26,7 @@ namespace Underworld
         private int[] _direction = new int[] { 1, -1 };
         private Point[,] _map = null;
         private List<RayPoint> _points = new List<RayPoint>();
-        public bool IsAttackMode => _points.Count > 0;
+        public bool IsActive => startMode != null;
 
         private void Awake()
         {
@@ -37,6 +36,7 @@ namespace Underworld
         {
             if (startMode == null)
             {
+                Debug.Log("stasss");
                 _map = swictMode.builder.Map;
                 startMode = StartCoroutine(Rotation(_points));
                 TurnOnPoints(_map);
@@ -71,9 +71,10 @@ namespace Underworld
                 yield return new WaitForSeconds(_delay);
                 progress += _delay / _duration;
             }
-            yield return new WaitWhile(() => TurnOffPoints(_map).IsActive);
+            var point = TurnOffPoints(_map);
+            if(point != null)
+                yield return new WaitWhile(() => point.IsActive);
             startMode = null;
-            Destroy(gameObject);
         }
         private int GetDirection()
         {
@@ -93,6 +94,17 @@ namespace Underworld
             ray.parent = transform;
             ray.rotation = Quaternion.Euler(Vector3.forward * lostSteep);
             return GetComponent<RayPoint>();
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<RaySetting>(jsonSetting);
+            _countRay = setting.CountRay;
+            _delay = setting.Dealy;
+            _duration = setting.Duration;
+            _offset = setting.OfssetAngle;
+            _speedOffset = setting.SpeedOffset;
+            _warningTime = setting.WarningTime;
         }
     }
 }

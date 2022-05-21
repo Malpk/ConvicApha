@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public interface IMoveEffect
+public interface IMoveEffects
 {
     public abstract void ActivateTheEffectOnMove(UnitMove unitMove);
 }

@@ -4,28 +4,47 @@ using UnityEngine;
 using Underworld;
 using Zenject;
 
-namespace SwitchModeComponent
+
+namespace Underworld
 {
     public class SwitchMode : MonoBehaviour
     {
         [Header("Perfab Setting")]
         [SerializeField] private Player _player;
         [SerializeField] private MapBuilder _builder;
-        [SerializeField] private List<SettingSequence> _sequences = new List<SettingSequence>();
+        [SerializeField] private List<ModeSet> _mods;
+        [SerializeField] private ModeSwitchController _controller;
+
         [Header("Map Setting")]
 
         [Inject] private CameraAnimation _cameraAnimation;
 
-        private List<SettingSequence> _curretList = new List<SettingSequence>();
+        private SettingSerilize _curretMode;
+        private List<Seqcunce> _curretList = new List<Seqcunce>();
 
+        //public ModeTypeNew Type => _curretMode !=null ? _curretMode.Type: ModeTypeNew.BaseMode;
         public bool isAttackMode => GetSequenceStatus(curreqSequence);
         public Player Player => _player;
         public GameObject curreqSequence { get; private set; }
         public MapBuilder builder => _builder;
         public Vector2 UnitSize => _builder.UnitSize;
+
         private void Awake()
         {
             _builder.Intializate(transform);
+            var clearList = new List<ModeSet>();
+            for (int i = 0; i < _mods.Count; i++)
+            {
+                if (_mods[i].ModeObject != null)
+                {
+                    _mods[i].ModeObject = Instantiate(_mods[i].ModeObject, Vector3.zero, Quaternion.identity);
+                    _mods[i].ModeObject.transform.parent = transform;
+                    _mods[i].ModeObject.SetActive(false);
+                    clearList.Add(_mods[i]);
+                }
+            }
+            _mods.Clear();
+            _mods = clearList;
         }
         private void OnEnable()
         {
@@ -50,53 +69,50 @@ namespace SwitchModeComponent
         }
         private IEnumerator RunSwitchMode()
         {
-            while (true)
-            {
-                if (_curretList.Count > 0)
-                {
-                    var sequence = GetMode().sequence;
-                    var instateSequence = Instantiate(sequence, Vector3.zero, Quaternion.identity);
-                    instateSequence.transform.parent = transform;
-                    curreqSequence = instateSequence;
-                    IntializateSequence(instateSequence.GetComponents<IModeForSwitch>());
-                    yield return new WaitWhile(() => (instateSequence != null));
-                }
-                else 
-                {
-                    _curretList = GetList();
-                }
-            }
-        }
-        private void IntializateSequence(IModeForSwitch[] list)
-        {
-            foreach (var sequence in list)
-            {
-                sequence.Constructor(this);
-            }
-        }
-        private SettingSequence GetMode()
-        {
+            Seqcunce sequnce = null;
+            UpdateList(sequnce);
             if (_curretList.Count > 0)
             {
-                var index = Random.Range(0, _curretList.Count);
-                var sequence = _curretList[index];
-                _curretList.Remove(sequence);
-                return sequence;
+                sequnce = _curretList[Random.Range(0, _curretList.Count)];
+                for (int i = 0; i < sequnce.SettingSequnce.Count; i++)
+                {
+                    var mode = DefineMode(sequnce.SettingSequnce[i].Type);
+                    if (mode != null)
+                    {
+                        _curretMode = sequnce.SettingSequnce[i];
+                        mode.SetActive(true);
+                        if (mode.TryGetComponent<IModeForSwitch>(out IModeForSwitch switchMode))
+                        {
+                            switchMode.SetSetting(_curretMode.Setting);
+                            switchMode.Constructor(this);
+                            yield return new WaitWhile(() => switchMode.IsActive);
+                        }
+                        mode.SetActive(false);
+                    }
+                    yield return null;
+                }
             }
-            else
-            {
-                return null;
-            }
+                yield return null;
         }
-        private List<SettingSequence> GetList()
+        private GameObject DefineMode(ModeTypeNew type)
         {
-            var list = new List<SettingSequence>();
-            foreach (var sequence in _sequences)
+            foreach (var mode in _mods)
             {
-                list.Add(sequence);
+                if (mode.TypeMode == type)
+                    return mode.ModeObject;
             }
-            return list;
+            return null;
         }
-
+        private void UpdateList(Seqcunce delete)
+        {
+            _curretList.Remove(delete);
+            if (_curretList.Count == 0)
+            {
+                foreach (var sequnce in _controller.Seqcuncs)
+                {
+                    _curretList.Add(sequnce);
+                }
+            }
+        }
     }
 }

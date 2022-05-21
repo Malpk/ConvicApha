@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
 
 namespace Underworld
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class BoxMode : GameMode,IModeForSwitch
+    public class BoxMode : GameMode, IModeForSwitch
     {
         [Header("Movement Setting")] [Min(1)]
         [SerializeField] private int _countMove;
@@ -29,7 +28,7 @@ namespace Underworld
         private Point[,] _map;
         private BoxCollider2D _collider;
 
-        public bool IsAttackMode => throw new System.NotImplementedException();
+        public bool IsActive => startMode != null;
 
         private void Awake()
         {
@@ -54,6 +53,7 @@ namespace Underworld
             }
             yield return StartCoroutine(MoveSqurt());
             startMode = null;
+            gameObject.SetActive(false);
         }
         private IEnumerator MoveSqurt()
         {
@@ -110,6 +110,17 @@ namespace Underworld
         {
             var distance = Vector3.Distance(target, transform.position);
             return Mathf.Abs(distance / speed);
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<BoxSetting>(jsonSetting);
+            _countMove = setting.CountMove;
+            _delay = setting.Delay;
+            _maxOffset = setting.MaxOffset;
+            _minSize = setting.MinSize;
+            _scaleDuration = setting.ScaleDuration;
+            _speedMovement = setting.SpeedMove;
         }
     }
 }

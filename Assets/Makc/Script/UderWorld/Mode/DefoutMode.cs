@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using SwitchModeComponent;
 using UnityEngine;
 using System.Linq;
 
@@ -53,7 +52,7 @@ namespace Underworld
                 StartCoroutine(ActivateTile(GetSpawnZone(index).ToList()));
                 yield return new WaitForSeconds(_delay);
             }
-            yield return null;
+            _startMode = null;
         }
         private IEnumerator ActivateTile(List<Point> points)
         {
@@ -86,6 +85,15 @@ namespace Underworld
             var x = limit.x > 0 ? limit.x : 0;
             var y = limit.y < mapLimit ? limit.y : mapLimit;
             return new Vector2Int(x, y);
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<BaseSetting>(jsonSetting);
+            _delay = setting.Delay;
+            _spawnDistance = setting.SpawnDistance;
+            _timeFireActive = setting.TimeFireActive;
+            _workDuration = setting.WorkDuration;
         }
     }
 }

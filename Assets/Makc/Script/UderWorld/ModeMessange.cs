@@ -12,7 +12,7 @@ namespace Underworld
 
         private List<string> _messangeList = new List<string>(); 
 
-        public string GetMessgange(ModeType typeMode = ModeType.None)
+        public string GetMessgange(ModeTypeNew typeMode = ModeTypeNew.BaseMode)
         {
             var listMessange = FiltrModeMessange(typeMode);
             if (_messangeList.Count == 0)
@@ -22,7 +22,7 @@ namespace Underworld
             _messangeList.Remove(listMessange[index]);
             return listMessange[index];
         }
-        private List<string> FiltrModeMessange(ModeType typeMode)
+        private List<string> FiltrModeMessange(ModeTypeNew typeMode)
         {
             var listMessange = new List<string>();
             for (int i = 0; i < _modeMessgangs.Count; i++)

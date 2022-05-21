@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SwitchModeComponent;
 using System.Linq;
 
 namespace Underworld
@@ -60,7 +59,7 @@ namespace Underworld
             }
             _runMods.Remove(_runMods[0]);
             if (_runMods.Count == 0)
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             yield return null;
         }
         private Transform GetHolder(string name)
@@ -68,6 +67,14 @@ namespace Underworld
             var holder = new GameObject(name).transform;
             holder.parent = transform;
             return holder;
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            var setting = JsonUtility.FromJson<ViseSetting>(jsonSetting);
+            _maxTimeOffset = setting.MaxTimeOffset;
+            _minTimeOffset = setting.MinTimeOffset;
+            _warningTime = setting.WarningTime;
         }
     }
 }

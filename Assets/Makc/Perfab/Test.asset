@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23cc376d34e3344ab8476808a5b8618, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  _fuckField: 4545
+  SeqcuncePatern:
+  - SettingSequnce:
+    - _type: 0
+      _serilizeSetting: '{"_spawnDistance":78,"_delay":0.0,"_timeFireActive":0.0,"_workDuration":0.0}'
+    Elements:
+    - {fileID: 0}
+    SaveData:
+    - '{"_nextNode":-1,"_position":{"x":-29.599990844726564,"y":-34.400001525878909},"_type":0,"_settingSeirilize":"{\"_spawnDistance\":78,\"_delay\":0.0,\"_timeFireActive\":0.0,\"_workDuration\":0.0}"}'
+    _dataSetting:
+    - _nextNode: -1
+      _position: {x: 0, y: 0}
+      _type: 0
+      _settingSeirilize: '{"_spawnDistance":78,"_delay":0.0,"_timeFireActive":0.0,"_workDuration":0.0}'
+  - SettingSequnce:
+    - _type: 0
+      _serilizeSetting: '{"_spawnDistance":0,"_delay":0.0,"_timeFireActive":0.0,"_workDuration":0.0}'
+    Elements:
+    - {fileID: 0}
+    SaveData:
+    - '{"_nextNode":-1,"_position":{"x":0.0,"y":0.0},"_type":0,"_settingSeirilize":"{\"_spawnDistance\":0,\"_delay\":0.0,\"_timeFireActive\":0.0,\"_workDuration\":0.0}"}'
+    _dataSetting:
+    - _nextNode: -1
+      _position: {x: 0, y: 0}
+      _type: 0
+      _settingSeirilize: '{"_spawnDistance":0,"_delay":0.0,"_timeFireActive":0.0,"_workDuration":0.0}'
+  - SettingSequnce: []
+    Elements:
+    - {fileID: 0}
+    SaveData:
+    - '{"_nextNode":0,"_position":{"x":0.0,"y":0.0},"_type":0,"_settingSeirilize":"{\"_spawnDistance\":0,\"_delay\":0.0,\"_timeFireActive\":0.0,\"_workDuration\":0.0}"}'
+    _dataSetting:
+    - _nextNode: 0
+      _position: {x: 0, y: 0}
+      _type: 0
+      _settingSeirilize: '{"_spawnDistance":0,"_delay":0.0,"_timeFireActive":0.0,"_workDuration":0.0}'
+  - SettingSequnce: []
+    Elements:
+    - {fileID: 0}
+    SaveData:
+    - '{"_nextNode":0,"_position":{"x":0.0,"y":0.0},"_type":0,"_settingSeirilize":"{\"_spawnDistance\":0,\"_delay\":0.0,\"_timeFireActive\":0.0,\"_workDuration\":0.0}"}'
+    _dataSetting:
+    - _nextNode: 0
+      _position: {x: 0, y: 0}
+      _type: 0
+      _settingSeirilize: '{"_spawnDistance":0,"_delay":0.0,"_timeFireActive":0.0,"_workDuration":0.0}'

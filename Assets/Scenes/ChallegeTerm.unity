@@ -8198,9 +8198,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 6126168957804108401}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
       propertyPath: _mapSize
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 11400000, guid: f7d29fffb6cd6c846ae9382a418d70c1, type: 2}
     - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
       propertyPath: _unitSize.x
       value: 1.6
@@ -8214,6 +8222,10 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
       propertyPath: _builder.tileTern
       value: 
       objectReference: {fileID: 1333059954608903435, guid: eb1e0c99abc0c284e8e8776b5b69a482, type: 3}
@@ -8225,6 +8237,66 @@ PrefabInstance:
       propertyPath: _builder.unitSize.y
       value: 1.6
       objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[1].TypeMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[2].TypeMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[3].TypeMode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[4].TypeMode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[5].TypeMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[6].TypeMode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[7].TypeMode
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[0].ModeObject
+      value: 
+      objectReference: {fileID: 792147722769356492, guid: 99334ac496f07664d81171bdc0da1df6, type: 3}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[1].ModeObject
+      value: 
+      objectReference: {fileID: 4082129344648491972, guid: bed1168b993c57247babc418820fb6d5, type: 3}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[2].ModeObject
+      value: 
+      objectReference: {fileID: 3684427775290007181, guid: 21d2e1c7eeac93e4ab1e17009a431c4d, type: 3}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[3].ModeObject
+      value: 
+      objectReference: {fileID: 1078996803756881640, guid: 9607f047ce48be04b99b3278d69cde2e, type: 3}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[4].ModeObject
+      value: 
+      objectReference: {fileID: 3468715773357789379, guid: db44cf9ba30d94b4d98ed138e9422b62, type: 3}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[5].ModeObject
+      value: 
+      objectReference: {fileID: 3058030354801704806, guid: 6481cc8f1c13f6e4592167297a17a5ce, type: 3}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[6].ModeObject
+      value: 
+      objectReference: {fileID: 5045665886472551093, guid: bddd4b781746e3146958692bf38a90fa, type: 3}
+    - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
+      propertyPath: _mods.Array.data[7].ModeObject
+      value: 
+      objectReference: {fileID: 916709158494407678, guid: 5b64d1ac95d0ff54b9854cc75cc83c01, type: 3}
     - target: {fileID: 8263527212579409573, guid: f0780ffff2c7d7b4ebd3bf25a39ad3ce, type: 3}
       propertyPath: _sequences.Array.data[0]._name
       value: Vise

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using SwitchModeComponent;
 
 namespace Underworld
 {
@@ -114,6 +113,11 @@ namespace Underworld
                 _listShaps.Remove(shape);
             }
             _deleteShape.Clear();
+        }
+
+        public void SetSetting(string jsonSetting)
+        {
+            
         }
     }
 }

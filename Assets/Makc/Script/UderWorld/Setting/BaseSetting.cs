@@ -22,7 +22,7 @@ namespace Underworld
         public int SpawnDistance => _spawnDistance;
         public float Delay => _delay;
         public float TimeFireActive => _timeFireActive;
-        public float WorDuration => _workDuration;
+        public float WorkDuration => _workDuration;
 
 
         //public VisualElement[] Fields =>
