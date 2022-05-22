@@ -6,6 +6,7 @@ namespace BaseMode
 {
     public class VenomIzolator : Izolator
     {
+        [SerializeField] private SpriteRenderer _sprite;
         public override EffectType TypeEffect => EffectType.Venom;
 
         protected override void OnTriggerEnter2D(Collider2D collision)
@@ -15,6 +16,11 @@ namespace BaseMode
             {
                 ActivateDevice();
             }
+        }
+
+        protected override void SetMode(bool mode)
+        {
+            _sprite.enabled = mode;
         }
     }
 }

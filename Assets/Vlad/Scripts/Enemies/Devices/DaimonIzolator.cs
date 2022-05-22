@@ -15,5 +15,9 @@ namespace BaseMode
                 ActivateDevice();
             }
         }
+
+        protected override void SetMode(bool mode)
+        {
+        }
     }
 }

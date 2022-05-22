@@ -16,6 +16,8 @@ namespace BaseMode
         [SerializeField] private Transform _spawnProjectelePosition;
         [SerializeField] private FireWave _wave;
 
+
+        private Vector3 _lostTargetPosition;
         private ShootPoint _shootPoint;
         private SignalTile[] _signals;
 
@@ -64,6 +66,7 @@ namespace BaseMode
                 progress += Time.deltaTime / _aimTime;
                 yield return null;
             }
+            _lostTargetPosition = _rotateBody.transform.position + _rotateBody.transform.up * Vector3.Distance(transform.position, target.position);
             Shoot();
             if (_shootPoint == null)
                 Fire();
@@ -92,7 +95,8 @@ namespace BaseMode
             else
                 Debug.LogWarning("_wave = null");
 #endif
-            Instantiate(_bullet, _spawnProjectelePosition.position, Quaternion.Euler(Vector3.forward * _rotateBody.rotation));
+            var rocet =  Instantiate(_bullet, _spawnProjectelePosition.position, Quaternion.Euler(Vector3.forward * _rotateBody.rotation));
+            rocet.GetComponent<Rocket>().SetTarget(_lostTargetPosition);
         }
     }
 }

@@ -15,6 +15,7 @@ public abstract class Izolator : MonoBehaviour
     protected virtual void Awake()
     {
         animators = _jetHolder.GetComponentsInChildren<Animator>();
+        SetMode(false);
     }
     protected void ActivateDevice()
     {
@@ -28,6 +29,7 @@ public abstract class Izolator : MonoBehaviour
         }
         _isActive = true;
         Invoke(nameof(DeactivateDevice), activeTime);
+        SetMode(_isActive);
     }
 
     private void DeactivateDevice()
@@ -37,6 +39,7 @@ public abstract class Izolator : MonoBehaviour
             animator.SetTrigger("Deactivate");
         }
         _isActive = false;
+        SetMode(_isActive);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -57,4 +60,6 @@ public abstract class Izolator : MonoBehaviour
             screen.ScreenOff(TypeEffect);
         }
     }
+
+    protected abstract void SetMode(bool mode);
 }

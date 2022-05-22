@@ -26,6 +26,10 @@ namespace BaseMode
         {
             _animator.SetTrigger("explosion");
         }
+        private void DestroyObject()
+        {
+            Destroy(gameObject);
+        }
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.transform.TryGetComponent<IDamage>(out IDamage target))

@@ -13,5 +13,9 @@ namespace BaseMode
             if (collision.GetComponent<PlayerMove>())
                 ActivateDevice();
         }
+
+        protected override void SetMode(bool mode)
+        {
+        }
     }
 }

@@ -71,11 +71,9 @@ namespace BaseMode
         }
         private IEnumerator ReturnState()
         {
-            var target = 360 - Mathf.Abs(_rotateBody.rotation) > Mathf.Abs(_rotateBody.rotation) ? 0 : 360;
-            target *= _rotateBody.rotation > 0 ? 1 : -1;
-            while (_rotateBody.rotation != target)
+            while (Mathf.Abs(_rotateBody.rotation) > 0.1f && _coroutine == null)
             {
-                _rotateBody.MoveRotation(Mathf.MoveTowards(_rotateBody.rotation, target, _speedRotation));
+                _rotateBody.MoveRotation(Mathf.LerpAngle(_rotateBody.rotation,0,Time.fixedDeltaTime * _speedRotation));
                 yield return new WaitForFixedUpdate();
             }
         }
