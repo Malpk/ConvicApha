@@ -12,7 +12,7 @@ public class KIFactory : ObjectFactroy
     // Add prefabs here
     [Header("Prefabs")]
     //[SerializeField] private FireGun fireGunPrefab;
-    [SerializeField] private Gun gunPrefab;
+    [SerializeField] private Turel gunPrefab;
     //[SerializeField] private LaserGun laserGunPrefab;
     [SerializeField] private RocketLauncher rocketLauncherPrefab;
     [SerializeField] private Izolator izolatorPrefab;

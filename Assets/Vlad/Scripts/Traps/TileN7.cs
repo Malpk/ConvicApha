@@ -8,7 +8,7 @@ namespace BaseMode
     {
         [SerializeField] private float _duration;
 
-        public override TrapType Type => TrapType.N7;
+        public override EffectType Type => EffectType.Freez;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

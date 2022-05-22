@@ -11,7 +11,7 @@ namespace BaseMode
 
         [SerializeField] protected LayerMask playerLayer;
         
-        public abstract TrapType Type { get; }
+        public abstract EffectType Type { get; }
 
         private void Awake()
         {
@@ -24,6 +24,13 @@ namespace BaseMode
             if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect effect))
             {
                 effect.SetEffect(Type, duration);
+            }
+        }
+        protected void SetScreen(Collider2D collision)
+        {
+            if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect effect))
+            {
+                effect.SetEffect(Type);
             }
         }
     }

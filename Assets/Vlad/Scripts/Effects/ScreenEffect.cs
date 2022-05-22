@@ -8,10 +8,11 @@ namespace BaseMode
     [System.Serializable]
     public class ScreenEffect
     {
-        [SerializeField] private TrapType _type;
+        [SerializeField] private EffectType _type;
         [SerializeField] private Sprite _screen;
 
-        public TrapType Type => _type;
+        public EffectType Type => _type;
         public Sprite Screen => _screen;
+
     }
 }

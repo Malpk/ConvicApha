@@ -13,12 +13,11 @@ public class PlayerMove : MonoBehaviour, IMoveEffect
     [SerializeField]
     private float _multiplierSpeedCamera = 10f;
 
-
     private float _currentSpeed;
-
-    private Rigidbody2D _rb2d;
-    private Camera _mainCamera;
     private Vector2 _currentDirection;
+    
+    private Camera _mainCamera;
+    private Rigidbody2D _rb2d;
 
     private Coroutine _stopMoveCorotine;
     private Coroutine _utpdateMoveCorotine;
@@ -51,7 +50,6 @@ public class PlayerMove : MonoBehaviour, IMoveEffect
         {
             _rb2d.velocity = _rb2d.velocity.normalized * _currentSpeed;
         }
-
     }
     private void Rotate()
     {
@@ -85,7 +83,8 @@ public class PlayerMove : MonoBehaviour, IMoveEffect
         var temp = _currentSpeed;
         _currentSpeed = 0f;
         yield return new WaitForSeconds(duratuin);
-        _currentSpeed = temp;
+        if(_utpdateMoveCorotine == null)
+              _currentSpeed = temp;
         _stopMoveCorotine = null;
     }
     private IEnumerator UpdateSpeed(float duration, float value)
@@ -93,7 +92,9 @@ public class PlayerMove : MonoBehaviour, IMoveEffect
         var temp = _currentSpeed;
         _currentSpeed *= value;
         yield return new WaitForSeconds(duration);
-        _currentSpeed = temp;
+        if (_stopMoveCorotine == null)
+            _currentSpeed = temp;
         _utpdateMoveCorotine = null;
     }
+
 }

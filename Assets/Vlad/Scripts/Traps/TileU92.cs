@@ -6,11 +6,11 @@ namespace BaseMode
 {
     public class TileU92 : Trap
     {
-        public override TrapType Type => TrapType.U92;
+        public override EffectType Type => EffectType.Flash;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision,0);
+            SetScreen(collision);
         }
     }
 }

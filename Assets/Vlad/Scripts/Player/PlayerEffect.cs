@@ -13,22 +13,20 @@ namespace BaseMode
 
         private Coroutine _corotine = null;
 
-        public void SetEffect(TrapType type, float duration)
+        public void SetEffect(EffectType type, float duration)
         {
-
-            switch (type)
-            {
-                case TrapType.U92:
-                    _screen.SetScreen(type);
-                    break;
-                default:
-                    _screen.SetScreen(type, duration);
-                    break;
-            }
-            if (_corotine == null && type == TrapType.N7)
+            _screen.SetScreen(type, duration);
+            if (_corotine == null && type == EffectType.Freez)
                 _corotine = StartCoroutine(FreezeState(duration));     
         }
-
+        public void SetEffect(EffectType type)
+        {
+            _screen.SetScreen(type);
+        }
+        public void ScreenOff(EffectType type)
+        {
+            _screen.ScreenOff(type);
+        }
         private IEnumerator FreezeState(float duration)
         {
             var temp = _playerSpriteBody.sprite;

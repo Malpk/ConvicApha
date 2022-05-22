@@ -3,19 +3,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public interface IMoveEffects
-{
-    public abstract void ActivateTheEffectOnMove(UnitMove unitMove);
-}
-public interface IHealthEffect
-{
-    public abstract void ActivateTheEffectOnHealth(Health health);
-}
-
-public interface IDisplayEffect
-{
-    public abstract void ActivateTheDisplayEffect(Image[] effectImages);
-}
 
 public abstract class DestructiveEffect : MonoBehaviour
 {

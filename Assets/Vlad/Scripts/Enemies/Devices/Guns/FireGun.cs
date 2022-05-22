@@ -2,31 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireGun : Gun
+namespace BaseMode
 {
-    [SerializeField]
-    private GameObject _fire;
-    protected override IEnumerator Rotate()
+    public class FireGun : KI
     {
-        _animator.SetTrigger("Activate");
-        yield return new WaitForSeconds(_activationTime);
-        _fire.gameObject.SetActive(true);
+        [Header("Reqired component")]
+        [SerializeField] private Animator _animator;
+        [SerializeField] private Transform _signalHolder;
 
-        float startAngle = _rigidbody.rotation;
-        for (float f = 0; f < _activeTime; f += Time.deltaTime)
+        private SignalTile[] _signals;
+
+        private void Awake()
         {
-            _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _rigidbody.rotation + _rotationAngleOnSeconds, Time.deltaTime);
-            yield return null;
+            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
         }
 
-        _animator.SetTrigger("Deactivate");
-        _fire.gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        //for (float f = 0; f < _activationTime; f += Time.deltaTime)
-        //{
-        //    _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, startAngle, Time.deltaTime);
-        //    yield return null;
-        //}
-        _isActive = false;
+        private void OnEnable()
+        {
+            foreach (var signal in _signals)
+            {
+                signal.SingnalAction += Run;
+            }
+        }
+
+        private void OnDisable()
+        {
+            foreach (var signal in _signals)
+            {
+                signal.SingnalAction -= Run;
+            }
+        }
+
+        private void Run(Collider2D collision)
+        {
+            _animator.SetTrigger("rotate");
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace BaseMode
         [SerializeField] private int _damage;
         [SerializeField] private float _screenEffectDuration;
 
-        public override TrapType Type => TrapType.TI81;
+        public override EffectType Type => EffectType.Venom;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

@@ -2,19 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : DeviceWithNegativeEffect
+namespace BaseMode
 {
-    [SerializeField]
-    private ContactFilter2D _contactFilter2D;
-    private void Update()
+    public class Laser : MonoBehaviour
     {
-        List<RaycastHit2D> hit = new List<RaycastHit2D>();
-        if (Physics2D.Raycast(transform.position, transform.up, _contactFilter2D, hit, 50f) > 0)
-        {
-            transform.localScale = new Vector3(1f, hit[0].distance, 1f);
+        [Min(1)]
+        [SerializeField] private int _damage = 1;
+        [Min(10)]
+        [SerializeField] private float _timeEffect = 1;
 
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent<IDamage>(out IDamage target))
+            {
+                target.TakeDamage(_damage);
+            }
+            if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect screen))
+            {
+                screen.SetEffect(EffectType.Fire, _timeEffect);
+            }
         }
     }
-
-
 }
