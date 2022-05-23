@@ -9,6 +9,8 @@ namespace BaseMode
         [SerializeField] private SpriteRenderer _sprite;
         public override EffectType TypeEffect => EffectType.Venom;
 
+        public override TrapType DeviceType => TrapType.VenomIsolator;
+
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
             base.OnTriggerEnter2D(collision);

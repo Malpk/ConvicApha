@@ -11,6 +11,8 @@ namespace BaseMode
         [SerializeField] private float _durationEffect;
         public override EffectType Type => EffectType.Stone;
 
+        public override TrapType DeviceType => TrapType.C14;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             SetScreen(collision, _durationEffect);

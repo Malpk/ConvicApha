@@ -5,11 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class RandomSpawner : MonoBehaviour
 {
+    [SerializeField] private float spanwGap;
+    [SerializeField] private float spawnTimer;
     [SerializeField] private KIFactory kiFactory;
     [SerializeField] private CircleCollider2D spawnZone;
-    [SerializeField] private float spanwGap;
     [SerializeField] private AnimationCurve difficultCurve;
-    [SerializeField] private float spawnTimer;
     [SerializeField] private Tilemap tilemap;
 
     private Vector3 spawn;

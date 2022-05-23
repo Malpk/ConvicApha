@@ -1,6 +1,6 @@
 public enum GunsEnum 
 {
-    Gun,
+    Turel,
     FireGun,
     LaserGun,
     RocketLauncher

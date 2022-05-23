@@ -4,10 +4,8 @@ using UnityEngine;
 namespace BaseMode
 {
     [RequireComponent(typeof(CapsuleCollider2D))]
-    public class Turel : KI
+    public class Turel : Device
     {
-        [SerializeField] protected GunsEnum gunType = GunsEnum.Gun;
-
 
         [Header("Attacks properties")]
         [SerializeField]
@@ -34,7 +32,7 @@ namespace BaseMode
 
         private SignalTile[] _signals;
 
-        public GunsEnum GunType => gunType;
+        public override TrapType DeviceType => TrapType.Turel;
 
         private void Awake()
         {

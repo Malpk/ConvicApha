@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BaseMode
 {
-    public class RocketLauncher : KI
+    public class RocketLauncher : Device
     {
         [SerializeField] private float _aimTime = 1f;
         [SerializeField] private float _speedRotation;
@@ -23,6 +23,7 @@ namespace BaseMode
 
         private Coroutine _coroutine;
 
+        public override TrapType DeviceType => TrapType.RocketLauncher;
 
         private void Awake()
         {

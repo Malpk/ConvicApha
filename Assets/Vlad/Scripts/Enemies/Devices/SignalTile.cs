@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace BaseMode
 {
-    public class SignalTile : MonoBehaviour
+    public class SignalTile : Device
     {
+        public override TrapType DeviceType => TrapType.SignalTile;
+
         public delegate void Singnal(Collider2D collision);
         public event Singnal SingnalAction;
 

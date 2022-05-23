@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BaseMode;
 
-public abstract class Izolator : MonoBehaviour
+public abstract class Izolator : Device
 {
     [SerializeField] protected float activeTime = 10f;
     [SerializeField] protected Transform _jetHolder;

@@ -8,6 +8,8 @@ namespace BaseMode
     {
         public override EffectType TypeEffect => EffectType.None;
 
+        public override TrapType DeviceType => TrapType.DaimondIzolator;
+
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<PlayerMove>(out PlayerMove target))

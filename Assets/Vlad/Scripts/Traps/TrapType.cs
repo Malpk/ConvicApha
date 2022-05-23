@@ -10,8 +10,13 @@ namespace BaseMode
         TI81,
         U92,
         C14,
+        SignalTile,
+        Turel,
+        FireGun,
+        LaserGun,
         VenomIsolator,
-        DaimondIzolator,
-        SteamIsolator
+        SteamIsolator,
+        RocketLauncher,
+        DaimondIzolator
     }
 }

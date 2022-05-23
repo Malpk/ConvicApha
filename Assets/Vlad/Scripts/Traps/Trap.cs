@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BaseMode
 {
-    public abstract class Trap : MonoBehaviour
+    public abstract class Trap : Device
     {
         [SerializeField] private bool _destroyMode = true;
         [SerializeField] private float _timeDestroy = 1;

@@ -4,13 +4,15 @@ using UnityEngine;
 
 namespace BaseMode
 {
-    public class FireGun : KI
+    public class FireGun : Device
     {
         [Header("Reqired component")]
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _signalHolder;
 
         private SignalTile[] _signals;
+
+        public override TrapType DeviceType => TrapType.FireGun;
 
         private void Awake()
         {

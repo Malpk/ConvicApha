@@ -11,58 +11,48 @@ public class KIFactory : ObjectFactroy
      */
     // Add prefabs here
     [Header("Prefabs")]
-    //[SerializeField] private FireGun fireGunPrefab;
-    [SerializeField] private Turel gunPrefab;
-    //[SerializeField] private LaserGun laserGunPrefab;
-    [SerializeField] private RocketLauncher rocketLauncherPrefab;
-    [SerializeField] private Izolator izolatorPrefab;
-    //[SerializeField] private Stream streamPrefab;
+    [SerializeField] private Device[] _tilePrefabs;
+    [SerializeField] private Device[] _gunPrefabs;
+    [SerializeField] private Device[] _izolatorPerfabs;
 
-    public KI GetKI(DeviceEnum type)
+    public KI GetIzolatorKI()
     {
-        switch (type)
+        if (_izolatorPerfabs.Length > 0)
         {
-            //case DeviceEnum.Stream:
-            //    return Get(streamPrefab);
+            return Get(_izolatorPerfabs[Random.Range(0, _izolatorPerfabs.Length)]);
         }
         return null;
     }
-    public KI GetKI(GunsEnum type)
+    public KI GetGunKI()
     {
-        switch (type)
+        if (_gunPrefabs.Length > 0)
         {
-            //case GunsEnum.FireGun:
-            //    return Get(fireGunPrefab);
-            //case GunsEnum.LaserGun:
-            //    return Get(laserGunPrefab);
-            case GunsEnum.RocketLauncher:
-                return Get(rocketLauncherPrefab);
-            case GunsEnum.Gun:
-                return Get(gunPrefab); 
+            return Get(_gunPrefabs[Random.Range(0, _gunPrefabs.Length)]);
         }
         return null;
     }
-
+    public KI GetTileKI()
+    {
+        if (_tilePrefabs.Length > 0)
+        {
+            return Get(_tilePrefabs[Random.Range(0, _tilePrefabs.Length)]);
+        }
+        return null;
+    }
     public KI GetRandomKI()
     {
-        int a = Random.Range(1, 3);
-        switch (a)
+        Debug.Log("Get");
+        var typs = new DeviceEnum[] { DeviceEnum.Izolator, DeviceEnum.Tile, DeviceEnum.Gun };
+        switch (typs[Random.Range(0,typs.Length)])
         {
-            case 1:
-                return GetKI(DeviceEnum.Izolator); // use random after
-            case 2:
-                int i = Random.Range(1, 3);
-                switch (i)
-                {
-                    case 1:
-                        return GetKI(GunsEnum.Gun);
-                    case 2:
-                        //return GetKI(GunsEnum.RocketLauncher);
-                        break;
-                }
-                break;
+            case DeviceEnum.Izolator:
+                return GetIzolatorKI(); // use random after
+            case DeviceEnum.Gun:
+                return GetGunKI();
+            case DeviceEnum.Tile:
+                return GetTileKI();
         }
-        return GetKI(DeviceEnum.Izolator);
+        return null;
     }
 
     private T Get<T>(T prefab) where T : MonoBehaviour

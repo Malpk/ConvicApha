@@ -8,6 +8,8 @@ namespace BaseMode
     {
         public override EffectType Type => EffectType.Flash;
 
+        public override TrapType DeviceType => TrapType.U92;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             SetScreen(collision);

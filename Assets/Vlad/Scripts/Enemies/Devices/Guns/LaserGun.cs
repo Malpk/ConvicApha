@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BaseMode
 {
-    public class LaserGun : KI
+    public class LaserGun : Device
     {
         [Header("Time setting")]
         [Min(1)]
@@ -24,6 +24,8 @@ namespace BaseMode
 
         private Coroutine _coroutine = null;
         private SignalTile[] _signals;
+
+        public override TrapType DeviceType => TrapType.LaserGun;
 
         private void Awake()
         {

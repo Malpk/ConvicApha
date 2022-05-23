@@ -11,6 +11,8 @@ namespace BaseMode
 
         public override EffectType Type => EffectType.Venom;
 
+        public override TrapType DeviceType => TrapType.TI81;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             SetScreen(collision, _screenEffectDuration);

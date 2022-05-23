@@ -12,6 +12,7 @@ namespace BaseMode
         [SerializeField] private float _timeEffect = 1;
 
 
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))
