@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     public class RocketLauncher : Device
     {

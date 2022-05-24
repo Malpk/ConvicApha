@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     public class TileTI81 : Trap
     {

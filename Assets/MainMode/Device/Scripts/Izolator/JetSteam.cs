@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
     public class JetSteam : MonoBehaviour
@@ -22,7 +22,7 @@ namespace BaseMode
             {
                 target.TakeDamage(_damage);
             }
-            if (collision.collider.TryGetComponent<PlayerEffect>(out PlayerEffect screen))
+            if (collision.collider.TryGetComponent<IEffect>(out IEffect screen))
             {
                 screen.SetEffect(EffectType.Fire, _effectTime);
             }

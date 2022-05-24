@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Rocket : MonoBehaviour

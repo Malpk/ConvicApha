@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BaseMode
+namespace MainMode
 {
     public abstract class Trap : Device
     {
@@ -21,14 +21,14 @@ namespace BaseMode
 
         protected void SetScreen(Collider2D collision, float duration)
         {
-            if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect effect))
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen effect))
             {
                 effect.SetEffect(Type, duration);
             }
         }
         protected void SetScreen(Collider2D collision)
         {
-            if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect effect))
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen effect))
             {
                 effect.SetEffect(Type);
             }

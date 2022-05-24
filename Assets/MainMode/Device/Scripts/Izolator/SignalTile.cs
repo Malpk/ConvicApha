@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     public class SignalTile : Device
     {
@@ -13,7 +13,7 @@ namespace BaseMode
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (SingnalAction != null &&  collision.GetComponent<PlayerMove>())
+            if (SingnalAction != null &&  collision.GetComponent<Player>())
                 SingnalAction(collision);
         }
     }

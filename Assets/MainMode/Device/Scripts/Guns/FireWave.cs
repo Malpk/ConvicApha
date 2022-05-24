@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(Animator))]
     public class FireWave : MonoBehaviour
@@ -36,7 +36,7 @@ namespace BaseMode
             {
                 target.TakeDamage(_damage);
             }
-            if (collision.transform.TryGetComponent<PlayerEffect>(out PlayerEffect screen))
+            if (collision.transform.TryGetComponent<IEffect>(out IEffect screen))
             {
                 screen.SetEffect(EffectType.Fire, _fireEffect);
             }

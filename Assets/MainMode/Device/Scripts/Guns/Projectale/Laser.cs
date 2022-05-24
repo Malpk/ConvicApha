@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     public class Laser : MonoBehaviour
     {
@@ -19,7 +19,7 @@ namespace BaseMode
             {
                 target.TakeDamage(_damage);
             }
-            if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect screen))
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
             {
                 screen.SetEffect(EffectType.Fire, _timeEffect);
             }

@@ -2,36 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using BaseMode;
+using MainMode;
 
-public class PlayerHealth : Health
+[System.Serializable]
+public class PlayerHealth 
 {
-    [SerializeField]
-    private HealthUI _healthUI;
+    [SerializeField] private int _healthPoints = 5;
+    [SerializeField] private int _maxHealthPoint = 7;
+    [SerializeField] private HealthUI _healthUI;
 
-    public AudioSource AddHealthSound;
-    
+    public UnityEvent EventOnTakeDamage;
+    public UnityEvent EventOnDead;
+
+
+    public int MaxHealth => _maxHealthPoint;
+
+    public int Health 
+    {
+        get => _healthPoints;
+    }
+
     public void Start()
     {
+        if (_healthUI == null)
+            return;
         _healthUI.Setup(_maxHealthPoint);
         _healthUI.DisplayHealth(_healthPoints);
     }
-
-    public override void AddHealth(int healthValue)
+    public void SetDamage(int damage)
     {
-        base.AddHealth(healthValue);
-        //AddHealthSound.Play();
-        _healthUI.DisplayHealth(_healthPoints);
+        _healthPoints -= damage;
+        UpdateScreen();
     }
-
-    public override void TakeDamage(int damageValue)
+    public void Heal(int value)
     {
-
-        base.TakeDamage(damageValue);
-
-        Invoke("StopInvulnerable", 1);
-        _healthUI.DisplayHealth(_healthPoints);
-
+        _healthPoints += _healthPoints + value > _maxHealthPoint ? _maxHealthPoint : value;
+        UpdateScreen();
     }
-
+    private void UpdateScreen()
+    {
+        if (_healthUI != null)
+            _healthUI.DisplayHealth(_healthPoints);
+    }
 }

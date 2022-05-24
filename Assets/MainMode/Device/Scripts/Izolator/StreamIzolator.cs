@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     public class StreamIzolator : Izolator
     {
@@ -12,7 +12,7 @@ namespace BaseMode
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<PlayerMove>())
+            if (collision.GetComponent<IMoveEffect>() != null)
                 ActivateDevice();
         }
 

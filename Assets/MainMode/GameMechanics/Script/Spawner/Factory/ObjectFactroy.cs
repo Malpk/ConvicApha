@@ -4,40 +4,43 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class ObjectFactroy : ScriptableObject
+namespace MainMode
 {
-    [SerializeField] private Scene scene;
-
-    protected T CreateGameObjectInstance<T>(T prefab) where T : MonoBehaviour
+    public abstract class ObjectFactroy : ScriptableObject
     {
-        if (!scene.isLoaded)
+        [SerializeField] private Scene scene;
+
+        protected T CreateGameObjectInstance<T>(T prefab) where T : MonoBehaviour
         {
-            if (Application.isEditor)
+            if (!scene.isLoaded)
             {
-                scene = SceneManager.GetSceneByName(name);
-                if (!scene.isLoaded)
+                if (Application.isEditor)
+                {
+                    scene = SceneManager.GetSceneByName(name);
+                    if (!scene.isLoaded)
+                        scene = SceneManager.CreateScene(name);
+                }
+                else
+                {
                     scene = SceneManager.CreateScene(name);
+                }
             }
-            else
-            {
-                scene = SceneManager.CreateScene(name);
-            }
+            T instance = Instantiate(prefab);
+            SceneManager.MoveGameObjectToScene(instance.gameObject, scene);
+            return instance;
         }
-        T instance = Instantiate(prefab);
-        SceneManager.MoveGameObjectToScene(instance.gameObject, scene);
-        return instance;
-    }
 
-    public async Task Unload()
-    {
-        if (!scene.isLoaded)
+        public async Task Unload()
         {
-            var unloadOp = SceneManager.UnloadSceneAsync(scene);
-            while (unloadOp.isDone == false)
+            if (!scene.isLoaded)
             {
-                await Task.Delay(1);
+                var unloadOp = SceneManager.UnloadSceneAsync(scene);
+                while (unloadOp.isDone == false)
+                {
+                    await Task.Delay(1);
+                }
             }
         }
-    }
 
+    }
 }

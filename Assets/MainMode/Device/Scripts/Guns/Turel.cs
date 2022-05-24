@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class Turel : Device

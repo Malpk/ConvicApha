@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     public class ShootPoint : MonoBehaviour
     {

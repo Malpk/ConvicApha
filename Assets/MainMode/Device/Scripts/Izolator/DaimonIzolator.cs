@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseMode
+namespace MainMode
 {
     public class DaimonIzolator : Izolator
     {
@@ -12,7 +12,7 @@ namespace BaseMode
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent<PlayerMove>(out PlayerMove target))
+            if (collision.TryGetComponent<Player>(out Player target))
             {
                 ActivateDevice();
             }

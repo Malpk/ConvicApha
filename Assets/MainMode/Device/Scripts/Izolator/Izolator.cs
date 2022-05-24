@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BaseMode;
+using MainMode;
 
 public abstract class Izolator : Device
 {
@@ -46,7 +46,7 @@ public abstract class Izolator : Device
     {
         if (TypeEffect == EffectType.None)
             return;
-        if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect screen))
+        if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
             screen.SetEffect(TypeEffect);
         }
@@ -55,7 +55,7 @@ public abstract class Izolator : Device
     {
         if (TypeEffect == EffectType.None)
             return;
-        if (collision.TryGetComponent<PlayerEffect>(out PlayerEffect screen))
+        if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
             screen.ScreenOff(TypeEffect);
         }
