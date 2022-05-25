@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraFollowing : MonoBehaviour
 {
     [SerializeField] private float _speedFollowing;
-    [SerializeField] private Player _target;
+    [SerializeField] private Character _target;
 
     void Update()
     {

@@ -10,7 +10,7 @@ namespace MainMode
         [Min(1)]
         [SerializeField] private int _damage = 1;
         [Min(1)]
-        [SerializeField] private float _force;
+        [SerializeField] private float _force = 5;
         [Min(1)]
         [SerializeField] private float _effectTime = 1f;
 
@@ -26,6 +26,8 @@ namespace MainMode
             {
                 screen.SetEffect(EffectType.Fire, _effectTime);
             }
+            if (collision.rigidbody)
+                collision.rigidbody.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace MainMode
     {
         [SerializeField] private Sprite _freezSprite;
         [SerializeField] private SpriteRenderer _playerSpriteBody;
+        [SerializeField] private Character _character;
 
         [SerializeField] private SwitchScreenEffect _screen;
 
@@ -15,12 +16,16 @@ namespace MainMode
 
         public void SetEffect(EffectType type, float duration)
         {
+            if (!_character.IsUseEffect)
+                return;
             _screen.SetScreen(type, duration);
             if (_corotine == null && type == EffectType.Freez)
                 _corotine = StartCoroutine(FreezeState(duration));     
         }
         public void SetEffect(EffectType type)
         {
+            if (!_character.IsUseEffect)
+                return;
             _screen.SetScreen(type);
         }
         public void ScreenOff(EffectType type)
