@@ -20,7 +20,7 @@ namespace MainMode
         {
             if (collision.collider.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage);
+                target.TakeDamage(_damage,EffectType.Fire);
             }
             if (collision.collider.TryGetComponent<IEffect>(out IEffect screen))
             {

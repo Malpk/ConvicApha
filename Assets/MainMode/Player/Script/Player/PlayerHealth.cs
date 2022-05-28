@@ -36,7 +36,6 @@ public class PlayerHealth
     }
     public void Heal(int value)
     {
-        Debug.Log("Heal");
         _healthPoints += _healthPoints + value > _maxHealthPoint ? _maxHealthPoint : value;
         UpdateScreen();
     }

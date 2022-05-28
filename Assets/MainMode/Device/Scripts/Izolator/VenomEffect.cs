@@ -12,7 +12,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damageValue);
+                target.TakeDamage(_damageValue, EffectType.Venom);
             }
         }
     }

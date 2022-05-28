@@ -14,11 +14,6 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.FireGun;
 
-        private void Awake()
-        {
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
-        }
-
         private void OnEnable()
         {
             foreach (var signal in _signals)
@@ -38,6 +33,11 @@ namespace MainMode
         private void Run(Collider2D collision)
         {
             _animator.SetTrigger("rotate");
+        }
+
+        protected override void Intilizate()
+        {
+            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
         }
     }
 }

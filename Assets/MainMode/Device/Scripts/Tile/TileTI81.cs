@@ -18,7 +18,7 @@ namespace MainMode
             SetScreen(collision, _screenEffectDuration);
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage);
+                target.TakeDamage(_damage, EffectType.Venom);
             }
         }
     }

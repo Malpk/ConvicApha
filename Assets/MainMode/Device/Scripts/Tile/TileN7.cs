@@ -17,7 +17,7 @@ namespace MainMode
             SetScreen(collision, _duration);
             if (collision.TryGetComponent<IMoveEffect>(out IMoveEffect target))
             {
-                target.StopMove(_duration);
+                target.StopMove(_duration,EffectType.Freez);
             }
         }
     }

@@ -18,7 +18,6 @@ namespace MainMode
         [SerializeField] private float _speedRotation = 1f;
         [Header("Reqired component")]
         [SerializeField] private Laser _laser;
-        [SerializeField] private Animator _animator;
         [SerializeField] private Rigidbody2D _rotateBody;
         [SerializeField] private Transform _signalHolder;
 
@@ -26,11 +25,6 @@ namespace MainMode
         private SignalTile[] _signals;
 
         public override TrapType DeviceType => TrapType.LaserGun;
-
-        private void Awake()
-        {
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
-        }
 
         private void OnEnable()
         {
@@ -62,7 +56,7 @@ namespace MainMode
             var direction = new int[] { -1, 1 };
             int index = Random.Range(0, direction.Length);
             float progress = 0f;
-            while (progress < 1f)
+            while (progress < 1f && isMode)
             {
                 _rotateBody.MoveRotation(_rotateBody.rotation + _speedRotation * direction[index]);
                 progress += Time.deltaTime / _durationWork;
@@ -73,7 +67,7 @@ namespace MainMode
         }
         private IEnumerator ReturnState()
         {
-            while (Mathf.Abs(_rotateBody.rotation) > 0.1f && _coroutine == null)
+            while (Mathf.Abs(_rotateBody.rotation) > 0.1f)
             {
                 _rotateBody.MoveRotation(Mathf.LerpAngle(_rotateBody.rotation,0,Time.fixedDeltaTime * _speedRotation));
                 yield return new WaitForFixedUpdate();
@@ -106,7 +100,12 @@ namespace MainMode
         }
         private void SetMode(bool mode)
         {
-            _animator.SetBool("mode", mode);
+            animator.SetBool("mode", mode);
+        }
+
+        protected override void Intilizate()
+        {
+            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
         }
     }
 }

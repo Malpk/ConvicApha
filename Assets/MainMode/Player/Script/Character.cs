@@ -37,13 +37,14 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
         _movement = new PlayerMovement(this, rigidBody);
     }
 
-    private void Start()
+    protected void Start()
     {
         health.Start();
     }
+    protected abstract void Move(Vector2 direction);
     public abstract void Dead();
-    public abstract void TakeDamage(int damage);
-    public abstract void StopMove(float timeStop);
+    public abstract void TakeDamage(int damage, EffectType type);
+    public abstract void StopMove(float timeStop, EffectType effect = EffectType.None);
     public abstract void ChangeSpeed(float duration, float value = 1);
 
     protected IEnumerator ReSpawn()
@@ -51,7 +52,7 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
         yield return new WaitForSeconds(respawnTime);
         transform.position = _startPosition;
         isDead = false;
-        animator.SetTrigger("Live");
+        animator.SetBool("Dead",false);
         ResetCharacter();
         respawn = null;
     }

@@ -20,10 +20,8 @@ namespace MainMode
         protected Transform _spawnTransform;
 
         [Header("Move properties")]
-        [SerializeField]
-        protected float _rotationAngleOnSeconds;
-        [SerializeField]
-        protected Animator _animator;
+
+        [SerializeField] protected float _rotationAngleOnSeconds;
         [SerializeField] protected Rigidbody2D _rigidbody;
         [SerializeField] private Transform _signalHolder;
 
@@ -34,10 +32,6 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.Turel;
 
-        private void Awake()
-        {
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
-        }
         private void OnEnable()
         {
             foreach (var signal in _signals)
@@ -58,7 +52,7 @@ namespace MainMode
         {
             _time = _firingRateOnSeconds;
             float startAngle = _rigidbody.rotation;
-            for (float f = 0; f < _activeTime; f += Time.deltaTime)
+            for (float f = 0; f < _activeTime && isMode; f += Time.deltaTime)
             {
                 _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _rigidbody.rotation + _rotationAngleOnSeconds, Time.deltaTime);
                 _time += Time.deltaTime;
@@ -73,7 +67,7 @@ namespace MainMode
             if (_time >= _firingRateOnSeconds)
             {
                 _time = 0;
-                _animator.SetTrigger("Shoot");
+                animator.SetTrigger("Shoot");
                 Bullet bullet = Instantiate(_bulletPrefab, _spawnTransform.position, _spawnTransform.rotation).GetComponent<Bullet>();
             }
         }
@@ -86,6 +80,11 @@ namespace MainMode
             }
             _isActive = true;
             StartCoroutine(Rotate());
+        }
+
+        protected override void Intilizate()
+        {
+            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
         }
     }
 }

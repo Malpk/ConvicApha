@@ -34,7 +34,7 @@ namespace MainMode
         {
             if (collision.transform.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage);
+                target.TakeDamage(_damage,EffectType.Fire);
             }
             if (collision.transform.TryGetComponent<IEffect>(out IEffect screen))
             {

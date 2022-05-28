@@ -12,7 +12,7 @@ public abstract class Izolator : Device
     protected Animator[] animators;
     public abstract EffectType TypeEffect { get; }
 
-    protected virtual void Awake()
+    protected override void Intilizate()
     {
         animators = _jetHolder.GetComponentsInChildren<Animator>();
         SetMode(false);
@@ -62,4 +62,9 @@ public abstract class Izolator : Device
     }
 
     protected abstract void SetMode(bool mode);
+    public override void TurnOff()
+    {
+        base.TurnOff();
+        DeactivateDevice();
+    }
 }

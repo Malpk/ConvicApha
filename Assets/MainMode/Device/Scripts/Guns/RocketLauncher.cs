@@ -10,7 +10,6 @@ namespace MainMode
 
         [SerializeField] private GameObject _bullet;
 
-        [SerializeField] private Animator _animator;
         [SerializeField] private Rigidbody2D _rotateBody;
         [SerializeField] private Transform _signalHolder;
         [SerializeField] private Transform _spawnProjectelePosition;
@@ -25,7 +24,7 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.RocketLauncher;
 
-        private void Awake()
+        protected override void Intilizate()
         {
             _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
             _shootPoint = GetComponentInChildren<ShootPoint>();
@@ -57,7 +56,7 @@ namespace MainMode
         private IEnumerator Rotate(Transform target)
         {
             float progress = 0f;
-            while (progress < 1f)
+            while (progress < 1f && isMode)
             {
                 var localPOsition = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
                 var direction = localPOsition.y > 0 ? 1 : -1;
@@ -67,10 +66,13 @@ namespace MainMode
                 progress += Time.deltaTime / _aimTime;
                 yield return null;
             }
-            _lostTargetPosition = _rotateBody.transform.position + _rotateBody.transform.up * Vector3.Distance(transform.position, target.position);
-            Shoot();
-            if (_shootPoint == null)
-                Fire();
+            if (isMode)
+            {
+                _lostTargetPosition = _rotateBody.transform.position + _rotateBody.transform.up * Vector3.Distance(transform.position, target.position);
+                Shoot();
+                if (_shootPoint == null)
+                    Fire();
+            }
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(ReturnState());
             _coroutine = null;
@@ -86,7 +88,7 @@ namespace MainMode
 
         private void Shoot()
         {
-            _animator.SetTrigger("Shoot");
+            animator.SetTrigger("Shoot");
         }
         private void Fire()
         {

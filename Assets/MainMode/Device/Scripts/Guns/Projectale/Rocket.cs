@@ -26,7 +26,7 @@ namespace MainMode
         {
             StartCoroutine(Destroy(target));
         }
-        private void Update()
+        private void FixedUpdate()
         {
             _rigidBody.MovePosition(_rigidBody.position + (Vector2)(transform.up * _speedMovement * Time.deltaTime));
         }
@@ -35,7 +35,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage);
+                target.TakeDamage(_damage, EffectType.Fire);
                 InstateWave();
             }
         }

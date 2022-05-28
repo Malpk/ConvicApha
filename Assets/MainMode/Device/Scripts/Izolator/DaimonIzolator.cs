@@ -6,18 +6,19 @@ namespace MainMode
 {
     public class DaimonIzolator : Izolator
     {
+        [SerializeField] private SignalTile _signalArea;
         public override EffectType TypeEffect => EffectType.None;
 
         public override TrapType DeviceType => TrapType.DaimondIzolator;
 
-        protected override void OnTriggerEnter2D(Collider2D collision)
+        private void OnEnable()
         {
-            if (collision.TryGetComponent<Player>(out Player target))
-            {
-                ActivateDevice();
-            }
+            _signalArea.SingnalAction +=(Collider2D collison) => ActivateDevice();
         }
-
+        private void OnDisable()
+        {
+            _signalArea.SingnalAction -= (Collider2D collison) => ActivateDevice();
+        }
         protected override void SetMode(bool mode)
         {
         }

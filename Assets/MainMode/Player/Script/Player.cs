@@ -5,39 +5,31 @@ using UnityEngine;
 
 public class Player : Character
 {
+    protected float stopEffect = 1;
+    protected float stoneEffect = 1;
 
-    private float _stoneEffect = 1;
-    private float _stopEffect = 1;
+    protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
 
     private Coroutine _stopMoveCorotine;
     private Coroutine _utpdateMoveCorotine;
 
     public override bool IsUseEffect => true;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     protected void FixedUpdate()
     {
-        if (isDead)
-            return;
         var direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        _movement.Move(direction * speedMovement * _stoneEffect * _stopEffect);
-        if (direction != Vector2.zero)
-            _movement.Rotate(direction,speedRotaton);
+        Move(direction);
     }
     public override void Dead()
     {
         isDead = true;
-        animator.SetTrigger("Dead");
+        animator.SetBool("Dead",true);
         health.EventOnDead.Invoke();
         rigidBody.velocity = Vector2.zero;
         if(respawn == null)
             respawn = StartCoroutine(ReSpawn());
     }
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, EffectType type )
     {
         health.SetDamage(damage);
         if (health.Health <= 0)
@@ -49,7 +41,7 @@ public class Player : Character
             health.EventOnTakeDamage.Invoke();
         }
     }
-    public override void StopMove(float timeStop)
+    public override void StopMove(float timeStop, EffectType effect = EffectType.None)
     {
         if (_stopMoveCorotine == null)
             _stopMoveCorotine = StartCoroutine(StopMovement(timeStop));
@@ -61,18 +53,33 @@ public class Player : Character
     }
     private IEnumerator StopMovement(float duratuin)
     {
-        _stopEffect = 0f;
+        stopEffect = 0f;
         animator.SetBool("Freez", true);
         yield return new WaitForSeconds(duratuin);
         animator.SetBool("Freez", false);
-        _stopEffect = 1;
+        stopEffect = 1;
         _stopMoveCorotine = null;
     }
     private IEnumerator UpdateSpeed(float duration, float value)
     {
-        _stoneEffect = value;
+        stoneEffect = value;
         yield return new WaitForSeconds(duration);
-        _stoneEffect = 1;
+        stoneEffect = 1;
         _utpdateMoveCorotine = null;
+    }
+
+    protected override void Move(Vector2 direction)
+    {
+        if (isDead)
+            return;
+        _movement.Move(direction * SpeedMovement);
+        if (direction != Vector2.zero)
+            _movement.Rotate(direction, speedRotaton);
+    }
+    protected override void ResetCharacter()
+    {
+        stopEffect = 1f;
+        stoneEffect = 1f;
+        base.ResetCharacter();
     }
 }

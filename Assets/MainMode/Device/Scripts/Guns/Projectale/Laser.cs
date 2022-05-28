@@ -17,7 +17,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage);
+                target.TakeDamage(_damage,EffectType.Fire);
             }
             if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
             {
