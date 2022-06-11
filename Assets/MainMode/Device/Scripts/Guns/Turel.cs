@@ -15,7 +15,7 @@ namespace MainMode
         [SerializeField]
         protected float _firingRateOnSeconds = 1f;
         [SerializeField]
-        protected GameObject _bulletPrefab;
+        protected Bullet _bulletPrefab;
         [SerializeField]
         protected Transform _spawnTransform;
 
@@ -29,8 +29,6 @@ namespace MainMode
         private float _time;
 
         private SignalTile[] _signals;
-
-        public override TrapType DeviceType => TrapType.Turel;
 
         private void OnEnable()
         {
@@ -68,7 +66,8 @@ namespace MainMode
             {
                 _time = 0;
                 animator.SetTrigger("Shoot");
-                Bullet bullet = Instantiate(_bulletPrefab, _spawnTransform.position, _spawnTransform.rotation).GetComponent<Bullet>();
+                var bullet = Instantiate(_bulletPrefab.gameObject, _spawnTransform.position, _spawnTransform.rotation).GetComponent<Bullet>();
+                bullet.SetAttack(AttackInfo);
             }
         }
 

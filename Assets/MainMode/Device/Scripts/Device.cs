@@ -11,10 +11,12 @@ namespace MainMode
         [SerializeField] protected bool destroyMode = true;
         [SerializeField] protected float timeDestroy = 1;
 
+        [SerializeField] protected AttackInfo attackInfo;
+
         protected bool isMode = true;
 
         protected Animator animator;
-        public abstract TrapType DeviceType { get; }
+        public AttackInfo AttackInfo => attackInfo;
 
         protected void Awake()
         {

@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IDamage 
 {
     public void Dead();
-    public void TakeDamage(int damage, EffectType type);
+    public void TakeDamage(int damage, AttackInfo type);
 }

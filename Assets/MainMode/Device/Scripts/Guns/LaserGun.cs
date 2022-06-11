@@ -24,8 +24,11 @@ namespace MainMode
         private Coroutine _coroutine = null;
         private SignalTile[] _signals;
 
-        public override TrapType DeviceType => TrapType.LaserGun;
-
+        protected override void Intilizate()
+        {
+            _laser.SetAttack(attackInfo);
+            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
+        }
         private void OnEnable()
         {
             foreach (var signal in _signals)
@@ -103,9 +106,5 @@ namespace MainMode
             animator.SetBool("mode", mode);
         }
 
-        protected override void Intilizate()
-        {
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
-        }
     }
 }

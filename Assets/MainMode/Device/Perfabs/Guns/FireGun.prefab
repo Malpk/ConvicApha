@@ -200,6 +200,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 6
+    _effect: 5
+    _attack: 1
+  _fire: {fileID: 8234966565007416239}
   _animator: {fileID: 8234966564860753813}
   _signalHolder: {fileID: 8234966564860753815}
 --- !u!212 &8234966564860753819
@@ -265,7 +270,6 @@ GameObject:
   - component: {fileID: 8234966565007416233}
   - component: {fileID: 8234966565007416232}
   - component: {fileID: 8234966565007416239}
-  - component: {fileID: 8234966565007416238}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -378,25 +382,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 2
   _timeEffect: 1
---- !u!95 &8234966565007416238
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8234966565007416236}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ad636a9cf5cc5654b8007b9934669bfa, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8234966565104963666
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +699,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &8234966565584583543
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -807,6 +796,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &8234966565594521474
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -900,6 +893,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &8234966565808574776
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(Animator))]
-    public class FireWave : MonoBehaviour
+    public class FireWave : MonoBehaviour,ISetAttack
     {
         [Min(1)]
         [SerializeField] private int _damage;
@@ -14,6 +14,7 @@ namespace MainMode
 
         private Animator _animator;
         private Collider2D _colider;
+        private AttackInfo _attackInfo;
         private SpriteRenderer _sprite;
 
         private void Awake()
@@ -34,12 +35,17 @@ namespace MainMode
         {
             if (collision.transform.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage,EffectType.Fire);
+                target.TakeDamage(_damage, _attackInfo);
             }
             if (collision.transform.TryGetComponent<IEffect>(out IEffect screen))
             {
                 screen.SetEffect(EffectType.Fire, _fireEffect);
             }
+        }
+
+        public void SetAttack(AttackInfo info)
+        {
+            _attackInfo = info;
         }
     }
 }

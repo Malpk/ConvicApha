@@ -7,12 +7,18 @@ namespace MainMode
     public class FireGun : Device
     {
         [Header("Reqired component")]
+        [SerializeField] private Laser _fire;
         [SerializeField] private Animator _animator;
+        [SerializeField] private Animator _fireAnimator;
         [SerializeField] private Transform _signalHolder;
 
         private SignalTile[] _signals;
 
-        public override TrapType DeviceType => TrapType.FireGun;
+        protected override void Intilizate()
+        {
+            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
+            _fire.SetAttack(AttackInfo);
+        }
 
         private void OnEnable()
         {
@@ -35,9 +41,6 @@ namespace MainMode
             _animator.SetTrigger("rotate");
         }
 
-        protected override void Intilizate()
-        {
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
-        }
+
     }
 }

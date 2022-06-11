@@ -9,9 +9,6 @@ namespace MainMode
         [Range(0,1f)]
         [SerializeField] private float _speedReduce = 1f;
         [SerializeField] private float _durationEffect;
-        public override EffectType Type => EffectType.Stone;
-
-        public override TrapType DeviceType => TrapType.C14;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

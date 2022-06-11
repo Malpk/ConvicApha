@@ -7,9 +7,6 @@ namespace MainMode
     public class DaimonIzolator : Izolator
     {
         [SerializeField] private SignalTile _signalArea;
-        public override EffectType TypeEffect => EffectType.None;
-
-        public override TrapType DeviceType => TrapType.DaimondIzolator;
 
         private void OnEnable()
         {

@@ -48,6 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &3328155945738703253
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -223,6 +227,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &3328155946123297476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -295,7 +303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3328155946218305134}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.034, z: 0}
+  m_LocalPosition: {x: 0.001, y: 1.041, z: 0}
   m_LocalScale: {x: 1, y: 4.81, z: 1}
   m_Children: []
   m_Father: {fileID: 3328155946285360801}
@@ -345,7 +353,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 0.1875, y: 0.171875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -369,14 +377,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.1875, y: 0.171875}
+    oldSize: {x: 0.25, y: 0.171875}
     newSize: {x: 0.1875, y: 0.171875}
     adaptiveTilingThreshold: 0.5
-    drawMode: 2
+    drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.37, y: 0.16}
+  m_Size: {x: 0.24, y: 0.16}
   m_EdgeRadius: 0
 --- !u!114 &3328155946218305138
 MonoBehaviour:
@@ -627,6 +635,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &3328155946749840604
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -771,6 +783,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 0
   timeDestroy: 1
+  attackInfo:
+    _device: 7
+    _effect: 5
+    _attack: 1
   _durationWork: 6
   _timeReload: 3
   _shootDuration: 6

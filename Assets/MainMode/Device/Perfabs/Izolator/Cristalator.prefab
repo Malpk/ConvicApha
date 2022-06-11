@@ -342,6 +342,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 0
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!1 &4534057550122638533
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +760,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 11
+    _effect: 0
+    _attack: 0
   activeTime: 10
   _jetHolder: {fileID: 4534057549741178634}
   _signalArea: {fileID: 4534057549741178639}

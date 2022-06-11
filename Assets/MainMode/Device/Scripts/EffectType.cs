@@ -9,5 +9,5 @@ public enum EffectType
     Freez,
     Flash,
     Stone,
-    Fire
+    Fire,
 }

@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _freezSprite: {fileID: 21300000, guid: e9c2e3bc23120e743a6c0aabcc91f4f1, type: 3}
   _playerSpriteBody: {fileID: 6870398045645405141}
-  _character: {fileID: 868995220648947401, guid: 8d6adb076c90b6b4595fa0fa5a4a119b, type: 3}
+  _character: {fileID: 5517268123668547750}
   _screen: {fileID: 0}
 --- !u!82 &6870398045645405145
 AudioSource:
@@ -273,7 +273,6 @@ MonoBehaviour:
   speedRotaton: 10
   health:
     _healthPoints: 5
-    _maxHealthPoint: 7
     _healthUI: {fileID: 0}
     EventOnTakeDamage:
       m_PersistentCalls:
@@ -286,7 +285,7 @@ MonoBehaviour:
   _distanceAttack: 1
   _deviceLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   _timeDebaf: 3
   _debafSpeed: 0.5
   _bodyTemperature: 0

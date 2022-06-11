@@ -6,7 +6,7 @@ namespace MainMode
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(CapsuleCollider2D))]
-    public class Bullet : MonoBehaviour
+    public class Bullet : MonoBehaviour,ISetAttack
     {
         [Min(1)]
         [SerializeField] private int _damage = 1;
@@ -14,6 +14,8 @@ namespace MainMode
         [SerializeField] protected float _speed = 1;
         [Min(1)]
         [SerializeField] private float _delayDestroy = 1;
+        
+        private AttackInfo _attackInfo;
 
         private Rigidbody2D _rigidbody;
         protected virtual void Start()
@@ -26,9 +28,14 @@ namespace MainMode
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage,EffectType.None);
+                target.TakeDamage(_damage, _attackInfo);
                 Destroy(gameObject);
             }
+        }
+
+        public void SetAttack(AttackInfo info)
+        {
+            _attackInfo = info;
         }
     }
 }

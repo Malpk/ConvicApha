@@ -43,7 +43,7 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
     }
     protected abstract void Move(Vector2 direction);
     public abstract void Dead();
-    public abstract void TakeDamage(int damage, EffectType type);
+    public abstract void TakeDamage(int damage,  AttackInfo type);
     public abstract void StopMove(float timeStop, EffectType effect = EffectType.None);
     public abstract void ChangeSpeed(float duration, float value = 1);
 

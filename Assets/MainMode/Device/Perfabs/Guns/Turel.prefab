@@ -48,6 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &4043684408507902960
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,6 +145,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &4043684408670007471
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -285,10 +293,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 5
+    _effect: 0
+    _attack: 5
   _activeTime: 6
   _activationTime: 6
   _firingRateOnSeconds: 1
-  _bulletPrefab: {fileID: 8610568988081006114, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
+  _bulletPrefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
   _spawnTransform: {fileID: 4043684410038264546}
   _rotationAngleOnSeconds: 120
   _rigidbody: {fileID: 4043684409374381547}
@@ -598,6 +610,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &4043684409473823172
 BoxCollider2D:
   m_ObjectHideFlags: 0

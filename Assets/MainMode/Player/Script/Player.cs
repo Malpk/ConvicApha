@@ -29,7 +29,7 @@ public class Player : Character
         if(respawn == null)
             respawn = StartCoroutine(ReSpawn());
     }
-    public override void TakeDamage(int damage, EffectType type )
+    public override void TakeDamage(int damage, AttackInfo type = null)
     {
         health.SetDamage(damage);
         if (health.Health <= 0)

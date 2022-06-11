@@ -7,10 +7,7 @@ namespace MainMode
     [RequireComponent(typeof(Collider2D))]
     public abstract class Trap : Device
     {
-
-
         [SerializeField] protected LayerMask playerLayer;
-        public abstract EffectType Type { get; }
 
         protected override void Intilizate()
         {
@@ -21,14 +18,14 @@ namespace MainMode
         {
             if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen effect))
             {
-                effect.SetEffect(Type, duration);
+                effect.SetEffect(attackInfo.Effect, duration);
             }
         }
         protected void SetScreen(Collider2D collision)
         {
             if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen effect))
             {
-                effect.SetEffect(Type);
+                effect.SetEffect(attackInfo.Effect);
             }
         }
     }

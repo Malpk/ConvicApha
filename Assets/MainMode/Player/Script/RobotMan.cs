@@ -86,10 +86,10 @@ public class RobotMan : Player
         else
             _target = null;
     }
-    public override void TakeDamage(int damage, EffectType type)
+    public override void TakeDamage(int damage, AttackInfo type)
     {
 
-        switch (type)
+        switch (type.Effect)
         {
             case EffectType.Venom:
                 return;

@@ -8,7 +8,7 @@ namespace MainMode
         [SerializeField] private float _aimTime = 1f;
         [SerializeField] private float _speedRotation;
 
-        [SerializeField] private GameObject _bullet;
+        [SerializeField] private Rocket _rocket;
 
         [SerializeField] private Rigidbody2D _rotateBody;
         [SerializeField] private Transform _signalHolder;
@@ -17,22 +17,17 @@ namespace MainMode
 
 
         private Vector3 _lostTargetPosition;
-        private ShootPoint _shootPoint;
         private SignalTile[] _signals;
 
         private Coroutine _coroutine;
 
-        public override TrapType DeviceType => TrapType.RocketLauncher;
-
         protected override void Intilizate()
         {
+            _wave.SetAttack(attackInfo);
             _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
-            _shootPoint = GetComponentInChildren<ShootPoint>();
         }
         private void OnEnable()
         {
-            if (_shootPoint != null)
-                _shootPoint.FireAction += Fire;
             foreach (var signal in _signals)
             {
                 signal.SingnalAction += SetTarget;
@@ -40,8 +35,6 @@ namespace MainMode
         }
         private void OnDisable()
         {
-            if (_shootPoint != null)
-                _shootPoint.FireAction -= Fire;
             foreach (var signal in _signals)
             {
                 signal.SingnalAction -= SetTarget;
@@ -70,8 +63,6 @@ namespace MainMode
             {
                 _lostTargetPosition = _rotateBody.transform.position + _rotateBody.transform.up * Vector3.Distance(transform.position, target.position);
                 Shoot();
-                if (_shootPoint == null)
-                    Fire();
             }
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(ReturnState());
@@ -98,8 +89,10 @@ namespace MainMode
             else
                 Debug.LogWarning("_wave = null");
 #endif
-            var rocet =  Instantiate(_bullet, _spawnProjectelePosition.position, Quaternion.Euler(Vector3.forward * _rotateBody.rotation));
-            rocet.GetComponent<Rocket>().SetTarget(_lostTargetPosition);
+            var rocket =  Instantiate(_rocket.gameObject, _spawnProjectelePosition.position,
+                Quaternion.Euler(Vector3.forward * _rotateBody.rotation)).GetComponent<Rocket>();
+            rocket.SetTarget(_lostTargetPosition);
+            rocket.SetAttack(attackInfo);
         }
     }
 }

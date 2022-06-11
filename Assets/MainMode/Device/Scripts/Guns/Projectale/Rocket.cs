@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Rocket : MonoBehaviour
+    public class Rocket : MonoBehaviour,ISetAttack
     {
         [Min(1)]
         [SerializeField] private int _damage;
@@ -13,14 +13,19 @@ namespace MainMode
         [SerializeField] private float _delayExplosin;
         [Min(1)]
         [SerializeField] private float _speedMovement;
-        [SerializeField] private GameObject _wave;
+        [SerializeField] private FireWave _wave;
 
         private Rigidbody2D _rigidBody;
+        private AttackInfo _attackInfo;
 
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
             _rigidBody.isKinematic = true;
+        }
+        public void SetAttack(AttackInfo info)
+        {
+            _attackInfo = info;
         }
         public void SetTarget(Vector3 target)
         {
@@ -35,7 +40,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage, EffectType.Fire);
+                target.TakeDamage(_damage, _attackInfo);
                 InstateWave();
             }
         }
@@ -52,12 +57,19 @@ namespace MainMode
         private void InstateWave()
         {
             if (_wave != null)
-                Instantiate(_wave, transform.position, transform.rotation).GetComponent<FireWave>().Explosion();
+            {
+                var explosion = Instantiate(_wave.gameObject, transform.position, transform.rotation).GetComponent<FireWave>();
+                explosion.SetAttack(_attackInfo);
+                explosion.Explosion();
+                enabled = false;
+            }
 #if UNITY_EDITOR
             else
                 Debug.LogWarning("_wave = null");
 #endif
             Destroy(gameObject);
         }
+
+
     }
 }

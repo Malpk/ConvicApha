@@ -24,14 +24,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4995089126972644334}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.057, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05700016, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4995089128127037852}
   - {fileID: 4995089128287469839}
   - {fileID: 4995089128498061564}
   m_Father: {fileID: 4995089127322861269}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4995089127322861279
 GameObject:
@@ -66,8 +66,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4995089128211659078}
-  - {fileID: 4995089126972644335}
   - {fileID: 4995089127584046607}
+  - {fileID: 4995089126972644335}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,9 +101,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 10
+    _effect: 5
+    _attack: 2
   _aimTime: 2
   _speedRotation: 5
-  _bullet: {fileID: 9159238687063250290, guid: 5fd83571f8e1d1e4696df0db3d3012d5, type: 3}
+  _rocket: {fileID: 1328194810300800774, guid: 5fd83571f8e1d1e4696df0db3d3012d5, type: 3}
   _rotateBody: {fileID: 4995089128211659074}
   _signalHolder: {fileID: 4995089126972644335}
   _spawnProjectelePosition: {fileID: 4995089128091787222}
@@ -308,7 +312,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.78, z: 1}
   m_Children: []
   m_Father: {fileID: 4995089127322861269}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4995089127584046606
 SpriteRenderer:
@@ -570,6 +574,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &4995089128127037854
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -824,6 +832,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!61 &4995089128287469833
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -943,6 +955,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 1
   timeDestroy: 1
+  attackInfo:
+    _device: 0
+    _effect: 0
+    _attack: 0
 --- !u!95 &4995089128498061565
 Animator:
   serializedVersion: 3

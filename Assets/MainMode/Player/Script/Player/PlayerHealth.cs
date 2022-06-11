@@ -8,9 +8,9 @@ using MainMode;
 public class PlayerHealth 
 {
     [SerializeField] private int _healthPoints = 5;
-    [SerializeField] private int _maxHealthPoint = 7;
     [SerializeField] private HealthUI _healthUI;
 
+    private int _maxHealthPoint;
     public UnityEvent EventOnTakeDamage;
     public UnityEvent EventOnDead;
 
@@ -26,7 +26,8 @@ public class PlayerHealth
     {
         if (_healthUI == null)
             return;
-        _healthUI.Setup(_maxHealthPoint);
+        _maxHealthPoint = _healthPoints;
+        _healthUI.Setup(_healthPoints);
         _healthUI.DisplayHealth(_healthPoints);
     }
     public void SetDamage(int damage)
@@ -36,7 +37,10 @@ public class PlayerHealth
     }
     public void Heal(int value)
     {
-        _healthPoints += _healthPoints + value > _maxHealthPoint ? _maxHealthPoint : value;
+        if (_healthPoints + value > _maxHealthPoint)
+            _healthPoints = _maxHealthPoint;
+        else
+            _healthPoints = value;
         UpdateScreen();
     }
     private void UpdateScreen()

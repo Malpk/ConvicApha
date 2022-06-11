@@ -46,7 +46,7 @@ public class JMan : Player
         _reload = null;
     }
 
-    public override void TakeDamage(int damage, EffectType type)
+    public override void TakeDamage(int damage, AttackInfo type)
     {
         if (!_isUseEffect)
             return;
