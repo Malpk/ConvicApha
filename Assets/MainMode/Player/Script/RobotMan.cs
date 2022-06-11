@@ -42,15 +42,14 @@ public class RobotMan : Player
         _collider = GetComponent<CapsuleCollider2D>();
         base.Awake();
     }
-
     private void OnValidate()
     {
         ChangeTemaerature(_bodyTemperature);
     }
 
-
-    private void Update()
+    private  void Update()
     {
+        base.Update();
         TrakingDevice();
         if (Input.GetAxis("Jump") != 0 && _abillityActive==null)
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class LaserGun : Device
+    public class LaserGun : Gun
     {
         [Header("Time setting")]
         [Min(1)]

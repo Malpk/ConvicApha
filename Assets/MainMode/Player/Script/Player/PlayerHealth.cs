@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using MainMode;
 
 [System.Serializable]
-public class PlayerHealth 
+public class PlayerHealth
 {
     [SerializeField] private int _healthPoints = 5;
     [SerializeField] private int _maxHealthPoint = 7;
@@ -17,7 +17,7 @@ public class PlayerHealth
 
     public int MaxHealth => _maxHealthPoint;
 
-    public int Health 
+    public int Health
     {
         get => _healthPoints;
     }
@@ -36,7 +36,13 @@ public class PlayerHealth
     }
     public void Heal(int value)
     {
-        _healthPoints += _healthPoints + value > _maxHealthPoint ? _maxHealthPoint : value;
+        var newHealthPoints = _healthPoints + value;
+        //    _healthPoints  += _healthPoints + value > _maxHealthPoint ? _maxHealthPoint : value;
+        if (newHealthPoints > _maxHealthPoint)
+            _healthPoints = _maxHealthPoint;
+        else
+            _healthPoints = newHealthPoints;
+
         UpdateScreen();
     }
     private void UpdateScreen()

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class RocketLauncher : Device
+    public class RocketLauncher : Gun
     {
         [SerializeField] private float _aimTime = 1f;
         [SerializeField] private float _speedRotation;

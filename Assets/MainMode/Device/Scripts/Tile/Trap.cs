@@ -7,8 +7,6 @@ namespace MainMode
     [RequireComponent(typeof(Collider2D))]
     public abstract class Trap : Device
     {
-
-
         [SerializeField] protected LayerMask playerLayer;
         public abstract EffectType Type { get; }
 

@@ -1,13 +1,16 @@
+using MainMode;
+using MainMode.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Player : Character
 {
+    [SerializeField] protected Inventory _inventory; 
+
     protected float stopEffect = 1;
     protected float stoneEffect = 1;
-
     protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
 
     private Coroutine _stopMoveCorotine;
@@ -23,13 +26,13 @@ public class Player : Character
     public override void Dead()
     {
         isDead = true;
-        animator.SetBool("Dead",true);
+        animator.SetBool("Dead", true);
         health.EventOnDead.Invoke();
         rigidBody.velocity = Vector2.zero;
-        if(respawn == null)
+        if (respawn == null)
             respawn = StartCoroutine(ReSpawn());
     }
-    public override void TakeDamage(int damage, EffectType type )
+    public override void TakeDamage(int damage, EffectType type)
     {
         health.SetDamage(damage);
         if (health.Health <= 0)
@@ -51,6 +54,53 @@ public class Player : Character
         if (_utpdateMoveCorotine == null)
             _utpdateMoveCorotine = StartCoroutine(UpdateSpeed(duration, value));
     }
+
+    public void Heal(int point)
+    {
+        health.Heal(point);
+    }
+
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IPickable item))
+        {
+            if (item is ConsumablesItem)
+                _inventory.AddConsumablesItem(item as ConsumablesItem);
+
+
+            if (item is Artifact)
+                _inventory.AddArtifact(item as Artifact);
+        }
+    }
+
+    protected void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (_inventory.TryGetConsumableItem(out Item item))
+            {
+                UseItem(item);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (_inventory.TryGetArtifact(out Artifact artifact))
+            {
+                UseItem(artifact);
+            }
+        }
+    }
+
+    private void UseItem(Item item)
+    {      
+        item.Use();      
+    }
+
+    public void ApplyEffect(IItemEffect itemEffect)
+    {
+        itemEffect.UseEffect(this);
+    }
+
     private IEnumerator StopMovement(float duratuin)
     {
         stopEffect = 0f;

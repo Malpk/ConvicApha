@@ -1,3 +1,4 @@
+using MainMode.GameMechanics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,16 @@ namespace MainMode
     public class RandomSpawner : MonoBehaviour
     {
         [Min(1)]
-        [SerializeField] private int _spawnZone;
+        [SerializeField] private float _radiusSpawnZone;
         [SerializeField] private float _spanwGap;
         [Min(0)]
         [SerializeField] private float _spawnTimer;
         [SerializeField] private Player _player;
         [SerializeField] private KIFactory _kiFactory;
         [SerializeField] private AnimationCurve _difficultCurve;
-        [SerializeField] private Tilemap _tilemap;
+        [SerializeField] private PlayGround _playGround;
 
-        private Vector3 spawn;
+        private Vector3 spawnPosition;
         private Vector3Int spawnCell;
         private bool isTimerActive = false;
         private bool spawned = false;
@@ -34,19 +35,19 @@ namespace MainMode
         {
             while (true)
             {
-                var device = _kiFactory.GetRandomKI();
-                spawn = (Random.insideUnitCircle * _spawnZone);
-                spawn.x = spawn.x + _player.Position.x;
-                spawn.y = spawn.y + _player.Position.y;
-                spawnCell = _tilemap.WorldToCell(spawn);
-                if (!(spawnCell.x < 0 || spawnCell.y < 0 || spawnCell.x > 19 || spawnCell.x > 19))
-                    device.transform.position = spawnCell;
-                else
-                {
-                    CorrectCoordinates();
-                    device.transform.position = spawnCell;
-                }
+                var device = _kiFactory.GetRandomKI();              
 
+                if (_playGround.TryGetFreeRandomCell(_player.transform.position, _radiusSpawnZone, out spawnCell))
+                {
+                    if (!(spawnCell.x < 0 || spawnCell.y < 0 || spawnCell.x >= 19 || spawnCell.x >= 19))
+                        device.transform.position = spawnCell;
+                    else
+                    {
+                        CorrectCoordinates();
+                        device.transform.position = spawnCell;
+                    }
+                }
+                          
                 yield return new WaitForSeconds(_spanwGap);
             }
         }

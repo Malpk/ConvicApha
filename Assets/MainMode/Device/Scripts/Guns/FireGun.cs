@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class FireGun : Device
+    public class FireGun : Gun
     {
         [Header("Reqired component")]
         [SerializeField] private Animator _animator;
