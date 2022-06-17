@@ -11,7 +11,7 @@ namespace MainMode
         [Header("DestroyMode")]
         [SerializeField] protected bool destroyMode = true;
         [SerializeField] protected float timeDestroy = 1;
-        private Vector3Int _cellPos;
+        [SerializeField]protected Vector3Int _cellPos;
         public Vector3Int CellPos { get => _cellPos; set => _cellPos = value; }
 
         protected bool isMode = true;

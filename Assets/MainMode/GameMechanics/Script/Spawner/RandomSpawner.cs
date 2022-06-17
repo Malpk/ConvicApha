@@ -18,7 +18,7 @@ namespace MainMode
         [SerializeField] private AnimationCurve _difficultCurve;
         [SerializeField] private PlayGround _playGround;
 
-       // private Vector3 spawnPosition;
+        // private Vector3 spawnPosition;
         private Vector3Int spawnCell;
         private bool isTimerActive = false;
         //private bool spawned = false;
@@ -35,14 +35,14 @@ namespace MainMode
         {
             while (true)
             {
-                var device = _kiFactory.GetRandomKI() as Device;              
-
                 if (_playGround.TryGetFreeRandomCell(_player.transform.position, _radiusSpawnZone, out spawnCell))
                 {
+                    var device = _kiFactory.GetRandomKI() as Device;
+
                     if (!(spawnCell.x < 0 || spawnCell.y < 0 || spawnCell.x >= 19 || spawnCell.x >= 19))
                     {
                         device.transform.position = spawnCell;
-                        device.CellPos = spawnCell;
+                        device.CellPos = spawnCell;                   
                     }
                     else
                     {
@@ -50,7 +50,7 @@ namespace MainMode
                         device.transform.position = spawnCell;
                     }
                 }
-                          
+
                 yield return new WaitForSeconds(_spanwGap);
             }
         }
