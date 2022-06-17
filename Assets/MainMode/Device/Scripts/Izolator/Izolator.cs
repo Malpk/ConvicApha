@@ -9,7 +9,7 @@ public abstract class Izolator : Device
     [SerializeField] protected Transform _jetHolder;
 
     private bool _isActive;
-    protected Animator[] animators;
+   [SerializeField] protected Animator[] animators;
     public abstract EffectType TypeEffect { get; }
 
     protected override void Intilizate()

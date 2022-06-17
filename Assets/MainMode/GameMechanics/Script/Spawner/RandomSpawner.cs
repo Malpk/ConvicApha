@@ -18,10 +18,10 @@ namespace MainMode
         [SerializeField] private AnimationCurve _difficultCurve;
         [SerializeField] private PlayGround _playGround;
 
-        private Vector3 spawnPosition;
+       // private Vector3 spawnPosition;
         private Vector3Int spawnCell;
         private bool isTimerActive = false;
-        private bool spawned = false;
+        //private bool spawned = false;
 
         private void Update()
         {
@@ -35,12 +35,15 @@ namespace MainMode
         {
             while (true)
             {
-                var device = _kiFactory.GetRandomKI();              
+                var device = _kiFactory.GetRandomKI() as Device;              
 
                 if (_playGround.TryGetFreeRandomCell(_player.transform.position, _radiusSpawnZone, out spawnCell))
                 {
                     if (!(spawnCell.x < 0 || spawnCell.y < 0 || spawnCell.x >= 19 || spawnCell.x >= 19))
+                    {
                         device.transform.position = spawnCell;
+                        device.CellPos = spawnCell;
+                    }
                     else
                     {
                         CorrectCoordinates();
