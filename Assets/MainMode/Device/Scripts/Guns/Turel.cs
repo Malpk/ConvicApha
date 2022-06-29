@@ -4,7 +4,7 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(CapsuleCollider2D))]
-    public class Turel : Device
+    public class Turel : Gun
     {
 
         [Header("Attacks properties")]

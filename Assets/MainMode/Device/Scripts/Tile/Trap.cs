@@ -11,6 +11,7 @@ namespace MainMode
 
         protected override void Intilizate()
         {
+            base.Intilizate();  
             if (destroyMode)
                 Destroy(gameObject, timeDestroy);
         }

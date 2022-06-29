@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6870398045645405145}
   - component: {fileID: 4656173001909429871}
   - component: {fileID: 5517268123668547750}
+  - component: {fileID: 3922916115326551211}
   m_Layer: 8
   m_Name: Kiborg_Murder
   m_TagString: Player
@@ -281,6 +282,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   respawnTime: 1
+  _inventory: {fileID: 0}
   _abilityReloadTime: 1
   _distanceAttack: 1
   _deviceLayer:
@@ -293,6 +295,23 @@ MonoBehaviour:
   _temperaturOnHit: 0.2
   _sprite: {fileID: 6870398045645405141}
   _lightHit: {fileID: 6961649145009594288}
+--- !u!114 &3922916115326551211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6870398045645405149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd46adbbe0010e74c8ca22a7bcc6525b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConsumablesItemView: {fileID: 0}
+  ArtifactItemView: {fileID: 0}
+  _consumablesItem: []
+  _player: {fileID: 0}
+  _artifact: {fileID: 0}
 --- !u!1001 &2424994377555690491
 PrefabInstance:
   m_ObjectHideFlags: 0

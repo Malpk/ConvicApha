@@ -30,6 +30,7 @@ namespace MainMode
         public void SetTarget(Vector3 target)
         {
             StartCoroutine(Destroy(target));
+            Destroy(gameObject, 4);
         }
         private void FixedUpdate()
         {

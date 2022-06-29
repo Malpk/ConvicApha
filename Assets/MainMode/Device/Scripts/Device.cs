@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MainMode.GameMechanics;
 
 namespace MainMode
 {
     [RequireComponent(typeof(Animator))]
-    public abstract class Device : KI,IMode
+    public abstract class Device : KI, IMode
     {
         [Header("DestroyMode")]
         [SerializeField] protected bool destroyMode = true;
         [SerializeField] protected float timeDestroy = 1;
-
-        [SerializeField] protected AttackInfo attackInfo;
+        [SerializeField]protected Vector3Int _cellPos;
+        public Vector3Int CellPos { get => _cellPos; set => _cellPos = value; }
 
         protected bool isMode = true;
 
-        protected Animator animator;
-        public AttackInfo AttackInfo => attackInfo;
+        protected Animator animator;    
+
+        public abstract TrapType DeviceType { get; }
 
         protected void Awake()
         {
@@ -26,7 +28,7 @@ namespace MainMode
 
         protected virtual void Intilizate()
         {
-            
+            MoveUpAnimation();
         }
         public virtual void TurnOff()
         {
@@ -34,12 +36,18 @@ namespace MainMode
             Invoke("DownAnimation", timeDestroy);
         }
         protected void DestroyPerfab()
-        {
+        {         
+            PlayGround.Instance.DeleteDeviceOnCell(_cellPos);
             Destroy(gameObject);
         }
         protected void DownAnimation()
         {
             animator.SetTrigger("Down");
+        }
+
+        protected void MoveUpAnimation()
+        {
+            animator.SetTrigger("Up");
         }
     }
 }

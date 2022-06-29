@@ -7,18 +7,13 @@ public abstract class Izolator : Device
 {
     [SerializeField] protected float activeTime = 10f;
     [SerializeField] protected Transform _jetHolder;
-    [SerializeField] protected ISetAttack[] _jets; 
 
     private bool _isActive;
-    protected Animator[] animators;
+   [SerializeField] protected Animator[] animators;
+    public abstract EffectType TypeEffect { get; }
 
     protected override void Intilizate()
     {
-        _jets = GetComponentsInChildren<ISetAttack>();
-        foreach (var jet in _jets)
-        {
-            jet.SetAttack(AttackInfo);
-        }
         animators = _jetHolder.GetComponentsInChildren<Animator>();
         SetMode(false);
     }
@@ -49,20 +44,20 @@ public abstract class Izolator : Device
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (attackInfo.Effect == EffectType.None)
+        if (TypeEffect == EffectType.None)
             return;
         if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
-            screen.SetEffect(attackInfo.Effect);
+            screen.SetEffect(TypeEffect);
         }
     }
     protected virtual void OnTriggerExit2D(Collider2D collision)
     {
-        if (attackInfo.Effect == EffectType.None)
+        if (TypeEffect == EffectType.None)
             return;
         if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
-            screen.ScreenOff(attackInfo.Effect);
+            screen.ScreenOff(TypeEffect);
         }
     }
 
