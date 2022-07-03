@@ -30,6 +30,8 @@ namespace MainMode
 
         private SignalTile[] _signals;
 
+        public override TrapType DeviceType => TrapType.Turel;
+
         private void OnEnable()
         {
             foreach (var signal in _signals)
@@ -67,7 +69,7 @@ namespace MainMode
                 _time = 0;
                 animator.SetTrigger("Shoot");
                 var bullet = Instantiate(_bulletPrefab.gameObject, _spawnTransform.position, _spawnTransform.rotation).GetComponent<Bullet>();
-                bullet.SetAttack(AttackInfo);
+                bullet.SetAttack(attackInfo);
             }
         }
 

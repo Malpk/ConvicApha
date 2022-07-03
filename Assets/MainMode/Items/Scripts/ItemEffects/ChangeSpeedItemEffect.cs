@@ -6,11 +6,11 @@ namespace MainMode.Items
 {
     public class ChangeSpeedItemEffect : ItemEffect
     {
-        [SerializeField]private int _speed;            
+        [SerializeField] private int _speed;            
 
         public override void UseEffect(Player player)
         {
-            player.ChangeSpeed(Duration,_speed);
+            player.ChangeSpeed(Duration,EffectType.None ,_speed);
         }
     }
 }

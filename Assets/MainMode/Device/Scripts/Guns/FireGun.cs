@@ -12,12 +12,15 @@ namespace MainMode
         [SerializeField] private Animator _fireAnimator;
         [SerializeField] private Transform _signalHolder;
 
+
         private SignalTile[] _signals;
+
+        public override TrapType DeviceType => TrapType.FireGun;
 
         protected override void Intilizate()
         {
             _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
-            _fire.SetAttack(AttackInfo);
+            _fire.SetAttack(attackInfo);
         }
 
         private void OnEnable()

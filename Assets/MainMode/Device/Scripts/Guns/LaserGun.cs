@@ -24,6 +24,8 @@ namespace MainMode
         private Coroutine _coroutine = null;
         private SignalTile[] _signals;
 
+        public override TrapType DeviceType => TrapType.LaserGun;
+
         protected override void Intilizate()
         {
             _laser.SetAttack(attackInfo);

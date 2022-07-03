@@ -8,7 +8,7 @@ namespace MainMode
     public abstract class Trap : Device
     {
         [SerializeField] protected LayerMask playerLayer;
-
+        [SerializeField] protected AttackInfo attackInfo;
         protected override void Intilizate()
         {
             base.Intilizate();  

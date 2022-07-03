@@ -10,6 +10,7 @@ namespace MainMode.Items
         [SerializeField] protected ItemEffect _itemEffect;
         [SerializeField] protected Sprite ItemSprite;
 
+
         protected Player _ownerPlayer;
         public Sprite Sprite => ItemSprite;
         public ItemEffect Effect { get => _itemEffect;}
@@ -18,6 +19,8 @@ namespace MainMode.Items
             _itemEffect = GetComponent<ItemEffect>();
         }
         public abstract void Pick(Player player);
+
         public abstract void Use();
+
     }
 }

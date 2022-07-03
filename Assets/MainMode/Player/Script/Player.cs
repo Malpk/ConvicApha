@@ -5,9 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character
+public class Player : Character,IResist
 {
     [SerializeField] protected Inventory _inventory; 
+    [Header("Resist setting")]
+    [SerializeField] protected List<AttackType> _defoutResistAttack;
+    [SerializeField] protected List<EffectType> _defoutResistEffect;
 
     protected float stopEffect = 1;
     protected float stoneEffect = 1;
@@ -16,64 +19,11 @@ public class Player : Character
     private Coroutine _stopMoveCorotine;
     private Coroutine _utpdateMoveCorotine;
 
+    protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
+    protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
     public override bool IsUseEffect => true;
 
-    protected void FixedUpdate()
-    {
-        var direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        Move(direction);
-    }
-    public override void Dead()
-    {
-        isDead = true;
-        animator.SetBool("Dead", true);
-        health.EventOnDead.Invoke();
-        rigidBody.velocity = Vector2.zero;
-        if (respawn == null)
-            respawn = StartCoroutine(ReSpawn());
-    }
-    public override void TakeDamage(int damage, EffectType type)
-    {
-        health.SetDamage(damage);
-        if (health.Health <= 0)
-        {
-            Dead();
-        }
-        else
-        {
-            health.EventOnTakeDamage.Invoke();
-        }
-    }
-    public override void StopMove(float timeStop, EffectType effect = EffectType.None)
-    {
-        if (_stopMoveCorotine == null)
-            _stopMoveCorotine = StartCoroutine(StopMovement(timeStop));
-    }
-    public override void ChangeSpeed(float duration, float value = 1)
-    {
-        if (_utpdateMoveCorotine == null)
-            _utpdateMoveCorotine = StartCoroutine(UpdateSpeed(duration, value));
-    }
-
-    public void Heal(int point)
-    {
-        health.Heal(point);
-    }
-
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IPickable item))
-        {
-            if (item is ConsumablesItem)
-                _inventory.AddConsumablesItem(item as ConsumablesItem);
-
-
-            if (item is Artifact)
-                _inventory.AddArtifact(item as Artifact);
-        }
-    }
-
-    protected void Update()
+    protected virtual void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -90,15 +40,59 @@ public class Player : Character
             }
         }
     }
-
-    private void UseItem(Item item)
-    {      
-        item.Use();      
-    }
-
-    public void ApplyEffect(IItemEffect itemEffect)
+    protected void FixedUpdate()
     {
-        itemEffect.UseEffect(this);
+        var direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Move(direction);
+    }
+    protected override void Move(Vector2 direction)
+    {
+        if (isDead)
+            return;
+        _movement.Move(direction * SpeedMovement);
+        if (direction != Vector2.zero)
+            _movement.Rotate(direction, speedRotaton);
+    }
+    #region Player Damage and Dead
+    public override void Dead()
+    {
+        isDead = true;
+        animator.SetBool("Dead", true);
+        health.EventOnDead.Invoke();
+        rigidBody.velocity = Vector2.zero;
+        if (respawn == null)
+            respawn = StartCoroutine(ReSpawn());
+    }
+    public override void TakeDamage(int damage, AttackInfo type)
+    {
+        if (!IsResist(type.Attack))
+        {
+            health.SetDamage(damage);
+            if (health.Health <= 0)
+            {
+                Dead();
+            }
+            else
+            {
+                health.EventOnTakeDamage.Invoke();
+            }
+        }
+    }
+    #endregion
+    #region Movement and Other Debaf
+    public override void StopMove(float timeStop, EffectType effect)
+    {
+        if (_stopMoveCorotine == null && !IsResist(effect))
+        {
+            _stopMoveCorotine = StartCoroutine(StopMovement(timeStop));
+        }
+    }
+    public override void ChangeSpeed(float duration,EffectType effect, float value = 1)
+    {
+        if (_utpdateMoveCorotine == null && !IsResist(effect))
+        {
+            _utpdateMoveCorotine = StartCoroutine(UpdateSpeed(duration, value));
+        }
     }
 
     private IEnumerator StopMovement(float duratuin)
@@ -117,14 +111,21 @@ public class Player : Character
         stoneEffect = 1;
         _utpdateMoveCorotine = null;
     }
-
-    protected override void Move(Vector2 direction)
+    #endregion
+    #region Item Useble
+    private void UseItem(Item item)
     {
-        if (isDead)
-            return;
-        _movement.Move(direction * SpeedMovement);
-        if (direction != Vector2.zero)
-            _movement.Rotate(direction, speedRotaton);
+        item.Use();
+    }
+
+    public void ApplyEffect(IItemEffect itemEffect)
+    {
+        itemEffect.UseEffect(this);
+    }
+    #endregion
+    public void Heal(int point)
+    {
+        health.Heal(point);
     }
     protected override void ResetCharacter()
     {
@@ -132,4 +133,74 @@ public class Player : Character
         stoneEffect = 1f;
         base.ResetCharacter();
     }
+
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IPickable item))
+        {
+            if (item is ConsumablesItem)
+            {
+                _inventory.AddConsumablesItem(item as ConsumablesItem);
+            }
+            if (item is Artifact)
+            {
+                _inventory.AddArtifact(item as Artifact);
+            }
+        }
+    }
+    #region SetResist
+    public void AddResistAttack(AttackInfo attackInfo, float timeActive)
+    {
+        if (!_defoutResistAttack.Contains(attackInfo.Attack))
+        {
+            AddAttackResist(attackInfo.Attack);
+            StartCoroutine(DeleteResist(attackInfo.Attack, timeActive));
+        }
+        if (!_defoutResistEffect.Contains(attackInfo.Effect))
+        {
+            AddEffectResist(attackInfo.Effect);
+            StartCoroutine(DeleteResist(attackInfo.Effect, timeActive));
+        }
+    }
+    private void AddEffectResist(EffectType effectType)
+    {
+        if (effectResist.ContainsKey(effectType))
+        {
+            effectResist[effectType]++;
+        }
+        else
+        {
+            effectResist.Add(effectType, 1);
+        }
+    }
+    private void AddAttackResist(AttackType effectType)
+    {
+        if (attackResist.ContainsKey(effectType))
+            attackResist[effectType]++;
+        else
+            attackResist.Add(effectType, 1);
+    }
+    private IEnumerator DeleteResist(AttackType type, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        attackResist[type]--;
+        if (attackResist[type] <= 0)
+            attackResist.Remove(type);
+    }
+    private IEnumerator DeleteResist(EffectType type, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        effectResist[type]--;
+        if (effectResist[type] <= 0)
+            effectResist.Remove(type);
+    }
+    public bool IsResist(EffectType effect)
+    {
+        return effectResist.ContainsKey(effect) || _defoutResistEffect.Contains(effect);
+    }
+    public bool IsResist(AttackType attack)
+    {
+        return attackResist.ContainsKey(attack) || _defoutResistAttack.Contains(attack);
+    }
+    #endregion
 }

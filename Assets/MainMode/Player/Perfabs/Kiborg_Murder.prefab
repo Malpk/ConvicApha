@@ -274,6 +274,7 @@ MonoBehaviour:
   speedRotaton: 10
   health:
     _healthPoints: 5
+    _maxHealthPoint: 7
     _healthUI: {fileID: 0}
     EventOnTakeDamage:
       m_PersistentCalls:
@@ -283,6 +284,8 @@ MonoBehaviour:
         m_Calls: []
   respawnTime: 1
   _inventory: {fileID: 0}
+  _defoutResistAttack: 
+  _defoutResistEffect: 
   _abilityReloadTime: 1
   _distanceAttack: 1
   _deviceLayer:

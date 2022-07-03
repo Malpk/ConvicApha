@@ -8,6 +8,8 @@ namespace MainMode
     {
         [SerializeField] private SignalTile _signalArea;
 
+        public override TrapType DeviceType => TrapType.DaimondIzolator;
+
         private void OnEnable()
         {
             _signalArea.SingnalAction +=(Collider2D collison) => ActivateDevice();

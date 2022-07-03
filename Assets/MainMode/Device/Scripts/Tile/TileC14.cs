@@ -10,12 +10,14 @@ namespace MainMode
         [SerializeField] private float _speedReduce = 1f;
         [SerializeField] private float _durationEffect;
 
+        public override TrapType DeviceType => TrapType.C14;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             SetScreen(collision, _durationEffect);
             if (collision.TryGetComponent<IMoveEffect>(out IMoveEffect target))
             {
-                target.ChangeSpeed(_durationEffect,_speedReduce);
+                target.ChangeSpeed(_durationEffect,EffectType.Stone,_speedReduce);
             }
         }
     }

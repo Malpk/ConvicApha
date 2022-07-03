@@ -9,6 +9,8 @@ namespace MainMode
         [SerializeField] private int _damage;
         [SerializeField] private float _screenEffectDuration;
 
+        public override TrapType DeviceType => TrapType.TI81;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             SetScreen(collision, _screenEffectDuration);

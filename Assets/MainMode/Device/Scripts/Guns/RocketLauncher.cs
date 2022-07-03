@@ -21,6 +21,8 @@ namespace MainMode
 
         private Coroutine _coroutine;
 
+        public override TrapType DeviceType => TrapType.RocketLauncher;
+
         protected override void Intilizate()
         {
             _wave.SetAttack(attackInfo);

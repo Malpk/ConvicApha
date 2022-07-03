@@ -47,7 +47,7 @@ public class RobotMan : Player
         ChangeTemaerature(_bodyTemperature);
     }
 
-    private  void Update()
+    protected override void Update()
     {
         base.Update();
         TrakingDevice();
@@ -85,34 +85,27 @@ public class RobotMan : Player
         else
             _target = null;
     }
-    public override void TakeDamage(int damage, AttackInfo type)
+    public override void TakeDamage(int damage, AttackInfo attack)
     {
-
-        switch (type.Effect)
+        if (attack.Effect == EffectType.Fire && !IsResist(EffectType.Fire))
         {
-            case EffectType.Venom:
-                return;
-            case EffectType.Fire:
-                ChangeTemaerature(_temperatureSteep);
-                break;
-            default:
-                base.TakeDamage(damage, type);
-                return;
+            ChangeTemaerature(_temperatureSteep);
         }
+        base.TakeDamage(damage, attack);
     }
-    public override void StopMove(float timeStop, EffectType effect = EffectType.None)
+    public override void StopMove(float timeStop, EffectType effect)
     {
         if (effect == EffectType.Freez)
             {
             if (_bodyTemperature < 0.3f)
             {
-                base.StopMove(timeStop);
+                base.StopMove(timeStop,effect);
             }
             _bodyTemperature = 0;
             ChangeTemaerature();
         }
         else
-            base.StopMove(timeStop);
+            base.StopMove(timeStop, effect);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

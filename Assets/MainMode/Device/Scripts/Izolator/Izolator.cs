@@ -8,9 +8,10 @@ public abstract class Izolator : Device
     [SerializeField] protected float activeTime = 10f;
     [SerializeField] protected Transform _jetHolder;
 
+    [SerializeField] protected Animator[] animators;
+    [SerializeField] protected AttackInfo attackInfo;
+
     private bool _isActive;
-   [SerializeField] protected Animator[] animators;
-    public abstract EffectType TypeEffect { get; }
 
     protected override void Intilizate()
     {
@@ -44,20 +45,20 @@ public abstract class Izolator : Device
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (TypeEffect == EffectType.None)
+        if (attackInfo.Effect == EffectType.None)
             return;
         if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
-            screen.SetEffect(TypeEffect);
+            screen.SetEffect(attackInfo.Effect);
         }
     }
     protected virtual void OnTriggerExit2D(Collider2D collision)
     {
-        if (TypeEffect == EffectType.None)
+        if (attackInfo.Effect == EffectType.None)
             return;
         if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
-            screen.ScreenOff(TypeEffect);
+            screen.ScreenOff(attackInfo.Effect);
         }
     }
 

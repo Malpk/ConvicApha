@@ -8,6 +8,18 @@ namespace MainMode
     {
         [SerializeField] private SpriteRenderer _sprite;
 
+        public override TrapType DeviceType => TrapType.VenomIsolator;
+
+        protected override void Intilizate()
+        {
+            var jets = GetComponentsInChildren<ISetAttack>();
+            foreach (var jet in jets)
+            {
+                jet.SetAttack(attackInfo);
+            }
+            base.Intilizate();
+        }
+
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
             base.OnTriggerEnter2D(collision);

@@ -2,6 +2,6 @@
 {
     public interface IItemEffect
     {
-        void UseEffect(Player player);
+        void UseEffect(Player target);
     }
 }

@@ -37,7 +37,7 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
         _movement = new PlayerMovement(this, rigidBody);
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         health.Start();
     }
@@ -45,7 +45,7 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
     public abstract void Dead();
     public abstract void TakeDamage(int damage,  AttackInfo type);
     public abstract void StopMove(float timeStop, EffectType effect = EffectType.None);
-    public abstract void ChangeSpeed(float duration, float value = 1);
+    public abstract void ChangeSpeed(float duration,EffectType effect, float value = 1);
 
     protected IEnumerator ReSpawn()
     {

@@ -19,6 +19,7 @@ namespace MainMode.Items
             var shield = Instantiate(_fireShield);
             shield.transform.SetParent(_ownerPlayer.transform, false);        
             _ownerPlayer.ApplyEffect(_itemEffect);
+            _ownerPlayer.AddResistAttack(attackResist,resistDuration);
             Destroy(shield, _itemEffect.Duration);
         }
 
