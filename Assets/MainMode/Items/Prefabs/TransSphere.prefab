@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522554527939328599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.991, y: 8.016, z: -0.042814508}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 522554528885218337}
@@ -49,7 +49,9 @@ MonoBehaviour:
   ItemSprite: {fileID: 8101572385338785263, guid: ea5bd51728087214ba8fc53573242e3b, type: 3}
   Count: 1
   IsInfinity: 0
+  _unitDistance: 0
   _spriteBody: {fileID: 522554528885218336}
+  _point: {fileID: 0}
 --- !u!61 &522554527939328600
 BoxCollider2D:
   m_ObjectHideFlags: 0

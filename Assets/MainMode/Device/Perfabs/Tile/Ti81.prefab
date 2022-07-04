@@ -91,8 +91,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2262772513938998255}
-  - component: {fileID: 2262772513938998254}
   - component: {fileID: 2262772513938998253}
+  - component: {fileID: 2262772513938998254}
   - component: {fileID: 2262772513938998252}
   - component: {fileID: 2262772513938998251}
   m_Layer: 10
@@ -110,13 +110,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2262772513938998250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.0528145, y: 14.000289, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2262772512422222710}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!114 &2262772513938998254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +141,7 @@ MonoBehaviour:
     m_Bits: 1
   _damage: 1
   _screenEffectDuration: 3
+
 --- !u!61 &2262772513938998253
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,6 +168,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
+
 --- !u!95 &2262772513938998252
 Animator:
   serializedVersion: 3

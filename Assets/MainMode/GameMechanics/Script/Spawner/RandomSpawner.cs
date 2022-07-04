@@ -17,11 +17,29 @@ namespace MainMode
         [SerializeField] private KIFactory _kiFactory;
         [SerializeField] private AnimationCurve _difficultCurve;
         [SerializeField] private PlayGround _playGround;
+        [SerializeField]
+        [Range(2, 8)]
+        private int limitNeighbours = 3;
+        private Vector3 _offset = new Vector3(0.5f, 0.5f, 0);
 
-        // private Vector3 spawnPosition;
+        private Dictionary<TrapType, int[]> _spwnZones = new Dictionary<TrapType, int[]>()
+        {
+            [TrapType.N7] = new int[2] { 1, 3 },
+            [TrapType.TI81] = new int[2] { 1, 3 },
+            [TrapType.U92] = new int[2] { 1, 3 },
+            [TrapType.C14] = new int[2] { 1, 3 },
+            [TrapType.Turel] = new int[2] { 7, 8 },
+            [TrapType.FireGun] = new int[2] { 7, 8 },
+            [TrapType.LaserGun] = new int[2] { 7, 8 },
+            [TrapType.VenomIsolator] = new int[2] { 4, 6 },
+            [TrapType.SteamIsolator] = new int[2] { 4, 6 },
+            [TrapType.RocketLauncher] = new int[2] { 7, 8 },
+            [TrapType.DaimondIzolator] = new int[2] { 4, 6 }
+        };
+    
         private Vector3Int spawnCell;
-        private bool isTimerActive = false;
-        //private bool spawned = false;
+        private List<Vector3Int> freeCells;
+        private bool isTimerActive = false; 
 
         private void Update()
         {
@@ -35,22 +53,51 @@ namespace MainMode
         {
             while (true)
             {
-                if (_playGround.TryGetFreeRandomCell(_player.transform.position, _radiusSpawnZone, out spawnCell))
-                {
-                    var device = _kiFactory.GetRandomKI() as Device;
+                bool spawned = false;
+                var device = _kiFactory.GetRandomKI() as Device;
+                device.gameObject.SetActive(false);
 
-                    if (!(spawnCell.x < 0 || spawnCell.y < 0 || spawnCell.x >= 19 || spawnCell.x >= 19))
+                while (spawned == false)
+                {
+                    if (_playGround.TryGetFreeCellsInRange(_player.transform.position, _spwnZones[device.DeviceType], out freeCells))
                     {
-                        device.transform.position = spawnCell;
-                        device.CellPos = spawnCell;                   
+
+                        while (freeCells.Count > 0)
+                        {
+                            spawnCell = freeCells[Random.Range(0, freeCells.Count)];
+                            var countFreeCells = _playGround.GetCountFreeCellsAroundCell(spawnCell);
+                            int countNeighbours = 8 - countFreeCells;
+
+                            if (countNeighbours < limitNeighbours)
+                            {
+                                device.gameObject.SetActive(true);
+                                device.transform.position = _playGround.GetWorldPositionByCellPos(spawnCell) + _offset;
+                                device.CellPos = spawnCell;
+                                _playGround.OccupyCell(spawnCell);
+                                spawned = true;
+                                break;
+                            }
+                            else
+                            {
+                                freeCells.Remove(spawnCell);
+                            }
+                        }
+
+                        if (freeCells.Count == 0)
+                        {
+                            Destroy(device.gameObject);
+                            break;
+
+                        }
+
                     }
                     else
                     {
-                        CorrectCoordinates();
-                        device.transform.position = spawnCell;
+                        Destroy(device.gameObject);
+                        break;
                     }
-                }
-
+                }          
+            
                 yield return new WaitForSeconds(_spanwGap);
             }
         }

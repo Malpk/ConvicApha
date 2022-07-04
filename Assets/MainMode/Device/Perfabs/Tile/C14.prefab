@@ -110,7 +110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4865375913905671008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.020277, y: 12.046743, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4865375913786008010}
@@ -157,15 +157,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyMode: 0
   timeDestroy: 1
+  _cellPos: {x: 0, y: 0, z: 0}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   attackInfo:
     _device: 3
     _effect: 4
     _attack: 0
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  _speedReduce: 0.5
-  _durationEffect: 3
+  _speedReduce: 0.65
+  _durationEffect: 2
 --- !u!95 &4865375913905671010
 Animator:
   serializedVersion: 3
