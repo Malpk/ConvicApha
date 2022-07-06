@@ -22,10 +22,12 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
     protected Animator animator;
     protected Rigidbody2D rigidBody;
     protected PlayerMovement _movement;
+    protected IPlayerComponent[] _component;
 
     protected Coroutine respawn = null;
 
     public abstract bool IsUseEffect { get; }
+    public abstract bool IsDead { get; }
     public Vector2 Position => transform.position;
     public Quaternion Rotation => transform.rotation;
 
@@ -35,6 +37,7 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         _movement = new PlayerMovement(this, rigidBody);
+        _component = GetComponents<IPlayerComponent>();
     }
 
     protected virtual void Start()
@@ -55,6 +58,10 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
         animator.SetBool("Dead",false);
         ResetCharacter();
         respawn = null;
+        foreach (var component in _component)
+        {
+            component.Play();
+        }
     }
 
     protected virtual void ResetCharacter()

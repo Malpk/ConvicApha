@@ -15,18 +15,18 @@ namespace MainMode
             if (destroyMode)
                 Destroy(gameObject, timeDestroy);
         }
-        protected void SetScreen(Collider2D collision, float duration)
+        protected void SetScreen(Collider2D collision, AttackInfo attack)
         {
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen effect))
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
             {
-                effect.SetEffect(attackInfo.Effect, duration);
+                screen.ShowEffect(attackInfo);
             }
         }
-        protected void SetScreen(Collider2D collision)
+        protected void SetScreen(Collider2D collision, EffectType effect)
         {
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen effect))
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
             {
-                effect.SetEffect(attackInfo.Effect);
+                screen.ShowEffect(effect);
             }
         }
     }

@@ -8,16 +8,15 @@ namespace MainMode
     {
         [Range(0,1f)]
         [SerializeField] private float _speedReduce = 1f;
-        [SerializeField] private float _durationEffect;
 
         public override TrapType DeviceType => TrapType.C14;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision, _durationEffect);
+            SetScreen(collision, attackInfo);
             if (collision.TryGetComponent<IMoveEffect>(out IMoveEffect target))
             {
-                target.ChangeSpeed(_durationEffect,EffectType.Stone,_speedReduce);
+                target.ChangeSpeed(attackInfo.TimeEffect, attackInfo.Effect,_speedReduce);
             }
         }
     }

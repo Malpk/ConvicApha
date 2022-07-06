@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerScreen))]
 public class Player : Character,IResist
 {
     [SerializeField] protected Inventory _inventory; 
@@ -14,14 +15,22 @@ public class Player : Character,IResist
 
     protected float stopEffect = 1;
     protected float stoneEffect = 1;
-    protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
+    protected PlayerScreen _screenEffect;
 
     private Coroutine _stopMoveCorotine;
     private Coroutine _utpdateMoveCorotine;
 
     protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
     protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
+    
     public override bool IsUseEffect => true;
+    public override bool IsDead => isDead;
+    protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
+    protected override void Awake()
+    {
+        _screenEffect = GetComponent<PlayerScreen>();
+        base.Awake();
+    }
 
     protected virtual void Update()
     {
@@ -63,9 +72,9 @@ public class Player : Character,IResist
         if (respawn == null)
             respawn = StartCoroutine(ReSpawn());
     }
-    public override void TakeDamage(int damage, AttackInfo type)
+    public override void TakeDamage(int damage, AttackInfo attackInfo)
     {
-        if (!IsResist(type.Attack))
+        if (!IsResist(attackInfo.Attack))
         {
             health.SetDamage(damage);
             if (health.Health <= 0)
@@ -76,6 +85,7 @@ public class Player : Character,IResist
             {
                 health.EventOnTakeDamage.Invoke();
             }
+            _screenEffect.ShowEffect(attackInfo);
         }
     }
     #endregion

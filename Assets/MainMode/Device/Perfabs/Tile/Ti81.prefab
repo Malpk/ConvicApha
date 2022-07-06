@@ -117,31 +117,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
---- !u!114 &2262772513938998254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2262772513938998250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f52f239a37a5394409d3e7f88dcd81cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyMode: 0
-  timeDestroy: 1
-  attackInfo:
-    _device: 0
-    _effect: 1
-    _attack: 3
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  _damage: 1
-  _screenEffectDuration: 3
-
 --- !u!61 &2262772513938998253
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -168,7 +143,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
-
+--- !u!114 &2262772513938998254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2262772513938998250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52f239a37a5394409d3e7f88dcd81cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyMode: 0
+  timeDestroy: 1
+  _cellPos: {x: 0, y: 0, z: 0}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  attackInfo:
+    _timeEffect: 3
+    _effect: 1
+    _attack: 3
+  _damage: 1
+  _screenEffectDuration: 3
 --- !u!95 &2262772513938998252
 Animator:
   serializedVersion: 3

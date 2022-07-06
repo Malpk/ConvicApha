@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6190572338360393724}
   - component: {fileID: 6190572338360393722}
- - component: {fileID: 6190572338360393725}
-  - component: {fileID: 6190572338360393723}
   - component: {fileID: 6190572338360393720}
+  - component: {fileID: 6190572338360393723}
+  - component: {fileID: 6190572338360393725}
   m_Layer: 10
   m_Name: N7
   m_TagString: Untagged
@@ -35,28 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6190572338360393725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6190572338360393721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a39030be56dc3e4ca342608742034e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyMode: 0
-  timeDestroy: 1
-  attackInfo:
-    _device: 0
-    _effect: 2
-    _attack: 0
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  _duration: 2
 --- !u!61 &6190572338360393722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -83,26 +61,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
-
---- !u!95 &6190572338360393723
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6190572338360393721}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5f2146fd4438b39469a09564c7e61421, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &6190572338360393720
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -154,6 +112,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6190572338360393723
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6190572338360393721}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f2146fd4438b39469a09564c7e61421, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6190572338360393725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6190572338360393721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a39030be56dc3e4ca342608742034e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyMode: 0
+  timeDestroy: 1
+  _cellPos: {x: 0, y: 0, z: 0}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  attackInfo:
+    _timeEffect: 2
+    _effect: 2
+    _attack: 0
+  _duration: 2
 --- !u!1 &6190572339352764824
 GameObject:
   m_ObjectHideFlags: 0

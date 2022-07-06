@@ -54,9 +54,9 @@ namespace MainMode
         private IEnumerator ScreenOff(EffectType type, float duration)
         {
             yield return new WaitForSeconds(duration);
-            ScreenOff(type);
+            ScreenHide(type);
         }
-        public void ScreenOff(EffectType type)
+        public void ScreenHide(EffectType type)
         {
             if (!_screenActive.ContainsKey(type))
                 return;

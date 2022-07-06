@@ -49,7 +49,7 @@ public abstract class Izolator : Device
             return;
         if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
-            screen.SetEffect(attackInfo.Effect);
+            screen.ShowEffect(attackInfo.Effect);
         }
     }
     protected virtual void OnTriggerExit2D(Collider2D collision)
@@ -58,7 +58,7 @@ public abstract class Izolator : Device
             return;
         if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
-            screen.ScreenOff(attackInfo.Effect);
+            screen.ScreenHide(attackInfo.Effect);
         }
     }
 

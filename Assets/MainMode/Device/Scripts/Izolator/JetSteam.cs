@@ -29,10 +29,6 @@ namespace MainMode
             {
                 target.TakeDamage(_damage,_attackInfo);
             }
-            if (collision.collider.TryGetComponent<IEffect>(out IEffect screen))
-            {
-                screen.SetEffect(_attackInfo.Effect, _effectTime);
-            }
             if (collision.rigidbody)
                 collision.rigidbody.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
         }

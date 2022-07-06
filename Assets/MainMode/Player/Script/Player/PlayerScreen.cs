@@ -14,23 +14,23 @@ namespace MainMode
 
         private Coroutine _corotine = null;
 
-        public void SetEffect(EffectType type, float duration)
+        public void ShowEffect(AttackInfo attack)
         {
             if (!_character.IsUseEffect)
                 return;
-            _screen.SetScreen(type, duration);
-            if (_corotine == null && type == EffectType.Freez)
-                _corotine = StartCoroutine(FreezeState(duration));     
+            _screen.SetScreen(attack.Effect, attack.TimeEffect);
+            if (_corotine == null && attack.Effect == EffectType.Freez)
+                _corotine = StartCoroutine(FreezeState(attack.TimeEffect));     
         }
-        public void SetEffect(EffectType type)
+        public void ShowEffect(EffectType type)
         {
             if (!_character.IsUseEffect)
                 return;
             _screen.SetScreen(type);
         }
-        public void ScreenOff(EffectType type)
+        public void ScreenHide(EffectType type)
         {
-            _screen.ScreenOff(type);
+            _screen.ScreenHide(type);
         }
         private IEnumerator FreezeState(float duration)
         {

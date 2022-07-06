@@ -37,10 +37,6 @@ namespace MainMode
             {
                 target.TakeDamage(_damage, _attackInfo);
             }
-            if (collision.transform.TryGetComponent<IEffect>(out IEffect screen))
-            {
-                screen.SetEffect(EffectType.Fire, _fireEffect);
-            }
         }
 
         public void SetAttack(AttackInfo info)

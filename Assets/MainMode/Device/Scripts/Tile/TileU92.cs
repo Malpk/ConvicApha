@@ -10,7 +10,7 @@ namespace MainMode
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision);
+            SetScreen(collision,attackInfo.Effect);
         }
     }
 }

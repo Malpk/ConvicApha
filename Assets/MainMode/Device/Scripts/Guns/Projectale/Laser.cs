@@ -24,10 +24,6 @@ namespace MainMode
             {
                 target.TakeDamage(_damage, _attackInfo);
             }
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
-            {
-                screen.SetEffect(EffectType.Fire, _timeEffect);
-            }
         }
     }
 }

@@ -7,13 +7,12 @@ namespace MainMode
     public class TileTI81 : Trap
     {
         [SerializeField] private int _damage;
-        [SerializeField] private float _screenEffectDuration;
 
         public override TrapType DeviceType => TrapType.TI81;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision, _screenEffectDuration);
+            SetScreen(collision, attackInfo);
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
                 target.TakeDamage(_damage, attackInfo);

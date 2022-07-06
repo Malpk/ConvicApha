@@ -6,16 +6,14 @@ namespace MainMode
 {
     public class TileN7 : Trap
     {
-        [SerializeField] private float _duration;
-
         public override TrapType DeviceType => TrapType.N7;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision, _duration);
+            SetScreen(collision, attackInfo);
             if (collision.TryGetComponent<IMoveEffect>(out IMoveEffect target))
             {
-                target.StopMove(_duration,attackInfo.Effect);
+                target.StopMove(attackInfo.TimeEffect, attackInfo.Effect);
             }
         }
     }
