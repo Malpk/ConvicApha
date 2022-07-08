@@ -89,8 +89,9 @@ namespace MainMode
                 if (cell.sprite == null)
                 {
                     cell.sprite = screen;
-                    cell.transform.parent = null;
-                    cell.transform.parent = transform;
+                    //баг со "съезжанием" эффектов экрана
+                   // cell.transform.parent = null;
+                   // cell.transform.parent = transform;
                     return cell;
                 }
             }

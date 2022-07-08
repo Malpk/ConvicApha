@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class VariableJoystick : Joystick
-{ 
+{
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
     [SerializeField] private float moveThreshold = 1;
@@ -23,7 +23,7 @@ public class VariableJoystick : Joystick
         else
             background.gameObject.SetActive(false);
     }
-    
+
     protected override void Start()
     {
         base.Start();
