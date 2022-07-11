@@ -26,6 +26,7 @@ namespace MainMode.GameMechanics
         private void Start()
         {
             FindStartDevices();
+            Application.targetFrameRate = 60;
 
         }
         public Vector3Int GetRandomFreeCell(Vector3 playerPosition, float radius)

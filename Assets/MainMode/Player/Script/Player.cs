@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerScreen))]
-public class Player : Character,IResist
+public class Player : Character, IResist
 {
-    [SerializeField] protected Inventory _inventory; 
+    [SerializeField] protected Inventory _inventory;
+    [SerializeField] protected Joystick _joystick;
     [Header("Resist setting")]
     [SerializeField] protected List<AttackType> _defoutResistAttack;
     [SerializeField] protected List<EffectType> _defoutResistEffect;
@@ -19,11 +20,10 @@ public class Player : Character,IResist
 
     private Coroutine _stopMoveCorotine;
     private Coroutine _utpdateMoveCorotine;
-    private IItemInteractive _interacitveObject;
 
     protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
     protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
-    
+
     public override bool IsUseEffect => true;
     public override bool IsDead => isDead;
     protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
@@ -31,32 +31,47 @@ public class Player : Character,IResist
     {
         _screenEffect = GetComponent<PlayerScreen>();
         base.Awake();
+        _joystick = FindObjectOfType<FloatingJoystick>();
+
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+            _joystick.gameObject.SetActive(false);
+
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            _joystick.gameObject.SetActive(true);
+
+        }
+
     }
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
         {
-            if (_inventory.TryGetConsumableItem(out Item item))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                UseItem(item);
+                if (_inventory.TryGetConsumableItem(out Item item))
+                {
+                    UseItem(item);
+                }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.F) && _interacitveObject != null)
-        {
-            _interacitveObject.Interactive(this);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (_inventory.TryGetArtifact(out Artifact artifact))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                UseItem(artifact);
+                if (_inventory.TryGetArtifact(out Artifact artifact))
+                {
+                    UseItem(artifact);
+                }
             }
         }
     }
     protected void FixedUpdate()
     {
-        var direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 direction = Vector2.zero;
+        if (Application.platform == RuntimePlatform.Android)
+            direction = _joystick.Direction;
+        else
+            direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
         Move(direction);
     }
     protected override void Move(Vector2 direction)
@@ -102,7 +117,7 @@ public class Player : Character,IResist
             _stopMoveCorotine = StartCoroutine(StopMovement(timeStop));
         }
     }
-    public override void ChangeSpeed(float duration,EffectType effect, float value = 1)
+    public override void ChangeSpeed(float duration, EffectType effect, float value = 1)
     {
         if (_utpdateMoveCorotine == null && !IsResist(effect))
         {
@@ -161,17 +176,6 @@ public class Player : Character,IResist
             {
                 _inventory.AddArtifact(item as Artifact);
             }
-        }
-        if (collision.TryGetComponent(out IItemInteractive interactive))
-        {
-            _interacitveObject = interactive;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IItemInteractive interactive))
-        {
-            _interacitveObject = null;
         }
     }
     #region SetResist

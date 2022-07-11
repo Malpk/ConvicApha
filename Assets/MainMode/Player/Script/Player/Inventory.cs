@@ -15,6 +15,42 @@ namespace MainMode
         [SerializeField] private Player _player;
         [SerializeField] private Artifact _artifact;
 
+        private void OnEnable()
+        {
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                ConsumablesItemView.ClickView += UseConsumableItem;
+                ArtifactItemView.ClickView += UseArtifactItem;
+
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                ConsumablesItemView.ClickView -= UseConsumableItem;
+                ArtifactItemView.ClickView -= UseArtifactItem;
+            }
+        }
+
+        private void UseArtifactItem()
+        {
+            if (TryGetArtifact(out Artifact artifact))
+            {
+                artifact.Use();
+            }
+
+        }
+
+        private void UseConsumableItem()
+        {
+            if (TryGetConsumableItem(out Item item))
+            {
+                item.Use();
+            }
+        }
+
         private void Start()
         {
             _player = GetComponent<Player>();

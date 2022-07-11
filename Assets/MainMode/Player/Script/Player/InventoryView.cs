@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.EventSystems;
 
 namespace MainMode
 {
-    public class InventoryView : MonoBehaviour
+    public class InventoryView : MonoBehaviour,IPointerDownHandler
     {
         [SerializeField] private Image _imageItem;
         [SerializeField] private TextMeshProUGUI _countItems;
+        [SerializeField] private TextMeshProUGUI _hotKey;
 
+        public event Action ClickView;
+
+        private void Awake()
+        {
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+                _hotKey.gameObject.SetActive(false);
+        }
         public void Display(Sprite spriteItem, int countItem)
         {
             if (spriteItem != null)
@@ -48,5 +56,7 @@ namespace MainMode
             
         }
 
+        public void OnPointerDown(PointerEventData eventData) => 
+            ClickView?.Invoke();
     }
 }
