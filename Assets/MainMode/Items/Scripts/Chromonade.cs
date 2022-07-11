@@ -5,16 +5,11 @@ namespace MainMode.Items
 {
     public class Chromonade : ConsumablesItem
     {
-        public override void Pick(Player player)
-        {
-            _ownerPlayer = player;
-            gameObject.SetActive(false);
-        }
-
+        [SerializeField] private ItemEffect _itemEffect;
         public override void Use()
         {
-            if (_ownerPlayer != null && _itemEffect != null)
-                _ownerPlayer.ApplyEffect(_itemEffect);
+            if (_target != null && _itemEffect != null)
+                _target.ApplyEffect(_itemEffect);
         }
     }
 }

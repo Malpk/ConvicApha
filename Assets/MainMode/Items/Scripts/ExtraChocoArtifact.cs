@@ -4,16 +4,11 @@ using UnityEngine;
 namespace MainMode.Items
 {
     public class ExtraChocoArtifact : Artifact
-    {    
-        public override void Pick(Player player)
-        {
-            _ownerPlayer = player;
-            gameObject.SetActive(false);
-        }
-
+    {
+        [SerializeField] private ItemEffect _itemEffect;
         public override void Use()
         {
-            _ownerPlayer.ApplyEffect(_itemEffect);
+            _target.ApplyEffect(_itemEffect);
         }
     }
 }

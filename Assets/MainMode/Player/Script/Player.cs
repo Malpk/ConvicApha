@@ -19,6 +19,7 @@ public class Player : Character,IResist
 
     private Coroutine _stopMoveCorotine;
     private Coroutine _utpdateMoveCorotine;
+    private IItemInteractive _interacitveObject;
 
     protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
     protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
@@ -40,6 +41,10 @@ public class Player : Character,IResist
             {
                 UseItem(item);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.F) && _interacitveObject != null)
+        {
+            _interacitveObject.Interactive(this);
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -156,6 +161,17 @@ public class Player : Character,IResist
             {
                 _inventory.AddArtifact(item as Artifact);
             }
+        }
+        if (collision.TryGetComponent(out IItemInteractive interactive))
+        {
+            _interacitveObject = interactive;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IItemInteractive interactive))
+        {
+            _interacitveObject = null;
         }
     }
     #region SetResist

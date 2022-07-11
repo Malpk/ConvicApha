@@ -6,12 +6,6 @@ namespace MainMode.Items
 {
     public class InterdimensionalSphere : Item
     {
-        public override void Pick(Player player)
-        {
-            _ownerPlayer = player;  
-            
-
-        }
 
         public override void Use()
         {

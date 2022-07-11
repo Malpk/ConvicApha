@@ -315,14 +315,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5228888590305354944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe041fca9a813b40a1d37f6613da990, type: 3}
+  m_Script: {fileID: 11500000, guid: 898d5fee3de0b304c968693cbd1abefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _safeTime: 10
-  _damage: 2
+  _safeBaseTime: 3
+  _damage: 1
   _hitDelay: 1
   _hitAttack:
-    _device: 0
+    _timeEffect: 0.5
     _effect: 0
     _attack: 0
   _fieldImage: {fileID: 0}

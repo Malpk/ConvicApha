@@ -6,20 +6,20 @@ namespace MainMode.Items
 {
     public class FirePill : ConsumablesItem
     {
-        [SerializeField] private GameObject _fireShield;     
+        [SerializeField] private ItemEffect _itemEffect;
+        [SerializeField] private GameObject _fireShield;
 
-        public override void Pick(Player player)
-        {         
-            _ownerPlayer = player;
-            gameObject.SetActive(false);
+        protected override void Awake()
+        {
+            base.Awake();
+            _itemEffect = GetComponent<ItemEffect>();
         }
-
         public override void Use()
         {
             var shield = Instantiate(_fireShield);
-            shield.transform.SetParent(_ownerPlayer.transform, false);        
-            _ownerPlayer.ApplyEffect(_itemEffect);
-            _ownerPlayer.AddResistAttack(attackResist,resistDuration);
+            shield.transform.SetParent(_target.transform, false);        
+            _target.ApplyEffect(_itemEffect);
+            _target.AddResistAttack(attackResist,resistDuration);
             Destroy(shield, _itemEffect.Duration);
         }
 

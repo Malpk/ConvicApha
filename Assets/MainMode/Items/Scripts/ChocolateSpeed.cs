@@ -5,15 +5,11 @@ namespace MainMode.Items
 {
     public class ChocolateSpeed : Item
     {
-        public override void Pick(Player player)
-        {
-            _ownerPlayer = player;  
-            gameObject.SetActive(false);    
-        }
+       [SerializeField] private ItemEffect _itemEffect;
 
         public override void Use()
         {
-            _ownerPlayer.ApplyEffect(_itemEffect);
+            _target.ApplyEffect(_itemEffect);
         }
     }
 }

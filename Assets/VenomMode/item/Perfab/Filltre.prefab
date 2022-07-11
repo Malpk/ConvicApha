@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2053004827506024307}
   - component: {fileID: 4717495860674856572}
   m_Layer: 0
-  m_Name: Filtr
+  m_Name: Filltre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,5 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c53b22ba94fd6046887b8954fc6e866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemSprite: {fileID: 6366529046394908241, guid: 3f5b8f3bf220ddf44b5c60fe97b7a1f7, type: 3}
+  _spriteBody: {fileID: 5369091613600331413}
   _filtrationTime: 10
-  _fitre: {fileID: 5369091613600331413}

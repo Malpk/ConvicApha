@@ -4,23 +4,40 @@ using UnityEngine;
 
 namespace MainMode.Items
 {   
+    [RequireComponent(typeof(Collider2D))]
     public abstract class Item : MonoBehaviour, IPickable, IUseable
     {
-
-        [SerializeField] protected ItemEffect _itemEffect;
         [SerializeField] protected Sprite ItemSprite;
+        [SerializeField] protected SpriteRenderer _spriteBody;
 
+        private Collider2D _collider;
 
-        protected Player _ownerPlayer;
+        public bool Active { get; private set; }
+
+        protected Player _target;
         public Sprite Sprite => ItemSprite;
-        public ItemEffect Effect { get => _itemEffect;}
-        private void Awake()
+
+        protected virtual void Awake()
         {
-            _itemEffect = GetComponent<ItemEffect>();
+            _collider = GetComponent<Collider2D>();
+ 
+            _collider.isTrigger = true;
+            SetMode(true);
         }
-        public abstract void Pick(Player player);
+        public void Pick(Player player)
+        {
+            _target = player;
+            SetMode(false);
+        }
 
         public abstract void Use();
 
+
+        public void SetMode(bool mode)
+        {
+            _spriteBody.enabled = mode;
+            _collider.enabled = mode;
+            Active = mode;
+        }
     }
 }

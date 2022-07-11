@@ -6,35 +6,23 @@ using MainMode.Items;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class Filtre : MonoBehaviour
+    public class Filtre : ConsumablesItem
     {
         [SerializeField] private int _filtrationTime;
-        [SerializeField] private SpriteRenderer _fitre;
-
-        private BoxCollider2D _collider;
 
         public int FiltrationTime => _filtrationTime;
-
-        private void Awake()
-        {
-            _collider = GetComponent<BoxCollider2D>();
-            _collider.isTrigger = true;
-        }
 
         public void Spawn(Vector2 position)
         {
             transform.position = position;
             SetMode(true);
         }
-        private void SetMode(bool mode)
+        public override void Use()
         {
-            _fitre.enabled = mode;
-            _collider.enabled = mode;
-        }
-
-        public void Pick()
-        {
-            SetMode(false);
+            if (_target.TryGetComponent<OxyGenSet>(out OxyGenSet oxyGen))
+            {
+                oxyGen.ChangeFitre(this);
+            }
         }
     }
 }

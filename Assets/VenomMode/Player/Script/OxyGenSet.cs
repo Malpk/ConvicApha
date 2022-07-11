@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(Player))]
-    public class OxyGenField : MonoBehaviour, IPlayerComponent
+    public class OxyGenSet : MonoBehaviour, IPlayerComponent, IPause
     {
         [Header("Time Setting")]
         [Min(3)]
@@ -21,11 +21,13 @@ namespace MainMode.Mode1921
         [Header("Requred Reference")]
         [SerializeField] private Image _fieldImage;
 
+        private bool _isPause;
         private float _safeTime;
-        private float _curretOxyValue;
+        private float _curretAirSupply;
         private Player _player;
         private Coroutine _corotine;
 
+        public float CurretAirSupply => _curretAirSupply;
         private void Awake()
         {
             _player = GetComponent<Player>();
@@ -47,10 +49,11 @@ namespace MainMode.Mode1921
         {
             while (!_player.IsDead)
             {
-                if (_curretOxyValue > 0)
+                if (_curretAirSupply > 0)
                 {
-                    _curretOxyValue -= Time.deltaTime;
-                    _fieldImage.fillAmount = _curretOxyValue / _safeTime;
+                    yield return new WaitWhile(() => _isPause); 
+                    _curretAirSupply -= Time.deltaTime;
+                    _fieldImage.fillAmount = _curretAirSupply / _safeTime;
                     yield return null;
                 }
                 else
@@ -62,32 +65,44 @@ namespace MainMode.Mode1921
         }
         private IEnumerator HitDamage()
         {
-            while (!_player.IsDead && _curretOxyValue <= 0)
+            while (!_player.IsDead && _curretAirSupply <= 0)
             {
                 var progress = 0f;
-                while (progress < 1f && _curretOxyValue <= 0)
+                while (progress < 1f && _curretAirSupply <= 0)
                 {
+                    yield return new WaitWhile(() => _isPause);
                     progress += Time.deltaTime / _hitDelay;
                     yield return null;
                 }
-                if (_curretOxyValue <= 0)
+                if (_curretAirSupply <= 0)
                     _player.TakeDamage(_damage, _hitAttack);
             }
         }
-        private void OnTriggerEnter2D(Collider2D collision)
+        public void ChangeFitre(Filtre filltre)
         {
-            if (collision.TryGetComponent<Filtre>(out Filtre filtre))
-            {
-                _safeTime = filtre.FiltrationTime;
-                _curretOxyValue = _safeTime;
-                filtre.Pick();
-            }
+            _safeTime = filltre.FiltrationTime;
+            _curretAirSupply = _safeTime;
+        }
+        public void ReduceFilltre(float value = 0f)
+        {
+            value = Mathf.Clamp01(value);
+            _curretAirSupply -= _safeTime * value;
         }
         public void Play()
         {
             _safeTime = _safeBaseTime;
-            _curretOxyValue = _safeTime;
+            _curretAirSupply = _safeTime;
             StartUpdate();
+        }
+
+        public void Pause()
+        {
+            _isPause = true;
+        }
+
+        public void UnPause()
+        {
+            _isPause = false;
         }
     }
 }
