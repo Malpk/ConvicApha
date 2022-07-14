@@ -14,7 +14,7 @@ namespace MainMode.Items
 
         public bool Active { get; private set; }
 
-        protected Player _target;
+        protected Player user;
         public Sprite Sprite => ItemSprite;
 
         protected virtual void Awake()
@@ -26,7 +26,7 @@ namespace MainMode.Items
         }
         public void Pick(Player player)
         {
-            _target = player;
+            user = player;
             SetMode(false);
         }
 

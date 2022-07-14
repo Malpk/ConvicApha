@@ -18,7 +18,7 @@ namespace MainMode
         public void TurnOff()
         {
             _curretHealht = _healhtWall;
-            _animator.SetTrigger("Deactivate");
+            _animator.SetBool("Mode", false);
         }
 
         public void Dead()
@@ -26,7 +26,7 @@ namespace MainMode
             TurnOff();
         }
 
-        public void TakeDamage(int damage, AttackInfo type)
+        public void TakeDamage(int damage, DamageInfo type)
         {
             _curretHealht -= damage;
             if (_curretHealht <= 0)

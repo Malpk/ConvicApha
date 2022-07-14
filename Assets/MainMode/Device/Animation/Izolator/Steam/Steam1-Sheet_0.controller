@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Activate
+    m_ConditionEvent: Mode
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -903797390963406284}
@@ -110,14 +110,8 @@ AnimatorController:
   m_Name: Steam1-Sheet_0
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Activate
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: Deactivate
-    m_Type: 9
+  - m_Name: Mode
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -146,16 +140,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 2479435202023437395}
-    m_Position: {x: 570, y: 130, z: 0}
+    m_Position: {x: 560, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -903797390963406284}
-    m_Position: {x: 290, y: 130, z: 0}
+    m_Position: {x: 280, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2261857102254857313}
-    m_Position: {x: 290, y: 220, z: 0}
+    m_Position: {x: 280, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1956137689686168141}
-    m_Position: {x: 290, y: 30, z: 0}
+    m_Position: {x: 30, y: 170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -174,8 +168,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: Deactivate
+  - m_ConditionMode: 2
+    m_ConditionEvent: Mode
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2261857102254857313}
@@ -200,7 +194,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Activate
+    m_ConditionEvent: Mode
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -903797390963406284}
@@ -223,7 +217,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New State
+  m_Name: Hide
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

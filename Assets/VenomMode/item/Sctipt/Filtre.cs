@@ -19,7 +19,7 @@ namespace MainMode.Mode1921
         }
         public override void Use()
         {
-            if (_target.TryGetComponent<OxyGenSet>(out OxyGenSet oxyGen))
+            if (user.TryGetComponent<OxyGenSet>(out OxyGenSet oxyGen))
             {
                 oxyGen.ChangeFitre(this);
             }

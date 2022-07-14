@@ -4,19 +4,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerComponent;
+using MainMode.GameInteface;
 
-[RequireComponent(typeof(PlayerScreen))]
+[RequireComponent(typeof(PlayerScreen),typeof(Collider2D))]
 public class Player : Character, IResist
-{
+{ 
     [SerializeField] protected Inventory _inventory;
-    [SerializeField] protected Joystick _joystick;
+    [SerializeField] protected Controller controller;
     [Header("Resist setting")]
     [SerializeField] protected List<AttackType> _defoutResistAttack;
     [SerializeField] protected List<EffectType> _defoutResistEffect;
 
     protected float stopEffect = 1;
     protected float stoneEffect = 1;
-    protected PlayerScreen _screenEffect;
+    protected Collider2D playerCollider = null;
+    protected PlayerScreen screenEffect = null;
+    private IItemInteractive _interacive = null;
 
     private Coroutine _stopMoveCorotine;
     private Coroutine _utpdateMoveCorotine;
@@ -29,51 +33,43 @@ public class Player : Character, IResist
     protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
     protected override void Awake()
     {
-        _screenEffect = GetComponent<PlayerScreen>();
+        screenEffect = GetComponent<PlayerScreen>();
+        playerCollider = GetComponent<Collider2D>();
         base.Awake();
-        _joystick = FindObjectOfType<FloatingJoystick>();
-
-        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
-            _joystick.gameObject.SetActive(false);
-
-        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
-        {
-            _joystick.gameObject.SetActive(true);
-
-        }
-
     }
-
-    protected virtual void Update()
+    #region SetController
+    private void OnEnable()
     {
-        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (_inventory.TryGetConsumableItem(out Item item))
-                {
-                    UseItem(item);
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (_inventory.TryGetArtifact(out Artifact artifact))
-                {
-                    UseItem(artifact);
-                }
-            }
-        }
+        if (controller != null)
+            BindController(controller);
     }
-    protected void FixedUpdate()
+    private void OnDisable()
     {
-        Vector2 direction = Vector2.zero;
-        if (Application.platform == RuntimePlatform.Android)
-            direction = _joystick.Direction;
-        else
-            direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-        Move(direction);
+        if (controller != null)
+            UnBindController(controller);
     }
+    public void SetController(Controller controller)
+    {
+        this.controller = controller;
+        BindController(controller);
+    }
+    protected void BindController(Controller controller)
+    {
+        controller.InteractiveAction += InteractiveWhithObject;
+        controller.UseItemAction += UseItem;
+        controller.UseArtifactAction += UseArtifact;
+        controller.MovementAction += Move;
+        controller.UseAbillityAction += UseAbillity;
+    }
+    protected void UnBindController(Controller controller)
+    {
+        controller.InteractiveAction -= InteractiveWhithObject;
+        controller.UseItemAction -= UseItem;
+        controller.UseArtifactAction -= UseArtifact;
+        controller.MovementAction -= Move;
+        controller.UseAbillityAction += UseAbillity;
+    }
+    #endregion
     protected override void Move(Vector2 direction)
     {
         if (isDead)
@@ -87,25 +83,18 @@ public class Player : Character, IResist
     {
         isDead = true;
         animator.SetBool("Dead", true);
-        health.EventOnDead.Invoke();
         rigidBody.velocity = Vector2.zero;
         if (respawn == null)
             respawn = StartCoroutine(ReSpawn());
     }
-    public override void TakeDamage(int damage, AttackInfo attackInfo)
+    public override void TakeDamage(int damage, DamageInfo damageInfo)
     {
-        if (!IsResist(attackInfo.Attack))
+        if (!IsResist(damageInfo.Attack))
         {
             health.SetDamage(damage);
             if (health.Health <= 0)
-            {
                 Dead();
-            }
-            else
-            {
-                health.EventOnTakeDamage.Invoke();
-            }
-            _screenEffect.ShowEffect(attackInfo);
+            screenEffect.ShowEffect(damageInfo);
         }
     }
     #endregion
@@ -142,15 +131,35 @@ public class Player : Character, IResist
         _utpdateMoveCorotine = null;
     }
     #endregion
-    #region Item Useble
-    private void UseItem(Item item)
+    #region Interactive and Useble
+    private void InteractiveWhithObject()
     {
-        item.Use();
+        if (_interacive != null)
+        {
+            _interacive.Interactive(this);
+        }
     }
-
+    private void UseItem()
+    {
+        if (_inventory.TryGetConsumableItem(out Item item))
+        {
+            item.Use();
+        }
+    }
+    private void UseArtifact()
+    {
+        if (_inventory.TryGetArtifact(out Artifact artifact))
+        {
+            artifact.Use();
+        }
+    }
     public void ApplyEffect(IItemEffect itemEffect)
     {
         itemEffect.UseEffect(this);
+    }
+    protected virtual void UseAbillity()
+    {
+        
     }
     #endregion
     public void Heal(int point)
@@ -177,9 +186,20 @@ public class Player : Character, IResist
                 _inventory.AddArtifact(item as Artifact);
             }
         }
+        if (collision.TryGetComponent(out IItemInteractive interactive))
+        {
+            _interacive = interactive;
+        }
+    }
+    protected void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IItemInteractive interactive))
+        {
+            _interacive = null; 
+        }
     }
     #region SetResist
-    public void AddResistAttack(AttackInfo attackInfo, float timeActive)
+    public void AddResistAttack(DamageInfo attackInfo, float timeActive)
     {
         if (!_defoutResistAttack.Contains(attackInfo.Attack))
         {
@@ -232,5 +252,6 @@ public class Player : Character, IResist
     {
         return attackResist.ContainsKey(attack) || _defoutResistAttack.Contains(attack);
     }
+
     #endregion
 }

@@ -7,7 +7,7 @@ namespace MainMode
     public interface IEffect
     {
         public void ShowEffect(EffectType type);
-        public void ShowEffect(AttackInfo attack);
+        public void ShowEffect(DamageInfo attack);
         public void ScreenHide(EffectType type);
     }
 }

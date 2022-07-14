@@ -143,6 +143,10 @@ MonoBehaviour:
   _playerSpriteBody: {fileID: 6870398045645405141}
   _character: {fileID: 5517268123668547750}
   _screen: {fileID: 0}
+  CurretAttack:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
 --- !u!82 &6870398045645405145
 AudioSource:
   m_ObjectHideFlags: 0
@@ -275,16 +279,11 @@ MonoBehaviour:
   health:
     _healthPoints: 5
     _maxHealthPoint: 7
-    _healthUI: {fileID: 0}
-    EventOnTakeDamage:
-      m_PersistentCalls:
-        m_Calls: []
-    EventOnDead:
-      m_PersistentCalls:
-        m_Calls: []
+    _display: {fileID: 0}
   respawnTime: 1
-  _inventory: {fileID: 0}
-  _defoutResistAttack: 
+  _inventory: {fileID: 3922916115326551211}
+  controller: {fileID: 0}
+  _defoutResistAttack: 03000000
   _defoutResistEffect: 
   _abilityReloadTime: 1
   _distanceAttack: 1
@@ -310,11 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd46adbbe0010e74c8ca22a7bcc6525b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConsumablesItemView: {fileID: 0}
-  ArtifactItemView: {fileID: 0}
-  _consumablesItem: []
-  _player: {fileID: 0}
+  _player: {fileID: 5517268123668547750}
   _artifact: {fileID: 0}
+  _display: {fileID: 0}
+  _consumablesItem: []
 --- !u!1001 &2424994377555690491
 PrefabInstance:
   m_ObjectHideFlags: 0

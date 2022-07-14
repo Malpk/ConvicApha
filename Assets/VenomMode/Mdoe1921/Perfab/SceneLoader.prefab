@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3771118590848190967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3771118590848190965}
+  - component: {fileID: 3771118590848190971}
+  - component: {fileID: 3771118590848190970}
+  - component: {fileID: 3771118590848190964}
+  m_Layer: 0
+  m_Name: SceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3771118590848190965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3771118590848190967}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7777548, y: -1.3718337, z: -6.392005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3771118590848190971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3771118590848190967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfc1be772c1da6448ec985fd3d5ff52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 1
+  _spwanPoint: {fileID: 0}
+  choosePlayer: 1
+  _perfabController: {fileID: 4461776345514264974, guid: 9c884674542b64b4685544b59d331be5, type: 3}
+  _perfab: {fileID: 5041223835232552705, guid: 171cf63c2fb4a96499a3dc2165479d27, type: 3}
+--- !u!114 &3771118590848190970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3771118590848190967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48c5d75e775da414faa807d456b0bed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnAwake: 0
+  _startInterface: 0
+  _interfacesPerfab:
+  - {fileID: -6920262893417780073, guid: 52a9e770155cdb149842b84b8c9857aa, type: 3}
+  - {fileID: 7204789072030797677, guid: adbae0970a6543c4ebbe0eeadc2342a3, type: 3}
+  _receivers:
+  - {fileID: 3989325022343667299, guid: 559d567f1a2473c46a4fdcdbca7547a3, type: 3}
+  - {fileID: 5246592016933632915, guid: 048cd5a01b93885449e1ebf01b8bfe1d, type: 3}
+  - {fileID: 668942915446906196, guid: 106a4e8b9e40f9449b170d79ebee88f0, type: 3}
+  - {fileID: 6731396422923375043, guid: 07ed78d7bbbc1904b8891a9b744801e3, type: 3}
+  - {fileID: 7012071875718636490, guid: 89a6dfdcdea6e4548b4ea6fc62a0ad78, type: 3}
+--- !u!114 &3771118590848190964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3771118590848190967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b5b9965e25b9148be2a5a0d5e56175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPerfabs:
+  - nameCell: Jeff
+    _type: 1
+    _playerPerfab: {fileID: 7502771675541039062, guid: b9b5993da4f5c9e448bce10aa9fc8f25, type: 3}
+  _cameraPerfab: {fileID: 3117493798526455250, guid: fb565e40d849f6c43aa943f8c4129d86, type: 3}
+  _cameraFollowing: {fileID: 0}

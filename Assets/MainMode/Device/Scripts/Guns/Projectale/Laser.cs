@@ -11,9 +11,9 @@ namespace MainMode
         [Min(10)]
         [SerializeField] private float _timeEffect = 1;
         
-        private AttackInfo _attackInfo;
+        private DamageInfo _attackInfo;
 
-        public void SetAttack(AttackInfo info)
+        public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;
         }

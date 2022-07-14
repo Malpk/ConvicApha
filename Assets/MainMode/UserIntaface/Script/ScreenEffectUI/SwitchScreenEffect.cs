@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MainMode;
+using MainMode.GameInteface;
 
-namespace MainMode
+namespace PlayerComponent
 {
     [RequireComponent(typeof(Animator))]
-    public class SwitchScreenEffect : MonoBehaviour
+    public class SwitchScreenEffect : Receiver
     {
         [SerializeField] private Image[] _cellScreen;
         [SerializeField] private ScreenEffect[] _screens;
@@ -14,6 +16,9 @@ namespace MainMode
         private Animator _animator;
         private Dictionary<EffectType, int> _screenActive = new Dictionary<EffectType, int>();
         private Dictionary<EffectType, Image> _screenReference = new Dictionary<EffectType, Image>();
+
+        public override TypeDisplay DisplayType => TypeDisplay.ScreenUI;
+
         private void Awake()
         {
             _animator = GetComponent<Animator>();

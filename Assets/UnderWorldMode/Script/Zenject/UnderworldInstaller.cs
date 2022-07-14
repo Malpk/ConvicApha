@@ -1,6 +1,6 @@
 using UnityEngine;
 using Zenject;
-using PlayerComponent;
+using PlayerComponentLegacy;
 using Underworld;
 using UnityEngine.Tilemaps;
 using UIInteface;

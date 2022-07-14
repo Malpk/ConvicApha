@@ -35,7 +35,7 @@ namespace MainMode
             _curretEndurance = 0;
         }
 
-        public void TakeDamage(int damage, AttackInfo type)
+        public void TakeDamage(int damage, DamageInfo type)
         {
             if (_curretEndurance - damage > 0 && _isDeactive)
                 _curretEndurance -= damage;

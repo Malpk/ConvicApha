@@ -7,6 +7,6 @@ namespace MainMode
 {
     public abstract class Gun : Device
     {
-        [SerializeField] protected AttackInfo attackInfo;
+        [SerializeField] protected DamageInfo attackInfo;
     }
 }

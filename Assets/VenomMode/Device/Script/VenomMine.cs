@@ -13,7 +13,7 @@ namespace MainMode.Mode1921
         [SerializeField] private float _dangerDistace;
         [Min(0.05f)]
         [SerializeField] private float _trigerDistance = 0.1f;
-        [SerializeField] private AttackInfo _attackInfo;
+        [SerializeField] private DamageInfo _attackInfo;
         [Header("Reference requred")]
         [SerializeField] private GameObject _explosion;
         [SerializeField] private Collider2D _bodyCollider;

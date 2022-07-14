@@ -15,7 +15,7 @@ namespace MainMode
         [Min(1)]
         [SerializeField] private float _delayDestroy = 1;
         
-        private AttackInfo _attackInfo;
+        private DamageInfo _attackInfo;
 
         private Rigidbody2D _rigidbody;
         protected virtual void Start()
@@ -33,7 +33,7 @@ namespace MainMode
             }
         }
 
-        public void SetAttack(AttackInfo info)
+        public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;
         }

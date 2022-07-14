@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MainMode;
+using MainMode.GameInteface;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
+public abstract class Character : MonoBehaviour, IMoveEffect, IDamage, ISender
 {
     [Header("Movement Setting")]
     [Min(1)]
@@ -26,10 +28,13 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
 
     protected Coroutine respawn = null;
 
+    public int Health => health.Health;
     public abstract bool IsUseEffect { get; }
     public abstract bool IsDead { get; }
     public Vector2 Position => transform.position;
     public Quaternion Rotation => transform.rotation;
+
+    public TypeDisplay TypeDisplay => TypeDisplay.HealthUI;
 
     protected virtual void Awake()
     {
@@ -39,14 +44,21 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
         _movement = new PlayerMovement(this, rigidBody);
         _component = GetComponents<IPlayerComponent>();
     }
-
     protected virtual void Start()
     {
         health.Start();
     }
+    public bool AddReceiver(Receiver receiver)
+    {
+        if (receiver is HealthUI display)
+        {
+            return health.SetReceiver(display);
+        }
+        return false;
+    }
     protected abstract void Move(Vector2 direction);
     public abstract void Dead();
-    public abstract void TakeDamage(int damage,  AttackInfo type);
+    public abstract void TakeDamage(int damage,  DamageInfo type);
     public abstract void StopMove(float timeStop, EffectType effect = EffectType.None);
     public abstract void ChangeSpeed(float duration,EffectType effect, float value = 1);
 
@@ -69,4 +81,6 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage
         rigidBody.rotation = 0;
         health.Heal(health.MaxHealth);
     }
+
+
 }

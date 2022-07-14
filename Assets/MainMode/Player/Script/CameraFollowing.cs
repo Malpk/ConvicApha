@@ -7,9 +7,15 @@ public class CameraFollowing : MonoBehaviour
     [SerializeField] private float _speedFollowing;
     [SerializeField] private Character _target;
 
-    void Update()
+    private void Update()
     {
-        FollowingTheCamera();
+        if(_target)
+            FollowingTheCamera();
+    }
+
+    public void SetTarget(Character target)
+    {
+        _target = target;
     }
     private void FollowingTheCamera()
     {

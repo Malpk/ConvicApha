@@ -8,7 +8,7 @@ namespace MainMode.Items
         [SerializeField] private ItemEffect _itemEffect;
         public override void Use()
         {
-            _target.ApplyEffect(_itemEffect);
+            user.ApplyEffect(_itemEffect);
         }
     }
 }

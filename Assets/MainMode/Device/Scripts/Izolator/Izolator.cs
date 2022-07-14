@@ -9,7 +9,7 @@ public abstract class Izolator : Device
     [SerializeField] protected Transform _jetHolder;
 
     [SerializeField] protected Animator[] animators;
-    [SerializeField] protected AttackInfo attackInfo;
+    [SerializeField] protected DamageInfo attackInfo;
 
     private bool _isActive;
 
@@ -26,7 +26,7 @@ public abstract class Izolator : Device
         }
         foreach (Animator animator in animators)
         {
-            animator.SetTrigger("Activate");
+            animator.SetBool("Mode", true);
         }
         _isActive = true;
         Invoke(nameof(DeactivateDevice), activeTime);
@@ -37,7 +37,7 @@ public abstract class Izolator : Device
     {
         foreach (Animator animator in animators)
         {
-            animator.SetTrigger("Deactivate");
+            animator.SetBool("Mode", false);
         }
         _isActive = false;
         SetMode(_isActive);

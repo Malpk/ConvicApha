@@ -13,9 +13,9 @@ namespace MainMode.Items
 
         public override void Use()
         {
-            var point = Instantiate(_point.gameObject, _target.transform.position,Quaternion.identity).GetComponent<TransSpherePoint>();
-            point.Run(_target.transform, _target.transform.position +
-                    _target.transform.up * _unitDistance);
+            var point = Instantiate(_point.gameObject, user.transform.position,Quaternion.identity).GetComponent<TransSpherePoint>();
+            point.Run(user.transform, user.transform.position +
+                    user.transform.up * _unitDistance);
         }
     }
 }

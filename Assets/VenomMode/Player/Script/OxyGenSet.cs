@@ -1,13 +1,14 @@
+using MainMode.GameInteface;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(Player))]
-    public class OxyGenSet : MonoBehaviour, IPlayerComponent, IPause
+    public class OxyGenSet : MonoBehaviour, IPlayerComponent, IPause, ISender
     {
         [Header("Time Setting")]
         [Min(3)]
@@ -17,9 +18,9 @@ namespace MainMode.Mode1921
         [SerializeField] private int _damage = 1;
         [Min(0)]
         [SerializeField] private float _hitDelay = 1f;
-        [SerializeField] private AttackInfo _hitAttack;
+        [SerializeField] private DamageInfo _hitAttack;
         [Header("Requred Reference")]
-        [SerializeField] private Image _fieldImage;
+        [SerializeField] private OxyGenDisplay _display;
 
         private bool _isPause;
         private float _safeTime;
@@ -28,6 +29,9 @@ namespace MainMode.Mode1921
         private Coroutine _corotine;
 
         public float CurretAirSupply => _curretAirSupply;
+
+        public TypeDisplay TypeDisplay => TypeDisplay.OxyGenUI;
+
         private void Awake()
         {
             _player = GetComponent<Player>();
@@ -53,7 +57,7 @@ namespace MainMode.Mode1921
                 {
                     yield return new WaitWhile(() => _isPause); 
                     _curretAirSupply -= Time.deltaTime;
-                    _fieldImage.fillAmount = _curretAirSupply / _safeTime;
+                    _display.UpdateField(_curretAirSupply / _safeTime);
                     yield return null;
                 }
                 else
@@ -103,6 +107,15 @@ namespace MainMode.Mode1921
         public void UnPause()
         {
             _isPause = false;
+        }
+
+        public bool AddReceiver(Receiver receiver)
+        {
+            if (_display != null)
+                return false;
+            if (receiver is OxyGenDisplay display)
+                _display = display;
+            return _display;
         }
     }
 }

@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5041223835232552717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5041223835232552718}
+  - component: {fileID: 5041223835232552719}
+  - component: {fileID: 5041223835232552716}
+  - component: {fileID: 5041223835232552705}
+  m_Layer: 0
+  m_Name: MapGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5041223835232552718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5041223835232552717}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5041223835232552719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5041223835232552717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499b0d5efd95b0b40adba40ec7956714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitSize: {x: 1, y: 1}
+  _mapSize: {x: 16, y: 16}
+  _showMarker: 0
+  _marker: {fileID: 1156379936625223983, guid: b97baa71949d2f14f8833c8ecd173590, type: 3}
+--- !u!114 &5041223835232552716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5041223835232552717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff3f0ef4427a6d4a8b2e4b71aee5b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onStart: 0
+  _maxDistanceOnTarget: 5
+  _rangeTimeSpawn: {x: 3, y: 7}
+  _items:
+  - _name: Filtre
+    _maxLimit: 10
+    _item: {fileID: 4717495860674856572, guid: ddfb347e91dc4e34bb2ad2c7c6fc0bee, type: 3}
+  _mapGrid: {fileID: 5041223835232552719}
+  _target: {fileID: 0}
+--- !u!114 &5041223835232552705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5041223835232552717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06acbd3a95e973f4b9f6da6ec5cd69db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onStart: 1
+  _countRangeMine: {x: 15, y: 25}
+  _countRangeShield: {x: 10, y: 15}
+  _map: {fileID: 5041223835232552719}
+  _changeTest: {fileID: 0}
+  _shield: {fileID: 5245872121302450046, guid: 52e0e30fda0573744a54bab7680637ad, type: 3}
+  _gasMine: {fileID: 799339695788005221, guid: dcef4e36cf3c27a4980e878f73dce9a4, type: 3}
+  _tools:
+  - {fileID: 6843293452440120864, guid: 8ec2bb9cb6b24d948a24ffee9e42c082, type: 3}
+  - {fileID: 2567757606809758297, guid: aa4521135e6b9a144833490dd331c540, type: 3}
+  - {fileID: 8954888755046884202, guid: 02504ce246a2ea44bb876ac1bdf48022, type: 3}
+  _win:
+    m_PersistentCalls:
+      m_Calls: []

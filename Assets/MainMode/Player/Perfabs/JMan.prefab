@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1425891481077609341}
   - component: {fileID: 868995220648947403}
   - component: {fileID: 868995220648947401}
+  - component: {fileID: 854305113421834015}
   m_Layer: 8
   m_Name: JMan
   m_TagString: Player
@@ -141,6 +142,10 @@ MonoBehaviour:
   _playerSpriteBody: {fileID: 1425891481077609329}
   _character: {fileID: 868995220648947401}
   _screen: {fileID: 0}
+  CurretAttack:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
 --- !u!82 &1425891481077609341
 AudioSource:
   m_ObjectHideFlags: 0
@@ -273,17 +278,28 @@ MonoBehaviour:
   health:
     _healthPoints: 4
     _maxHealthPoint: 4
-    _healthUI: {fileID: 0}
-    EventOnTakeDamage:
-      m_PersistentCalls:
-        m_Calls: []
-    EventOnDead:
-      m_PersistentCalls:
-        m_Calls: []
+    _display: {fileID: 0}
   respawnTime: 1
-  _inventory: {fileID: 0}
+  _inventory: {fileID: 854305113421834015}
+  controller: {fileID: 0}
   _defoutResistAttack: 
   _defoutResistEffect: 
   _timeReload: 0.5
-  _forceJerk: 15
-  _debafSpeed: 0.782
+  _forceJerk: 750
+  _debafSpeed: 0.53
+--- !u!114 &854305113421834015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425891481077609337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd46adbbe0010e74c8ca22a7bcc6525b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 868995220648947401}
+  _artifact: {fileID: 0}
+  _display: {fileID: 0}
+  _consumablesItem: []

@@ -8,14 +8,14 @@ namespace MainMode
     public abstract class Trap : Device
     {
         [SerializeField] protected LayerMask playerLayer;
-        [SerializeField] protected AttackInfo attackInfo;
+        [SerializeField] protected DamageInfo attackInfo;
         protected override void Intilizate()
         {
             base.Intilizate();  
             if (destroyMode)
                 Destroy(gameObject, timeDestroy);
         }
-        protected void SetScreen(Collider2D collision, AttackInfo attack)
+        protected void SetScreen(Collider2D collision, DamageInfo attack)
         {
             if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
             {

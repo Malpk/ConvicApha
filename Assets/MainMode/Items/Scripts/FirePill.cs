@@ -17,9 +17,9 @@ namespace MainMode.Items
         public override void Use()
         {
             var shield = Instantiate(_fireShield);
-            shield.transform.SetParent(_target.transform, false);        
-            _target.ApplyEffect(_itemEffect);
-            _target.AddResistAttack(attackResist,resistDuration);
+            shield.transform.SetParent(user.transform, false);        
+            user.ApplyEffect(_itemEffect);
+            user.AddResistAttack(attackResist,resistDuration);
             Destroy(shield, _itemEffect.Duration);
         }
 

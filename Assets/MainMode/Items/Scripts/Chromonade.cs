@@ -8,8 +8,8 @@ namespace MainMode.Items
         [SerializeField] private ItemEffect _itemEffect;
         public override void Use()
         {
-            if (_target != null && _itemEffect != null)
-                _target.ApplyEffect(_itemEffect);
+            if (user != null && _itemEffect != null)
+                user.ApplyEffect(_itemEffect);
         }
     }
 }

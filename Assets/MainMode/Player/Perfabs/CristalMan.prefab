@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2945612157506840891}
   - component: {fileID: 3973978711600690317}
   - component: {fileID: 8626755286193916105}
+  - component: {fileID: 5494408789903217394}
   m_Layer: 8
   m_Name: CristalMan
   m_TagString: Player
@@ -143,6 +144,10 @@ MonoBehaviour:
   _playerSpriteBody: {fileID: 2945612157506840887}
   _character: {fileID: 8626755286193916105}
   _screen: {fileID: 0}
+  CurretAttack:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
 --- !u!82 &2945612157506840891
 AudioSource:
   m_ObjectHideFlags: 0
@@ -275,19 +280,30 @@ MonoBehaviour:
   health:
     _healthPoints: 5
     _maxHealthPoint: 7
-    _healthUI: {fileID: 0}
-    EventOnTakeDamage:
-      m_PersistentCalls:
-        m_Calls: []
-    EventOnDead:
-      m_PersistentCalls:
-        m_Calls: []
+    _display: {fileID: 0}
   respawnTime: 1
-  _inventory: {fileID: 0}
+  _inventory: {fileID: 5494408789903217394}
+  _controller: {fileID: 0}
   _defoutResistAttack: 0100000003000000
   _defoutResistEffect: 
   _timeReload: 1
   _returnPoint: {fileID: 8626755286083596638}
+--- !u!114 &5494408789903217394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945612157506840895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd46adbbe0010e74c8ca22a7bcc6525b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8626755286193916105}
+  _artifact: {fileID: 0}
+  _display: {fileID: 0}
+  _consumablesItem: []
 --- !u!1 &8626755286083596639
 GameObject:
   m_ObjectHideFlags: 0

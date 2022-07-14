@@ -8,9 +8,9 @@ namespace MainMode
         [Min(1)]
         [SerializeField] private int _damageValue = 1;
         
-        private AttackInfo _attackInfo;
+        private DamageInfo _attackInfo;
 
-        public void SetAttack(AttackInfo info)
+        public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;
         }

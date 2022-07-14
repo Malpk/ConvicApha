@@ -14,11 +14,11 @@ namespace MainMode
         [Min(1)]
         [SerializeField] private float _effectTime = 1f;
         
-        private AttackInfo _attackInfo;
+        private DamageInfo _attackInfo;
 
         public float ForceJet => _force;
 
-        public void SetAttack(AttackInfo info)
+        public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;
         }

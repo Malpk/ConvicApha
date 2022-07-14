@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace PlayerComponent
+namespace PlayerComponentLegacy
 {
     public class AndroidControl : MonoBehaviour,IGameController
     {

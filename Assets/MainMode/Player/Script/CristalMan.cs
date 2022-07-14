@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MainMode;
+using PlayerComponent;
 
 public class CristalMan : Player
 {
@@ -9,34 +10,30 @@ public class CristalMan : Player
     [Min(1)]
     [SerializeField] private float _timeReload = 1;
     [SerializeField] private ReturnPoint _returnPoint;
+    [SerializeField] private DamageInfo _returnDamage;
 
     private bool _isReload = false;
 
     private List<AttackType> _dangersAttack = new List<AttackType>() { AttackType.Explosion, AttackType.Kinetic};
 
-    protected override void Update()
+    protected override void UseAbillity()
     {
-        base.Update();
-        if (Input.GetKeyDown(KeyCode.Space) && !_isReload)
-            ActiveAbility();
-    }
-
-    private void ActiveAbility()
-    {
+        if (_isReload)
+            return;
         if (_returnPoint.State)
         {
             transform.position = _returnPoint.Position;
             _returnPoint.Deactive(this);
             _isReload = true;
             Invoke("Reload", _timeReload);
-            TakeDamage(1, null);
+            TakeDamage(1, _returnDamage);
         }
         else
         {
             _returnPoint.ActiveMode(transform.position);
         }
     }
-    public override void TakeDamage(int damage, AttackInfo type)
+    public override void TakeDamage(int damage, DamageInfo type)
     {
         if (IsResist(type.Attack))
             return;

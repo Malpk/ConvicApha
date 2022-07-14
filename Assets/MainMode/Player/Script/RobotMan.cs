@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MainMode;
+using PlayerComponent;
 
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class RobotMan : Player
@@ -47,11 +48,11 @@ public class RobotMan : Player
         ChangeTemaerature(_bodyTemperature);
     }
 
-    protected override void Update()
+
+    protected override void UseAbillity()
     {
-        base.Update();
         TrakingDevice();
-        if (Input.GetAxis("Jump") != 0 && _abillityActive==null)
+        if (_abillityActive == null)
         {
             ChangeTemaerature(_temperaturOnHit);
             _abillityActive = StartCoroutine(AbillitReload());
@@ -85,7 +86,7 @@ public class RobotMan : Player
         else
             _target = null;
     }
-    public override void TakeDamage(int damage, AttackInfo attack)
+    public override void TakeDamage(int damage, DamageInfo attack)
     {
         if (attack.Effect == EffectType.Fire && !IsResist(EffectType.Fire))
         {

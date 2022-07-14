@@ -14,7 +14,7 @@ namespace MainMode
 
         private Animator _animator;
         private Collider2D _colider;
-        private AttackInfo _attackInfo;
+        private DamageInfo _attackInfo;
         private SpriteRenderer _sprite;
 
         private void Awake()
@@ -39,7 +39,7 @@ namespace MainMode
             }
         }
 
-        public void SetAttack(AttackInfo info)
+        public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;
         }

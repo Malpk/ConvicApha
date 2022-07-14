@@ -8,6 +8,6 @@ namespace MainMode.Items
     public abstract class ConsumablesItem : Item
     {
         [SerializeField] protected float resistDuration;
-        [SerializeField] protected AttackInfo attackResist;
+        [SerializeField] protected DamageInfo attackResist;
     }
 }

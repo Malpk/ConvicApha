@@ -1,20 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerComponent;
+using MainMode.GameInteface;
 
 namespace MainMode
 {
-    public class PlayerScreen : MonoBehaviour, IEffect
+    public class PlayerScreen : MonoBehaviour, IEffect, ISender
     {
         [SerializeField] private Sprite _freezSprite;
         [SerializeField] private SpriteRenderer _playerSpriteBody;
         [SerializeField] private Character _character;
-
         [SerializeField] private SwitchScreenEffect _screen;
 
         private Coroutine _corotine = null;
 
-        public void ShowEffect(AttackInfo attack)
+        public DamageInfo CurretAttack;
+
+        public TypeDisplay TypeDisplay => TypeDisplay.ScreenUI;
+
+        public bool AddReceiver(Receiver receiver)
+        {
+            if (_screen != null)
+                return false;
+            if (receiver is SwitchScreenEffect screen)
+            {
+                _screen = screen;
+                return true;
+            }
+            else
+            {
+                return false; ;
+            }
+        }
+        public void ShowEffect(DamageInfo attack)
         {
             if (!_character.IsUseEffect)
                 return;
@@ -40,5 +59,6 @@ namespace MainMode
             _playerSpriteBody.sprite = temp;
             _corotine = null;
         }
+
     }
 }

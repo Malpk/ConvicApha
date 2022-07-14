@@ -143,6 +143,10 @@ MonoBehaviour:
   _playerSpriteBody: {fileID: 3763651025555216317}
   _character: {fileID: 5614930928919736659}
   _screen: {fileID: 0}
+  CurretAttack:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
 --- !u!114 &5614930928919736659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,15 +164,10 @@ MonoBehaviour:
   health:
     _healthPoints: 5
     _maxHealthPoint: 5
-    _healthUI: {fileID: 0}
-    EventOnTakeDamage:
-      m_PersistentCalls:
-        m_Calls: []
-    EventOnDead:
-      m_PersistentCalls:
-        m_Calls: []
+    _display: {fileID: 0}
   respawnTime: 1
   _inventory: {fileID: 6706806910228261059}
+  controller: {fileID: 0}
   _defoutResistAttack: 
   _defoutResistEffect: 
   _healValue: 1
@@ -279,7 +278,7 @@ Animator:
   m_GameObject: {fileID: 3763651025555216309}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 24c5056e7d3981245858a8069925c224, type: 2}
+  m_Controller: {fileID: 9100000, guid: 16834a5bc9942334daa9cf86df78855a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -300,11 +299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd46adbbe0010e74c8ca22a7bcc6525b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConsumablesItemView: {fileID: 0}
-  ArtifactItemView: {fileID: 0}
-  _consumablesItem: []
-  _player: {fileID: 0}
+  _player: {fileID: 5614930928919736659}
   _artifact: {fileID: 0}
+  _display: {fileID: 0}
+  _consumablesItem: []
 --- !u!1001 &5387692446698008467
 PrefabInstance:
   m_ObjectHideFlags: 0

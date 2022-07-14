@@ -3,57 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MainMode.Items;
+using MainMode.GameInteface;
 
 namespace MainMode
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : MonoBehaviour,ISender
     {
-        [SerializeField] private InventoryView ConsumablesItemView;
-        [SerializeField] private InventoryView ArtifactItemView;
-
-        [SerializeField] private List<ConsumablesItem> _consumablesItem = new List<ConsumablesItem>();
         [SerializeField] private Player _player;
         [SerializeField] private Artifact _artifact;
+        [SerializeField] private InventroryUI _display;
+        [SerializeField] private List<ConsumablesItem> _consumablesItem = new List<ConsumablesItem>();
 
-        private void OnEnable()
-        {
-            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                ConsumablesItemView.ClickView += UseConsumableItem;
-                ArtifactItemView.ClickView += UseArtifactItem;
-
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                ConsumablesItemView.ClickView -= UseConsumableItem;
-                ArtifactItemView.ClickView -= UseArtifactItem;
-            }
-        }
-
-        private void UseArtifactItem()
-        {
-            if (TryGetArtifact(out Artifact artifact))
-            {
-                artifact.Use();
-            }
-
-        }
-
-        private void UseConsumableItem()
-        {
-            if (TryGetConsumableItem(out Item item))
-            {
-                item.Use();
-            }
-        }
+        public TypeDisplay TypeDisplay => TypeDisplay.ItemInventory;
 
         private void Start()
         {
             _player = GetComponent<Player>();
+        }
+        public bool AddReceiver(Receiver receiver)
+        {
+            if (_display != null)
+                return false;
+            if (receiver is InventroryUI display)
+                _display = display;
+            return _display;
         }
         public void AddConsumablesItem(ConsumablesItem item)
         {
@@ -145,20 +118,21 @@ namespace MainMode
         private void UpdateInventory()
         {
             if (_consumablesItem.Count > 0)
-                ConsumablesItemView.Display(_consumablesItem[0].Sprite, _consumablesItem.Count);
+                _display.DisplayConsumablesItem(_consumablesItem[0].Sprite, _consumablesItem.Count);
             else
-                ConsumablesItemView.DisplayEmpty();
+                _display.DisplayConsumablesItem(null);
 
             if (_artifact != null)
             {
-                if (_artifact.Count > 0)
-                    ArtifactItemView.Display(_artifact.Sprite, _artifact.Count);
-                else
-                    ArtifactItemView.DisplayEmpty();
-
                 if (_artifact.IsInfinity)
-                    ArtifactItemView.DisplayInfinity(_artifact.Sprite);
+                    _display.DisplayInfinity(_artifact.Sprite);
+                else if (_artifact.Count > 0)
+                    _display.DisplayArtifact(_artifact.Sprite, _artifact.Count);
+                else
+                    _display.DisplayArtifact(null);
             }
         }
+
+
     }
 }

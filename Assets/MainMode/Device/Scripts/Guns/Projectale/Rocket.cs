@@ -16,14 +16,14 @@ namespace MainMode
         [SerializeField] private FireWave _wave;
 
         private Rigidbody2D _rigidBody;
-        private AttackInfo _attackInfo;
+        private DamageInfo _attackInfo;
 
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
             _rigidBody.isKinematic = true;
         }
-        public void SetAttack(AttackInfo info)
+        public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;
         }

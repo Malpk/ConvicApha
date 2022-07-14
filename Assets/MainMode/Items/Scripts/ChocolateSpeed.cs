@@ -9,7 +9,7 @@ namespace MainMode.Items
 
         public override void Use()
         {
-            _target.ApplyEffect(_itemEffect);
+            user.ApplyEffect(_itemEffect);
         }
     }
 }

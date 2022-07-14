@@ -20,7 +20,7 @@ namespace MainMode
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<IMoveEffect>() != null)
+            if (collision.GetComponent<Character>() != null)
                 ActivateDevice();
         }
 
