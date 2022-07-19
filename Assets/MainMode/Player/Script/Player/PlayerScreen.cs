@@ -37,7 +37,7 @@ namespace MainMode
         {
             if (!_character.IsUseEffect)
                 return;
-            _screen.SetScreen(attack.Effect, attack.TimeEffect);
+            _screen.Show(attack.Effect, attack.TimeEffect);
             if (_corotine == null && attack.Effect == EffectType.Freez)
                 _corotine = StartCoroutine(FreezeState(attack.TimeEffect));     
         }
@@ -45,11 +45,11 @@ namespace MainMode
         {
             if (!_character.IsUseEffect)
                 return;
-            _screen.SetScreen(type);
+            _screen.Show(type);
         }
         public void ScreenHide(EffectType type)
         {
-            _screen.ScreenHide(type);
+            _screen.Show(type);
         }
         private IEnumerator FreezeState(float duration)
         {

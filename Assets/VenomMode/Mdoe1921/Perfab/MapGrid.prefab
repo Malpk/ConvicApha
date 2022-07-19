@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onStart: 0
   _maxDistanceOnTarget: 5
-  _rangeTimeSpawn: {x: 3, y: 7}
+  _rangeTimeSpawn: {x: 3, y: 5}
   _items:
   - _name: Filtre
     _maxLimit: 10
@@ -83,10 +83,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _onStart: 1
-  _countRangeMine: {x: 15, y: 25}
-  _countRangeShield: {x: 10, y: 15}
+  _countRangeMine: {x: 35, y: 50}
+  _countRangeShield: {x: 5, y: 7}
   _map: {fileID: 5041223835232552719}
   _changeTest: {fileID: 0}
+  _minDistanceTools: 7
+  _miuDistanceShield: 7
   _shield: {fileID: 5245872121302450046, guid: 52e0e30fda0573744a54bab7680637ad, type: 3}
   _gasMine: {fileID: 799339695788005221, guid: dcef4e36cf3c27a4980e878f73dce9a4, type: 3}
   _tools:

@@ -15,7 +15,6 @@ namespace MainMode.GameInteface
      
         public bool DisplayConsumablesItem(Sprite itemIcon, int count = 0)
         {
-            Debug.Log("shwo");
             return ShowObject(itemIcon, count, _item);
         }
         public bool DisplayArtifact(Sprite itemIcon, int count = 0)

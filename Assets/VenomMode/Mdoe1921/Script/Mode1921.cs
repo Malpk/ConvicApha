@@ -16,6 +16,9 @@ namespace MainMode.Mode1921
         [Header("Requred Reference")]
         [SerializeField] private MapGrid _map;
         [SerializeField] private ChangeTest _changeTest;
+        [Header("Spawn Setting")]
+        [SerializeField] private float _minDistanceTools;
+        [SerializeField] private float _miuDistanceShield;
         [Header("Instantiate Object")]
         [SerializeField] private Shield _shield;
         [SerializeField] private VenomMine _gasMine;
@@ -25,14 +28,19 @@ namespace MainMode.Mode1921
 
         private int _countRepairShield;
         private List<Shield> _poolShield = new List<Shield>();
-        private List<VenomMine> _poolVenomMine = new List<VenomMine>();
+        private FactoryGameObjecs1921 _factory;
+
+        private void Awake()
+        {
+            _factory = new FactoryGameObjecs1921(_map);
+        }
 
         private void Start()
         {
             if (_onStart)
             {
-                InstateTools();
-                InstanteShield(_shield);
+                InstateTools(_tools);
+                InstanteShield(_shield, _miuDistanceShield);
                 InstanteVenimMine(_gasMine);
             }
         }
@@ -43,20 +51,18 @@ namespace MainMode.Mode1921
             _changeTest = test;
             return true;
         }
-        private void InstanteShield(Shield shield)
+        private void InstanteShield(Shield perfab, float distance)
         {
             _countRepairShield = Random.Range(_countRangeShield.x, _countRangeShield.y);
-            for (int i = 0; i < _countRepairShield; i++)
+            var shields = _factory.Create(perfab.gameObject, _countRepairShield, distance);
+            BindTransform(shields);
+            foreach (var item in shields)
             {
-                _poolShield.Add(BindShield(
-                    InstantiateObject(shield.gameObject).GetComponent<Shield>()));
-            }
-        }
-        private void InstateTools()
-        {
-            foreach (var tool in _tools)
-            {
-                InstantiateObject(tool.gameObject);
+                if (item.TryGetComponent(out Shield shield))
+                {
+                    _poolShield.Add(shield);
+                    BindShield(shield);
+                }
             }
         }
         private Shield BindShield(Shield shield)
@@ -65,22 +71,27 @@ namespace MainMode.Mode1921
             shield.RepairShieldAction += UpdateQuest;
             return shield;
         }
-        private void InstanteVenimMine(VenomMine mine)
+        private void InstateTools(ToolRepairs[] toolsPerfabs)
         {
-            var count = Random.Range(_countRangeMine.x, _countRangeMine.y);
-            for (int i = 0; i < count; i++)
+            var tools = new GameObject[toolsPerfabs.Length];
+            for (int i = 0; i < toolsPerfabs.Length; i++)
             {
-                _poolVenomMine.Add(
-                    InstantiateObject(mine.gameObject).GetComponent<VenomMine>());
+                tools[i] = toolsPerfabs[i].gameObject;
             }
+            BindTransform(_factory.Create(tools, _minDistanceTools));
         }
 
-        private GameObject InstantiateObject(GameObject instantiateObject)
+        private void InstanteVenimMine(VenomMine perfab)
         {
-            var freePoints = _map.GetFreePoints();
-            var instantiate = Instantiate(instantiateObject, transform);
-            freePoints[Random.Range(0, freePoints.Count)].SetObject(instantiate);
-            return instantiate;
+            var count = Random.Range(_countRangeMine.x, _countRangeMine.y);
+            BindTransform(_factory.Create(perfab.gameObject, count));
+        }
+        private void BindTransform(List<GameObject> items)
+        {
+            foreach (var item in items)
+            {
+                item.transform.parent = transform;
+            }
         }
         private void UpdateQuest(Shield parent)
         {
@@ -90,7 +101,5 @@ namespace MainMode.Mode1921
                 _win.Invoke();
             }
         }
-
-
     }
 }

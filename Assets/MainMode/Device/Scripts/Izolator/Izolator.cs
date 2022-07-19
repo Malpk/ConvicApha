@@ -58,7 +58,7 @@ public abstract class Izolator : Device
             return;
         if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
         {
-            screen.ScreenHide(attackInfo.Effect);
+            screen.ShowEffect(attackInfo.Effect);
         }
     }
 

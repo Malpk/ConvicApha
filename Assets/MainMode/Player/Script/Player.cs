@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerComponent;
-using MainMode.GameInteface;
 
 [RequireComponent(typeof(PlayerScreen),typeof(Collider2D))]
 public class Player : Character, IResist
