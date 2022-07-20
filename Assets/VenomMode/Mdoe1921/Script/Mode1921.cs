@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using MainMode.Map;
 using MainMode.GameInteface;
 
 namespace MainMode.Mode1921
@@ -10,7 +9,7 @@ namespace MainMode.Mode1921
     public class Mode1921 : MonoBehaviour
     {
         [Header("General Seting")]
-        [SerializeField] private bool _onStart = true;
+        [SerializeField] private bool _playOnStart = true;
         [SerializeField] private Vector2Int _countRangeMine;
         [SerializeField] private Vector2Int _countRangeShield;
         [Header("Requred Reference")]
@@ -18,51 +17,95 @@ namespace MainMode.Mode1921
         [SerializeField] private ChangeTest _changeTest;
         [Header("Spawn Setting")]
         [SerializeField] private float _minDistanceTools;
-        [SerializeField] private float _miuDistanceShield;
+        [SerializeField] private float _minDistanceShield;
         [Header("Instantiate Object")]
         [SerializeField] private Shield _shield;
         [SerializeField] private VenomMine _gasMine;
         [SerializeField] private ToolRepairs[] _tools;
         [Header("Events")]
-        [SerializeField] private UnityEvent _win;
+        [SerializeField] public UnityEvent Win;
 
         private int _countRepairShield;
-        private List<Shield> _poolShield = new List<Shield>();
-        private FactoryGameObjecs1921 _factory;
+        private List<IMapItem> _poolShield = new List<IMapItem>();
+        private List<IMapItem> _poolMine = new List<IMapItem>();
+        private List<IMapItem> _poolTool = new List<IMapItem>();
 
         private void Awake()
         {
-            _factory = new FactoryGameObjecs1921(_map);
-        }
 
-        private void Start()
+            CreateMap();
+        }
+        public void Intializate(ChangeTest test)
         {
-            if (_onStart)
+            _changeTest = test;
+        }
+        private void UpdateQuest(Shield parent)
+        {
+            _countRepairShield--;
+            if (_countRepairShield <= 0)
             {
-                InstateTools(_tools);
-                InstanteShield(_shield, _miuDistanceShield);
-                InstanteVenimMine(_gasMine);
+                Win.Invoke();
             }
         }
-        public bool Intializate(ChangeTest test)
+
+        #region Create Map
+        public void CreateMap()
         {
-            if (_changeTest != null)
-                return false;
-            _changeTest = test;
-            return true;
+            var count = Random.Range(_countRangeShield.x, _countRangeShield.y);
+            if (count < _poolShield.Count)
+                DeleteItem(_poolShield, _poolShield.Count - count);
+            else if(count > _poolShield.Count)
+                AddShield(_shield, count - _poolShield.Count);
+            count = Random.Range(_countRangeMine.x, _countRangeMine.y);
+            if(count < _poolMine.Count)
+                DeleteItem(_poolMine, _poolMine.Count - count);
+            else
+                AddVenomMine(_gasMine, count - _poolMine.Count);
+            if(_poolTool.Count == 0)
+                CreateTools(_tools);
+            SetItemPosition();
         }
-        private void InstanteShield(Shield perfab, float distance)
+        private void SetItemPosition()
         {
-            _countRepairShield = Random.Range(_countRangeShield.x, _countRangeShield.y);
-            var shields = _factory.Create(perfab.gameObject, _countRepairShield, distance);
-            BindTransform(shields);
-            foreach (var item in shields)
+            SetPosition(_poolShield, _minDistanceShield);
+            SetPosition(_poolTool, _minDistanceTools);
+            SetPosition(_poolMine);
+        }
+        private void AddShield(Shield perfab, int count)
+        {
+            count = count < 0 ? 0 : count;
+            for (int i = 0; i < count; i++)
             {
+                var item = Instantiate(perfab.gameObject, transform);
                 if (item.TryGetComponent(out Shield shield))
                 {
                     _poolShield.Add(shield);
                     BindShield(shield);
                 }
+            }
+        }
+        private void AddVenomMine(VenomMine perfab, int count)
+        {
+            count = count < 0 ? 0 : count;
+            for (int i = 0; i < count; i++)
+            {
+                _poolMine.Add(Instantiate(perfab, transform).GetComponent<IMapItem>());
+            }
+        }
+        private void CreateTools(ToolRepairs[] toolsPerfabs)
+        {
+            for (int i = 0; i < toolsPerfabs.Length; i++)
+            {
+                _poolTool.Add(Instantiate(toolsPerfabs[i].gameObject, transform).GetComponent<IMapItem>());
+            }
+        }
+        private void DeleteItem(List<IMapItem> pool, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var item = pool[0];
+                pool.Remove(pool[0]);
+                item.Delete();
             }
         }
         private Shield BindShield(Shield shield)
@@ -71,35 +114,52 @@ namespace MainMode.Mode1921
             shield.RepairShieldAction += UpdateQuest;
             return shield;
         }
-        private void InstateTools(ToolRepairs[] toolsPerfabs)
+        #endregion
+        #region SetPosition
+        private void SetPosition(List<IMapItem> items,float distance = 0)
         {
-            var tools = new GameObject[toolsPerfabs.Length];
-            for (int i = 0; i < toolsPerfabs.Length; i++)
+            var points = GetPoints(items.Count, distance);
+            for (int i = 0; i < points.Count; i++)
             {
-                tools[i] = toolsPerfabs[i].gameObject;
-            }
-            BindTransform(_factory.Create(tools, _minDistanceTools));
-        }
-
-        private void InstanteVenimMine(VenomMine perfab)
-        {
-            var count = Random.Range(_countRangeMine.x, _countRangeMine.y);
-            BindTransform(_factory.Create(perfab.gameObject, count));
-        }
-        private void BindTransform(List<GameObject> items)
-        {
-            foreach (var item in items)
-            {
-                item.transform.parent = transform;
+                points[i].SetItem(items[i]);
+                items[i].SetMode(true);
             }
         }
-        private void UpdateQuest(Shield parent)
+        #endregion
+        #region GetPoints
+        private List<Point> GetPoints(int count ,float distance = 0)
         {
-            _countRepairShield--;
-            if (_countRepairShield <= 0)
+            var busyPoints = new List<Point>();
+            for (int i = 0; i < count; i++)
             {
-                _win.Invoke();
+                var point = GetPoint(busyPoints, distance);
+                if (point != null)
+                    busyPoints.Add(point);
+                else
+                    break;
             }
+            return busyPoints;
         }
+        private Point GetPoint(List<Point> busyPoints, float distance)
+        {
+            var list = new List<Point>();
+            var map = _map.GetFreePoints();
+            for (int i = 0; i < map.Count; i++)
+            {
+                if (CheakDistance(map[i].Position, busyPoints, distance))
+                    list.Add(map[i]);
+            }
+            return list.Count > 0 ? list[Random.Range(0, list.Count)] : null;
+        }
+        private bool CheakDistance(Vector2 position, List<Point> busyPoints, float distance)
+        {
+            foreach (var item in busyPoints)
+            {
+                if (Vector2.Distance(item.Position, position) < distance)
+                    return false;
+            }
+            return true;
+        }
+        #endregion
     }
 }

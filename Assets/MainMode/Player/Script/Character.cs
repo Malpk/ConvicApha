@@ -14,7 +14,8 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage, ISender
     [Min(1)]
     [SerializeField] protected float speedRotaton = 1f;
     [SerializeField] protected PlayerHealth health;
-    [Header("Debug")]
+    [Header("Respawn Setting")]
+    [SerializeField] protected bool isAutoRespawnMode = true;
     [Min(0)]
     [SerializeField] protected float respawnTime = 1f;
 
@@ -65,19 +66,22 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage, ISender
     protected IEnumerator ReSpawn()
     {
         yield return new WaitForSeconds(respawnTime);
-        transform.position = _startPosition;
-        isDead = false;
-        animator.SetBool("Dead",false);
-        ResetCharacter();
+        Respawn();
         respawn = null;
+    }
+
+    public virtual void Respawn()
+    {
+        if (!isDead)
+            return;
+        else
+            isDead = false;
+        transform.position = _startPosition;
+        animator.SetBool("Dead", false);
         foreach (var component in _component)
         {
             component.Play();
         }
-    }
-
-    protected virtual void ResetCharacter()
-    {
         rigidBody.rotation = 0;
         health.Heal(health.MaxHealth);
     }

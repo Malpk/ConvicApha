@@ -34,12 +34,14 @@ public class RobotMan : Player
     private float _debafSpeedCurret = 1f;
     private IMode _target = null;
 
+    private Color _startColor;
     private Coroutine _abillityActive = null;
 
     protected override float SpeedMovement => base.SpeedMovement * _debafSpeedCurret;
 
     protected override void Awake()
     {
+        _startColor = _sprite.color;
         _collider = GetComponent<CapsuleCollider2D>();
         base.Awake();
     }
@@ -121,9 +123,9 @@ public class RobotMan : Player
     {
         if (_bodyTemperature > 1f)
             Dead();
+        temperature = Mathf.Clamp01(temperature);
         _bodyTemperature += temperature;
-        var value = Mathf.Clamp01(1 - (temperature == 0 ?_temperatureSteep : 0 + _bodyTemperature));
-        _sprite.color = new Vector4(1,value, value, 1);
+        _sprite.color = Vector4.MoveTowards(_sprite.color, Color.red, temperature);
     }
     private void DropDebaf()
     {
@@ -131,11 +133,12 @@ public class RobotMan : Player
         if (_countDebaf == 0)
              _debafSpeedCurret = 1;
     }
-    protected override void ResetCharacter()
+    public override void Respawn()
     {
+        base.Respawn();
         _bodyTemperature = 0;
         ChangeTemaerature();
         _debafSpeedCurret = 1;
-        base.ResetCharacter();
+        _sprite.color = _startColor;
     }
 }

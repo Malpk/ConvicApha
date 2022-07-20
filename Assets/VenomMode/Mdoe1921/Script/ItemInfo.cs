@@ -60,5 +60,12 @@ namespace MainMode
             }
             return null;
         }
+        public void DeSpawnItems()
+        {
+            foreach (var item in _pool)
+            {
+                item.SetMode(false);
+            }
+        }
     }
 }

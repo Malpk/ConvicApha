@@ -14,7 +14,7 @@ namespace MainMode.LoadScene
         [SerializeField] private UserInterface[] _interfacesPerfab;
         [SerializeField] private List<Receiver> _receivers;
 
-        private GameObject _holder = null;
+        private InterfaceSwitcher _holder = null;
 
         public IReadOnlyList<Receiver> Receivers => _receivers;
 
@@ -24,7 +24,7 @@ namespace MainMode.LoadScene
                 return;
             LaodInteface();
         }
-        public GameObject LaodInteface()
+        public InterfaceSwitcher LaodInteface()
         {
             if (_holder != null)
                 return _holder;
@@ -37,12 +37,12 @@ namespace MainMode.LoadScene
                 instantiateObject.transform.parent = holder.transform;
                 list.Add(instantiateObject.GetComponent<UserInterface>());
             }
-            holder.AddComponent<InterfaceSwitcher>().Intializate(list.ToArray(), _startInterface);
+            _holder = holder.AddComponent<InterfaceSwitcher>();
+            _holder.Intializate(list.ToArray(), _startInterface);
 #if UNITY_ANDROID
             LoadElement(_startInterface, _joystickPerfab.gameObject);
 #endif
-            _holder = holder;
-            return holder;
+            return _holder;
         }
     }
 }

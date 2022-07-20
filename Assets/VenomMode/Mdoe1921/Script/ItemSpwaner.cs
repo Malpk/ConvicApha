@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MainMode.Map;
+using MainMode.Items;
 
 namespace MainMode.Mode1921
 {
@@ -31,6 +31,13 @@ namespace MainMode.Mode1921
             {
                 _target = target;
                 StartCoroutine(SpwanwItem());
+            }
+        }
+        public void Restart()
+        {
+            foreach (var item in _items)
+            {
+                item.DeSpawnItems();
             }
         }
         private IReadOnlyList<ItemInfo> GetItems()
@@ -69,9 +76,9 @@ namespace MainMode.Mode1921
                     freePoints = GetPoints();
                     return freePoints.Count > 0;
                 });
-                freePoints[Random.Range(0, freePoints.Count)].
-                    SetObject(items[Random.Range(0, items.Count)].
-                        Instantiate(transform).gameObject);
+                var item = items[Random.Range(0, items.Count)].Instantiate(transform).gameObject;
+                if (item != null)
+                    freePoints[Random.Range(0, freePoints.Count)].SetItem(item);
                 yield return new WaitForSeconds(Random.Range(_rangeTimeSpawn.x, _rangeTimeSpawn.y));
             }
         }

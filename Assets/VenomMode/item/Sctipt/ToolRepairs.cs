@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(CircleCollider2D))]
-    public class ToolRepairs : MonoBehaviour
+    public class ToolRepairs : MonoBehaviour,IMapItem
     {
         [SerializeField] private Sprite _itemIcon;
         [SerializeField] private SpriteRenderer _spriteBody;
@@ -22,8 +22,23 @@ namespace MainMode.Mode1921
 
         public void Pick()
         {
-            _spriteBody.enabled = false;
-            _triger.enabled = false;
+            SetMode(false);
+        }
+
+        public void SetMode(bool mode)
+        {
+            _spriteBody.enabled = mode;
+            _triger.enabled = mode;
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            transform.position = position;
+        }
+
+        public void Delete()
+        {
+            Destroy(gameObject);
         }
     }
 }

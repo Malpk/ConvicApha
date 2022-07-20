@@ -25,10 +25,10 @@ public class Jeff : Player
             Heal(_healValue);
         }
     }
-    protected override void ResetCharacter()
+    public override void Respawn()
     {
         if (_reserHealth == null)
             _reserHealth = StartCoroutine(ResertUnitHealth(_delayAbillity));
-        base.ResetCharacter();
+        base.Respawn();
     }
 }

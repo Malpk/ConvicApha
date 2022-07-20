@@ -10,7 +10,7 @@ namespace MainMode.LoadScene
     public class MainLoader : MonoBehaviour
     {
         [Header("General Setting")]
-        [SerializeField] protected bool playOnAwake;
+        [SerializeField] protected bool playOnStart;
         [Header("Player Load Setting")]
         [SerializeField] protected Transform _spwanPoint;
         [SerializeField] protected PlayerType choosePlayer;
@@ -19,7 +19,7 @@ namespace MainMode.LoadScene
         protected IntefaceLoader intefaceLaoder;
 
         protected Player player;
-        protected GameObject holder;
+        protected InterfaceSwitcher holder;
 
         [SerializeField] private AndroidController _perfabController;
 
@@ -27,11 +27,16 @@ namespace MainMode.LoadScene
         {
             playerLoader = GetComponent<PlayerLoader>();
             intefaceLaoder = GetComponent<IntefaceLoader>();
-            if (playOnAwake)
+        }
+
+        private void Start()
+        {
+            if (playOnStart)
             {
                 Load(choosePlayer);
             }
         }
+
         public virtual void Load(PlayerType choose)
         {
             player = playerLoader.PlayerLaod(_spwanPoint ? _spwanPoint.position : Vector3.zero, choose);

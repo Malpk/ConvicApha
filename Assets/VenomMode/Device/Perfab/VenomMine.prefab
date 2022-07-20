@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 799339694738414660}
   - component: {fileID: 799339694738414661}
-  - component: {fileID: 799339694738414667}
+  - component: {fileID: 5109295501896903613}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -83,8 +83,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &799339694738414667
-BoxCollider2D:
+--- !u!58 &5109295501896903613
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -97,18 +97,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.48, y: 0.48}
-  m_EdgeRadius: 0
+  m_Radius: 0.23
 --- !u!1 &799339695788005222
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,12 +232,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3007f58dd4793e84f811ad0f64af3710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dangerDistace: 0.5
   _trigerDistance: 0.58
   _attackInfo:
     _timeEffect: 2
-    _effect: 2
+    _effect: 0
     _attack: 3
   _explosion: {fileID: 2926408336466887126, guid: 28b421ca847d46242acd42c6efe36bbc, type: 3}
-  _bodyCollider: {fileID: 799339694738414667}
+  _bodyCollider: {fileID: 5109295501896903613}
   _bodySprite: {fileID: 799339694738414661}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MainMode.Map
+namespace MainMode.Mode1921
 {
     public class MapGrid : MonoBehaviour
     {

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using MainMode.Items;
 
-namespace MainMode.Map
+namespace MainMode.Mode1921
 {
     public class Point
     {
-        private GameObject _containeObject;
+        private object _item;
 
-        public bool IsBusy => _containeObject;
+        public bool IsBusy => _item != null;
         public Vector2 Position { get; private set; }
 
         public Point(Vector2 position)
@@ -17,27 +17,28 @@ namespace MainMode.Map
             Position = position;
         }
 
-        public bool SetObject(GameObject instateObject)
+        public void SetItem(IMapItem item)
         {
-            if (_containeObject != null)
-                return false;
-            _containeObject = instateObject;
-            _containeObject.transform.position = Position;
-            return _containeObject;
+            if (_item != null)
+                RemoveObject();
+            item.SetPosition(Position);
+            _item = item;
         }
-        public bool ChangeContainer(GameObject changeOnObject)
+        public void SetItem(GameObject item)
         {
-            RemoveObject();
-            return SetObject(changeOnObject);
+            _item = item;
         }
-
         private void RemoveObject()
         {
-            if (_containeObject.TryGetComponent<Item>(out Item item))
+            if (_item is IMapItem item && item != null)
+            {
                 item.SetMode(false);
-            else
-                MonoBehaviour.Destroy(_containeObject);
-            _containeObject = null;
+            }
+            else if(_item is GameObject gameobject)
+            {
+                MonoBehaviour.Destroy(gameobject);
+            }
+            _item = null;
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(Animator), typeof(BoxCollider2D))]
-    public class Shield : MonoBehaviour, IItemInteractive
+    public class Shield : MonoBehaviour, IItemInteractive,IMapItem
     {
         [Header("General Setting")]
         [Min(0)]
@@ -64,7 +64,15 @@ namespace MainMode.Mode1921
             set.ShowHint();
             return false;
         }
-
+        public void SetMode(bool mode)
+        {
+            _collider.enabled = mode;
+            _animator.SetBool("Mode", !mode);
+        }
+        public void SetPosition(Vector2 position)
+        {
+            transform.position = position;
+        }
         private void OnRepairShield(int compliteRepair)
         {
             HideUI();
@@ -73,17 +81,12 @@ namespace MainMode.Mode1921
             if (_countTest <= 0)
             {
                 SetMode(false);
-                _animator.SetBool("Mode", true);
+                if (RepairShieldAction != null)
+                    RepairShieldAction(this);
             }
         }
 
-        private void SetMode(bool mode)
-        {
-            enabled = mode;
-            _collider.enabled = mode;
-            if (RepairShieldAction != null && mode)
-                RepairShieldAction(this);
-        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if(collision.TryGetComponent(out Player player))
@@ -102,6 +105,11 @@ namespace MainMode.Mode1921
         private void HideUI()
         {
             _canvas.enabled = false;
+        }
+
+        public void Delete()
+        {
+            Destroy(gameObject);
         }
     }
 }

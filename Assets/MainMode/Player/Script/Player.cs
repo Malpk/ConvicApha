@@ -27,6 +27,9 @@ public class Player : Character, IResist
     protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
     protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
 
+    public delegate void Messange();
+    public event Messange OnDead;
+
     public override bool IsUseEffect => true;
     public override bool IsDead => isDead;
     protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
@@ -81,9 +84,11 @@ public class Player : Character, IResist
     public override void Dead()
     {
         isDead = true;
+        if (OnDead != null)
+            OnDead();
         animator.SetBool("Dead", true);
         rigidBody.velocity = Vector2.zero;
-        if (respawn == null)
+        if (respawn == null && isAutoRespawnMode)
             respawn = StartCoroutine(ReSpawn());
     }
     public override void TakeDamage(int damage, DamageInfo damageInfo)
@@ -165,11 +170,11 @@ public class Player : Character, IResist
     {
         health.Heal(point);
     }
-    protected override void ResetCharacter()
+    public override void Respawn()
     {
         stopEffect = 1f;
         stoneEffect = 1f;
-        base.ResetCharacter();
+        base.Respawn();
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)

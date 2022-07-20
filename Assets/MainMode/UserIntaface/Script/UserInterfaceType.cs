@@ -5,6 +5,7 @@ namespace MainMode.GameInteface
         HUD,
         Other,
         MainMenu,
-        PauseMenu
+        PauseMenu,
+        EndMenu
     }
 }

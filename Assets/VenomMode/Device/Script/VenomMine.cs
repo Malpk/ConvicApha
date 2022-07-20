@@ -6,17 +6,14 @@ using MainMode;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(CircleCollider2D),typeof(Animator))]
-    public class VenomMine : MonoBehaviour, IMode
+    public class VenomMine : MonoBehaviour, IMapItem
     {
-        [Header("Setting General")]
-        [Min(1)]
-        [SerializeField] private float _dangerDistace;
         [Min(0.05f)]
         [SerializeField] private float _trigerDistance = 0.1f;
         [SerializeField] private DamageInfo _attackInfo;
         [Header("Reference requred")]
         [SerializeField] private GameObject _explosion;
-        [SerializeField] private Collider2D _bodyCollider;
+        [SerializeField] private CircleCollider2D _bodyCollider;
         [SerializeField] private SpriteRenderer _bodySprite;
 
         private Animator _animator;
@@ -34,13 +31,17 @@ namespace MainMode.Mode1921
             SetMode(false);
         }
 
-        private void SetMode(bool mode)
+        public void SetMode(bool mode)
         {
             _bodySprite.enabled = mode;
             _trigerArea.enabled = mode;
             _bodyCollider.enabled = mode;
+            _animator.SetBool("Mode", false);
         }
-
+        public void SetPosition(Vector2 position)
+        {
+            transform.position = position;
+        }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<Player>(out Player player))
@@ -53,7 +54,7 @@ namespace MainMode.Mode1921
         {
             if (_targetTransform != null)
             {
-                if (Vector2.Distance(_targetTransform.position, transform.position) <= _trigerDistance)
+                if (Vector2.Distance(_targetTransform.position, transform.position) <= _trigerDistance + _bodyCollider.radius)
                 {
                     _targetTransform = null;
                     Instantiate(_explosion, transform.position, Quaternion.identity).
@@ -69,6 +70,11 @@ namespace MainMode.Mode1921
                 _animator.SetBool("Mode", false);
                 _targetTransform = null;
             }
+        }
+
+        public void Delete()
+        {
+            Destroy(gameObject);
         }
     }
 }
