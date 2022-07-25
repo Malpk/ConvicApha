@@ -6,12 +6,13 @@ using MainMode.GameInteface;
 
 namespace MainMode.Mode1921
 {
-    public class SceneLoader1921 : MainLoader
+    public sealed class SceneLoader1921 : MainLoader
     {
         [SerializeField] private Mode1921 _perfab;
 
         private Mode1921 _mode;
         private EndMenu _endMenu;
+        private ItemSpwaner _itemSpawner;
 
         private void OnEnable()
         {
@@ -26,9 +27,10 @@ namespace MainMode.Mode1921
         {
             base.Load(choose);
             _mode = Instantiate(_perfab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Mode1921>();
-            _mode.GetComponent<ItemSpwaner>().Run(player.transform);
+            _itemSpawner = _mode.GetComponent<ItemSpwaner>();
             _endMenu = holder.GetComponentInChildren<EndMenu>();
             var test = holder.GetComponentInChildren<ChangeTest>();
+            _itemSpawner.Run(player.transform);
             if (test)
                 _mode.Intializate(test);
             SubcriteEvents();
@@ -36,6 +38,9 @@ namespace MainMode.Mode1921
         public void ResetGame()
         {
             _mode.CreateMap();
+            if (player.TryGetComponent(out IRestart restart))
+                restart.Restart();
+            _itemSpawner.Restart();
             player.Respawn();
             holder.SetShow(holder.GetComponentInChildren<HUDInteface>());
         }

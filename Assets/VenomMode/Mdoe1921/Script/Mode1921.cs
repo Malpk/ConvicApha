@@ -30,14 +30,16 @@ namespace MainMode.Mode1921
         private List<IMapItem> _poolMine = new List<IMapItem>();
         private List<IMapItem> _poolTool = new List<IMapItem>();
 
-        private void Awake()
-        {
 
-            CreateMap();
+        private void Start()
+        {
+            if(_playOnStart)
+                CreateMap();
         }
         public void Intializate(ChangeTest test)
         {
             _changeTest = test;
+            CreateMap();
         }
         private void UpdateQuest(Shield parent)
         {
@@ -52,6 +54,7 @@ namespace MainMode.Mode1921
         public void CreateMap()
         {
             var count = Random.Range(_countRangeShield.x, _countRangeShield.y);
+            _countRepairShield = count;
             if (count < _poolShield.Count)
                 DeleteItem(_poolShield, _poolShield.Count - count);
             else if(count > _poolShield.Count)
@@ -80,6 +83,7 @@ namespace MainMode.Mode1921
                 if (item.TryGetComponent(out Shield shield))
                 {
                     _poolShield.Add(shield);
+                    shield.Intializate(_changeTest,_tools.Length);
                     BindShield(shield);
                 }
             }

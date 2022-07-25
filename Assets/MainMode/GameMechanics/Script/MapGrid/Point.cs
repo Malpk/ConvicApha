@@ -27,6 +27,7 @@ namespace MainMode.Mode1921
         public void SetItem(GameObject item)
         {
             _item = item;
+            item.transform.position = Position;
         }
         private void RemoveObject()
         {

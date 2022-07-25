@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MainMode.Mode1921
 {
-    public class ToolSet : MonoBehaviour,ISender
+    public class ToolSet : MonoBehaviour,ISender, IRestart
     {
         [SerializeField] private ToolDisplay _toolDisplay;
 
@@ -28,7 +28,11 @@ namespace MainMode.Mode1921
         {
             _toolDisplay.ShowHint();
         }
-
+        public void Restart()
+        {
+            _countTools = 0;
+            _toolDisplay.Restart();
+        }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out ToolRepairs tool))

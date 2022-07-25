@@ -8,9 +8,9 @@ namespace PlayerComponent
     public class PcController : Controller
     {
         [SerializeField] private KeyCode _itemUse = KeyCode.E;
-        [SerializeField] private KeyCode _useAbility = KeyCode.Space;
+        [SerializeField] private KeyCode _useAbility = KeyCode.R;
         [SerializeField] private KeyCode _artifactUse = KeyCode.Q;
-        [SerializeField] private KeyCode _intractive = KeyCode.F;
+        [SerializeField] private KeyCode _intractive = KeyCode.Space;
 
         public override event Use UseItemAction;
         public override event Use UseArtifactAction;

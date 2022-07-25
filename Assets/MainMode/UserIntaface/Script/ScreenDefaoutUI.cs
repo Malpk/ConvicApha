@@ -33,7 +33,6 @@ namespace MainMode.GameInteface
         }
         private void Hide()
         {
-            Debug.Log("");
             _orders--;
             if (_orders <= 0)
                 _sceen.enabled = false;

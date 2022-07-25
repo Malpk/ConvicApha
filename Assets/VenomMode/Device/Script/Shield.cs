@@ -13,6 +13,7 @@ namespace MainMode.Mode1921
         [Header("Requred Reference")]
         [SerializeField] private Canvas _canvas;
 
+        private bool _shield = false;
         private Animator _animator;
         private Collider2D _collider;
         private ChangeTest _changeTest;
@@ -45,11 +46,11 @@ namespace MainMode.Mode1921
         }
         public bool Interactive(Player player)
         {
-            if (!player.TryGetComponent(out ToolSet set))
+            if (!player.TryGetComponent(out ToolSet set) || _changeTest.IsActive)
                 return false;
             if(set.CountTools >= _countTest)
             {
-                if (player.TryGetComponent(out OxyGenSet oxyGen) && _changeTest != null)
+                if (player.TryGetComponent(out OxyGenSet oxyGen))
                 {
                     oxyGen.Pause();
                     _changeTest.RunGame(oxyGen, _countTest);

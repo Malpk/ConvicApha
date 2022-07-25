@@ -17,10 +17,11 @@ namespace MainMode
         private List<Item> _pool = new List<Item>();
 
         public int Count => GetCount();
-        public bool IsAccess => Count <= _maxLimit || _pool.Count <=_maxLimit;
+        public bool IsAccess => Count < _maxLimit || _pool.Count <=_maxLimit;
 
         public Item Instantiate(Transform transform)
         {
+            GetCount();
             if (coutnDeactive > 0)
             {
                 var item = GetDeactiveItem();
@@ -46,7 +47,7 @@ namespace MainMode
             foreach (var item in _pool)
             {
                 if (item.Active)
-                    count++; ;
+                    count++;
             }
             coutnDeactive = _pool.Count - count;
             return count;

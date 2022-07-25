@@ -17,7 +17,8 @@ public class PlayerHealth
 
     public void Start()
     {
-        _display.SetupHelth(_healthPoints);
+        if(_display)
+            _display.SetupHelth(_healthPoints);
     }
     public bool SetReceiver(HealthUI display)
     {

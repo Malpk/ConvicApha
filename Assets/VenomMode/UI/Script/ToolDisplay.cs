@@ -12,6 +12,13 @@ namespace MainMode.Mode1921
 
         public override TypeDisplay DisplayType => TypeDisplay.ToolSetUI;
 
+        public void Restart()
+        {
+            foreach (var tool in _toolsDislplay)
+            {
+                tool.SetSprite(null);
+            }
+        }
         public void Display(Sprite icon)
         {
             foreach (var cell in _toolsDislplay)

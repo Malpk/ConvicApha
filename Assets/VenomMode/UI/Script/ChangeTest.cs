@@ -23,6 +23,7 @@ namespace MainMode.Mode1921
 
         private Coroutine _runGame;
 
+        public bool IsActive => _runGame != null;
         public override UserInterfaceType Type => UserInterfaceType.Other;
 
         public delegate void Action(int countComplite);
@@ -43,6 +44,7 @@ namespace MainMode.Mode1921
         private IEnumerator ChangeTestUpdate(OxyGenSet oxyGen,int countTest)
         {
             var key = KeyCode.Space;
+            oxyGen.Pause();
             int complite = 0;
             for (int i = 0; i < countTest && oxyGen.CurretAirSupply > 0; i++)
             {
@@ -63,9 +65,7 @@ namespace MainMode.Mode1921
                 }
             }
             if (swithchInteface != null)
-            {
                 swithchInteface.SetHide();
-            }
             if (CompliteGame != null)
                 CompliteGame((complite + 1));
             oxyGen.UnPause();

@@ -29,11 +29,8 @@ namespace MainMode.Mode1921
         }
         public void SetSprite(Sprite sprite)
         {
-            if (!IsBusy)
-            {
-                _toolCell.sprite = sprite;
-                _toolCell.enabled = true;
-            }
+            _toolCell.sprite = sprite;
+            _toolCell.enabled = sprite;
         }
     }
 }

@@ -72,10 +72,7 @@ public abstract class Character : MonoBehaviour, IMoveEffect, IDamage, ISender
 
     public virtual void Respawn()
     {
-        if (!isDead)
-            return;
-        else
-            isDead = false;
+        isDead = false;
         transform.position = _startPosition;
         animator.SetBool("Dead", false);
         foreach (var component in _component)

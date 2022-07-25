@@ -76,9 +76,9 @@ namespace MainMode.Mode1921
                     freePoints = GetPoints();
                     return freePoints.Count > 0;
                 });
-                var item = items[Random.Range(0, items.Count)].Instantiate(transform).gameObject;
+                var item = items[Random.Range(0, items.Count)].Instantiate(transform);
                 if (item != null)
-                    freePoints[Random.Range(0, freePoints.Count)].SetItem(item);
+                    freePoints[Random.Range(0, freePoints.Count)].SetItem(item.gameObject);
                 yield return new WaitForSeconds(Random.Range(_rangeTimeSpawn.x, _rangeTimeSpawn.y));
             }
         }

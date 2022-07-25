@@ -12,9 +12,9 @@ namespace MainMode.Mode1921
         [SerializeField] private float _trigerDistance = 0.1f;
         [SerializeField] private DamageInfo _attackInfo;
         [Header("Reference requred")]
-        [SerializeField] private GameObject _explosion;
-        [SerializeField] private CircleCollider2D _bodyCollider;
+        [SerializeField] private FireWave _explosion;
         [SerializeField] private SpriteRenderer _bodySprite;
+        [SerializeField] private CircleCollider2D _bodyCollider;
 
         private Animator _animator;
         private Transform _targetTransform;
@@ -24,6 +24,7 @@ namespace MainMode.Mode1921
         {
             _animator = GetComponent<Animator>();
             _trigerArea = GetComponent<CircleCollider2D>();
+            _explosion.SetAttack(_attackInfo);
             _trigerArea.isTrigger = true;
         }
         public void TurnOff()
@@ -37,6 +38,8 @@ namespace MainMode.Mode1921
             _trigerArea.enabled = mode;
             _bodyCollider.enabled = mode;
             _animator.SetBool("Mode", false);
+            if (mode)
+                _explosion.SetMode(false);
         }
         public void SetPosition(Vector2 position)
         {
@@ -54,11 +57,10 @@ namespace MainMode.Mode1921
         {
             if (_targetTransform != null)
             {
-                if (Vector2.Distance(_targetTransform.position, transform.position) <= _trigerDistance + _bodyCollider.radius)
+                if (Vector2.Distance(_targetTransform.position, transform.position) <= _trigerDistance + _bodyCollider.radius / 2)
                 {
                     _targetTransform = null;
-                    Instantiate(_explosion, transform.position, Quaternion.identity).
-                        GetComponent<ISetAttack>().SetAttack(_attackInfo);
+                    _explosion.Explosion();
                     SetMode(false);
                 }
             }

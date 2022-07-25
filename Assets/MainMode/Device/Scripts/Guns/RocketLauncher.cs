@@ -26,6 +26,7 @@ namespace MainMode
         protected override void Intilizate()
         {
             _wave.SetAttack(attackInfo);
+            _rocket.SetAttack(attackInfo);
             _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
         }
         private void OnEnable()
@@ -91,10 +92,10 @@ namespace MainMode
             else
                 Debug.LogWarning("_wave = null");
 #endif
-            var rocket =  Instantiate(_rocket.gameObject, _spawnProjectelePosition.position,
-                Quaternion.Euler(Vector3.forward * _rotateBody.rotation)).GetComponent<Rocket>();
-            rocket.SetTarget(_lostTargetPosition);
-            rocket.SetAttack(attackInfo);
+            _rocket.transform.position = _spawnProjectelePosition.position;
+            _rocket.transform.rotation = Quaternion.Euler(Vector3.forward * _rotateBody.rotation);
+            _rocket.SetMode(true);
+            _rocket.SetTarget(_lostTargetPosition);
         }
     }
 }

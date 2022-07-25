@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(Animator))]
-    public class FireWave : MonoBehaviour,ISetAttack
+    public class FireWave : MonoBehaviour, ISetAttack
     {
         [Min(1)]
         [SerializeField] private int _damage;
@@ -22,14 +22,21 @@ namespace MainMode
             _sprite = GetComponent<SpriteRenderer>();
             _colider = GetComponent<Collider2D>();
             _animator = GetComponent<Animator>();
+            DestroyObject();
         }
         public void Explosion()
         {
-            _animator.SetTrigger("explosion");
+            SetMode(true);
         }
-        private void DestroyObject()
+        public void DestroyObject()
         {
-            Destroy(gameObject);
+            SetMode(false);
+        }
+        public void SetMode(bool mode)
+        {
+            _sprite.enabled = mode;
+            _colider.enabled = mode;
+            _animator.SetBool("Explosion", mode);
         }
         private void OnCollisionEnter2D(Collision2D collision)
         {

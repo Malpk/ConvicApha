@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3763651025555216305}
   - component: {fileID: 3169881685351778823}
   - component: {fileID: 6706806910228261059}
+  - component: {fileID: 6849126063760821714}
   m_Layer: 8
   m_Name: Jeff
   m_TagString: Player
@@ -165,6 +166,7 @@ MonoBehaviour:
     _healthPoints: 5
     _maxHealthPoint: 5
     _display: {fileID: 0}
+  isAutoRespawnMode: 1
   respawnTime: 1
   _inventory: {fileID: 6706806910228261059}
   controller: {fileID: 0}
@@ -303,6 +305,22 @@ MonoBehaviour:
   _artifact: {fileID: 0}
   _display: {fileID: 0}
   _consumablesItem: []
+--- !u!114 &6849126063760821714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3763651025555216309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19dc506c8af734e4ebdfc3acf93749db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemUse: 101
+  _useAbility: 114
+  _artifactUse: 113
+  _intractive: 32
 --- !u!1001 &5387692446698008467
 PrefabInstance:
   m_ObjectHideFlags: 0
