@@ -20,11 +20,6 @@ public class JMan : Player
 
     protected override float SpeedMovement => base.SpeedMovement * _abilitiSpeedEffect;
 
-    protected override void Move(Vector2 direction)
-    {
-       
-        base.Move(direction);
-    }
     protected override void UseAbillity()
     {
         rigidBody.AddForce(Jerk());

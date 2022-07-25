@@ -31,12 +31,12 @@ namespace MainMode
             if (spriteItem != null)
             {
                 _imageItem.enabled = true;
-                _imageItem.sprite = spriteItem; 
+                _imageItem.sprite = spriteItem;
             }
             else
+            {
                 _imageItem.enabled = false;
-
-
+            }
             if (countItem <= 0)
                 _countItems.text = "";
             else

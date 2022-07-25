@@ -7,6 +7,8 @@ namespace PlayerComponent
     {
         [SerializeField] private Joystick _inputMovement;
 
+        private bool _isblock = false;
+
         public override event Use UseItemAction;
         public override event Use UseArtifactAction;
         public override event Use UseAbillityAction;
@@ -15,33 +17,44 @@ namespace PlayerComponent
 
         private void FixedUpdate()
         {
+            if(!_isblock)
             SendDirection();
         }
 
         public void OnInteractive()
         {
-            if (InteractiveAction != null)
+            if (InteractiveAction != null && !_isblock)
                 InteractiveAction();
         }
         public void OnUse()
         {
-            if (UseItemAction != null)
+            if (UseItemAction != null && !_isblock)
                 UseItemAction();
         }
         public void OnUseAbility()
         {
-            if (UseAbillityAction != null)
+            if (UseAbillityAction != null && !_isblock)
                 UseAbillityAction();
         }
         public void OnUseArtifact()
         {
-            if (UseArtifactAction != null)
+            if (UseArtifactAction != null && !_isblock)
                 UseArtifactAction();
         }
         private void SendDirection()
         {
-            if (MovementAction != null)
+            if (MovementAction != null && !_isblock)
                 MovementAction(_inputMovement.Direction);
+        }
+
+        public override void Block()
+        {
+            _isblock = true;
+        }
+
+        public override void UnBlock()
+        {
+            _isblock = false;
         }
     }
 }

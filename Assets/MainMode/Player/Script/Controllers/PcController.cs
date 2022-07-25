@@ -12,6 +12,8 @@ namespace PlayerComponent
         [SerializeField] private KeyCode _artifactUse = KeyCode.Q;
         [SerializeField] private KeyCode _intractive = KeyCode.Space;
 
+        private bool _isBlock = false;
+
         public override event Use UseItemAction;
         public override event Use UseArtifactAction;
         public override event Use UseAbillityAction;
@@ -27,7 +29,8 @@ namespace PlayerComponent
         }
         private void FixedUpdate()
         {
-            SendDirection();  
+            if(!_isBlock)
+                SendDirection();  
         }
 
         private void SendDirection()
@@ -37,23 +40,33 @@ namespace PlayerComponent
         }
         private void Interactive()
         {
-            if (Input.GetKeyDown(_intractive) && InteractiveAction != null)
+            if (Input.GetKeyDown(_intractive) && InteractiveAction != null && !_isBlock)
                 InteractiveAction();
         }
         private void UseItem()
         {
-            if (Input.GetKeyDown(_itemUse) && UseItemAction != null)
+            if (Input.GetKeyDown(_itemUse) && UseItemAction != null && !_isBlock)
                 UseItemAction();
         }
         private void UseAbillity()
         {
-            if (Input.GetKeyDown(_useAbility) && UseAbillityAction != null)
+            if (Input.GetKeyDown(_useAbility) && UseAbillityAction != null && !_isBlock)
                 UseAbillityAction();
         }
         private void UseArtifact()
         {
-            if (Input.GetKeyDown(_artifactUse) && UseArtifactAction != null)
+            if (Input.GetKeyDown(_artifactUse) && UseArtifactAction != null && !_isBlock)
                 UseArtifactAction();
+        }
+
+        public override void Block()
+        {
+            _isBlock = true;
+        }
+
+        public override void UnBlock()
+        {
+            _isBlock = false;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace MainMode.Mode1921
 
         private Coroutine _runGame;
 
-        public bool IsActive => _runGame != null;
+        public bool IsRepairShield => _runGame != null;
         public override UserInterfaceType Type => UserInterfaceType.Other;
 
         public delegate void Action(int countComplite);
@@ -43,22 +43,20 @@ namespace MainMode.Mode1921
         }
         private IEnumerator ChangeTestUpdate(OxyGenSet oxyGen,int countTest)
         {
-            var key = KeyCode.Space;
-            oxyGen.Pause();
+            var hotKey = KeyCode.Space;
             int complite = 0;
-            for (int i = 0; i < countTest && oxyGen.CurretAirSupply > 0; i++)
+            for (complite = 0; complite < countTest && oxyGen.CurretAirSupply > 0; complite++)
             {
-                complite = i;
-                yield return new WaitUntil(() => Input.GetKeyDown(key));
+                yield return new WaitUntil(() => Input.GetKeyDown(hotKey));
                 _messnga.enabled = false;
                 _triger.Run();
                 yield return null;
-                yield return new WaitUntil(() => Input.GetKeyDown(key));
+                yield return new WaitUntil(() => Input.GetKeyDown(hotKey));
                 ReadMessange(_triger.GetMessange(),oxyGen);
                 _triger.TurnOff();
                 yield return null;
                 var progress = 0f; 
-                while (progress <= 1f && !Input.GetKeyDown(key))
+                while (progress <= 1f && !Input.GetKeyDown(hotKey))
                 {
                     progress += Time.deltaTime / _timeDelay;
                     yield return null;
@@ -68,7 +66,6 @@ namespace MainMode.Mode1921
                 swithchInteface.SetHide();
             if (CompliteGame != null)
                 CompliteGame((complite + 1));
-            oxyGen.UnPause();
             _runGame = null;
         }
         private void ReadMessange(MessangeRepairTest messange, OxyGenSet oxyGen)

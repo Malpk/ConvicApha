@@ -7,16 +7,18 @@ namespace MainMode.Mode1921
     [RequireComponent(typeof(Animator), typeof(BoxCollider2D))]
     public class Shield : MonoBehaviour, IItemInteractive,IMapItem
     {
-        [Header("General Setting")]
+        [Header("Requred Reference")]
         [Min(0)]
-        [SerializeField] private int _countTest = 3;
+        [SerializeField] private int _countGames = 3;
         [Header("Requred Reference")]
         [SerializeField] private Canvas _canvas;
 
-        private bool _shield = false;
+        private int _curretCount;
+        private ToolSet _curretToolSet;
         private Animator _animator;
         private Collider2D _collider;
         private ChangeTest _changeTest;
+        private IBlock[] _blockElements;
 
         public delegate void Action(Shield parent);
         public event Action RepairShieldAction;
@@ -25,18 +27,18 @@ namespace MainMode.Mode1921
         {
             _collider = GetComponent<BoxCollider2D>();
             _animator = GetComponent<Animator>();
+            _curretCount = _countGames;
             _collider.isTrigger = true;
         }
         private void Start()
         {
             HideUI();
         }
-        public bool Intializate(ChangeTest changeTest, int countTest)
+        public bool Intializate(ChangeTest changeTest)
         {
             if (_changeTest == null)
             {
                 _changeTest = changeTest;
-                _countTest = countTest;
                 return true;
             }
             else
@@ -44,29 +46,77 @@ namespace MainMode.Mode1921
                 return false;
             }
         }
+        public void Restart()
+        {
+            _curretCount = _countGames;
+        }
+        #region Repair
         public bool Interactive(Player player)
         {
-            if (!player.TryGetComponent(out ToolSet set) || _changeTest.IsActive)
+            if (!player.TryGetComponent(out ToolSet toolSet) || _changeTest.IsRepairShield)
                 return false;
-            if(set.CountTools >= _countTest)
+            if (toolSet.IsAccessTools)
             {
+                BlockPlayer(player);
+                _curretToolSet = toolSet;
                 if (player.TryGetComponent(out OxyGenSet oxyGen))
                 {
-                    oxyGen.Pause();
-                    _changeTest.RunGame(oxyGen, _countTest);
+                    _changeTest.RunGame(oxyGen, _curretCount);
                     _changeTest.CompliteGame += OnRepairShield;
                 }
                 else
                 {
-                    OnRepairShield(_countTest);
+                    OnRepairShield(_curretCount);
                 }
                 return true;
             }
-            set.ShowHint();
+            toolSet.ShowHint();
             return false;
         }
+        private void OnRepairShield(int compliteRepair)
+        {
+            _changeTest.CompliteGame -= OnRepairShield;
+            _curretCount -= compliteRepair;
+            UnBlcokPlayer();
+            if (_curretCount <= 0)
+            {
+                HideUI();
+                SetMode(false);
+                if(_curretToolSet)
+                    _curretToolSet.UseTool();
+                if (RepairShieldAction != null)
+                    RepairShieldAction(this);
+            }
+            _curretToolSet = null;
+        }
+        #endregion
+        #region Blocking
+        private void BlockPlayer(Player player)
+        {
+            _blockElements = player.GetComponents<IBlock>();
+            if (_blockElements != null)
+            {
+                foreach (var element in _blockElements)
+                {
+                    element.Block();
+                }
+            }
+        }
+        private void UnBlcokPlayer()
+        {
+            if (_blockElements != null)
+            {
+                foreach (var element in _blockElements)
+                {
+                    element.UnBlock();
+                }
+                _blockElements = null;
+            }
+        }
+        #endregion
         public void SetMode(bool mode)
         {
+            _curretCount = mode ? _countGames : 0; 
             _collider.enabled = mode;
             _animator.SetBool("Mode", !mode);
         }
@@ -74,19 +124,6 @@ namespace MainMode.Mode1921
         {
             transform.position = position;
         }
-        private void OnRepairShield(int compliteRepair)
-        {
-            HideUI();
-            _changeTest.CompliteGame -= OnRepairShield;
-            _countTest = Mathf.Clamp(_countTest - compliteRepair, 0, _countTest);
-            if (_countTest <= 0)
-            {
-                SetMode(false);
-                if (RepairShieldAction != null)
-                    RepairShieldAction(this);
-            }
-        }
-
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

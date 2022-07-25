@@ -5,9 +5,10 @@ using UnityEngine;
 using MainMode.Items;
 using MainMode.GameInteface;
 
+
 namespace MainMode
 {
-    public class Inventory : MonoBehaviour,ISender
+    public class Inventory : MonoBehaviour, ISender, IReset
     {
         [SerializeField] private Player _player;
         [SerializeField] private Artifact _artifact;
@@ -19,6 +20,13 @@ namespace MainMode
         private void Start()
         {
             _player = GetComponent<Player>();
+        }
+
+        public void Restart()
+        {
+            _artifact = null;
+            _consumablesItem.Clear();
+            _display.Restart();
         }
         public bool AddReceiver(Receiver receiver)
         {
@@ -132,7 +140,6 @@ namespace MainMode
                     _display.DisplayArtifact(null);
             }
         }
-
 
     }
 }

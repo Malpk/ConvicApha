@@ -11,7 +11,6 @@ namespace MainMode.Mode1921
         [Header("General Seting")]
         [SerializeField] private bool _playOnStart = true;
         [SerializeField] private Vector2Int _countRangeMine;
-        [SerializeField] private Vector2Int _countRangeShield;
         [Header("Requred Reference")]
         [SerializeField] private MapGrid _map;
         [SerializeField] private ChangeTest _changeTest;
@@ -53,13 +52,12 @@ namespace MainMode.Mode1921
         #region Create Map
         public void CreateMap()
         {
-            var count = Random.Range(_countRangeShield.x, _countRangeShield.y);
-            _countRepairShield = count;
-            if (count < _poolShield.Count)
-                DeleteItem(_poolShield, _poolShield.Count - count);
-            else if(count > _poolShield.Count)
-                AddShield(_shield, count - _poolShield.Count);
-            count = Random.Range(_countRangeMine.x, _countRangeMine.y);
+            _countRepairShield = _tools.Length;
+            if (_poolShield.Count == 0)
+            {
+                CreateShield(_shield, _tools.Length);
+            }
+            var count = Random.Range(_countRangeMine.x, _countRangeMine.y);
             if(count < _poolMine.Count)
                 DeleteItem(_poolMine, _poolMine.Count - count);
             else
@@ -74,7 +72,7 @@ namespace MainMode.Mode1921
             SetPosition(_poolTool, _minDistanceTools);
             SetPosition(_poolMine);
         }
-        private void AddShield(Shield perfab, int count)
+        private void CreateShield(Shield perfab, int count)
         {
             count = count < 0 ? 0 : count;
             for (int i = 0; i < count; i++)
@@ -83,7 +81,7 @@ namespace MainMode.Mode1921
                 if (item.TryGetComponent(out Shield shield))
                 {
                     _poolShield.Add(shield);
-                    shield.Intializate(_changeTest,_tools.Length);
+                    shield.Intializate(_changeTest);
                     BindShield(shield);
                 }
             }
@@ -114,7 +112,7 @@ namespace MainMode.Mode1921
         }
         private Shield BindShield(Shield shield)
         {
-            shield.Intializate(_changeTest, _tools.Length);
+            shield.Intializate(_changeTest);
             shield.RepairShieldAction += UpdateQuest;
             return shield;
         }

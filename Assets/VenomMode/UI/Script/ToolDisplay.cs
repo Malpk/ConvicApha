@@ -30,6 +30,15 @@ namespace MainMode.Mode1921
                 }
             }
         }
+        public bool DeleyIcon(int index)
+        {
+            if (index < _toolsDislplay.Length)
+            {
+                _toolsDislplay[index].SetSprite(null);
+                return true;
+            }
+            return false;
+        }
         public void ShowHint()
         {
             for (int i = 0; i < _toolsDislplay.Length; i++)

@@ -38,7 +38,7 @@ namespace MainMode.Mode1921
         public void ResetGame()
         {
             _mode.CreateMap();
-            if (player.TryGetComponent(out IRestart restart))
+            if (player.TryGetComponent(out IReset restart))
                 restart.Restart();
             _itemSpawner.Restart();
             player.Respawn();

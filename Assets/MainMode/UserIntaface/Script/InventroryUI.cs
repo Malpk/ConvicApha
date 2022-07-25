@@ -11,25 +11,24 @@ namespace MainMode.GameInteface
 
         public override TypeDisplay DisplayType => TypeDisplay.ItemInventory;
 
-
+        public void Restart()
+        {
+            DisplayArtifact(null);
+            DisplayConsumablesItem(null);
+        }
      
-        public bool DisplayConsumablesItem(Sprite itemIcon, int count = 0)
+        public void DisplayConsumablesItem(Sprite itemIcon, int count = 0)
         {
-            return ShowObject(itemIcon, count, _item);
+            ShowObject(itemIcon, count, _item);
         }
-        public bool DisplayArtifact(Sprite itemIcon, int count = 0)
+        public void DisplayArtifact(Sprite itemIcon, int count = 0)
         {
-            return ShowObject(itemIcon, count, _artifact);
+            ShowObject(itemIcon, count, _artifact);
         }
 
-        private bool ShowObject(Sprite itemIcon,int count, InventoryView view)
+        private void ShowObject(Sprite itemIcon,int count, InventoryView view)
         {
-            if (view != null)
-            {
-                view.Display(itemIcon, count);
-                return true;
-            }
-            return false;
+            view.Display(itemIcon, count);
         }
         public void DisplayInfinity(Sprite itemIcon)
         {

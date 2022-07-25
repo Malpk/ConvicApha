@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(Player))]
-    public class OxyGenSet : MonoBehaviour, IPlayerComponent, IPause, ISender
+    public class OxyGenSet : MonoBehaviour, IPlayerComponent, IBlock, ISender
     {
         [Header("Time Setting")]
         [Min(3)]
@@ -22,7 +22,7 @@ namespace MainMode.Mode1921
         [Header("Requred Reference")]
         [SerializeField] private OxyGenDisplay _display;
 
-        private bool _isPause;
+        private bool _isBlock;
         private float _safeTime;
         private float _curretAirSupply;
         private Player _player;
@@ -55,7 +55,7 @@ namespace MainMode.Mode1921
             {
                 if (_curretAirSupply > 0)
                 {
-                    yield return new WaitWhile(() => _isPause); 
+                    yield return new WaitWhile(() => _isBlock); 
                     _curretAirSupply -= Time.deltaTime;
                     _display.UpdateField(_curretAirSupply / _safeTime);
                     yield return null;
@@ -74,7 +74,7 @@ namespace MainMode.Mode1921
                 var progress = 0f;
                 while (progress < 1f && _curretAirSupply <= 0)
                 {
-                    yield return new WaitWhile(() => _isPause);
+                    yield return new WaitWhile(() => _isBlock);
                     progress += Time.deltaTime / _hitDelay;
                     yield return null;
                 }
@@ -99,14 +99,14 @@ namespace MainMode.Mode1921
             StartUpdate();
         }
 
-        public void Pause()
+        public void Block()
         {
-            _isPause = true;
+            _isBlock = true;
         }
 
-        public void UnPause()
+        public void UnBlock()
         {
-            _isPause = false;
+            _isBlock = false;
         }
 
         public bool AddReceiver(Receiver receiver)
