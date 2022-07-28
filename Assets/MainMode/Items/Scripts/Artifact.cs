@@ -7,7 +7,8 @@ namespace MainMode.Items
     [Serializable]
     public abstract class Artifact : Item
     {
-        public int Count;
+        [Min(1)]
+        public int Count = 1;
         public bool IsInfinity;
 
     }

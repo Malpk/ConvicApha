@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MainMode.Effects;
 
 namespace MainMode
 {
@@ -11,9 +12,8 @@ namespace MainMode
         [SerializeField] private int _damage = 1;
         [Min(1)]
         [SerializeField] private float _force = 5;
-        [Min(1)]
-        [SerializeField] private float _effectTime = 1f;
-        
+        [SerializeField] private MovementEffect _effect;
+
         private DamageInfo _attackInfo;
 
         public float ForceJet => _force;
@@ -29,6 +29,8 @@ namespace MainMode
             {
                 target.TakeDamage(_damage,_attackInfo);
             }
+            if (collision.collider.TryGetComponent(out RobotMan man))
+                man.AddEffects(_effect, _attackInfo.TimeEffect);
             if (collision.rigidbody)
                 collision.rigidbody.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
         }

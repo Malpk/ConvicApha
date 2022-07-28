@@ -14,10 +14,6 @@ public class RobotMan : Player
     [SerializeField] private float _distanceAttack = 1;
     [SerializeField] private LayerMask _deviceLayer;
     [Header("Debafe Character")]
-    [Min(1)]
-    [SerializeField] private float _timeDebaf;
-    [Range(0, 1)]
-    [SerializeField] private float _debafSpeed;
     [Range(0,1)]
     [SerializeField] private float _bodyTemperature = 0;
     [Range(0, 1)]
@@ -30,14 +26,10 @@ public class RobotMan : Player
 
     private CapsuleCollider2D _collider;
     
-    private int _countDebaf = 0;
-    private float _debafSpeedCurret = 1f;
     private IMode _target = null;
 
     private Color _startColor;
     private Coroutine _abillityActive = null;
-
-    protected override float SpeedMovement => base.SpeedMovement * _debafSpeedCurret;
 
     protected override void Awake()
     {
@@ -49,7 +41,6 @@ public class RobotMan : Player
     {
         ChangeTemaerature(_bodyTemperature);
     }
-
 
     protected override void UseAbillity()
     {
@@ -110,15 +101,7 @@ public class RobotMan : Player
         else
             base.StopMove(timeStop, effect);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.TryGetComponent<JetSteam>(out JetSteam jet))
-        {
-            _debafSpeedCurret = _debafSpeed;
-            _countDebaf++;
-            Invoke("DropDebaf", _timeDebaf);
-        }
-    }
+
     private void ChangeTemaerature(float temperature = 0)
     {
         if (_bodyTemperature > 1f)
@@ -127,18 +110,11 @@ public class RobotMan : Player
         _bodyTemperature += temperature;
         _sprite.color = Vector4.MoveTowards(_sprite.color, Color.red, temperature);
     }
-    private void DropDebaf()
-    {
-        _countDebaf--;
-        if (_countDebaf == 0)
-             _debafSpeedCurret = 1;
-    }
     public override void Respawn()
     {
         base.Respawn();
         _bodyTemperature = 0;
         ChangeTemaerature();
-        _debafSpeedCurret = 1;
         _sprite.color = _startColor;
     }
 }

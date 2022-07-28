@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedMovement: 20
-  speedRotaton: 10
+  speedRotation: 1
   health:
     _healthPoints: 5
     _maxHealthPoint: 7
@@ -291,8 +291,6 @@ MonoBehaviour:
   _deviceLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _timeDebaf: 3
-  _debafSpeed: 0.5
   _bodyTemperature: 0
   _temperatureSteep: 0.15
   _temperaturOnHit: 0.2

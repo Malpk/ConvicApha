@@ -1,24 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MainMode.Effects;
 
 public class JMan : Player
 {
     [Header("Ability")]
-    [SerializeField] private float _timeReload;
+    [Min(1)]
+    [SerializeField] private float _timeActive;
     [SerializeField] private float _forceJerk;
     [Range(0,1f)]
-    [SerializeField] private float _debafSpeed;
-
-    private float _abilitiSpeedEffect = 1;
-
-    private bool _isUseEffect = true;
+    [SerializeField] private MovementEffect _debaf;
 
     private Coroutine _reload = null;
-
-    public override bool IsUseEffect => _isUseEffect;
-
-    protected override float SpeedMovement => base.SpeedMovement * _abilitiSpeedEffect;
 
     protected override void UseAbillity()
     {
@@ -28,41 +22,29 @@ public class JMan : Player
     {
         if (_reload == null)
         {
+            AddEffects(_debaf, _timeActive);
             _reload = StartCoroutine(Reload());
         }
         else
         {
             return Vector2.zero;
-        }       
-        _abilitiSpeedEffect = _debafSpeed;
-        _isUseEffect = false;
+        }
+        IsUseEffect = false;
         playerCollider.enabled = false;
         return transform.up * _forceJerk;
     }
 
     private IEnumerator Reload()
     {
-        yield return new WaitForSeconds(_timeReload);
-        playerCollider.enabled = true; 
-        _abilitiSpeedEffect = 1f;
-        _isUseEffect = true;
+        yield return new WaitForSeconds(_timeActive);
+        playerCollider.enabled = true;
+        IsUseEffect = true;
         _reload = null;
     }
 
     public override void TakeDamage(int damage, DamageInfo type)
     {
-        if (_isUseEffect)
+        if (IsUseEffect)
             base.TakeDamage(damage, type);
-    }
-
-    public override void StopMove(float timeStop, EffectType effect)
-    {
-        if(_isUseEffect)
-            base.StopMove(timeStop, effect);
-    }
-    public override void ChangeSpeed(float duration, EffectType effect, float value = 1)
-    {
-        if (_isUseEffect)
-            base.ChangeSpeed(duration, effect, value);
     }
 }

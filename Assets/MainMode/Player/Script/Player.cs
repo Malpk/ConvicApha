@@ -5,10 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerComponent;
+using MainMode.Effects;
 
 [RequireComponent(typeof(PlayerScreen),typeof(Collider2D))]
 public class Player : Character, IResist
-{ 
+{
     [SerializeField] protected Inventory _inventory;
     [SerializeField] protected Controller controller;
     [Header("Resist setting")]
@@ -30,9 +31,8 @@ public class Player : Character, IResist
     public delegate void Messange();
     public event Messange OnDead;
 
-    public override bool IsUseEffect => true;
     public override bool IsDead => isDead;
-    protected virtual float SpeedMovement => speedMovement * stopEffect * stoneEffect;
+
     protected override void Awake()
     {
         screenEffect = GetComponent<PlayerScreen>();
@@ -76,9 +76,9 @@ public class Player : Character, IResist
     {
         if (isDead)
             return;
-        _movement.Move(direction * SpeedMovement);
+        movement.Move(direction * GetMovementEffect() * speedMovement);
         if (direction != Vector2.zero)
-            _movement.Rotate(direction, speedRotaton);
+            _baseMovement.Rotate(direction, speedRotation);
     }
     #region Player Damage and Dead
     public override void Dead()

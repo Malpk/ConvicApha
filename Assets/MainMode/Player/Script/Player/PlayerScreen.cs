@@ -6,7 +6,7 @@ using MainMode.GameInteface;
 
 namespace MainMode
 {
-    public class PlayerScreen : MonoBehaviour, IEffect, ISender
+    public class PlayerScreen : MonoBehaviour, ISender
     {
         [SerializeField] private Sprite _freezSprite;
         [SerializeField] private SpriteRenderer _playerSpriteBody;
