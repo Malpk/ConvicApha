@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace MainMode
 {
@@ -12,18 +15,28 @@ namespace MainMode
         [Min(1)]
         [SerializeField] private float _timeDestroy =1f;
         [SerializeField] private SpriteRenderer _sprite;
-
         private int _curretEndurance;
         private bool _isDeactive;
         private Coroutine _corotine;
         private BoxCollider2D _collider;
-
-        public bool IsDeactive => _isDeactive;
+        private List<Vector3Int> vctInt = new List<Vector3Int>();
+        
+        private bool wasColWithWalls;
+        private Tilemap wallsTileMap1; 
+        private Tilemap wallsTileMap2;
+        [SerializeField] private Tile _tile;
+    public bool IsDeactive => _isDeactive;
+    
         private void Awake()
         {
             _collider = GetComponent<BoxCollider2D>();
             _collider.isTrigger = false;
             _curretEndurance = _endurance;
+            vctInt.Add(new Vector3Int(0,0,0));
+            vctInt.Add(Vector3Int.up);
+            vctInt.Add(Vector3Int.down);
+            vctInt.Add(Vector3Int.right);
+            vctInt.Add(Vector3Int.left);
         }
         private void OnValidate()
         {

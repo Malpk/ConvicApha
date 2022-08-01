@@ -35,6 +35,8 @@ namespace MainMode.Items
 
         public void SetMode(bool mode)
         {
+            _collider = gameObject.GetComponent<Collider2D>();
+            _spriteBody = gameObject.GetComponent<SpriteRenderer>();
             _spriteBody.enabled = mode;
             _collider.enabled = mode;
             Active = mode;

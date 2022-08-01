@@ -30,7 +30,6 @@ namespace MainMode
             else
                 _imageItem.enabled = false;
 
-
             if (countItem <= 0)
                 _countItems.text = "";
             else

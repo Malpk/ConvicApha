@@ -36,23 +36,21 @@ public class Patrul : StateMachineBehaviour
             animator.SetBool("Patrul", false);
         }
 
-        if (time > 10)
+        if (time > 30)
         {
-            //animator.SetBool("Patrul", false);
+            animator.SetBool("Patrul", false);
         }
         
         if (RayToPlayer(animator))
         {
             animator.SetBool("Chase", true);
         }
-        RotatZombieToPlayer(animator);
     }
 
    
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("Patrul", false);
-        time = 0;
     }
 
     private void SetDistancion()
@@ -61,15 +59,7 @@ public class Patrul : StateMachineBehaviour
         agent.SetDestination(points[rand].position);
         currentPoint = points[rand];
     }
-
-    void RotatZombieToPlayer(Animator animator)
-    {
-        var direction = currentPoint.position - animator.transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        angle += 90;
-        Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
-        animator.transform.rotation = Quaternion.Lerp(animator.transform.rotation, rot, 0.006f);
-    }
+    
 
     private bool RayToPlayer(Animator animator)
     {

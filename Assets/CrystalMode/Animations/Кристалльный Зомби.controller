@@ -171,8 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbdfa0ffffec5854a953e10612f90f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseDistance: 5.4
-  rotationSpeed: 10
   patrulSpeed: 1.5
 --- !u!1101 &-1902140625413782100
 AnimatorStateTransition:
@@ -303,8 +301,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: Attack
+  - m_ConditionMode: 1
+    m_ConditionEvent: Chase
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 314449642621856918}

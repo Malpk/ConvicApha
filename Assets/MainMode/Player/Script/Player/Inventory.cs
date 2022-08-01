@@ -57,7 +57,6 @@ namespace MainMode
         }
         public void AddConsumablesItem(ConsumablesItem item)
         {
-
             if (item != null)
             {
                 if (_consumablesItem.Count == 0)

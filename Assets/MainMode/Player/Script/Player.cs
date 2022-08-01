@@ -72,6 +72,7 @@ public class Player : Character, IResist
         else
             direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
+
         Move(direction);
     }
     protected override void Move(Vector2 direction)
