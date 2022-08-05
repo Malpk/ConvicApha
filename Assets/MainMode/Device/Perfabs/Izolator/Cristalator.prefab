@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98931ddde03442842b059ed9bbfd77db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healhtWall: 1
   _animator: {fileID: 4534057549488661148}
 --- !u!1 &4534057549612729679
 GameObject:
@@ -255,9 +256,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4534057549741178634}
-  - component: {fileID: 4534057549741178633}
-  - component: {fileID: 4534057549741178632}
-  - component: {fileID: 4534057549741178639}
+  - component: {fileID: 175944678318487367}
+  - component: {fileID: 6171286363988686997}
   m_Layer: 0
   m_Name: Cristals
   m_TagString: Untagged
@@ -283,8 +283,8 @@ Transform:
   m_Father: {fileID: 4534057550761766540}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &4534057549741178633
-BoxCollider2D:
+--- !u!58 &175944678318487367
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -293,42 +293,13 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.953125, y: 0.953125}
-    newSize: {x: 1.890625, y: 1.796875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5}
-  m_EdgeRadius: 0
---- !u!95 &4534057549741178632
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4534057549741178638}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4534057549741178639
+  m_Radius: 0.5
+--- !u!114 &6171286363988686997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -337,15 +308,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 4534057549741178638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
+  m_Script: {fileID: 11500000, guid: d1013998a544609408b849792645a65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyMode: 0
-  timeDestroy: 1
-  attackInfo:
-    _device: 0
-    _effect: 0
-    _attack: 0
+  _detect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4534057550761766545}
+        m_TargetAssemblyTypeName: MainMode.Izolator, Assembly-CSharp
+        m_MethodName: OnActivateJet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4534057550122638533
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98931ddde03442842b059ed9bbfd77db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healhtWall: 1
   _animator: {fileID: 4534057550122638529}
 --- !u!1 &4534057550550693384
 GameObject:
@@ -642,6 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98931ddde03442842b059ed9bbfd77db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healhtWall: 1
   _animator: {fileID: 4534057550718843206}
 --- !u!1 &4534057550761766551
 GameObject:
@@ -759,14 +741,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
-  timeDestroy: 1
-  attackInfo:
-    _device: 11
-    _effect: 0
-    _attack: 0
+  timeDestroy: 10
+  playOnStart: 1
   activeTime: 10
   _jetHolder: {fileID: 4534057549741178634}
-  _signalArea: {fileID: 4534057549741178639}
+  attackInfo:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
+  animators: []
+  _body: {fileID: 4534057549612729673}
+  _signalArea: {fileID: 0}
 --- !u!95 &4534057550761766544
 Animator:
   serializedVersion: 3
@@ -777,7 +762,7 @@ Animator:
   m_GameObject: {fileID: 4534057550761766551}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6dea257d55876fd46b54d6e54f2ca309, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -918,6 +903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98931ddde03442842b059ed9bbfd77db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healhtWall: 1
   _animator: {fileID: 4534057549488661148}
 --- !u!1 &4534057551002241206
 GameObject:

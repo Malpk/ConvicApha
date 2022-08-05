@@ -19,7 +19,8 @@ public class CameraFollowing : MonoBehaviour
     }
     private void FollowingTheCamera()
     {
-        Vector2 newPosition = Vector2.Lerp(transform.position, _target.Position, _speedFollowing * Time.deltaTime);
+        Vector2 velocity = Vector2.zero;
+        Vector2 newPosition = Vector2.SmoothDamp(transform.position, _target.Position, ref velocity, Time.deltaTime, _speedFollowing);
         transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
     }
 }

@@ -194,12 +194,21 @@ public class Player : Character, IResist
         {
             _interacive = interactive;
         }
+        if (collision.TryGetComponent(out VenomCloud cloud))
+        {
+            screenEffect.ShowEffect(cloud.DamageInfo.Effect);
+        }
     }
     protected void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IItemInteractive interactive))
         {
             _interacive = null; 
+        }
+        if (collision.TryGetComponent(out VenomCloud cloud))
+        {
+            TakeDamage(0, cloud.DamageInfo);
+            screenEffect.ScreenHide(cloud.DamageInfo.Effect);
         }
     }
     #region SetResist

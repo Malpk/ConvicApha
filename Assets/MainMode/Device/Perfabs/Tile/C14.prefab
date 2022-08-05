@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4865375913786008010}
   - component: {fileID: 4865375913786008011}
+  - component: {fileID: 7806071636037634582}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -82,6 +83,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7806071636037634582
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865375913786008009}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4865375913905671008
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,16 +175,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045b38dfe3ea64243afcd1abbd33087e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyMode: 0
-  timeDestroy: 1
-  _cellPos: {x: 0, y: 0, z: 0}
+  destroyMode: 1
+  timeDestroy: 10
+  playOnStart: 0
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   attackInfo:
     _timeEffect: 2
     _effect: 5
     _attack: 0
+  _body: {fileID: 4865375913786008011}
   _effect: {fileID: 11400000, guid: 07aba00864c7f0542b38d049b02882ca, type: 2}
 --- !u!95 &4865375913905671010
 Animator:
@@ -176,7 +197,7 @@ Animator:
   m_GameObject: {fileID: 4865375913905671008}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9e581b65fe5f3f0438f75a45b87fb9c4, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

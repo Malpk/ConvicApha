@@ -6,21 +6,36 @@ using MainMode.Effects;
 namespace MainMode
 {
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
-    public class JetSteam : MonoBehaviour,ISetAttack
+    public class JetSteam : MonoBehaviour, IJet
     {
+        [Header("General Setting")]
         [Min(1)]
         [SerializeField] private int _damage = 1;
         [Min(1)]
         [SerializeField] private float _force = 5;
         [SerializeField] private MovementEffect _effect;
+        [Header("Reference")]
+        [SerializeField] private SpriteRenderer _body;
 
+        private Collider2D _collider;
         private DamageInfo _attackInfo;
 
         public float ForceJet => _force;
 
+        private void Awake()
+        {
+            _collider = GetComponent<Collider2D>();
+        }
+
         public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;
+        }
+
+        public void SetMode(bool mode)
+        {
+            _body.enabled = mode;
+            _collider.enabled = mode;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

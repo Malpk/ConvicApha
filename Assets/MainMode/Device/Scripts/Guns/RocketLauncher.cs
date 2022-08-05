@@ -5,19 +5,18 @@ namespace MainMode
 {
     public class RocketLauncher : Gun
     {
+        [Header("Geneeral Setting")]
         [SerializeField] private float _aimTime = 1f;
         [SerializeField] private float _speedRotation;
-
+        [Header("Reference")]
         [SerializeField] private Rocket _rocket;
-
-        [SerializeField] private Rigidbody2D _rotateBody;
-        [SerializeField] private Transform _signalHolder;
-        [SerializeField] private Transform _spawnProjectelePosition;
         [SerializeField] private FireWave _wave;
+        [SerializeField] private ShootPoint _shoot;
+        [SerializeField] private Transform _spawnProjectelePosition;
+        [SerializeField] private Rigidbody2D _rotateBody;
 
 
         private Vector3 _lostTargetPosition;
-        private SignalTile[] _signals;
 
         private Coroutine _coroutine;
 
@@ -27,32 +26,23 @@ namespace MainMode
         {
             _wave.SetAttack(attackInfo);
             _rocket.SetAttack(attackInfo);
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
+            base.Intilizate();
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
-            foreach (var signal in _signals)
-            {
-                signal.SingnalAction += SetTarget;
-            }
+            base.OnEnable();
+            _shoot.FireAction += Fire;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
-            foreach (var signal in _signals)
-            {
-                signal.SingnalAction -= SetTarget;
-            }
+            base.OnDisable();
+            _shoot.FireAction -= Fire;
         }
 
-        public void SetTarget(Collider2D target)
-        {
-            if (_coroutine == null)
-                _coroutine = StartCoroutine(Rotate(target.transform));
-        }
         private IEnumerator Rotate(Transform target)
         {
             float progress = 0f;
-            while (progress < 1f && isMode)
+            while (progress < 1f && IsShow)
             {
                 var localPOsition = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
                 var direction = localPOsition.y > 0 ? 1 : -1;
@@ -62,7 +52,7 @@ namespace MainMode
                 progress += Time.deltaTime / _aimTime;
                 yield return null;
             }
-            if (isMode)
+            if (IsShow)
             {
                 _lostTargetPosition = _rotateBody.transform.position + _rotateBody.transform.up * Vector3.Distance(transform.position, target.position);
                 Shoot();
@@ -82,7 +72,7 @@ namespace MainMode
 
         private void Shoot()
         {
-            animator.SetTrigger("Shoot");
+            gunAnimator.SetTrigger("Shoot");
         }
         private void Fire()
         {
@@ -96,6 +86,13 @@ namespace MainMode
             _rocket.transform.rotation = Quaternion.Euler(Vector3.forward * _rotateBody.rotation);
             _rocket.SetMode(true);
             _rocket.SetTarget(_lostTargetPosition);
+        }
+
+        public override void Run(Collider2D target)
+        {
+            Activate();
+            if (_coroutine == null)
+                _coroutine = StartCoroutine(Rotate(target.transform));
         }
     }
 }

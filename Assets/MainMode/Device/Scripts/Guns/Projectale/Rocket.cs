@@ -29,6 +29,7 @@ namespace MainMode
             _collider = GetComponent<Collider2D>();
             _rigidBody = GetComponent<Rigidbody2D>();
             _rigidBody.isKinematic = true;
+            SetMode(false);
         }
         public void SetAttack(DamageInfo info)
         {

@@ -42,7 +42,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: Laser Sprite/Laser
+    path: Laser
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -70,7 +70,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: Laser Sprite/Laser
+    path: Laser
     classID: 61
     script: {fileID: 0}
   m_PPtrCurves:
@@ -120,7 +120,7 @@ AnimationClip:
     - time: 0.95454544
       value: {fileID: -3089757578175428324, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     attribute: m_Sprite
-    path: Laser Sprite
+    path: 
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -137,13 +137,11 @@ AnimationClip:
     - time: 0.8636364
       value: {fileID: 1376847189962657216, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     - time: 0.90909094
-      value: {fileID: 1376847189962657216, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
+      value: {fileID: -3051327439704073884, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     - time: 0.95454544
       value: {fileID: -3051327439704073884, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
-    - time: 1
-      value: {fileID: -3051327439704073884, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     attribute: m_Sprite
-    path: Laser Sprite/Laser
+    path: Laser
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 22
@@ -154,28 +152,28 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1413354943
+      path: 680365000
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1413354943
+      path: 680365000
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 61
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1993804780
+      path: 0
       attribute: 0
       script: {fileID: 0}
       typeID: 212
       customType: 23
       isPPtrCurve: 1
     - serializedVersion: 2
-      path: 1413354943
+      path: 680365000
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -210,7 +208,6 @@ AnimationClip:
     - {fileID: 8359162988682326449, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     - {fileID: -2690579915047441125, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     - {fileID: 1376847189962657216, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
-    - {fileID: 1376847189962657216, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     - {fileID: -3051327439704073884, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
     - {fileID: -3051327439704073884, guid: 035425a9b76b9c84dbbf8e59d377d20a, type: 3}
   m_AnimationClipSettings:
@@ -218,7 +215,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.0454545
+    m_StopTime: 1
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -259,7 +256,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: Laser Sprite/Laser
+    path: Laser
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -287,7 +284,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: Laser Sprite/Laser
+    path: Laser
     classID: 61
     script: {fileID: 0}
   m_EulerEditorCurves: []

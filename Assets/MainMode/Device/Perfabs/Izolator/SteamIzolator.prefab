@@ -41,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340496184988178}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.5625, y: 1.5625}
+  m_Size: {x: 3.125, y: 3.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -111,7 +111,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340496184988178}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -135,6 +135,7 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _body: {fileID: 6670340496184988191}
 --- !u!1 &6670340496303248551
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340496303248551}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -246,7 +247,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340496303248551}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -270,6 +271,7 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _body: {fileID: 6670340496303248544}
 --- !u!1 &6670340496782743743
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,6 +281,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6670340496782743740}
+  - component: {fileID: 461150938960951541}
+  - component: {fileID: 8382375441904635175}
   m_Layer: 0
   m_Name: JetHolder
   m_TagString: Untagged
@@ -304,6 +308,49 @@ Transform:
   m_Father: {fileID: 6670340497542324523}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!58 &461150938960951541
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670340496782743743}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.51, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &8382375441904635175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670340496782743743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1013998a544609408b849792645a65f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6670340497542324525}
+        m_TargetAssemblyTypeName: MainMode.Izolator, Assembly-CSharp
+        m_MethodName: OnActivateJet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6670340496958644878
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +474,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340497454435101}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -497,7 +544,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340497454435101}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -521,6 +568,7 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _body: {fileID: 6670340497454435558}
 --- !u!1 &6670340497542324513
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +581,6 @@ GameObject:
   - component: {fileID: 6670340497542324522}
   - component: {fileID: 6670340497542324525}
   - component: {fileID: 6670340497542324524}
-  - component: {fileID: 6670340497542324527}
   - component: {fileID: 6670340497542324526}
   m_Layer: 10
   m_Name: SteamIzolator
@@ -622,15 +669,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
-  timeDestroy: 3
-  _cellPos: {x: 0, y: 0, z: 0}
+  timeDestroy: 10
+  playOnStart: 1
   activeTime: 10
   _jetHolder: {fileID: 6670340496782743740}
-  animators: []
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
     _attack: 1
+  animators: []
+  _body: {fileID: 6670340496958644876}
 --- !u!58 &6670340497542324524
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -647,32 +695,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.38998535
---- !u!61 &6670340497542324527
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6670340497542324513}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.5}
-  m_EdgeRadius: 0
 --- !u!95 &6670340497542324526
 Animator:
   serializedVersion: 3
@@ -683,7 +705,7 @@ Animator:
   m_GameObject: {fileID: 6670340497542324513}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fb05d1fcc615df34d9bac865f4404f9b, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -733,7 +755,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340497626434993}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -803,7 +825,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670340497626434993}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -827,3 +849,4 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _body: {fileID: 6670340497626435002}

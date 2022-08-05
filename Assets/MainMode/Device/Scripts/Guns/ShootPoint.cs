@@ -4,10 +4,10 @@ namespace MainMode
 {
     public class ShootPoint : MonoBehaviour
     {
-        public delegate void Fire();
-        public event Fire FireAction;
+        public delegate void Action();
+        public event Action FireAction;
 
-        private void Shoot()
+        private void Fire()
         {
             if (FireAction != null)
                 FireAction();

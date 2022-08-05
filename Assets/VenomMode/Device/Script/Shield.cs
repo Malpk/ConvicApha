@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(Animator), typeof(BoxCollider2D))]
-    public class Shield : MonoBehaviour, IItemInteractive,IMapItem
+    public class Shield : SpawnItem, IItemInteractive
     {
         [Header("Requred Reference")]
         [Min(0)]
@@ -14,11 +14,14 @@ namespace MainMode.Mode1921
         [SerializeField] private Canvas _canvas;
 
         private int _curretCount;
+        private bool _isMode = true;
         private ToolSet _curretToolSet;
         private Animator _animator;
         private Collider2D _collider;
         private ChangeTest _changeTest;
         private IBlock[] _blockElements;
+
+        public override bool IsShow => throw new System.NotImplementedException();
 
         public delegate void Action(Shield parent);
         public event Action RepairShieldAction;
@@ -114,15 +117,12 @@ namespace MainMode.Mode1921
             }
         }
         #endregion
-        public void SetMode(bool mode)
+        public override void SetMode(bool mode)
         {
+            _isMode = mode;
             _curretCount = mode ? _countGames : 0; 
             _collider.enabled = mode;
             _animator.SetBool("Mode", !mode);
-        }
-        public void SetPosition(Vector2 position)
-        {
-            transform.position = position;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -145,7 +145,7 @@ namespace MainMode.Mode1921
             _canvas.enabled = false;
         }
 
-        public void Delete()
+        public override void Deactivate()
         {
             Destroy(gameObject);
         }

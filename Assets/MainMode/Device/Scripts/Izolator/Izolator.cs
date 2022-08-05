@@ -1,71 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MainMode;
 
-public abstract class Izolator : Device
+namespace MainMode
 {
-    [SerializeField] protected float activeTime = 10f;
-    [SerializeField] protected Transform _jetHolder;
-
-    [SerializeField] protected Animator[] animators;
-    [SerializeField] protected DamageInfo attackInfo;
-
-    private bool _isActive;
-
-    protected override void Intilizate()
+    [RequireComponent(typeof(Collider2D))]
+    public abstract class Izolator : Device
     {
-        animators = _jetHolder.GetComponentsInChildren<Animator>();
-        SetMode(false);
-    }
-    protected void ActivateDevice()
-    {
-        if (_isActive)
+        [Header("General Setting")]
+        [SerializeField] protected float activeTime = 10f;
+        [Header("Reference")]
+        [SerializeField] protected Transform _jetHolder;
+        [SerializeField] protected DamageInfo attackInfo;
+        [SerializeField] protected Animator[] animators;
+        [SerializeField] private SpriteRenderer _body;
+
+        protected Collider2D colider;
+        
+        protected IJet[] jets;
+
+        protected override void Intilizate()
         {
-            return;
+            colider = GetComponent<Collider2D>();
+            animators = _jetHolder.GetComponentsInChildren<Animator>();
+            jets = GetComponentsInChildren<IJet>();
+            foreach (var jet in jets)
+            {
+                jet.SetAttack(attackInfo);
+            }
         }
-        foreach (Animator animator in animators)
+        private void Start()
         {
-            animator.SetBool("Mode", true);
+            SetState(false);
         }
-        _isActive = true;
-        Invoke(nameof(DeactivateDevice), activeTime);
-        SetMode(_isActive);
-    }
+        public void OnActivateJet()
+        {
+            if (IsShow)
+            {
+                foreach (Animator animator in animators)
+                {
+                    animator.SetBool("Mode", true);
+                }
+                Invoke(nameof(OnDeactivateJet), activeTime);
+            }
+        }
 
-    private void DeactivateDevice()
-    {
-        foreach (Animator animator in animators)
+        private void OnDeactivateJet()
         {
-            animator.SetBool("Mode", false);
+            foreach (Animator animator in animators)
+            {
+                animator.SetBool("Mode", false);
+            }
         }
-        _isActive = false;
-        SetMode(_isActive);
-    }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (attackInfo.Effect == EffectType.None)
-            return;
-        if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
+        protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            screen.ShowEffect(attackInfo.Effect);
+            if (attackInfo.Effect == EffectType.None)
+                return;
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
+            {
+                screen.ShowEffect(attackInfo);
+            }
         }
-    }
-    protected virtual void OnTriggerExit2D(Collider2D collision)
-    {
-        if (attackInfo.Effect == EffectType.None)
-            return;
-        if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
+        protected virtual void OnTriggerExit2D(Collider2D collision)
         {
-            screen.ShowEffect(attackInfo.Effect);
+            if (attackInfo.Effect == EffectType.None)
+                return;
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
+            {
+                screen.ShowEffect(attackInfo);
+            }
         }
-    }
-
-    protected abstract void SetMode(bool mode);
-    public override void TurnOff()
-    {
-        base.TurnOff();
-        DeactivateDevice();
+        protected override void SetState(bool mode)
+        {
+            _body.enabled = mode;
+            colider.enabled = mode;
+            foreach (var jet in jets)
+            {
+                jet.SetMode(false);
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace MainMode.GameInteface
             if(!_screen.enabled)
                 SetMode(true);
         }
-        private void Hide()
+        public void Hide()
         {
             SetMode(false);
         }
@@ -35,6 +35,11 @@ namespace MainMode.GameInteface
         {
             _screen.enabled = mode;
             _animator.SetBool("Show", mode);
+        }
+
+        public void Show()
+        {
+            Show(0);
         }
     }
 }

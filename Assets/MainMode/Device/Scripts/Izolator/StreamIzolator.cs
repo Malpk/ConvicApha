@@ -21,11 +21,8 @@ namespace MainMode
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.GetComponent<Character>() != null)
-                ActivateDevice();
+                OnActivateJet();
         }
 
-        protected override void SetMode(bool mode)
-        {
-        }
     }
 }

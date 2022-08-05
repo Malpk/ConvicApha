@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class DaimonWall : MonoBehaviour, IMode,IDamage
+    public class DaimonWall : MonoBehaviour,IDamage
     {
         [Min(1)]
         [SerializeField] private int _healhtWall = 1;
@@ -15,7 +15,7 @@ namespace MainMode
             _curretHealht = _healhtWall;
             _animator = GetComponent<Animator>();
         }
-        public void TurnOff()
+        public void Activate()
         {
             _curretHealht = _healhtWall;
             _animator.SetBool("Mode", false);
@@ -23,7 +23,7 @@ namespace MainMode
 
         public void Dead()
         {
-            TurnOff();
+            Activate();
         }
 
         public void TakeDamage(int damage, DamageInfo type)

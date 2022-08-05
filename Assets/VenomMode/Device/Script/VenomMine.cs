@@ -6,7 +6,7 @@ using MainMode;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(CircleCollider2D),typeof(Animator))]
-    public class VenomMine : MonoBehaviour, IMapItem
+    public class VenomMine : Device
     {
         [Min(0.05f)]
         [SerializeField] private float _trigerDistance = 0.1f;
@@ -20,19 +20,21 @@ namespace MainMode.Mode1921
         private Transform _targetTransform;
         private CircleCollider2D _trigerArea;
 
-        private void Awake()
+        public override TrapType DeviceType => throw new System.NotImplementedException();
+
+        protected override void Intilizate()
         {
             _animator = GetComponent<Animator>();
             _trigerArea = GetComponent<CircleCollider2D>();
             _explosion.SetAttack(_attackInfo);
             _trigerArea.isTrigger = true;
         }
+
         public void TurnOff()
         {
             SetMode(false);
         }
-
-        public void SetMode(bool mode)
+        protected override void SetState(bool mode)
         {
             _bodySprite.enabled = mode;
             _trigerArea.enabled = mode;
@@ -40,10 +42,6 @@ namespace MainMode.Mode1921
             _animator.SetBool("Mode", false);
             if (mode)
                 _explosion.SetMode(false);
-        }
-        public void SetPosition(Vector2 position)
-        {
-            transform.position = position;
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -72,11 +70,6 @@ namespace MainMode.Mode1921
                 _animator.SetBool("Mode", false);
                 _targetTransform = null;
             }
-        }
-
-        public void Delete()
-        {
-            Destroy(gameObject);
         }
     }
 }

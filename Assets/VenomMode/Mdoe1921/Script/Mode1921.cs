@@ -25,9 +25,9 @@ namespace MainMode.Mode1921
         [SerializeField] public UnityEvent Win;
 
         private int _countRepairShield;
-        private List<IMapItem> _poolShield = new List<IMapItem>();
-        private List<IMapItem> _poolMine = new List<IMapItem>();
-        private List<IMapItem> _poolTool = new List<IMapItem>();
+        private List<SpawnItem> _poolShield = new List<SpawnItem>();
+        private List<SpawnItem> _poolMine = new List<SpawnItem>();
+        private List<SpawnItem> _poolTool = new List<SpawnItem>();
 
 
         private void Start()
@@ -91,23 +91,23 @@ namespace MainMode.Mode1921
             count = count < 0 ? 0 : count;
             for (int i = 0; i < count; i++)
             {
-                _poolMine.Add(Instantiate(perfab, transform).GetComponent<IMapItem>());
+                _poolMine.Add(Instantiate(perfab, transform).GetComponent<SpawnItem>());
             }
         }
         private void CreateTools(ToolRepairs[] toolsPerfabs)
         {
             for (int i = 0; i < toolsPerfabs.Length; i++)
             {
-                _poolTool.Add(Instantiate(toolsPerfabs[i].gameObject, transform).GetComponent<IMapItem>());
+                _poolTool.Add(Instantiate(toolsPerfabs[i].gameObject, transform).GetComponent<SpawnItem>());
             }
         }
-        private void DeleteItem(List<IMapItem> pool, int count)
+        private void DeleteItem(List<SpawnItem> pool, int count)
         {
             for (int i = 0; i < count; i++)
             {
                 var item = pool[0];
                 pool.Remove(pool[0]);
-                item.Delete();
+                item.Deactivate();
             }
         }
         private Shield BindShield(Shield shield)
@@ -118,7 +118,7 @@ namespace MainMode.Mode1921
         }
         #endregion
         #region SetPosition
-        private void SetPosition(List<IMapItem> items,float distance = 0)
+        private void SetPosition(List<SpawnItem> items,float distance = 0)
         {
             var points = GetPoints(items.Count, distance);
             for (int i = 0; i < points.Count; i++)

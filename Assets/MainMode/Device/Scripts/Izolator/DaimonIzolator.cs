@@ -10,16 +10,5 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.DaimondIzolator;
 
-        private void OnEnable()
-        {
-            _signalArea.SingnalAction +=(Collider2D collison) => ActivateDevice();
-        }
-        private void OnDisable()
-        {
-            _signalArea.SingnalAction -= (Collider2D collison) => ActivateDevice();
-        }
-        protected override void SetMode(bool mode)
-        {
-        }
     }
 }

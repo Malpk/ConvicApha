@@ -9,24 +9,29 @@ namespace MainMode
     {
         [SerializeField] protected LayerMask playerLayer;
         [SerializeField] protected DamageInfo attackInfo;
+        [SerializeField] protected SpriteRenderer _body;
+
+        private Collider2D _collider;
+
         protected override void Intilizate()
         {
-            base.Intilizate();  
-            if (destroyMode)
-                Destroy(gameObject, timeDestroy);
+            _collider = GetComponent<Collider2D>();
         }
+        private void Start()
+        {
+            Run();
+        }
+        protected override void SetState(bool mode)
+        {
+            _body.enabled = mode;
+            _collider.enabled = mode;
+        }
+
         protected void SetScreen(Collider2D collision, DamageInfo attack)
         {
             if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
             {
                 screen.ShowEffect(attackInfo);
-            }
-        }
-        protected void SetScreen(Collider2D collision, EffectType effect)
-        {
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
-            {
-                screen.ShowEffect(effect);
             }
         }
     }

@@ -20,39 +20,27 @@ namespace MainMode
         protected Transform _spawnTransform;
 
         [Header("Move properties")]
-
         [SerializeField] protected float _rotationAngleOnSeconds;
         [SerializeField] protected Rigidbody2D _rigidbody;
-        [SerializeField] private Transform _signalHolder;
 
         protected bool _isActive;
+        
         private float _time;
-
-        private SignalTile[] _signals;
+        private Coroutine _rotate;
 
         public override TrapType DeviceType => TrapType.Turel;
 
-        private void OnEnable()
+        public override void Run(Collider2D collision)
         {
-            foreach (var signal in _signals)
-            {
-                signal.SingnalAction += ActivateGun;
-            }
-        }
-        private void OnDisable()
-        {
-            foreach (var signal in _signals)
-            {
-                signal.SingnalAction -= ActivateGun;
-            }
+            if(_rotate == null)
+                _rotate = StartCoroutine(Rotate());
         }
 
-
-        protected virtual IEnumerator Rotate()
+        protected IEnumerator Rotate()
         {
             _time = _firingRateOnSeconds;
             float startAngle = _rigidbody.rotation;
-            for (float f = 0; f < _activeTime && isMode; f += Time.deltaTime)
+            for (float f = 0; f < _activeTime && IsShow; f += Time.deltaTime)
             {
                 _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _rigidbody.rotation + _rotationAngleOnSeconds, Time.deltaTime);
                 _time += Time.deltaTime;
@@ -67,25 +55,10 @@ namespace MainMode
             if (_time >= _firingRateOnSeconds)
             {
                 _time = 0;
-                animator.SetTrigger("Shoot");
+                gunAnimator.SetTrigger("Shoot");
                 var bullet = Instantiate(_bulletPrefab.gameObject, _spawnTransform.position, _spawnTransform.rotation).GetComponent<Bullet>();
                 bullet.SetAttack(attackInfo);
             }
-        }
-
-        public virtual void ActivateGun(Collider2D collision)
-        {
-            if (_isActive)
-            {
-                return;
-            }
-            _isActive = true;
-            StartCoroutine(Rotate());
-        }
-
-        protected override void Intilizate()
-        {
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
         }
     }
 }

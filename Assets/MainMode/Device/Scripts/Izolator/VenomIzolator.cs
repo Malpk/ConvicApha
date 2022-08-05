@@ -6,32 +6,14 @@ namespace MainMode
 {
     public class VenomIzolator : Izolator
     {
-        [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private VenomCloud _cloud;
 
         public override TrapType DeviceType => TrapType.VenomIsolator;
 
-        protected override void Intilizate()
+        protected override void SetState(bool mode)
         {
-            var jets = GetComponentsInChildren<ISetAttack>();
-            foreach (var jet in jets)
-            {
-                jet.SetAttack(attackInfo);
-            }
-            base.Intilizate();
-        }
-
-        protected override void OnTriggerEnter2D(Collider2D collision)
-        {
-            base.OnTriggerEnter2D(collision);
-            if (collision.TryGetComponent<IDamage>(out IDamage target))
-            {
-                ActivateDevice();
-            }
-        }
-
-        protected override void SetMode(bool mode)
-        {
-            _sprite.enabled = mode;
+            base.SetState(mode);
+            _cloud.SetMode(mode);
         }
     }
 }

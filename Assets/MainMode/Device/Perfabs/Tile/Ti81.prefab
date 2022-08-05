@@ -155,18 +155,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f52f239a37a5394409d3e7f88dcd81cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyMode: 0
-  timeDestroy: 1
-  _cellPos: {x: 0, y: 0, z: 0}
+  destroyMode: 1
+  timeDestroy: 10
+  playOnStart: 0
   playerLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   attackInfo:
     _timeEffect: 3
     _effect: 1
     _attack: 3
+  _body: {fileID: 2262772512422222711}
   _damage: 1
-  _screenEffectDuration: 3
 --- !u!95 &2262772513938998252
 Animator:
   serializedVersion: 3
@@ -177,7 +177,7 @@ Animator:
   m_GameObject: {fileID: 2262772513938998250}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ad49417fdf807694db9a52c385263df1, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

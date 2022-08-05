@@ -30,7 +30,7 @@ namespace MainMode
             }
             else
             {
-                return false; ;
+                return false; 
             }
         }
         public void ShowEffect(DamageInfo attack)
@@ -49,7 +49,7 @@ namespace MainMode
         }
         public void ScreenHide(EffectType type)
         {
-            _screen.Show(type);
+            _screen.Hide(type);
         }
         private IEnumerator FreezeState(float duration)
         {

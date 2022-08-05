@@ -18,13 +18,34 @@ namespace PlayerComponent
             _screens = GetComponentsInChildren<IScreenEffectUI>();
         }
 
-        public void Show(EffectType type, float duration = 0.5f)
+        public void Show(EffectType type, float duration)
         {
             foreach (var screen in _screens)
             {
                 if (screen.Type == type)
                 {
                     screen.Show(duration);
+                }
+            }
+        }
+
+        public void Show(EffectType type)
+        {
+            foreach (var screen in _screens)
+            {
+                if (screen.Type == type)
+                {
+                    screen.Show();
+                }
+            }
+        }
+        public void Hide(EffectType type)
+        {
+            foreach (var screen in _screens)
+            {
+                if (screen.Type == type)
+                {
+                    screen.Hide();
                 }
             }
         }

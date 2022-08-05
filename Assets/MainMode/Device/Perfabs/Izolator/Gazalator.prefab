@@ -41,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671763328100292}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -111,7 +111,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671763328100292}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _body: {fileID: 8033671763328100303}
 --- !u!1 &8033671763470768184
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +143,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8033671763470768191}
+  - component: {fileID: 7833018310850750276}
+  - component: {fileID: 6654308569677066379}
   m_Layer: 0
   m_Name: Gas Point
   m_TagString: Untagged
@@ -167,6 +170,54 @@ Transform:
   m_Father: {fileID: 8033671764934702066}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &7833018310850750276
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033671763470768184}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &6654308569677066379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033671763470768184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978d7c78d4d36f948aaea9bcb5c239f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8033671764934701580}
+        m_TargetAssemblyTypeName: MainMode.Izolator, Assembly-CSharp
+        m_MethodName: OnActivateJet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _damageInfo:
+    _timeEffect: 2
+    _effect: 1
+    _attack: 0
+  _cloudSprite: {fileID: 8033671765203865900}
 --- !u!1 &8033671763963772011
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +341,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671764629569638}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -360,7 +411,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671764629569638}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -382,6 +433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _body: {fileID: 8033671764629569641}
 --- !u!1 &8033671764647475680
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +475,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671764647475680}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -493,7 +545,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671764647475680}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -515,6 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _body: {fileID: 8033671764647475691}
 --- !u!1 &8033671764932123963
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,7 +609,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671764932123963}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -626,7 +679,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033671764932123963}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -648,6 +701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _body: {fileID: 8033671764932123966}
 --- !u!1 &8033671764934701576
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +714,6 @@ GameObject:
   - component: {fileID: 8033671764934702067}
   - component: {fileID: 8033671764934701580}
   - component: {fileID: 8033671764934701581}
-  - component: {fileID: 8033671764934701582}
   - component: {fileID: 8033671764934701583}
   m_Layer: 10
   m_Name: Gazalator
@@ -750,14 +803,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
-  timeDestroy: 1
+  timeDestroy: 10
+  playOnStart: 1
+  activeTime: 10
+  _jetHolder: {fileID: 8033671763470768191}
   attackInfo:
-    _device: 8
+    _timeEffect: 0.5
     _effect: 1
     _attack: 3
-  activeTime: 10
-  _jetHolder: {fileID: 8033671764934702066}
-  _sprite: {fileID: 8033671765203865900}
+  animators: []
+  _body: {fileID: 8033671763963772009}
+  _cloud: {fileID: 6654308569677066379}
 --- !u!58 &8033671764934701581
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -774,22 +830,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.47487462
---- !u!58 &8033671764934701582
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8033671764934701576}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.44
 --- !u!95 &8033671764934701583
 Animator:
   serializedVersion: 3
@@ -800,7 +840,7 @@ Animator:
   m_GameObject: {fileID: 8033671764934701576}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4bebe6bbbfb18d646bce5b2289b30ae8, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

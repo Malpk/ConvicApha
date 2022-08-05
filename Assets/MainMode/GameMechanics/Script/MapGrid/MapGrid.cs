@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MainMode.Mode1921
+namespace MainMode
 {
     public class MapGrid : MonoBehaviour
     {
@@ -16,11 +16,12 @@ namespace MainMode.Mode1921
 #endif
         private Point[,] _points;
 
-        public Point[,] Points => _points;
-
+        public Point[,] PointsArray => _points;
+        public List<Point> Points { get; private set; }
         private void Awake()
         {
             _points = CreateMap(_unitSize, _mapSize);
+            Points = GetFreePoints();
         }
         #region SearchPoint
         public Vector2 SearchPoint(Vector2 position)
@@ -74,6 +75,7 @@ namespace MainMode.Mode1921
 
         private Point[,] CreateMap(Vector2 unity, Vector2Int mapSize)
         {
+            mapSize = (mapSize / 2) * 2;
             var map = new Point[mapSize.y, mapSize.x];
             var y = mapSize.y / 2;
             var x = mapSize.x / 2;

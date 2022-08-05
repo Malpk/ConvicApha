@@ -4,46 +4,25 @@ using UnityEngine;
 
 namespace MainMode
 {
+
     public class FireGun : Gun
     {
         [Header("Reqired component")]
         [SerializeField] private Laser _fire;
         [SerializeField] private Animator _animator;
-        [SerializeField] private Animator _fireAnimator;
-        [SerializeField] private Transform _signalHolder;
-
-
-        private SignalTile[] _signals;
 
         public override TrapType DeviceType => TrapType.FireGun;
 
         protected override void Intilizate()
         {
-            _signals = _signalHolder.GetComponentsInChildren<SignalTile>();
+            base.Intilizate();
             _fire.SetAttack(attackInfo);
         }
 
-        private void OnEnable()
+        public override void Run(Collider2D collision)
         {
-            foreach (var signal in _signals)
-            {
-                signal.SingnalAction += Run;
-            }
+            gunAnimator.SetTrigger("Rotate");
         }
-
-        private void OnDisable()
-        {
-            foreach (var signal in _signals)
-            {
-                signal.SingnalAction -= Run;
-            }
-        }
-
-        private void Run(Collider2D collision)
-        {
-            _animator.SetTrigger("rotate");
-        }
-
 
     }
 }

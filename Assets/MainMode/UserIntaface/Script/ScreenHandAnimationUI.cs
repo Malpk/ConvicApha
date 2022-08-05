@@ -11,7 +11,6 @@ namespace MainMode.GameInteface
         [SerializeField] private EffectType _type;
         [SerializeField] private Image _screen;
 
-
         private int _orders;
         private Animator _animator;
 
@@ -23,18 +22,12 @@ namespace MainMode.GameInteface
             _animator = GetComponent<Animator>();
         }
 
-        public void Show(float timeDeactive = 0)
+        public void Show(float timeDeactive)
         {
             Invoke("Hide", timeDeactive);
-            if (_screen.enabled)
-            {
-                _orders++;
-                return;
-            }
-            _orders = 1;
-            SetMode(true);
+            Show();
         }
-        private void Hide()
+        public void Hide()
         {
             _orders--;
             if (_orders <= 0)
@@ -45,6 +38,17 @@ namespace MainMode.GameInteface
         {
             _screen.enabled = mode;
             _animator.SetBool("Show", mode);
+        }
+
+        public void Show()
+        {
+            if (_screen.enabled)
+            {
+                _orders++;
+                return;
+            }
+            _orders = 1;
+            SetMode(true);
         }
     }
 }

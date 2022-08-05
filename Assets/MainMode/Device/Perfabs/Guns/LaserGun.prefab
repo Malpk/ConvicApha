@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3328155945738703254}
   - component: {fileID: 3328155945738703253}
   - component: {fileID: 3328155945738703252}
+  - component: {fileID: 1070679393205276464}
   m_Layer: 0
   m_Name: Signal Tile (1)
   m_TagString: Untagged
@@ -46,12 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyMode: 1
+  destroyMode: 0
   timeDestroy: 1
-  attackInfo:
-    _device: 0
-    _effect: 0
-    _attack: 0
+  playOnStart: 1
+  _body: {fileID: 3328155947717484391}
 --- !u!61 &3328155945738703253
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -88,7 +87,7 @@ Animator:
   m_GameObject: {fileID: 3328155945738703250}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -97,6 +96,57 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!212 &1070679393205276464
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328155945738703250}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &3328155945962144151
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +241,7 @@ GameObject:
   - component: {fileID: 3328155946123297477}
   - component: {fileID: 3328155946123297476}
   - component: {fileID: 3328155946123297475}
+  - component: {fileID: 6415389268684417999}
   m_Layer: 0
   m_Name: Signal Tile (2)
   m_TagString: Untagged
@@ -225,12 +276,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyMode: 1
+  destroyMode: 0
   timeDestroy: 1
-  attackInfo:
-    _device: 0
-    _effect: 0
-    _attack: 0
+  playOnStart: 1
+  _body: {fileID: 3328155946629805118}
 --- !u!61 &3328155946123297476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -267,7 +316,7 @@ Animator:
   m_GameObject: {fileID: 3328155946123297473}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -276,6 +325,57 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!212 &6415389268684417999
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328155946123297473}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &3328155946218305134
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +511,7 @@ GameObject:
   - component: {fileID: 3328155946285360801}
   - component: {fileID: 3328155946285360800}
   - component: {fileID: 3328155946285360799}
+  - component: {fileID: 1650112908767110690}
   m_Layer: 10
   m_Name: Laser Sprite
   m_TagString: Untagged
@@ -505,6 +606,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &1650112908767110690
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328155946285360798}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1031d95fd8444e44e852d9b2e65af8de, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3328155946629805116
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,6 +719,7 @@ GameObject:
   - component: {fileID: 3328155946749840605}
   - component: {fileID: 3328155946749840604}
   - component: {fileID: 3328155946749840603}
+  - component: {fileID: 1954804381216189815}
   m_Layer: 0
   m_Name: Signal Tile
   m_TagString: Untagged
@@ -633,12 +754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyMode: 1
+  destroyMode: 0
   timeDestroy: 1
-  attackInfo:
-    _device: 0
-    _effect: 0
-    _attack: 0
+  playOnStart: 1
+  _body: {fileID: 3328155945962144153}
 --- !u!61 &3328155946749840604
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -675,7 +794,7 @@ Animator:
   m_GameObject: {fileID: 3328155946749840601}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -684,6 +803,57 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!212 &1954804381216189815
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328155946749840601}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &3328155946759113423
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,19 +951,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27188d43ca8914c43aaa3f5dcb42642e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyMode: 0
-  timeDestroy: 1
+  destroyMode: 1
+  timeDestroy: 10
+  playOnStart: 0
+  signalHolder: {fileID: 3328155946759113424}
   attackInfo:
-    _device: 7
+    _timeEffect: 0.5
     _effect: 5
     _attack: 1
+  gunAnimator: {fileID: 1650112908767110690}
+  _spriteRender: {fileID: 3328155946285360800}
   _durationWork: 6
   _timeReload: 3
   _shootDuration: 6
   _speedRotation: 2.5
   _laser: {fileID: 3328155946218305138}
   _rotateBody: {fileID: 3328155946285360799}
-  _signalHolder: {fileID: 3328155946759113424}
 --- !u!95 &3328155947362499434
 Animator:
   serializedVersion: 3
@@ -804,7 +977,7 @@ Animator:
   m_GameObject: {fileID: 3328155947362499432}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1031d95fd8444e44e852d9b2e65af8de, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
