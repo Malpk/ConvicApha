@@ -11,9 +11,7 @@ public class ItemScroller : MonoBehaviour
     [SerializeField] private List<ItemView> _items;
     [SerializeField] private RectTransform[] _transforms; 
     private RingListItems _ringList;
-
     public ItemView SelectedItem { get => _ringList.ItemSelected;}
-
     private void Awake()
     {   
         _leftBtn.onClick.AddListener(Previous);
@@ -22,14 +20,12 @@ public class ItemScroller : MonoBehaviour
     }
 
     public void Next()
-    {
-        Debug.Log("next");                     
+    {                 
         _ringList.RotateRight();
     }
 
     public void Previous()
-    {
-        Debug.Log("previ");      
+    {  
        _ringList.RotateLeft();    
     }
 

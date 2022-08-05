@@ -6,7 +6,7 @@ using MainMode.GameInteface;
 
 namespace MainMode.Mode1921
 {
-    public sealed class SceneLoader1921 : BaseLoder
+    public sealed class SceneLoader1921 : BaseLoader
     {
         [SerializeField] private Mode1921 _perfab;
 

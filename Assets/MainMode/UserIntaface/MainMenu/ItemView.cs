@@ -3,13 +3,14 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using System.Threading.Tasks;
+using MainMode.Items;
 
 public class ItemView : MonoBehaviour
-{    
-    private float _duration = 1f;
-    private Coroutine _coroutine;
-    private RectTransform _rectTransform;
+{
+    protected float _duration = 1f;
+    protected Coroutine _coroutine;
+    protected RectTransform _rectTransform;
+    public GameObject itemPrefab;
     private void Awake()
     {
         DOTween.RewindAll();
@@ -33,15 +34,14 @@ public class ItemView : MonoBehaviour
         _rectTransform.localPosition = transformPlace.localPosition;
     }
 
-
-    private IEnumerator Move(Vector3 endValue, Action OnComplete)
+    protected IEnumerator Move(Vector3 endValue, Action OnComplete)
     {
         transform.DOLocalMove(endValue, _duration);
         yield return new WaitForSeconds(_duration);
         _coroutine = null;
         OnComplete?.Invoke();
     }
-    private IEnumerator Move(Vector3 endValue)
+    protected IEnumerator Move(Vector3 endValue)
     {
         transform.DOLocalMove(endValue, _duration);
         yield return new WaitForSeconds(_duration);
