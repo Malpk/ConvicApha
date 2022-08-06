@@ -273,8 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd76b5104eba11a4786d292adfaef222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMovement: 20
-  speedRotaton: 10
+  state: {fileID: 11400000, guid: f3e5ed7c2c656ca4d9ae654a3f0874b6, type: 2}
   health:
     _healthPoints: 4
     _maxHealthPoint: 4
@@ -285,9 +284,9 @@ MonoBehaviour:
   controller: {fileID: 0}
   _defoutResistAttack: 
   _defoutResistEffect: 
-  _timeReload: 0.5
+  _timeActive: 0
   _forceJerk: 750
-  _debafSpeed: 0.53
+  _debaf: {fileID: 0}
 --- !u!114 &854305113421834015
 MonoBehaviour:
   m_ObjectHideFlags: 0

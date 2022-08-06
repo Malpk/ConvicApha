@@ -177,17 +177,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1953a3d267e66c4cb921e3d5a5db76a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMovement: 20
-  speedRotaton: 10
+  state: {fileID: 11400000, guid: f3e5ed7c2c656ca4d9ae654a3f0874b6, type: 2}
   health:
     _healthPoints: 5
     _maxHealthPoint: 5
     _display: {fileID: 0}
   isAutoRespawnMode: 1
   respawnTime: 1
-  _effects:
-    _timeActive: 0
-    _effectValue: 0
   _inventory: {fileID: 5901689966442968829}
   controller: {fileID: 0}
   _defoutResistAttack: 

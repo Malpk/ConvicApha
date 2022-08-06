@@ -12,10 +12,7 @@ using MainMode.Items;
 public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
 {
     [Header("Movement Setting")]
-    [Min(1)]
-    [SerializeField] protected float speedMovement = 1f;
-    [Min(1)]
-    [SerializeField] protected float speedRotation = 1f;
+    [SerializeField] protected PlayerState state;
     [SerializeField] protected PlayerHealth health;
     [Header("Respawn Setting")]
     [SerializeField] protected bool isAutoRespawnMode = true;

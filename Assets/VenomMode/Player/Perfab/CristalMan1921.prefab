@@ -505,8 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153d222863300834f8873c325a63870b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMovement: 20
-  speedRotaton: 10
+  state: {fileID: 11400000, guid: f3e5ed7c2c656ca4d9ae654a3f0874b6, type: 2}
   health:
     _healthPoints: 5
     _maxHealthPoint: 7
@@ -523,6 +522,8 @@ MonoBehaviour:
     _timeEffect: 0.5
     _effect: 0
     _attack: 0
+  _movementDebaf: 0.8
+  _rotationDebaf: 1
 --- !u!114 &1256335081690430297
 MonoBehaviour:
   m_ObjectHideFlags: 0

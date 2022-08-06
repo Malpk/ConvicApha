@@ -11,10 +11,18 @@ public class CristalMan : Player
     [SerializeField] private float _timeReload = 1;
     [SerializeField] private ReturnPoint _returnPoint;
     [SerializeField] private DamageInfo _returnDamage;
+    [Header("Character Setting")]
+    [Range(0, 1f)]
+    [SerializeField] private float _movementDebaf = 0.8f;
+    [Range(0, 1f)]
+    [SerializeField] private float _rotationDebaf = 1f;
 
     private bool _isReload = false;
 
     private List<AttackType> _dangersAttack = new List<AttackType>() { AttackType.Explosion, AttackType.Kinetic};
+
+    protected override float speedMovement => base.speedMovement * _movementDebaf;
+    protected override float speedRotation => base.speedRotation * _rotationDebaf;
 
     protected override void UseAbillity()
     {

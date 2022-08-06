@@ -8,6 +8,9 @@ namespace MainMode
     [RequireComponent(typeof(Collider2D))]
     public abstract class Gun : Device
     {
+        [Header("Help Setting")]
+        [SerializeField] private bool _showTrigerTile;
+        [Header("Reference")]
         [SerializeField] protected Transform signalHolder;
         [SerializeField] protected DamageInfo attackInfo;
         [SerializeField] protected Animator gunAnimator;
@@ -20,6 +23,13 @@ namespace MainMode
         {
             _collider = GetComponent<Collider2D>();
             signals = signalHolder.GetComponentsInChildren<SignalTile>();
+            if (_showTrigerTile)
+            {
+                foreach (var triger in signals)
+                {
+                    triger.IsShowTile = _showTrigerTile;
+                }
+            }
         }
 
         protected virtual void OnEnable()

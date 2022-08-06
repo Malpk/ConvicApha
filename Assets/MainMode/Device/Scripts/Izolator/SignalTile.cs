@@ -5,21 +5,24 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Collider2D))]
-    public class SignalTile : Device
+    public class SignalTile : MonoBehaviour
     {
+        [Header("General Setting")]
+        public bool IsShowTile = false;
+
         [SerializeField] private SpriteRenderer _body;
 
         private Collider2D _collider;
 
-        public override TrapType DeviceType => TrapType.SignalTile;
+        public TrapType DeviceType => TrapType.SignalTile;
 
         public delegate void Singnal(Collider2D collision);
         public event Singnal SingnalAction;
 
-        protected override void Intilizate()
+        private void Awake()
         {
+            _body.enabled = false;
             _collider = GetComponent<Collider2D>();
-            Deactivate();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -28,10 +31,9 @@ namespace MainMode
                 SingnalAction(collision);
         }
 
-        protected override void SetState(bool mode)
+        public void SetMode(bool mode)
         {
-            if(_body)
-                _body.enabled = mode;
+            _body.enabled =IsShowTile ? mode : false;
             _collider.enabled = mode;
         }
     }

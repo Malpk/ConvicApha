@@ -13,8 +13,12 @@ public class RobotMan : Player
     [Min(1)]
     [SerializeField] private float _distanceAttack = 1;
     [SerializeField] private LayerMask _deviceLayer;
-    [Header("Debafe Character")]
-    [Range(0,1)]
+    [Header("Character Setting")]
+    [Range(0, 1f)]
+    [SerializeField] private float _movementDebaf = 0.7f;
+    [Range(0, 1f)]
+    [SerializeField] private float _rotationDebaf = 0.7f;
+    [Range(0, 1)]
     [SerializeField] private float _bodyTemperature = 0;
     [Range(0, 1)]
     [SerializeField] private float _temperatureSteep = 0.15f;
@@ -23,6 +27,9 @@ public class RobotMan : Player
     [Header("Requred Perfab")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Animator _lightHit;
+
+    protected override float speedMovement => base.speedMovement * _movementDebaf;
+    protected override float speedRotation => base.speedRotation * _rotationDebaf;
 
     private CapsuleCollider2D _collider;
     

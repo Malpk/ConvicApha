@@ -33,6 +33,9 @@ public class Player : Character, IResist
 
     public override bool IsDead => isDead;
 
+    protected virtual float speedMovement => state.SpeedMovement;
+    protected virtual float speedRotation => state.SpeedRotation;
+
     protected override void Awake()
     {
         screenEffect = GetComponent<PlayerScreen>();
@@ -76,9 +79,10 @@ public class Player : Character, IResist
     {
         if (isDead)
             return;
-        movement.Move(direction * GetMovementEffect() * speedMovement);
+        var speedDebaf = GetMovementEffect();
+        movement.Move(direction * speedMovement);
         if (direction != Vector2.zero)
-            _baseMovement.Rotate(direction, speedRotation);
+            _baseMovement.Rotate(direction, speedRotation * speedDebaf);
     }
     #region Player Damage and Dead
     public override void Dead()
