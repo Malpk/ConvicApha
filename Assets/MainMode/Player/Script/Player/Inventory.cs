@@ -17,7 +17,7 @@ namespace MainMode
 
         public TypeDisplay TypeDisplay => TypeDisplay.ItemInventory;
 
-        private void Start()
+        private void Awake()
         {
             _player = GetComponent<Player>();
         }
@@ -38,7 +38,6 @@ namespace MainMode
         }
         public void AddConsumablesItem(ConsumablesItem item)
         {
-
             if (item != null)
             {
                 if (_consumablesItem.Count == 0)
@@ -46,7 +45,6 @@ namespace MainMode
                     _consumablesItem.Add(item);
 
                     item.Pick(_player);
-
                 }
                 else
                     if (_consumablesItem[0].GetType() == item.GetType())

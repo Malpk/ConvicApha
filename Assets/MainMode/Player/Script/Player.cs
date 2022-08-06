@@ -7,7 +7,7 @@ using UnityEngine;
 using PlayerComponent;
 using MainMode.Effects;
 
-[RequireComponent(typeof(PlayerScreen),typeof(Collider2D))]
+[RequireComponent(typeof(PlayerScreen), typeof(Collider2D))]
 public class Player : Character, IResist
 {
     [SerializeField] protected Inventory _inventory;
@@ -167,7 +167,7 @@ public class Player : Character, IResist
     }
     protected virtual void UseAbillity()
     {
-        
+
     }
     #endregion
     public void Heal(int point)
@@ -179,6 +179,20 @@ public class Player : Character, IResist
         stopEffect = 1f;
         stoneEffect = 1f;
         base.Respawn();
+    }
+
+    public void AddDefaultItems(ConsumablesItem consumablesItem, Artifact artifact)
+    {
+        if (consumablesItem != null && artifact != null)
+        {
+            _inventory.AddConsumablesItem(consumablesItem);
+            _inventory.AddArtifact(artifact);
+            Debug.Log($"default items was added!");
+        }
+        else
+        {
+            Debug.LogError($"default items have not been added!");
+        }
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
@@ -207,7 +221,7 @@ public class Player : Character, IResist
     {
         if (collision.TryGetComponent(out IItemInteractive interactive))
         {
-            _interacive = null; 
+            _interacive = null;
         }
         if (collision.TryGetComponent(out VenomCloud cloud))
         {

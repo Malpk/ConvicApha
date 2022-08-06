@@ -11,7 +11,6 @@ namespace MainMode.Items
         [SerializeField] protected SpriteRenderer _spriteBody;
 
         private Collider2D _collider;
-
         public bool Active { get; private set; }
 
         protected Player user;
@@ -19,8 +18,7 @@ namespace MainMode.Items
 
         protected virtual void Awake()
         {
-            _collider = GetComponent<Collider2D>();
- 
+            _collider = GetComponent<Collider2D>(); 
             _collider.isTrigger = true;
             SetMode(true);
         }
@@ -29,10 +27,7 @@ namespace MainMode.Items
             user = player;
             SetMode(false);
         }
-
         public abstract void Use();
-
-
         public void SetMode(bool mode)
         {
             _spriteBody.enabled = mode;
