@@ -15,6 +15,10 @@ namespace UserIntaface.MainMenu
         private List<Node<T>> _list = new List<Node<T>>();
         private int _count;
 
+        public RingList() 
+        {
+        
+        }
         public RingList(List<T> list)
         {
             foreach (var item in list)
@@ -32,6 +36,7 @@ namespace UserIntaface.MainMenu
                 _tail = node;
                 _tail.Next = _head;
                 _tail.Previous = _tail;
+                Selected = _head;
             }
             else
             {

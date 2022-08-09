@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UserIntaface.MainMenu;
-
+/// <summary>
+/// Как добавлять 
+/// </summary>
 public class ConfigCreator : MonoBehaviour
 {
     public MainLoader Loader;

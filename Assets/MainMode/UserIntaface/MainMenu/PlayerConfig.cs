@@ -17,9 +17,9 @@ namespace UserIntaface.MainMenu
         public PlayerType characterType;
         public PlayerConfig(ItemScroller consumableScroller,ItemScroller artifactScroller, CharacterScroller characterScroller) 
         {
-            itemConsumable = GameObject.Instantiate(consumableScroller.SelectedItem.itemPrefab);
-            itemArtifact = GameObject.Instantiate(artifactScroller.SelectedItem.itemPrefab);
-            characterType = characterScroller.SelectedPlayer.PlayerType;
+            itemConsumable = GameObject.Instantiate(consumableScroller.SelectedElement.itemPrefab);
+            itemArtifact = GameObject.Instantiate(artifactScroller.SelectedElement.itemPrefab);
+            characterType = characterScroller.SelectedElement.PlayerType;
         }     
     }
 }

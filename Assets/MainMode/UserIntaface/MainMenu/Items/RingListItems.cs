@@ -5,30 +5,19 @@ using System.Linq;
 using UnityEngine;
 using UserIntaface.MainMenu;
 
-public class RingListItems
+public class RingListItems:BaseRingList<ItemView>
 {
-    private RectTransform[] _pointPlaces;
-    private RingList<ItemView> _ringList;
-    public bool IsRotating = false;
-    private int _countMovingItems;
-    public ItemView ItemSelected { get => _ringList.Selected.Data; }
-    //points 5 при выборе предметов, 3 при выборе персонажей, items-сколько угодно в обоих случаях
-    public RingListItems(List<ItemView> itemList, RectTransform[] points)
+    public RingListItems(List<ItemView> elementList, List<RectTransform> movingPoints,Transform parentElements) : base(elementList, movingPoints,parentElements)
     {
-        if (itemList != null && points.Length > 0)
-        {
-            _pointPlaces = points;
-            _ringList = new RingList<ItemView>(itemList);
-            AlignItems();
-        }
+        AlignElements();        
     }
 
-    public void RotateRight()
+    public override void RotateRight()
     {
         if (IsRotating)
             return;
 
-        IsRotating = true;
+        IsRotating = true;       
 
         List<ItemView> rotateItems = new List<ItemView>()
         {
@@ -37,8 +26,8 @@ public class RingListItems
            _ringList.Selected.Next.Data,
            _ringList.Selected.Next.Next.Data
         };
-        _ringList.Selected.Next.Next.Data.JumpTo(_pointPlaces[_pointPlaces.Length - 1]);
-        _countMovingItems = rotateItems.Count;
+        _ringList.Selected.Next.Next.Data.JumpTo(_pointPlaces[_pointPlaces.Count - 1]);
+        _countMovingElements = rotateItems.Count;
 
         for (int i = 0; i < rotateItems.Count; i++)
         {
@@ -46,16 +35,7 @@ public class RingListItems
         }
         _ringList.RotateRight();
     }
-
-    private void CountMovingItemsCallback()
-    {
-        _countMovingItems--;
-
-        if (_countMovingItems == 0)
-            IsRotating = false;
-    }
-
-    public void RotateLeft()
+    public override void RotateLeft()
     {
         if (IsRotating)
             return;
@@ -70,7 +50,7 @@ public class RingListItems
            _ringList.Selected.Next.Data
         };
 
-        _countMovingItems = rotateItems.Count;
+        _countMovingElements = rotateItems.Count;
 
         _ringList.Selected.Previous.Previous.Data.JumpTo(_pointPlaces[0]);
 
@@ -81,7 +61,7 @@ public class RingListItems
         _ringList.RotateLeft();
     }
 
-    private void AlignItems()
+    protected override void AlignElements()
     {
         List<ItemView> startItems = new List<ItemView>()
         {
@@ -101,7 +81,7 @@ public class RingListItems
         {
             item.JumpTo(_pointPlaces[0]);
         }
-        _ringList.Selected.Next.Next.Data.JumpTo(_pointPlaces[_pointPlaces.Length - 1]);
+        _ringList.Selected.Next.Next.Data.JumpTo(_pointPlaces[_pointPlaces.Count - 1]);
 
     }
 }
