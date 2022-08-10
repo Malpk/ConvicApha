@@ -10,7 +10,7 @@ namespace UserIntaface.MainMenu
     {
         protected float _duration = 1f;
         protected Coroutine _coroutine;
-        [SerializeField]protected RectTransform _rectTransform;
+        protected RectTransform _rectTransform;
 
         protected void Awake()
         {            
@@ -44,7 +44,6 @@ namespace UserIntaface.MainMenu
         {
             transform.DOLocalMove(endValue, _duration);
             yield return new WaitForSeconds(_duration);
-
         }
 
     }
