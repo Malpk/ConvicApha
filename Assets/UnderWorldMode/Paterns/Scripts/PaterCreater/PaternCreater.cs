@@ -5,12 +5,10 @@ using System.Linq;
 
 namespace Underworld
 {
-    public class PaternCreater : MonoBehaviour
+    public class PaternCreater : TotalMapMode
     {
         [Header("Game setting")]
-        [SerializeField] protected float changeSpeed;
         [SerializeField] protected bool iversionMode;
-        [Header("Frame Setting")]
         [SerializeField] protected float errorColorDefaout;
         [SerializeField] protected Color _deffaout;
         [SerializeField] protected Vector2Int _unitySprite;
@@ -19,34 +17,45 @@ namespace Underworld
         protected int oneSecond = 1;
         protected Color deactiveColor;
         protected Point[,] _map;
+        protected Coroutine _runMode = null;
 
-        protected Coroutine startMode = null;
+        public bool IsAttackMode => _runMode != null;
 
-        public bool IsAttackMode => startMode != null;
-
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             deactiveColor = iversionMode ? Color.black : Color.white;
+        }
+        public override bool Activate()
+        {
+            if (_runMode == null && IsReady)
+            {
+                State = ModeState.Play;
+                _runMode = StartCoroutine(RunPatern());
+                return true;
+            }
+            return false;
         }
         private IEnumerator RunPatern()
         {
             var countOffset = GetCountOffset();
-            List<Point> previousFrame = null;
+            List<HandTermTile> previousFrame = null;
             for (int i = 0; i < countOffset.y; i++)
             {
-                for (int j = 0; j < countOffset.x; j++)
+                for (int j = 0; j < countOffset.x && State != ModeState.Stop; j++)
                 {
                     var curretPosition = new Vector2Int(i * _unitySprite.y, j * _unitySprite.y);
                     var curretFrame = ReadTexture(_spriteAtlas.texture, curretPosition).ToList();
                     DeactivePreviusTils(curretFrame, previousFrame);
                     previousFrame = curretFrame;
-                    yield return new WaitForSeconds(oneSecond / changeSpeed);
+                    yield return WaitTime((workDuration / countOffset.x) + oneSecond);
                 }
             }
-            startMode = null;
-            gameObject.SetActive(false);
+            State = ModeState.Stop;
+            _runMode = null;
         }
-        private IEnumerable<Point> ReadTexture(Texture2D texture, Vector2Int startPosition)
+        #region Pacing Sprite
+        private IEnumerable<HandTermTile> ReadTexture(Texture2D texture, Vector2Int startPosition)
         {
             for (int i = 0; i < _unitySprite.y; i++)
             {
@@ -55,42 +64,41 @@ namespace Underworld
                 {
                     var inkecJ = startPosition.x + j;
                     var color = texture.GetPixel(indexI, inkecJ);
-                    var point = DefineState(color, new Vector2Int(i, j));
-                    if (point != null)
+                    var term = DefineState(color, new Vector2Int(i, j));
+                    if (term != null)
                     {
-                        yield return point;
+                        yield return term;
                     }
                 }
             }
         }
-        private void DeactivePreviusTils(List<Point> curret, List<Point> previous)
+        private HandTermTile DefineState(Color color, Vector2Int termPosition)
+        {
+            if (color == deactiveColor)
+                return null;
+            if (!Equale(color, _deffaout, errorColorDefaout))
+            {
+                var term = termArray[termPosition.x, termPosition.y];
+                term.Activate(FireState.Start);
+                return term;
+            }
+            return null;
+        }
+        #endregion
+        private void DeactivePreviusTils(List<HandTermTile> curret, List<HandTermTile> previous)
         {
             if (previous == null)
                 return;
             var count = previous.Count();
             for (int i = 0; i < count; i++)
             {
-                var point = previous[i];
-                if (!curret.Contains(point))
+                if (!curret.Contains(previous[i]))
                 {
-                    point.SetAtiveObject(false);
-                    point.Animation.Deactivate();
+                    previous[i].Deactivate();
                 }
             }
         }
-        private Point DefineState(Color color,Vector2Int arrayPosition)
-        {
-            if (color == deactiveColor)
-                return null;
-            var point = _map[arrayPosition.x, arrayPosition.y];
-            if(!point.IsActive)
-                point.SetAtiveObject(true);
-            if (!Equale(color, _deffaout, errorColorDefaout))
-            {
-                point.Animation.Activate();
-            }
-            return point;
-        }
+
         private bool Equale(Color to, Color from, float errorFiltr = 0f)
         {
             var b = Mathf.Abs(to.b - from.b);

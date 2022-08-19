@@ -23,18 +23,6 @@ namespace MainMode.Mode1921
             UnSubcriteEvents();
         }
 
-        public override void Load(PlayerType choose)
-        {
-            base.Load(choose);
-            _mode = Instantiate(_perfab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Mode1921>();
-            _itemSpawner = _mode.GetComponent<ItemSpwaner>();
-            _endMenu = holder.GetComponentInChildren<EndMenu>();
-            var test = holder.GetComponentInChildren<ChangeTest>();
-            _itemSpawner.Run(player.transform);
-            if (test)
-                _mode.Intializate(test);
-            SubcriteEvents();
-        }
         public void ResetGame()
         {
             _mode.CreateMap();

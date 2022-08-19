@@ -11,14 +11,20 @@ public class PlayerHealth
     [SerializeField] private int _maxHealthPoint = 7;
     [SerializeField] private HealthUI _display;
 
-    public int MaxHealth => _maxHealthPoint;
+    private bool _isStart;
 
     public int Health => _healthPoints;
+    public int MaxHealth => _maxHealthPoint;
+    public bool IsLoadDisplay => _display;
+
 
     public void Start()
     {
-        if(_display)
+        if (_display && !_isStart)
+        {
+            _isStart = true;
             _display.SetupHelth(_healthPoints);
+        }
     }
     public bool SetReceiver(HealthUI display)
     {

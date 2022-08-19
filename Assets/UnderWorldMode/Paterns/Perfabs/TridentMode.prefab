@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7021650a37e87a849865e823de3cae84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playOnStart: 0
+  workDuration: 0
   _speedMovement: 40
   _moveDistance: 40
   _horizontalMode: 1
@@ -50,9 +52,16 @@ MonoBehaviour:
   _shootDelay: 0.05
   _groupShootDelay: 0.4
   _warningTime: 1
-  _workDuration: 10
   _countTridentInGroup: 1
   _radius: 8
   _unitSize: {x: 1.6, y: 1.6}
-  _marker: {fileID: 7905483864581599279, guid: 55cf426f2c2d4ca49b9608bf95ae0299, type: 3}
-  _trident: {fileID: 471845234174259781, guid: 14b89b9194e4f1944905d9071bd86414, type: 3}
+  _markerAsset:
+    m_AssetGUID: 55cf426f2c2d4ca49b9608bf95ae0299
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _tridentAsset:
+    m_AssetGUID: 14b89b9194e4f1944905d9071bd86414
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

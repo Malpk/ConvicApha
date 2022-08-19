@@ -11,30 +11,32 @@ namespace Underworld
         [SerializeField] private SpriteRenderer _body;
         [SerializeField] private Animator _animator;
 
-        public bool IsActive => _body.enabled;
+        public FireState CurretState { get; private set; }
 
         private void Awake()
         {
             if(!_playOnAwake)
-                Hide();
+                Deactive();
         }
 
         public bool Activate(FireState state)
         {
             if (state == FireState.End)
                 return false;
+            CurretState = state;
             _body.enabled = true;
             _animator.SetInteger("State", GetState(state));
             return true;
         }
-        public void Diactivate()
-        {
-            _animator.SetInteger("State", GetState(FireState.End));
-        }
-        private void Hide()
+        public void Deactive()
         {
             _body.enabled = false;
+            CurretState = FireState.End;
             _animator.SetInteger("State", 0);
+        }
+        public void DeactivateWaitAnimation()
+        {
+            _animator.SetInteger("State", GetState(FireState.End));
         }
         private int GetState(FireState state)
         {
@@ -44,10 +46,8 @@ namespace Underworld
                     return 1;
                 case FireState.Stay:
                     return 2;
-                case FireState.End:
-                    return 3;
                 default:
-                    return 0;
+                    return 3;
             }
         }
     }

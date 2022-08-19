@@ -4,15 +4,23 @@ using UnityEngine;
 
 namespace MainMode
 {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class Laser : MonoBehaviour,ISetAttack
     {
         [Min(1)]
         [SerializeField] private int _damage = 1;
-        [Min(10)]
-        [SerializeField] private float _timeEffect = 1;
         
         private DamageInfo _attackInfo;
-
+        private BoxCollider2D _collider;
+        private void Awake()
+        {
+            _collider = GetComponent<BoxCollider2D>();
+            SetMode(false);
+        }
+        public void SetMode(bool mode)
+        {
+            _collider.enabled = mode;
+        }
         public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;

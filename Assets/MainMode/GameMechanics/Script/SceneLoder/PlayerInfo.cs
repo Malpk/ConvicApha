@@ -1,18 +1,16 @@
 using UnityEngine;
-using PlayerComponent;
+using UnityEngine.AddressableAssets;
 
 namespace MainMode.LoadScene
 {
-    [System.Serializable]
-    public class PlayerInfo
+    [CreateAssetMenu(menuName = "PlayerComponent/ PlayerInfo")]
+    public class PlayerInfo : ScriptableObject
     {
-#if UNITY_EDITOR
-        [SerializeField] private string nameCell;
-#endif
         [SerializeField] private PlayerType _type;
-        [SerializeField] private Player _playerPerfab;
+        [AssetReferenceUILabelRestriction("player")]
+        [SerializeField] private AssetReferenceGameObject _playerPerfab;
 
         public PlayerType Type => _type;
-        public GameObject PlayerPerfab => _playerPerfab.gameObject;
+        public AssetReferenceGameObject PlayerPerfab => _playerPerfab;
     }
 }

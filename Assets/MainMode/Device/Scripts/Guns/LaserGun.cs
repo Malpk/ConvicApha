@@ -8,8 +8,6 @@ namespace MainMode
     {
         [Header("Time setting")]
         [Min(1)]
-        [SerializeField] private float _durationWork = 1f;
-        [Min(1)]
         [SerializeField] private float _timeReload = 1f;
         [Min(1)]
         [SerializeField] private float _shootDuration = 1f;
@@ -29,29 +27,38 @@ namespace MainMode
             base.Intilizate();
             _laser.SetAttack(attackInfo);
         }
-
-        public override void Run(Collider2D collision)
+        private void Start()
+        {
+            if (playOnStart)
+            {
+                Run();
+            }
+        }
+        public override void Run(Collider2D target = null)
         {
             if (_coroutine == null)
             {
+                isActiveDevice = true;
                 _coroutine = StartCoroutine(Rotate());
                 StartCoroutine(ShootLaser());
             }
         }
-
         private IEnumerator Rotate()
         {
+            yield return new WaitWhile(() => !IsShow);
             var direction = new int[] { -1, 1 };
             int index = Random.Range(0, direction.Length);
             float progress = 0f;
             while (progress < 1f && IsShow)
             {
                 _rotateBody.MoveRotation(_rotateBody.rotation + _speedRotation * direction[index]);
-                progress += Time.deltaTime / _durationWork;
-                yield return new WaitForFixedUpdate();
+                progress += Time.deltaTime / durationWork;
+                yield return null;
             }
             _coroutine = null;
             yield return StartCoroutine(ReturnState());
+            isActiveDevice = false;
+            SetMode(false);
         }
         private IEnumerator ReturnState()
         {
@@ -64,8 +71,8 @@ namespace MainMode
 
         private IEnumerator ShootLaser()
         {
+            yield return new WaitWhile(() => !IsShow);
             float progress = 0f;
-
             while (progress < 1f && _coroutine != null)
             {
                 float localProgress = 0f;
@@ -82,7 +89,7 @@ namespace MainMode
                     return localProgress < 1f && _coroutine != null;
                 });
                 gunAnimator.SetBool("mode", false);
-                progress += (_timeReload + _shootDuration) / _durationWork;
+                progress += (_timeReload + _shootDuration) / durationWork;
                 yield return null;
             }
         }

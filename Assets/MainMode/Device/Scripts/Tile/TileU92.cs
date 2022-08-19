@@ -11,7 +11,7 @@ namespace MainMode
         protected override void Intilizate()
         {
             base.Intilizate();
-            Deactivate();
+            OffItem();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

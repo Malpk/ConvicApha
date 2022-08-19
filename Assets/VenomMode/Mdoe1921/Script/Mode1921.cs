@@ -107,7 +107,7 @@ namespace MainMode.Mode1921
             {
                 var item = pool[0];
                 pool.Remove(pool[0]);
-                item.Deactivate();
+                item.OffItem();
             }
         }
         private Shield BindShield(Shield shield)

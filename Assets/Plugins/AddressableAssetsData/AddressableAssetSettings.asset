@@ -38,6 +38,10 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 3ca62eed06bd2f447a10940a93180a56, type: 2}
   - {fileID: 11400000, guid: b06bf887960c46040b2c1843e985758f, type: 2}
+  - {fileID: 11400000, guid: c8811893c1171154ba6103c83efd4564, type: 2}
+  - {fileID: 11400000, guid: e6d261c9192e8ef46949b4a725862f54, type: 2}
+  - {fileID: 11400000, guid: b9ac9a08354a8a942b432335d50e632a, type: 2}
+  - {fileID: 11400000, guid: c8afc1f48bab03248badfb348d7afe64, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -48,6 +52,20 @@ MonoBehaviour:
     - m_InheritedParent: 
       m_Id: 4d7fb1ea8113b6e418b5bbefe86cbd4c
       m_ProfileName: Default
+      m_Values:
+      - m_Id: 53975085604fe3b4babae9e07ef043e6
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: 056789b23a26e9c46883f2741b0a75b8
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: cf12eb21eea0a9341989b5a491130f52
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 96ab0e9ce2c53ae4a9d1ad20d9838a53
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: 24df1123da7e83f45997950b10379e6d
+        m_Value: http://localhost/[BuildTarget]
+    - m_InheritedParent: 
+      m_Id: cc39a038dbbdd914f81c5a1cbde4c80d
+      m_ProfileName: New Profile
       m_Values:
       - m_Id: 53975085604fe3b4babae9e07ef043e6
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
@@ -78,7 +96,16 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
+    - reciversUI
+    - controller
+    - player
     - default
+    - mainMode
+    - device
+    - userInterface
+    - gamePlay
+    - term
+    - underworld
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 401de707350c5d146baf14f87390391c, type: 2}

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
 
 namespace Underworld
 {
-    public class IslandModeD : MonoBehaviour
+    public class IslandModeD : GeneralMode
     {
         [Header("Mode Setting")]
         [Min(0)]
@@ -18,116 +20,124 @@ namespace Underworld
         [SerializeField] private int _minSizeIsland;
         [SerializeField] private int _maxSizeIsland;
         [Header("Map Setting")]
-        [SerializeField] private bool _playToAwake;
         [SerializeField] private MapBuilder _mapBuilder;
+        [AssetReferenceUILabelRestriction("term")]
+        [SerializeField] private AssetReferenceGameObject _handTermAsset;
 
         private int _mapSize;
+        private bool _isReady = false;
         private Point[,] _map;
         private Coroutine _runMode = null;
+        private HandTermTile _handTermPerfab;
+        private List<HandTermTile> _activeTils = new List<HandTermTile>();
         private Vector2Int[] _bounds;
-        
+
         private readonly Vector2Int[] offset = new Vector2Int[]
         {
-            Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down 
+            Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down
         };
 
-        public bool IsAttackMode => _runMode != null;
+        public override bool IsReady => _isReady;
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (_playToAwake)
+            base.Awake();
+        }
+        private void Start()
+        {
+            if (_mapBuilder)
+                Intializate(_mapBuilder, null);
+            if (playOnStart)
+                Activate();
+        }
+        #region Intializate
+        public override void Intializate(MapBuilder builder, Player player)
+        {
+            _mapBuilder = builder;
+            _map = _mapBuilder.Points;
+            _mapSize = _map.GetLength(0);
+            _bounds = SetBounds(_mapSize);
+        }
+        protected async override Task<bool> LoadAsync()
+        {
+            if (_handTermAsset == null)
+                throw new System.NullReferenceException();
+            var task = _handTermAsset.LoadAssetAsync().Task;
+            await task;
+            if (task.Result.TryGetComponent(out HandTermTile term))
             {
-                _mapBuilder.Intializate(transform);
-                _map = _mapBuilder.Map;
-                _mapSize = _map.GetLength(0);
-                _bounds = SetBounds(_mapSize);
-                StartMode();
+                _isReady = true;
+                _handTermPerfab = term;
+                return true;
+            }
+            else
+            {
+                throw new System.NullReferenceException("Gameobject is not component HandTermTile");
             }
         }
-        public bool StartMode()
+
+        protected override void Unload()
+        {
+            _handTermAsset.ReleaseAsset();
+            _isReady = false;
+        }
+        #endregion
+        public override bool Activate()
         {
             if (_runMode == null)
             {
-                _runMode = StartCoroutine(
-                    RunMode(
-                        GetSeed(
-                            GetStartPoint(_mapSize), _bounds)));
+                State = ModeState.Play;
+                _runMode = StartCoroutine(RunMode());
                 return true;
             }
             return false;
         }
-        private IEnumerator RunMode(List<Vector2Int> seeds)
+
+        #region Work Mode
+        private IEnumerator RunMode()
         {
-            CheakValue();
-            var islands = new List<Vector2Int>();
-            foreach (var seed in seeds)
-            {
-                islands.AddRange(CreateIsland(seed,_mapSize));
-            }
-            var mapActive = GetMapActive(_map, islands).ToList();
-            foreach (var point in mapActive)
-            {
-                point.SetAtiveObject(true);
-            }
-            yield return new WaitForSeconds(_warningTime);
-            foreach (var point in mapActive)
-            {
-                point.Animation.Activate();
-            }
-            yield return new WaitForSeconds(_workTime);
-            foreach (var point in mapActive)
-            {
-                point.Animation.Deactivate();
-            }
-            yield return new WaitWhile(() => mapActive[mapActive.Count - 1].IsActive);
+            yield return new WaitWhile(() => !IsReady);
+            _activeTils = CreateMap();
+            yield return WaitTime(_warningTime);
+            MapActivate();
+            yield return WaitTime(_workTime);
+            Debug.Log("DeaActivate");
+            var deactivateMap = MapDeactivate(_activeTils);
+            yield return new WaitWhile(() => deactivateMap.IsCompleted);
+            yield return new WaitWhile(() => deactivateMap.Result.IsActive);
+            State = ModeState.Stop;
             _runMode = null;
-            gameObject.SetActive(false);
+            yield return null;
         }
-        private IEnumerable<Point> GetMapActive(Point[,] map,IReadOnlyList<Vector2Int> islands)
+
+        private void MapActivate()
         {
-            for (int i = 0; i < map.GetLength(0); i++)
+            int index = 0;
+            int steep = (int)Mathf.Sqrt(_activeTils.Count);
+            while (_activeTils.Count > index)
             {
-                for (int j = 0; j < map.GetLength(1); j++)
+                var progress = 0;
+                while (_activeTils.Count > index && progress < steep)
                 {
-                    if (!islands.Contains<Vector2Int>(new Vector2Int(i, j)))
-                        yield return map[i, j];
+                    _activeTils[index].Activate(FireState.Start);
+                    index++;
                 }
             }
         }
-        private void CheakValue()
+        private async Task<HandTermTile> MapDeactivate(List<HandTermTile> activateMap)
         {
-            if (_minSizeIsland <= 0)
-                throw new System.Exception("MinSize is can't be <= 0");
-            if (_maxSizeIsland <= 0)
-                throw new System.Exception("MaxSize is can't be <= 0");
-        }
-        private Vector2Int[] CreateIsland(Vector2Int seed,int mapSize)
-        {
-            List<Vector2Int> island = new List<Vector2Int>();
-            List<Vector2Int> extensionPoint = new List<Vector2Int>();
-            extensionPoint.Add(seed);
-            int count = Random.Range(_minSizeIsland, _maxSizeIsland);
-            while (island.Count < count && extensionPoint.Count > 0)
+            await Task.Run(() =>
             {
-                var vertex = extensionPoint[Random.Range(0, extensionPoint.Count)];
-                for (int i = 0; i < offset.Length; i++)
+                foreach (var point in activateMap)
                 {
-                    var newVertex = vertex - offset[i];
-                    if (!island.Contains(newVertex) && !extensionPoint.Contains(newVertex))
-                    {
-                        if (newVertex.x >= 0 && newVertex.x < mapSize
-                            && newVertex.y >= 0 && newVertex.y < mapSize)
-                        {
-                            extensionPoint.Add(newVertex);
-                        }
-                    }
+                    point.Deactivate();
                 }
-                extensionPoint.Remove(vertex);
-                island.Add(vertex);
-            }
-            return island.ToArray();
+            });
+            return activateMap[activateMap.Count - 1];
         }
-        private List<Vector2Int> GetSeed(Vector2Int startPoint,Vector2Int[] bounds)
+        #endregion
+        #region Get Seeds
+        private List<Vector2Int> GetSeed(Vector2Int startPoint, Vector2Int[] bounds)
         {
             List<Vector2Int> seeds = new List<Vector2Int>();
             List<Vector2Int> expansionPoints = new List<Vector2Int>();
@@ -192,6 +202,69 @@ namespace Underworld
             var y = Random.Range(0, mapSize);
             return new Vector2Int(x, y);
         }
+        #endregion
+        #region Create Map
+        private List<HandTermTile> CreateMap()
+        {
+            var result = new List<HandTermTile>();
+            var seeds = GetSeed(GetStartPoint(_mapSize), _bounds);
+            var islands = new List<Vector2Int>();
+            foreach (var seed in seeds)
+            {
+                islands.AddRange(CreateIsland(seed, _mapSize));
+            }
+            var mapActive = GetMapActive(_map, islands).ToList();
+            for (int i = 0; i < mapActive.Count; i++)
+            {
+                var term = Instantiate(_handTermPerfab, transform);
+                mapActive[i].SetItem(term);
+                result.Add(term);
+            }
+            return result;
+        }
+        private IEnumerable<Point> GetMapActive(Point[,] map, IReadOnlyList<Vector2Int> islands)
+        {
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    if (!islands.Contains<Vector2Int>(new Vector2Int(i, j)))
+                        yield return map[i, j];
+                }
+            }
+        }
+        private Vector2Int[] CreateIsland(Vector2Int seed, int mapSize)
+        {
+            List<Vector2Int> island = new List<Vector2Int>();
+            List<Vector2Int> extensionPoint = new List<Vector2Int>();
+            extensionPoint.Add(seed);
+            int count = Random.Range(_minSizeIsland, _maxSizeIsland);
+            while (island.Count < count && extensionPoint.Count > 0)
+            {
+                var vertex = extensionPoint[Random.Range(0, extensionPoint.Count)];
+                for (int i = 0; i < offset.Length; i++)
+                {
+                    var newVertex = vertex - offset[i];
+                    if (!island.Contains(newVertex) && !extensionPoint.Contains(newVertex))
+                    {
+                        if (newVertex.x >= 0 && newVertex.x < mapSize
+                            && newVertex.y >= 0 && newVertex.y < mapSize)
+                        {
+                            extensionPoint.Add(newVertex);
+                        }
+                    }
+                }
+                extensionPoint.Remove(vertex);
+                island.Add(vertex);
+            }
+            return island.ToArray();
+        }
+
+
+
+
+
+
         private Vector2Int[] SetBounds(int mapSize)
         {
             if (mapSize <= 0)
@@ -205,5 +278,24 @@ namespace Underworld
             }
             return bounds;
         }
+        #endregion
+        #region Pause
+        public override void Pause()
+        {
+            base.Pause();
+            foreach (var term in _activeTils)
+            {
+                term.Pause();
+            }
+        }
+        public override void UnPause()
+        {
+            base.UnPause();
+            foreach (var term in _activeTils)
+            {
+                term.UnPause();
+            }
+        }
+        #endregion
     }
 }

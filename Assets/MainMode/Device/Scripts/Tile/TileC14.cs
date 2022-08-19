@@ -14,13 +14,13 @@ namespace MainMode
         protected override void Intilizate()
         {
             base.Intilizate();
-            Deactivate();
+            OffItem();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             SetScreen(collision, attackInfo);
-            if (collision.TryGetComponent(out IAddEffects target))
+            if (collision.TryGetComponent(out IAddEffects target) && IsShow)
             {
                 target.AddEffects(_effect, attackInfo.TimeEffect);
             }

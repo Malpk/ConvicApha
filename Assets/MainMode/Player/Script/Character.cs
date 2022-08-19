@@ -42,22 +42,25 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
 
     protected virtual void Awake()
     {
-        _startPosition = transform.position;
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
-        _component = GetComponents<IPlayerComponent>();
+        _startPosition = transform.position;
         _baseMovement.Intializate(this, rigidBody);
+        _component = GetComponents<IPlayerComponent>();
         movement = _baseMovement;
     }
     protected virtual void Start()
     {
-        health.Start();
+        if(health.IsLoadDisplay)
+            health.Start();
     }
     public bool AddReceiver(Receiver receiver)
     {
         if (receiver is HealthUI display)
         {
-            return health.SetReceiver(display);
+            health.SetReceiver(display);
+            health.Start();
+            return true;
         }
         return false;
     }

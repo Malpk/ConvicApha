@@ -11,15 +11,15 @@ namespace MainMode
         [SerializeField] private string _name;
         [Min(0)]
         [SerializeField] private int _maxLimit;
-        [SerializeField] private Item _item;
+        [SerializeField] private SpawnItem _item;
 
         private int coutnDeactive = 0;
-        private List<Item> _pool = new List<Item>();
+        private List<SpawnItem> _pool = new List<SpawnItem>();
 
         public int Count => GetCount();
         public bool IsAccess => Count < _maxLimit || _pool.Count <=_maxLimit;
 
-        public Item Instantiate(Transform transform)
+        public SpawnItem Instantiate(Transform transform)
         {
             GetCount();
             if (coutnDeactive > 0)
@@ -32,7 +32,7 @@ namespace MainMode
             }
             else if (_pool.Count <= _maxLimit)
             {
-                var item = MonoBehaviour.Instantiate(_item.gameObject,transform).GetComponent<Item>();
+                var item = MonoBehaviour.Instantiate(_item.gameObject,transform).GetComponent<SpawnItem>();
                 _pool.Add(item);
                 return item;
             }
@@ -46,17 +46,17 @@ namespace MainMode
             int count = 0;
             foreach (var item in _pool)
             {
-                if (item.Active)
+                if (item.IsShow)
                     count++;
             }
             coutnDeactive = _pool.Count - count;
             return count;
         }
-        private Item GetDeactiveItem()
+        private SpawnItem GetDeactiveItem()
         {
             foreach (var item in _pool)
             {
-                if (!item.Active)
+                if (!item.IsShow)
                     return item;
             }
             return null;

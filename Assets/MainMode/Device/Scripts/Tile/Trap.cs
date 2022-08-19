@@ -19,7 +19,7 @@ namespace MainMode
         }
         private void Start()
         {
-            Run();
+            Show();
         }
         protected override void SetState(bool mode)
         {

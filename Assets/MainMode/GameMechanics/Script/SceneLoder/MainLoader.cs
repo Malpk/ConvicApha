@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MainMode.LoadScene;
 using UserIntaface.MainMenu;
+using System.Threading.Tasks;
 
 namespace MainMode
 {
@@ -10,16 +11,10 @@ namespace MainMode
     {
         [SerializeField] private MapSpawner _spawner;
 
-        public override void Load(PlayerType choose)
+        public async override Task LoadAsync(PlayerConfig config)
         {
-            base.Load(choose);
-            _spawner.Intializate(player);
-            _spawner.Run();
-        }
-        public override void Load(PlayerConfig config)
-        {
-            base.Load(config);
-            _spawner.Intializate(player);
+            await base.LoadAsync(config);
+            await _spawner.Intializate(player);
             _spawner.Run();
         }
     }

@@ -1,25 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerComponent;
+using UnityEngine.AddressableAssets;
+using System.Threading.Tasks;
 
 namespace MainMode.LoadScene
 {
     public class PlayerLoader : MonoBehaviour
     {
         [SerializeField] private PlayerInfo[] _playerPerfabs;
-        [SerializeField] private CameraFollowing _cameraPerfab;
         [SerializeField] private CameraFollowing _cameraFollowing;
+        [AssetReferenceUILabelRestriction("default")]
+        [SerializeField] private AssetReferenceGameObject _cameraPerfab;
 
-        public Player PlayerLaod(Vector2 spawnPosition, PlayerType playerType = PlayerType.None)
+        public async Task<Player> PlayerLaodAsync(Transform spawnPosition, PlayerType playerType = PlayerType.None)
         {
-            if (GetPerafab(playerType, out GameObject prefab))
+            if (GetPerafab(playerType, out AssetReferenceGameObject prefab))
             {
-                var player = MonoBehaviour.Instantiate(prefab, spawnPosition, Quaternion.identity).GetComponent<Player>();
-               if(_cameraFollowing == null)
-                    _cameraFollowing = MonoBehaviour.Instantiate(_cameraPerfab.gameObject,
-                        new Vector3(spawnPosition.x,spawnPosition.y, _cameraPerfab.transform.position.z), 
-                            Quaternion.identity).GetComponent<CameraFollowing>();
+                var position = spawnPosition ? spawnPosition.position : Vector3.zero;
+                var loadPlayer = prefab.InstantiateAsync(position, Quaternion.identity).Task;
+                await loadPlayer;
+                var player = loadPlayer.Result.GetComponent<Player>();
+                try
+                {
+                    if (_cameraFollowing == null)
+                    {
+                        var loadCamera = LoadCamera(_cameraPerfab);
+                        await loadCamera;
+                        _cameraFollowing = loadCamera.Result;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    throw ex;
+                }
+                _cameraFollowing.transform.position = new Vector3(position.x, 
+                    position.y, _cameraFollowing.transform.position.z);
                 _cameraFollowing.SetTarget(player);
                 return player;
             }
@@ -28,8 +44,24 @@ namespace MainMode.LoadScene
                 return null;
             }
         }
-     
-        private bool GetPerafab(PlayerType type,out GameObject perfab)
+        private async Task<CameraFollowing> LoadCamera(AssetReferenceGameObject perfab)
+        {
+            var load = perfab.InstantiateAsync().Task;
+            await load;
+            var cameraFollowing = load.Result;
+            try
+            {
+                if (!cameraFollowing.TryGetComponent(out CameraFollowing camera))
+                    throw new System.Exception("GameObject is not component CameraFollowing");
+                return camera;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+            
+        private bool GetPerafab(PlayerType type,out AssetReferenceGameObject perfab)
         {
             foreach (var player in _playerPerfabs)
             {

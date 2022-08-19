@@ -5,10 +5,8 @@ using UnityEngine;
 namespace Underworld
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class BoxMode : GameMode
+    public class BoxMode : TotalMapMode
     {
-        [Header("General Setting")]
-        [SerializeField] private bool _playOnStart;
         [Header("Movement Setting")] [Min(1)]
         [SerializeField] private int _countMove;
         [Min(0)]
@@ -19,7 +17,7 @@ namespace Underworld
         [SerializeField] private float _delay;
         [Header("Scale Setting")]
         [SerializeField] private Vector2 _minSize;
-        [SerializeField] private Vector3 _maxOffset;
+        [SerializeField] private Vector2 _maxOffset;
 
         private Vector3[] _moveDirection = new Vector3[]
         {
@@ -28,32 +26,39 @@ namespace Underworld
             new Vector3(1,-1), new Vector3(-1,1)
         };
 
-        private Point[,] _map;
         private Coroutine _corotine;
         private BoxCollider2D _collider;
         private Vector2 _defoutSize;
 
-        public bool IsAttackMode => startMode != null;
-
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _collider = GetComponent<BoxCollider2D>();
+            _collider.enabled = false;
             _defoutSize = _collider.size;
+            _maxOffset -= Vector2.one * _minSize / 2;
         }
 
-        private void Start()
+        protected override void Start()
         {
-            if (_playOnStart)
-                Run();
+            base.Start();
+            if (playOnStart)
+                Activate();
         }
-        public void Run()
+        public override bool Activate()
         {
             if (_corotine == null)
+            {
+                _collider.enabled = true;
+                State = ModeState.Play;
                 _corotine = StartCoroutine(Scale(transform.position, _defoutSize));
+                return true;
+            }
+            return false;
         }
         private IEnumerator Scale(Vector3 previsiousPosition, Vector2 previsiousSize)
         {
-
+            yield return new WaitWhile(() => !IsReady);
             float progress = 0f;
             var target = GetOffset(_maxOffset);
             while (progress < 1f)
@@ -64,8 +69,6 @@ namespace Underworld
                 yield return null;
             }
             yield return StartCoroutine(MoveSqurt());
-            startMode = null;
-            gameObject.SetActive(false);
         }
         private IEnumerator MoveSqurt()
         {
@@ -73,22 +76,31 @@ namespace Underworld
             Vector3 direction = Vector3.zero;
             for (int i = 0; i < _countMove; i++)
             {
+                if (State == ModeState.Pause)
+                {
+                    yield return new WaitWhile(() => State == ModeState.Pause);
+                    yield return new WaitForSeconds(0.1f);
+                }
                 direction = ChooseDirection(direction);
-                var target = direction.x * _maxOffset.x * Vector3.right + Vector3.up * direction.y * _maxOffset.y;
+                var target = Vector3.right * direction.x * _maxOffset.x +
+                    Vector3.up * direction.y * _maxOffset.y;
                 var duration = CalculateDuration(target, _speedMovement);
                 yield return StartCoroutine(Move(target, duration));
             }
-            yield return new WaitWhile(() => TurnOffPoints(_map).IsActive);
+            _collider.enabled = false;
+            DeactivateMap(out HandTermTile term);
+            yield return new WaitWhile(() => term.IsActive);
         }
         private IEnumerator Move(Vector3 target, float duration)
         {
             float progress = 0f;
             var startPosition = transform.position;
-            while (progress < 1f)
+            while (progress < 1f && State != ModeState.Stop)
             {
                 transform.position = Vector2.Lerp(startPosition, target, progress);
                 progress += Time.deltaTime / duration;
                 yield return null;
+                yield return new WaitWhile(() => State == ModeState.Pause);
             }
             yield return new WaitForSeconds(0.1f);
         }
@@ -125,18 +137,17 @@ namespace Underworld
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out PoolTerm poolTerm))
+            if (collision.TryGetComponent(out HandTermTile term))
             {
-                poolTerm.SetMode(false);
+                term.Deactivate(false);
             }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out PoolTerm poolTerm))
+            if (collision.TryGetComponent(out HandTermTile term) && _collider.enabled)
             {
-                poolTerm.SetMode(true);
-                poolTerm.Activate(FireState.Stay);
+                term.Activate(FireState.Stay);
             }
         }
     }

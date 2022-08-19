@@ -35,7 +35,7 @@ namespace MainMode.Mode1921
             _triger.enabled = mode;
         }
 
-        public override void Deactivate()
+        public override void OffItem()
         {
             Destroy(gameObject);
         }

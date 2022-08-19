@@ -43,7 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8952457558635dd4aa0d6a6d3e42c484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playOnStart: 0
+  workDuration: 10
+  _warningTime: 1.5
   _minTimeOffset: 0.75
   _maxTimeOffset: 1.25
-  _warningTime: 1.5
-  _poolTern: {fileID: 1333059954608903435, guid: eb1e0c99abc0c284e8e8776b5b69a482, type: 3}
+  _builder: {fileID: 0}
+  _handTernAsset:
+    m_AssetGUID: 513635374147d0b4f90e0345108879ea
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

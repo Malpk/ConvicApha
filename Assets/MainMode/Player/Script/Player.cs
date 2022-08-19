@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerComponent;
-using MainMode.Effects;
+
 
 [RequireComponent(typeof(PlayerScreen), typeof(Collider2D))]
 public class Player : Character, IResist
@@ -187,12 +187,16 @@ public class Player : Character, IResist
         {
             _inventory.AddConsumablesItem(consumablesItem);
             _inventory.AddArtifact(artifact);
+#if UNITY_EDITOR 
             Debug.Log($"default items was added!");
+#endif
         }
+#if UNITY_EDITOR
         else
         {
             Debug.LogError($"default items have not been added!");
         }
+#endif
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)

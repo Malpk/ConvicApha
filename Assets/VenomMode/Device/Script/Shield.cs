@@ -145,7 +145,7 @@ namespace MainMode.Mode1921
             _canvas.enabled = false;
         }
 
-        public override void Deactivate()
+        public override void OffItem()
         {
             Destroy(gameObject);
         }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TileSpace;
 
 namespace Underworld
 {
@@ -13,96 +12,65 @@ namespace Underworld
         [Min(1)]
         [SerializeField] protected int mapSize = 1;
         [SerializeField] protected Vector2 unitSize;
-        [SerializeField] protected PoolTerm defoutTile;
 
-        private Point[,] _pointsMap;
-        
-        public Vector2 UnitSize => unitSize;
-        public Point[,] Map => _pointsMap;
+        public Vector2 MapSize => unitSize * mapSize;
+        public Point[,] Points { get; private set; } = null;
+        public List<Point> PointsList { get; private set; } = new List<Point>();
 
         private void Awake()
         {
+            FormattingData();
             if (playOnAwake)
                 Intializate(transform);
         }
 
         public bool Intializate(Transform parent = null)
         {
-            if (_pointsMap != null)
+            if (Points != null)
                 return false;
-            CheakValue();
-            parent = GetHolder("PointHolder", parent);
-            var radius = mapSize / 2 - 1;
-            var startPosition = new Vector2(-unitSize.x / 2 - unitSize.x * radius,
-                unitSize.y / 2 + unitSize.y * radius);
-            _pointsMap = new Point[mapSize, mapSize];
-            for (int i = 0; i < mapSize; i++)
+            FormattingData();
+            Points = CreateMap();
+            foreach (var point in Points)
             {
-                for (int j = 0; j < mapSize; j++)
-                {
-                    _pointsMap[i, j] = new Point(startPosition + new Vector2(unitSize.x* j,-unitSize.y * i));
-                    if (defoutTile != null)
-                    {
-                        _pointsMap[i, j].CreateObject(defoutTile.gameObject).transform.parent = parent;
-                        _pointsMap[i, j].SetAtiveObject(false);
-                    }
-                }
+                PointsList.Add(point);
             }
             return true;
         }
-        private void CheakValue()
-        {
-            if (mapSize <= 0)
-                throw new System.Exception("Map Size is can't be <= 0");
-            if(unitSize == Vector2.zero || unitSize.x < 0 || unitSize.y < 0)
-                throw new System.Exception("UnitSize Size is can't be <= 0");
-        }
-        private Transform GetHolder(string name, Transform parent)
+        public Transform GetHolder(string name)
         {
             var holder = new GameObject("PointHolder").transform;
-            holder.parent = parent;
+            holder.parent = transform.parent;
             holder.localPosition = Vector2.zero;
             return holder;
         }
-        public void MapUpdate(TermMode[,] paternMap)
+        public void Clear()
         {
-            for (int i = 0; i < paternMap.GetLength(0); i++)
+            foreach (var points in Points)
             {
-                for (int j = 0; j < paternMap.GetLength(1); j++)
+                points.RemoveObject();
+            }
+        }
+        private Point[,] CreateMap()
+        {
+            var points = new Point[mapSize, mapSize];
+            var sideSize = mapSize % 2 == 0 ? mapSize  : mapSize - 1;
+            var start = new Vector2(unitSize.x / 2 - unitSize.x * sideSize/2 ,
+                -unitSize.y / 2 + unitSize.y * sideSize / 2);
+            for (int i = 0; i < sideSize; i++)
+            {
+                for (int j = 0; j < sideSize; j++)
                 {
-                    if (paternMap[i, j] != TermMode.Deactive)
-                    {
-                        ChooseMode(_pointsMap[i, j], paternMap[i, j]);
-                    }
-                    else
-                    {
-                        _pointsMap[i, j].SetAtiveObject(false);
-                    }
+                    points[i, j] = new Point(start + new Vector2(unitSize.x * j, -unitSize.y * i));
                 }
             }
+            return points;
         }
-        private void ChooseMode(Point point,TermMode mode)
+        private void FormattingData()
         {
+            var x = unitSize.x == 0 ? 1 : Mathf.Abs(unitSize.x);
+            var y = unitSize.y == 0 ? 1 : Mathf.Abs(unitSize.y);
+            unitSize = new Vector2(x, y);
+        }
 
-            point.SetAtiveObject(true);
-            switch (mode)
-            {
-                case TermMode.SafeMode:
-                    break;
-                case TermMode.AttackMode:
-                    point.Animation.Activate();
-                    break;
-            }
-        }
-        public Point TurnOffAllTile()
-        {
-            Point lost = null;
-            foreach (var point in _pointsMap)
-            {
-                point.Animation.Deactivate();
-                lost = point;
-            }
-            return lost;
-        }
     }
 }

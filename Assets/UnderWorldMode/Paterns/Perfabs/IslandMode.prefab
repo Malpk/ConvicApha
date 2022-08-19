@@ -43,13 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcbd43a16acfed84389de5a762bbd807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playOnStart: 0
+  workDuration: 0
   _warningTime: 4
   _workTime: 1
   _minDistanceBothIsland: 4
   _minSizeIsland: 4
   _maxSizeIsland: 10
-  _playToAwake: 0
-  _mapBuilder:
-    mapSize: 16
-    unitSize: {x: 1.6, y: 1.6}
-    tileTern: {fileID: 1333059954608903435, guid: eb1e0c99abc0c284e8e8776b5b69a482, type: 3}
+  _mapBuilder: {fileID: 0}
+  _handTermAsset:
+    m_AssetGUID: 513635374147d0b4f90e0345108879ea
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

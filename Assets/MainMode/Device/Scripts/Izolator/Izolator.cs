@@ -41,12 +41,14 @@ namespace MainMode
                 {
                     animator.SetBool("Mode", true);
                 }
+                isActiveDevice = true;
                 Invoke(nameof(OnDeactivateJet), activeTime);
             }
         }
 
         private void OnDeactivateJet()
         {
+            isActiveDevice = false;
             foreach (Animator animator in animators)
             {
                 animator.SetBool("Mode", false);

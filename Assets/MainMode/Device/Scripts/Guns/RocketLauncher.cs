@@ -11,10 +11,10 @@ namespace MainMode
         [Header("Reference")]
         [SerializeField] private Rocket _rocket;
         [SerializeField] private FireWave _wave;
-        [SerializeField] private ShootPoint _shoot;
         [SerializeField] private Transform _spawnProjectelePosition;
+        [SerializeField] private SignalTile _tils;
+        [SerializeField] private ShootPoint _shoot;
         [SerializeField] private Rigidbody2D _rotateBody;
-
 
         private Vector3 _lostTargetPosition;
 
@@ -28,21 +28,28 @@ namespace MainMode
             _rocket.SetAttack(attackInfo);
             base.Intilizate();
         }
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
+            _tils.SingnalAction += Run;
             _shoot.FireAction += Fire;
         }
-        protected override void OnDisable()
+        protected void OnDisable()
         {
-            base.OnDisable();
+            _tils.SingnalAction -= Run;
             _shoot.FireAction -= Fire;
         }
-
+        public override void Run(Collider2D target)
+        {
+            if (_coroutine == null && IsShow)
+            {
+                isActiveDevice = true;
+                _coroutine = StartCoroutine(Rotate(target.transform));
+            }
+        }
         private IEnumerator Rotate(Transform target)
         {
             float progress = 0f;
-            while (progress < 1f && IsShow)
+            while (progress < 1f)
             {
                 var localPOsition = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
                 var direction = localPOsition.y > 0 ? 1 : -1;
@@ -60,6 +67,7 @@ namespace MainMode
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(ReturnState());
             _coroutine = null;
+            isActiveDevice = false;
         }
         private IEnumerator ReturnState()
         {
@@ -88,11 +96,6 @@ namespace MainMode
             _rocket.SetTarget(_lostTargetPosition);
         }
 
-        public override void Run(Collider2D target)
-        {
-            Activate();
-            if (_coroutine == null)
-                _coroutine = StartCoroutine(Rotate(target.transform));
-        }
+
     }
 }

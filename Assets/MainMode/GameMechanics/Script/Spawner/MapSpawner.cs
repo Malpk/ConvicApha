@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace MainMode
 {
@@ -30,9 +31,22 @@ namespace MainMode
             _mapGrid = GetComponent<MapGrid>();
         }
 
-        public void Intializate(Player player)
+        public async Task Intializate(Player player)
         {
             _player = player;
+            var list = new List<Task>();
+            foreach (var pool in _pools)
+            {
+                list.Add(pool.LoadAsset());
+            }
+            await Task.WhenAll(list);
+        }
+        private void OnDestroy()
+        {
+            foreach (var pool in _pools)
+            {
+                pool.UnLaodAsset();
+            }
         }
         public void Run()
         {
@@ -63,10 +77,12 @@ namespace MainMode
                     if (GetFreePoints(_spawnRadius, pool, out List<Point> freePoints))
                     {
                         var point = freePoints[Random.Range(0, freePoints.Count)];
-                        pool.Create(out SpawnItem item);
-                        item.SetMode(true);
-                        point.SetItem(item);
-                        item.transform.parent = transform;
+                        if (pool.Create(out SpawnItem item))
+                        {
+                            item.SetMode(true);
+                            point.SetItem(item);
+                            item.transform.parent = transform;
+                        }
                     }
                 }
             }

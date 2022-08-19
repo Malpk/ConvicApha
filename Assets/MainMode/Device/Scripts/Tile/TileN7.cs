@@ -14,7 +14,7 @@ namespace MainMode
         protected override void Intilizate()
         {
             base.Intilizate();
-            Deactivate();
+            OffItem();
         }
 
 

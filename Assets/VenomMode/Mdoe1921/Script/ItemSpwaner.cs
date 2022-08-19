@@ -22,7 +22,7 @@ namespace MainMode.Mode1921
         private void Start()
         {
             _rangeTimeSpawn = new Vector2(Mathf.Abs(_rangeTimeSpawn.x), Mathf.Abs(_rangeTimeSpawn.y));
-            if(_onStart)
+            if (_onStart)
                 _run = StartCoroutine(SpwanwItem());
         }
         public void Run(Transform target)
@@ -45,7 +45,7 @@ namespace MainMode.Mode1921
             var list = new List<ItemInfo>();
             foreach (var item in _items)
             {
-                if(item.IsAccess)
+                if (item.IsAccess)
                     list.Add(item);
             }
             return list;
@@ -78,7 +78,7 @@ namespace MainMode.Mode1921
                 });
                 var item = items[Random.Range(0, items.Count)].Instantiate(transform);
                 if (item != null)
-                    freePoints[Random.Range(0, freePoints.Count)].SetItem(item.gameObject);
+                    freePoints[Random.Range(0, freePoints.Count)].SetItem(item);
                 yield return new WaitForSeconds(Random.Range(_rangeTimeSpawn.x, _rangeTimeSpawn.y));
             }
         }
