@@ -1,49 +1,34 @@
-using MainMenu.Characters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UserIntaface.MainMenu;
 
-public class CharacterScroller : MonoBehaviour
+namespace UserIntaface.MainMenu
 {
-    [SerializeField] protected Button _leftBtn;
-    [SerializeField] protected Button _rightBtn;
-    [SerializeField] private List<CharacterView> _players;
-    [SerializeField] private List<RectTransform> _transforms;
+    public class CharacterScroller : BaseScroller<CharacterView>
+    {
+        public Action<DescriptionCharacter> ChangeCharacter;
+        protected override void Awake()
+        {
+            base.Awake();
+            _ringList = new RingListCharacter(_listPrefabs, _transforms, _parentElements);          
+        }
+        private void Start()
+        {
+            ChangeCharacter?.Invoke(SelectedElement.Description);
+        }
+        public override void Next()
+        {
+            base.Next();
+            ChangeCharacter?.Invoke(SelectedElement.Description);
+        }
 
-    public Action<DescriptionCharacter> ChangeCharacter;
+        public override void Previous()
+        {
+            base.Previous();
+            ChangeCharacter?.Invoke(SelectedElement.Description);
+        }
 
-    private RingListCharacter _ringList;
-    public CharacterView SelectedPlayer { get => _ringList.ItemSelected; }
-    private void Awake()
-    {
-        _leftBtn.onClick.AddListener(Previous);
-        _rightBtn.onClick.AddListener(Next);
-        _ringList = new RingListCharacter(_players, _transforms);
-    }
-    private void Start()
-    {
-        ChangeCharacter?.Invoke(SelectedPlayer.Description);
-    }
-    public void Next()
-    {
-        Debug.Log("next");
-        _ringList.RotateRight();
-        ChangeCharacter?.Invoke(SelectedPlayer.Description);
-    }
-
-    public void Previous()
-    {
-        Debug.Log("previ");
-        _ringList.RotateLeft();
-        ChangeCharacter?.Invoke(SelectedPlayer.Description);
-    }
-
-    private void OnDestroy()
-    {
-        _leftBtn.onClick.RemoveListener(Previous);
-        _rightBtn.onClick.RemoveListener(Next);
     }
 }

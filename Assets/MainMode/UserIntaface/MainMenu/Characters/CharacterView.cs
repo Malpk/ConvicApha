@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using UserIntaface.MainMenu;
 
-namespace MainMenu.Characters
+namespace UserIntaface.MainMenu
 {
-    public class CharacterView: ItemView
+    public class CharacterView: BaseScrollElementView
     {
         public DescriptionCharacter Description;
-        public PlayerType PlayerType;
+        public PlayerType PlayerType;       
     }
 }
