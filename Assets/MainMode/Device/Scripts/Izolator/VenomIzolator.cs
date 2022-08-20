@@ -12,8 +12,16 @@ namespace MainMode
 
         protected override void SetState(bool mode)
         {
-            base.SetState(mode);
             _cloud.SetMode(mode);
+            base.SetState(mode);
+        }
+        protected override void SetDeviceMode(bool mode)
+        {
+            base.SetDeviceMode(mode);
+            if (mode)
+                _cloud.Show();
+            else
+                _cloud.Hide();
         }
     }
 }

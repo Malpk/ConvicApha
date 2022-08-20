@@ -11,11 +11,6 @@ namespace MainMode
         protected override void Intilizate()
         {
             base.Intilizate();
-            var jets = GetComponentsInChildren<ISetAttack>();
-            foreach (var jet in jets)
-            {
-                jet.SetAttack(attackInfo);
-            }
         }
 
         protected override void OnTriggerEnter2D(Collider2D collision)

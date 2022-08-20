@@ -33,7 +33,7 @@ public class Player : Character, IResist
 
     public override bool IsDead => isDead;
 
-    protected virtual float speedMovement => state.SpeedMovement;
+    protected virtual float speedMovement => state.SpeedMovement * GetMovementEffect();
     protected virtual float speedRotation => state.SpeedRotation;
 
     protected override void Awake()

@@ -6,7 +6,6 @@ namespace MainMode
     [RequireComponent(typeof(CapsuleCollider2D))]
     public class Turel : Gun
     {
-
         [Header("Attacks properties")]
         [SerializeField]
         protected float _activationTime = 1f;

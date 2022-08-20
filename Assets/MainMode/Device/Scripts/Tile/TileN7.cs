@@ -20,9 +20,9 @@ namespace MainMode
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision, attackInfo);
             if (collision.TryGetComponent(out IAddEffects target))
             {
+                SetScreen(collision, attackInfo);
                 target.AddEffects(_effect, attackInfo.TimeEffect, attackInfo.Effect);
             }
         }

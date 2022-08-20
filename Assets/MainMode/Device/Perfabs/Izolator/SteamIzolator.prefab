@@ -135,6 +135,7 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _jetAnimator: {fileID: 6670340496184988190}
   _body: {fileID: 6670340496184988191}
 --- !u!1 &6670340496303248551
 GameObject:
@@ -271,6 +272,7 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _jetAnimator: {fileID: 6670340496303248547}
   _body: {fileID: 6670340496303248544}
 --- !u!1 &6670340496782743743
 GameObject:
@@ -568,6 +570,7 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _jetAnimator: {fileID: 6670340497454435097}
   _body: {fileID: 6670340497454435558}
 --- !u!1 &6670340497542324513
 GameObject:
@@ -669,15 +672,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
-  timeDestroy: 10
-  playOnStart: 1
-  activeTime: 10
+  durationWork: 10
+  isDebug: 0
+  playOnStart: 0
   _jetHolder: {fileID: 6670340496782743740}
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
     _attack: 1
-  animators: []
   _body: {fileID: 6670340496958644876}
 --- !u!58 &6670340497542324524
 CircleCollider2D:
@@ -849,4 +851,5 @@ MonoBehaviour:
   _damage: 1
   _force: 10
   _effect: {fileID: 11400000, guid: d4180f55e8f8ad5479706864493de828, type: 2}
+  _jetAnimator: {fileID: 6670340497626435005}
   _body: {fileID: 6670340497626435002}

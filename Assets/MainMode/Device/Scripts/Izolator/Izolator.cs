@@ -7,12 +7,9 @@ namespace MainMode
     [RequireComponent(typeof(Collider2D))]
     public abstract class Izolator : Device
     {
-        [Header("General Setting")]
-        [SerializeField] protected float activeTime = 10f;
         [Header("Reference")]
         [SerializeField] protected Transform _jetHolder;
         [SerializeField] protected DamageInfo attackInfo;
-        [SerializeField] protected Animator[] animators;
         [SerializeField] private SpriteRenderer _body;
 
         protected Collider2D colider;
@@ -22,7 +19,6 @@ namespace MainMode
         protected override void Intilizate()
         {
             colider = GetComponent<Collider2D>();
-            animators = _jetHolder.GetComponentsInChildren<Animator>();
             jets = GetComponentsInChildren<IJet>();
             foreach (var jet in jets)
             {
@@ -31,30 +27,35 @@ namespace MainMode
         }
         private void Start()
         {
-            SetState(false);
+            SetDeviceMode(playOnStart);
         }
         public void OnActivateJet()
         {
             if (IsShow)
             {
-                foreach (Animator animator in animators)
-                {
-                    animator.SetBool("Mode", true);
-                }
-                isActiveDevice = true;
-                Invoke(nameof(OnDeactivateJet), activeTime);
+                SetDeviceMode(true);
+                Invoke(nameof(OnDeactivateJet), durationWork);
             }
         }
 
         private void OnDeactivateJet()
         {
-            isActiveDevice = false;
-            foreach (Animator animator in animators)
-            {
-                animator.SetBool("Mode", false);
-            }
+            SetDeviceMode(false);
+            if(destroyMode)
+                StartCoroutine(DeactivateDevice());
         }
-
+        protected virtual void SetDeviceMode(bool mode)
+        {
+            isActiveDevice = mode;
+            SetJetMode(mode);
+        }
+        private IEnumerator DeactivateDevice()
+        {
+            yield return new WaitWhile(() => jets[jets.Length-1].IsActive);
+            if (isActiveDevice)
+                throw new System.Exception("Error");
+            SetMode(false);
+        }
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
             if (attackInfo.Effect == EffectType.None)
@@ -77,9 +78,12 @@ namespace MainMode
         {
             _body.enabled = mode;
             colider.enabled = mode;
+        }
+        private void SetJetMode(bool mode)
+        {
             foreach (var jet in jets)
             {
-                jet.SetMode(false);
+                jet.SetMode(mode);
             }
         }
     }

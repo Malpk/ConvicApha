@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MainMode.Effects;
 
@@ -15,12 +13,17 @@ namespace MainMode
         [SerializeField] private float _force = 5;
         [SerializeField] private MovementEffect _effect;
         [Header("Reference")]
+        [SerializeField] private Animator _jetAnimator;
         [SerializeField] private SpriteRenderer _body;
 
         private Collider2D _collider;
         private DamageInfo _attackInfo;
 
+        private bool _isActivate;
+
         public float ForceJet => _force;
+
+        public bool IsActive => _isActivate;
 
         private void Awake()
         {
@@ -35,14 +38,23 @@ namespace MainMode
         public void SetMode(bool mode)
         {
             _body.enabled = mode;
-            _collider.enabled = mode;
+            _jetAnimator.SetBool("Mode", mode);
         }
-
+        private void SetActivateState()
+        {
+            _isActivate = true;
+            _collider.enabled = true;
+        }
+        private void SetDeactivateState()
+        {
+            _isActivate = false;
+            _collider.enabled = false;
+        }
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.TryGetComponent<IDamage>(out IDamage target))
             {
-                target.TakeDamage(_damage,_attackInfo);
+                target.TakeDamage(_damage, _attackInfo);
             }
             if (collision.collider.TryGetComponent(out RobotMan man))
                 man.AddEffects(_effect, _attackInfo.TimeEffect);

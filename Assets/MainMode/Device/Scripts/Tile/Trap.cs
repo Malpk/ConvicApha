@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MainMode
 {
@@ -20,6 +19,8 @@ namespace MainMode
         private void Start()
         {
             Show();
+            if(destroyMode)
+                Invoke("DownDevice", durationWork);
         }
         protected override void SetState(bool mode)
         {

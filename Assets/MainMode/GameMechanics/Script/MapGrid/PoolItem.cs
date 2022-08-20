@@ -62,8 +62,7 @@ public class PoolItem
         if (IsAcces)
         {
             item = Instantiate();
-            if (!_poolActive.Contains(item))
-                _poolActive.Add(item);
+            item.StartCoroutine(AddInPool(item));
             return item;
         }
         else
@@ -103,6 +102,11 @@ public class PoolItem
             _poolDeactive.Remove(item);
             MonoBehaviour.Destroy(item.gameObject);
         }
+    }
+    private IEnumerator AddInPool(SpawnItem item)
+    {
+        yield return new WaitWhile(() => !item.IsShow);
+        _poolActive.Add(item);
     }
     private float GetProbility()
     {

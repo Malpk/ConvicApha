@@ -20,7 +20,7 @@ namespace MainMode
         private Coroutine _trakingActive = null;
         private Coroutine _destroy = null;
 
-        public override bool IsShow => _isMode && gameObject.activeSelf;
+        public override bool IsShow => _isMode;
 
         public abstract TrapType DeviceType { get; }
 
@@ -65,6 +65,7 @@ namespace MainMode
                 Debug.Log("DeviceDownWait");
 #endif
             yield return new WaitWhile(() => isActiveDevice);
+
             DownDevice();
             _trakingActive = null;
         }

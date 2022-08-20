@@ -23,6 +23,7 @@ namespace MainMode
         {
             _body.enabled = false;
             _collider = GetComponent<Collider2D>();
+            _collider.isTrigger = true;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

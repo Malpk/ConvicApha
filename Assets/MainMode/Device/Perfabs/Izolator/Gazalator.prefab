@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _jetAnimator: {fileID: 8033671763328100296}
   _body: {fileID: 8033671763328100303}
 --- !u!1 &8033671763470768184
 GameObject:
@@ -146,7 +147,7 @@ GameObject:
   - component: {fileID: 7833018310850750276}
   - component: {fileID: 6654308569677066379}
   m_Layer: 0
-  m_Name: Gas Point
+  m_Name: Jet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +217,8 @@ MonoBehaviour:
   _damageInfo:
     _timeEffect: 2
     _effect: 1
-    _attack: 0
+    _attack: 3
+  _triger: {fileID: 7833018310850750276}
   _cloudSprite: {fileID: 8033671765203865900}
 --- !u!1 &8033671763963772011
 GameObject:
@@ -433,6 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _jetAnimator: {fileID: 8033671764629569642}
   _body: {fileID: 8033671764629569641}
 --- !u!1 &8033671764647475680
 GameObject:
@@ -567,6 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _jetAnimator: {fileID: 8033671764647475684}
   _body: {fileID: 8033671764647475691}
 --- !u!1 &8033671764932123963
 GameObject:
@@ -701,6 +705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 2
+  _jetAnimator: {fileID: 8033671764932123967}
   _body: {fileID: 8033671764932123966}
 --- !u!1 &8033671764934701576
 GameObject:
@@ -803,15 +808,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
-  timeDestroy: 10
-  playOnStart: 1
-  activeTime: 10
+  durationWork: 10
+  isDebug: 0
+  playOnStart: 0
   _jetHolder: {fileID: 8033671763470768191}
   attackInfo:
     _timeEffect: 0.5
     _effect: 1
     _attack: 3
-  animators: []
   _body: {fileID: 8033671763963772009}
   _cloud: {fileID: 6654308569677066379}
 --- !u!58 &8033671764934701581

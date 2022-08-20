@@ -46,7 +46,7 @@ namespace MainMode
             isActiveDevice = true;
             var direction = _directions[Random.Range(0, _directions.Length)];
             _fireGun.rotation = 181;
-            while (progress <= 1f)
+            while (progress <= 1f && IsShow)
             {
                 progress += Time.deltaTime / durationWork;
                 _fireGun.transform.localRotation *= Quaternion.Euler(Vector3.forward * direction * _speedRotation * Time.deltaTime);

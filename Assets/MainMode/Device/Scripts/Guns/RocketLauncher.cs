@@ -12,7 +12,6 @@ namespace MainMode
         [SerializeField] private Rocket _rocket;
         [SerializeField] private FireWave _wave;
         [SerializeField] private Transform _spawnProjectelePosition;
-        [SerializeField] private SignalTile _tils;
         [SerializeField] private ShootPoint _shoot;
         [SerializeField] private Rigidbody2D _rotateBody;
 
@@ -28,14 +27,14 @@ namespace MainMode
             _rocket.SetAttack(attackInfo);
             base.Intilizate();
         }
-        protected void OnEnable()
+        protected override void OnEnable()
         {
-            _tils.SingnalAction += Run;
+            base.OnEnable();
             _shoot.FireAction += Fire;
         }
-        protected void OnDisable()
+        protected override void OnDisable()
         {
-            _tils.SingnalAction -= Run;
+            base.OnDisable();
             _shoot.FireAction -= Fire;
         }
         public override void Run(Collider2D target)
@@ -44,6 +43,8 @@ namespace MainMode
             {
                 isActiveDevice = true;
                 _coroutine = StartCoroutine(Rotate(target.transform));
+                if(destroyMode)
+                    StartCoroutine(Delete());
             }
         }
         private IEnumerator Rotate(Transform target)
@@ -77,7 +78,17 @@ namespace MainMode
                 yield return null;
             }
         }
-
+        public IEnumerator Delete()
+        {
+            var progress = 0f;
+            while (progress < 1f)
+            {
+                progress += Time.deltaTime / durationWork;
+                yield return null;
+            }
+            yield return new WaitWhile(() => isActiveDevice);
+            SetMode(false);
+        }
         private void Shoot()
         {
             gunAnimator.SetTrigger("Shoot");

@@ -82,12 +82,14 @@ namespace MainMode
                     return  localProgress < 1f && _coroutine != null;
                 });
                 localProgress = 0f;
+                _laser.SetMode(true);
                 gunAnimator.SetBool("mode", true);
                 yield return new WaitWhile(() =>
                 {
                     localProgress += Time.deltaTime / _shootDuration;
                     return localProgress < 1f && _coroutine != null;
                 });
+                _laser.SetMode(false);
                 gunAnimator.SetBool("mode", false);
                 progress += (_timeReload + _shootDuration) / durationWork;
                 yield return null;

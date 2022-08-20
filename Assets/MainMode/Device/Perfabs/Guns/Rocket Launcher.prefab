@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowTile: 0
+  IsShowTile: 1
   _body: {fileID: 7194119080931255040}
 --- !u!212 &7194119080931255040
 SpriteRenderer:
@@ -580,19 +580,18 @@ MonoBehaviour:
   durationWork: 15
   isDebug: 0
   playOnStart: 0
-  signalHolder: {fileID: 7194119080931255041}
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
     _attack: 2
   gunAnimator: {fileID: 7194119081331237773}
+  triger: {fileID: 7194119080931255070}
   _spriteRender: {fileID: 7194119081331237772}
   _aimTime: 2
   _speedRotation: 5
   _rocket: {fileID: 7194119081121924859}
   _wave: {fileID: 7194119081575162925}
   _spawnProjectelePosition: {fileID: 7194119081343419932}
-  _tils: {fileID: 7194119080931255070}
   _shoot: {fileID: 7194119081331237775}
   _rotateBody: {fileID: 7194119081331237808}
 --- !u!58 &7194119081482484997

@@ -6,8 +6,6 @@ namespace MainMode
 {
     public class DaimonIzolator : Izolator
     {
-        [SerializeField] private SignalTile _signalArea;
-
         public override TrapType DeviceType => TrapType.DaimondIzolator;
 
     }

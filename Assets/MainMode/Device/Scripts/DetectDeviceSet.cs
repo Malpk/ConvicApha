@@ -12,16 +12,12 @@ namespace MainMode
 
         private CircleCollider2D _collider;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _collider = GetComponent<CircleCollider2D>();
             _collider.isTrigger = true;
         }
 
-        public virtual void SetMode(bool mode)
-        {
-            _collider.enabled = mode;
-        }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out Player player))
