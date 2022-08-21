@@ -99,13 +99,13 @@ namespace MainMode
         }
         protected abstract void SetState(bool mode);
 
-        private void OnBecameInvisible()
-        {;
-            SetMode(false);
-        }
-        private void OnBecameVisible()
-        {
-            SetMode(true);
-        }
+        //private void OnBecameInvisible()
+        //{;
+        //    SetMode(false);
+        //}
+        //private void OnBecameVisible()
+        //{
+        //    SetMode(true);
+        //}
     }
 }
