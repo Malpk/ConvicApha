@@ -58,7 +58,8 @@ namespace MainMode
             _coroutine = null;
             yield return StartCoroutine(ReturnState());
             isActiveDevice = false;
-            SetMode(false);
+            if(destroyMode)
+                SetMode(false);
         }
         private IEnumerator ReturnState()
         {

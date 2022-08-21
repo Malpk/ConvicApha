@@ -69,7 +69,7 @@ namespace MainMode
             DownDevice();
             _trakingActive = null;
         }
-        protected void Activate()
+        protected virtual void Activate()
         {
             SetState(true);
         }

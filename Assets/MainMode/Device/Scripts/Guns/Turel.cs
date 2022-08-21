@@ -51,7 +51,8 @@ namespace MainMode
             }
             _rigidbody.rotation = startAngle;
             isActiveDevice = false;
-            SetMode(false);
+            if(destroyMode)
+                SetMode(false);
         }
         protected IEnumerator Shoot()
         {

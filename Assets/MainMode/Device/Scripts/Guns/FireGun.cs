@@ -49,14 +49,25 @@ namespace MainMode
             while (progress <= 1f && IsShow)
             {
                 progress += Time.deltaTime / durationWork;
-                _fireGun.transform.localRotation *= Quaternion.Euler(Vector3.forward * direction * _speedRotation * Time.deltaTime);
+                _fireGun.MoveRotation(_fireGun.rotation + direction * _speedRotation * Time.deltaTime);
                 yield return null;
             }
+            yield return ReturnState();
             _fire.SetMode(false);
             _fireParticale.Pause();
             _fireParticale.Clear();
             isActiveDevice = false;
-            SetMode(false);
+            if(destroyMode)
+                SetMode(false);
         }
+        private IEnumerator ReturnState()
+        {
+            while (Mathf.Abs(_fireGun.rotation) > 0.1f)
+            {
+                _fireGun.MoveRotation(Mathf.LerpAngle(_fireGun.rotation, 0, Time.fixedDeltaTime * _speedRotation));
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
     }
 }

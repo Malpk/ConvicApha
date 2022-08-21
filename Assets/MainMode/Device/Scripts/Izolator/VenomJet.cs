@@ -11,18 +11,14 @@ namespace MainMode
         [SerializeField] private int _damageValue = 1;
         [Header("Reference")]
         [SerializeField] private Animator _jetAnimator;
+        [SerializeField] private Collider2D _collider;
         [SerializeField] private SpriteRenderer _body;
 
         private bool _isActivate;
-        private Collider2D _collider;
         private DamageInfo _attackInfo;
 
         public bool IsActive => _isActivate;
 
-        private void Awake()
-        {
-            _collider = GetComponent<Collider2D>();
-        }
         public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;

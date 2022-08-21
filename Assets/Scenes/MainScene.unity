@@ -229,7 +229,7 @@ PrefabInstance:
     - target: {fileID: 5904282610656691024, guid: ba67cfd0b249d744590d5e63b5a6841d, type: 3}
       propertyPath: _spawner
       value: 
-      objectReference: {fileID: 1957391439}
+      objectReference: {fileID: 2097719781}
     - target: {fileID: 5904282610656691024, guid: ba67cfd0b249d744590d5e63b5a6841d, type: 3}
       propertyPath: playOnStart
       value: 0
@@ -530,7 +530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5181492680973262978, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5222877457415629917, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
       propertyPath: _marker
@@ -586,7 +586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
---- !u!114 &1957391439 stripped
+--- !u!114 &2097719781 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
   m_PrefabInstance: {fileID: 4545201386628365896}
@@ -672,6 +672,54 @@ PrefabInstance:
     - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
       propertyPath: _spawnRadius
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[3]._distanceFormPlayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[6]._distanceFormPlayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[0]._perfabAsset.m_AssetGUID
+      value: 1ce4bb09f7cabbc43afa8cd4f4d37e42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[1]._perfabAsset.m_AssetGUID
+      value: 023bf1d6370ded14e91a1ab8681ccbe7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[2]._perfabAsset.m_AssetGUID
+      value: 96256595c1535014e8c5e1655211e010
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[3]._perfabAsset.m_AssetGUID
+      value: ee93799ba406c1343aec05c71fa75805
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[4]._perfabAsset.m_AssetGUID
+      value: 257329797b5855748a30e95133d6167d
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[5]._perfabAsset.m_AssetGUID
+      value: 3160c8ea198ec524fa1d689d127e377a
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[6]._perfabAsset.m_AssetGUID
+      value: 516ef06bf632941419ab3969b7eea7de
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[8]._perfabAsset.m_AssetGUID
+      value: 5b5a1af5e92da9843826e0ecf417cf16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _pools.Array.data[9]._perfabAsset.m_AssetGUID
+      value: a06cda8c11fd97c44b3725de91af7586
       objectReference: {fileID: 0}
     - target: {fileID: 5181492680973262978, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
       propertyPath: m_Name

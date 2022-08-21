@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsShowTile: 0
+  _collider: {fileID: 1816629728905682699}
   _body: {fileID: 4318679566918645197}
 --- !u!1 &7142385477910206621
 GameObject:
@@ -209,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
-  durationWork: 1
+  durationWork: 15
   isDebug: 0
   playOnStart: 1
   attackInfo:

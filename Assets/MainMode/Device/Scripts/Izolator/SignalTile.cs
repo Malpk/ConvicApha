@@ -10,9 +10,9 @@ namespace MainMode
         [Header("General Setting")]
         public bool IsShowTile = false;
 
+        [SerializeField] private Collider2D _collider;
         [SerializeField] private SpriteRenderer _body;
 
-        private Collider2D _collider;
 
         public TrapType DeviceType => TrapType.SignalTile;
 
@@ -35,7 +35,6 @@ namespace MainMode
         public void SetMode(bool mode)
         {
             _body.enabled =IsShowTile ? mode : false;
-            _collider.enabled = mode;
         }
     }
 }

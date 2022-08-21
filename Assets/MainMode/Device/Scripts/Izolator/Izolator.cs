@@ -7,6 +7,7 @@ namespace MainMode
     [RequireComponent(typeof(Collider2D))]
     public abstract class Izolator : Device
     {
+        [SerializeField] private float _activateTime;
         [Header("Reference")]
         [SerializeField] protected Transform _jetHolder;
         [SerializeField] protected DamageInfo attackInfo;
@@ -24,34 +25,47 @@ namespace MainMode
             {
                 jet.SetAttack(attackInfo);
             }
+            SetState(false);
+            OnDeactivateJet();
         }
-        private void Start()
+        protected override void Activate()
         {
-            SetDeviceMode(playOnStart);
+            if (!isActiveDevice)
+            {
+                isActiveDevice = true;
+                if (destroyMode)
+                    StartCoroutine(DeactivateDevice());
+                base.Activate();
+            }
         }
         public void OnActivateJet()
         {
-            if (IsShow)
+            if (isActiveDevice)
             {
                 SetDeviceMode(true);
-                Invoke(nameof(OnDeactivateJet), durationWork);
+                Invoke(nameof(OnDeactivateJet), _activateTime);
             }
         }
 
         private void OnDeactivateJet()
         {
             SetDeviceMode(false);
-            if(destroyMode)
-                StartCoroutine(DeactivateDevice());
         }
         protected virtual void SetDeviceMode(bool mode)
         {
-            isActiveDevice = mode;
             SetJetMode(mode);
         }
         private IEnumerator DeactivateDevice()
         {
-            yield return new WaitWhile(() => jets[jets.Length-1].IsActive);
+            yield return new WaitWhile(() => !IsShow);
+            var progress = 0f;
+            while (progress <= 1f && IsShow)
+            {
+                progress += Time.deltaTime / durationWork;
+                yield return null;
+            }
+            isActiveDevice = false;
+            yield return new WaitWhile(() => jets[jets.Length-1].IsActive && IsShow);
             if (isActiveDevice)
                 throw new System.Exception("Error");
             SetMode(false);
@@ -76,6 +90,7 @@ namespace MainMode
         }
         protected override void SetState(bool mode)
         {
+            isActiveDevice = mode;
             _body.enabled = mode;
             colider.enabled = mode;
         }
