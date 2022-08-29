@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &336707111408024134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 336707111408024136}
+  - component: {fileID: 336707111408024137}
+  m_Layer: 0
+  m_Name: ModeSwitch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &336707111408024136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336707111408024134}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4379196, y: -3.3236852, z: -0.598875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &336707111408024137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336707111408024134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792a84deaadfb68449f18d35b5ade7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 1
+  _chooseMode: 0
+  _player: {fileID: 0}
+  _builder: {fileID: 0}
+  _configs:
+  - {fileID: 11400000, guid: 328abbfbe9a5ff3489af7cc706406a23, type: 2}
+  - {fileID: 11400000, guid: 095fd0a0be4a801479b96993ee94127b, type: 2}
+  - {fileID: 11400000, guid: 0a4abbbf104095349a7340dbf9440645, type: 2}
+  - {fileID: 11400000, guid: d14c66c1d92dd614ea2b7e5abe53c980, type: 2}
+  - {fileID: 11400000, guid: 8f32ad60b0e59974995fe21d85b517df, type: 2}
+  - {fileID: 11400000, guid: ab2ed3f9e73ae3b409058d10f232d079, type: 2}
+  - {fileID: 11400000, guid: e96aa12b9209d51438bd2d462bc7286e, type: 2}
+  - {fileID: 11400000, guid: d0fdcb42c93de5d4e9566f5a06d9d96f, type: 2}

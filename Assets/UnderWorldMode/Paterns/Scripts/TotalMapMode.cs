@@ -9,52 +9,23 @@ namespace Underworld
     public abstract class TotalMapMode : GeneralMode
     {
         [SerializeField] protected Player player;
-        [AssetReferenceUILabelRestriction("term")]
-        [SerializeField] protected AssetReferenceGameObject handTermAsset;
+        [SerializeField] private MapBuilder _builder;
+        [SerializeField] private Term _handTermPerfab;
 
-        [SerializeField]private MapBuilder _builder;
+        protected Term[,] termArray;
+        protected List<Term> terms = new List<Term>();
 
-        private HandTermTile _handTerm;
-
-        protected HandTermTile[,] termArray;
-        protected List<HandTermTile> terms = new List<HandTermTile>();
-
-        private bool _isLoad;
         private bool _isCreate;
 
-        public override bool IsReady => _isLoad && _isCreate;
+        public override bool IsReady => _isCreate;
 
         protected virtual void Start()
         {
             StartCoroutine(CreateMap());
+            if (playOnStart)
+                Activate();
         }
 
-        protected async override Task<bool> LoadAsync()
-        {
-            if (handTermAsset == null)
-                throw new System.NullReferenceException();
-            if (!_handTerm)
-            {
-                var load = handTermAsset.LoadAssetAsync().Task;
-                await load;
-                if (load.Result.TryGetComponent(out HandTermTile term))
-                {
-                    _handTerm = term;
-                    _isLoad = true;
-                    return true;
-                }
-                else
-                {
-                    throw new System.NullReferenceException("Gameobject is not component HandTermTile");
-                }
-            }
-            return false;
-        }
-        protected override void Unload()
-        {
-            handTermAsset.ReleaseAsset();
-            _isLoad = false;
-        }
         public override void Intializate(MapBuilder builder, Player player)
         {
             this.player = player;
@@ -84,29 +55,80 @@ namespace Underworld
                 term.Activate(state);
             }
         }
-        protected void DeactivateMap(out HandTermTile compliteTerm)
+        #region Deactive Term
+        protected IEnumerator WaitDeactivateMap()
         {
-            compliteTerm = terms[0];
             for (int i = 0; i < terms.Count; i++)
             {
-                terms[i].SetMode(false);
-                if (terms[i].IsActive)
-                    compliteTerm = terms[i];
+                if(terms[i].IsActive)
+                    terms[i].Deactivate(true);
+            }
+            yield return TrakingDeactiveTerms(terms);
+        }
+        protected IEnumerator TrakingDeactiveTerms(List<Term> activeTerms)
+        {
+            while (activeTerms.Count > 0)
+            {
+                yield return WaitTime(0.2f);
+                activeTerms = GetActiveTerm(activeTerms);
             }
         }
+        protected IEnumerator WaitHideMap()
+        {
+            yield return WaitDeactivateMap();
+            for (int i = 0; i < terms.Count; i++)
+            {
+                if(terms[i].IsShow)
+                    terms[i].HideItem();
+            }
+            yield return TrakinHideMap(terms);
+        }
+        #endregion
+        #region Hide Term
+        protected List<Term> GetActiveTerm(List<Term> activeTerms)
+        {
+            var list = new List<Term>();
+            for (int i = 0; i < activeTerms.Count; i++)
+            {
+                if (activeTerms[i].IsDamageMode)
+                {
+                    list.Add(activeTerms[i]);
+                }
+            }
+            return list;
+        }
+        protected IEnumerator TrakinHideMap(List<Term> activeTerms)
+        {
+            while (activeTerms.Count > 0)
+            {
+                yield return WaitTime(0.2f);
+                activeTerms = GetShowTerm(activeTerms);
+            }
+        }
+        protected List<Term> GetShowTerm(List<Term> activeTerms)
+        {
+            var list = new List<Term>();
+            for (int i = 0; i < activeTerms.Count; i++)
+            {
+                if (activeTerms[i].IsShow)
+                {
+                    list.Add(activeTerms[i]);
+                }
+            }
+            return list;
+        }
+        #endregion
         protected IEnumerator CreateMap()
         {
-            yield return new WaitWhile(() => !_isLoad);
             var points = _builder.Points;
-            termArray = new HandTermTile[points.GetLength(0), points.GetLength(1)];
+            termArray = new Term[points.GetLength(0), points.GetLength(1)];
             for (int i = 0; i < points.GetLength(0); i++)
             {
                 for (int j = 0; j < points.GetLength(1); j++)
                 {
-                    var term = Instantiate(_handTerm.gameObject).GetComponent<HandTermTile>();
-                    term.transform.parent = transform.parent;
+                    var term = Instantiate(_handTermPerfab.gameObject).GetComponent<Term>();
+                    term.transform.parent = _builder.transform;
                     termArray[i, j] = term;
-                    term.Deactivate(false);
                     terms.Add(termArray[i, j]);
                     points[i, j].SetItem(termArray[i, j]);
                 }

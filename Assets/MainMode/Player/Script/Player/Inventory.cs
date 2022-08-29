@@ -127,7 +127,6 @@ namespace MainMode
                 _display.DisplayConsumablesItem(_consumablesItem[0].Sprite, _consumablesItem.Count);
             else
                 _display.DisplayConsumablesItem(null);
-
             if (_artifact != null)
             {
                 if (_artifact.IsInfinity)

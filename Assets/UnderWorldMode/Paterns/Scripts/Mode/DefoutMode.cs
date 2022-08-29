@@ -8,30 +8,26 @@ namespace Underworld
 {
     public sealed class DefoutMode : GeneralMode
     {
-#if UNITY_EDITOR 
-        [SerializeField] private bool _isDebug;
-#endif
         [Header("Spawn Setting")]
         [Min(1)]
         [SerializeField] private int _spawnDistance = 1;
         [Range(0.005f, 1)]
         [SerializeField] private float _delay = 1f;
-        [AssetReferenceUILabelRestriction("term")]
-        [SerializeField] private AssetReferenceGameObject _termAsset;
+        [SerializeField] private AutoTerm _termPerfab;
         [Header("Reference")]
         [SerializeField] private Player _player;
         [SerializeField] private MapBuilder _builder;
 
-        private bool _isReady;
+
         private Point[,] _map;
         private Coroutine _startMode;
-        private DefautTermTile _termPerfab;
-        private List<DefautTermTile> _poolActive = new List<DefautTermTile>();
-        private List<DefautTermTile> _poolDeactive = new List<DefautTermTile>();
+
+        private List<AutoTerm> _poolActive = new List<AutoTerm>();
+        private List<AutoTerm> _poolDeactive = new List<AutoTerm>();
 
         public bool IsActive => _startMode != null;
 
-        public override bool IsReady => _isReady;
+        public override bool IsReady => _builder && _player && _termPerfab;
 
         private void Start()
         {
@@ -39,42 +35,9 @@ namespace Underworld
                 Activate();
         }
 
-        protected override async Task<bool> LoadAsync()
-        {
-            if (!_isReady)
-            {
-                var load = _termAsset.LoadAssetAsync().Task;
-                await load;
-                if (load.Result.TryGetComponent(out DefautTermTile term))
-                {
-                    _isReady = true;
-                    _termPerfab = term;
-#if UNITY_EDITOR
-                    if(_isDebug)
-                        Debug.Log("Load Complite");
-#endif
-                    return true;
-                }
-                else
-                {
-                    throw new System.NullReferenceException("GameObject is not component DefautTermTile");
-                }
-            }
-            return false;
-        }
-
-        protected override void Unload()
-        {
-            _isReady = false;
-            _termAsset.ReleaseAsset();
-            ClearPool(_poolActive);
-            ClearPool(_poolDeactive);
-        }
         public override void Intializate(MapBuilder builder, Player player)
         {
-            _builder.Clear();
             _builder = builder;
-
             _player = player;
         }
 
@@ -94,10 +57,6 @@ namespace Underworld
 
         private IEnumerator Spawn()
         {
-#if UNITY_EDITOR
-            if (_isDebug)
-                Debug.Log("Start Game");
-#endif
             yield return new WaitWhile(() => !IsReady);
             _map = _builder.Points;
             float progress = 0;
@@ -107,21 +66,38 @@ namespace Underworld
                 if (GetPoint(_player, _spawnDistance, out Point choosePoint))
                 {
                     var term = GetTerm();
-                    if (!term.IsShow)
-                        term.SetMode(true);
-                    term.Activate();
                     choosePoint.SetItem(term);
+                    term.ShowItem();
+                    term.StartAutoMode();
                 }
                 yield return WaitTime(_delay);
                 progress += _delay / workDuration;
             }
-#if UNITY_EDITOR
-            if (_isDebug)
-                Debug.Log("End Game");
-#endif
+            ClearPool(_poolDeactive);
+            yield return ClearActivePool();
             _startMode = null;
+            State = ModeState.Stop;
         }
-        private DefautTermTile GetTerm()
+
+        private IEnumerator ClearActivePool()
+        {
+            var list = new List<AutoTerm>();
+            list.AddRange(_poolActive);
+            while (list.Count > 0)
+            {
+                var listActive = new List<AutoTerm>();
+                yield return WaitTime(0.2f);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].IsShow)
+                        listActive.Add(list[i]);
+                }
+                list.Clear();
+                list = listActive;
+            }
+            ClearPool(_poolActive);
+        }
+        private AutoTerm GetTerm()
         {
             PoolUpdate();
             if (_poolDeactive.Count > 0)
@@ -133,7 +109,7 @@ namespace Underworld
             }
             else
             {
-                var term = Instantiate(_termPerfab.gameObject).GetComponent<DefautTermTile>();
+                var term = Instantiate(_termPerfab.gameObject).GetComponent<AutoTerm>();
                 term.transform.parent = transform;
                 _poolActive.Add(term);
                 return term;
@@ -155,16 +131,11 @@ namespace Underworld
             }
             if (freePoints.Count > 0)
                 point = freePoints[Random.Range(0, freePoints.Count)];
-#if UNITY_EDITOR
-            if (_isDebug)
-                Debug.Log($"freeTiles= {freePoints.Count}");
-#endif
-
             return freePoints.Count > 0;
         }
         private void PoolUpdate()
         {
-            var deactiveTerms = new List<DefautTermTile>();
+            var deactiveTerms = new List<AutoTerm>();
             for (int i = 0; i < _poolActive.Count; i++)
             {
                 if (!_poolActive[i].IsShow)
@@ -187,13 +158,13 @@ namespace Underworld
                 }
             }
         }
-        private void ClearPool(List<DefautTermTile> pool)
+        private void ClearPool(List<AutoTerm> pool)
         {
             while (pool.Count > 0)
             {
                 var term = pool[0];
                 pool.Remove(term);
-                Destroy(term);
+                Destroy(term.gameObject);
             }
         }
         public override void Pause()

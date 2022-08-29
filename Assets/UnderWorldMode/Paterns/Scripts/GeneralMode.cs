@@ -12,29 +12,19 @@ namespace Underworld
         [SerializeField] protected bool isDebug;
 #endif
         [SerializeField] protected bool playOnStart;
+        [Min(0)]
         [SerializeField] protected float workDuration;
 
         private ModeState _previus;
         public abstract bool IsReady { get; }
         public ModeState State { get; protected set; } = ModeState.Stop;
 
-        protected virtual async void Awake()
-        {
-            await LoadAsync();
-        }
-        protected void OnDestroy()
-        {
-            Unload();
-        }
         public abstract void Intializate(MapBuilder builder, Player player);
-        protected abstract Task<bool> LoadAsync();
-        protected abstract void Unload();
         public abstract bool Activate();
 
         public void Deactivate()
         {
             State = ModeState.Stop;
-            Unload();
         }
         public virtual void Pause()
         {

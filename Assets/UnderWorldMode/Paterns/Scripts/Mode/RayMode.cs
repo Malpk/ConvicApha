@@ -17,24 +17,22 @@ namespace Underworld
         [SerializeField] private float _warningTime;
         [Min(0)]
         [SerializeField] private float _delay;
-        [Min(0)]
-        [SerializeField] private float _duration;
         [Header("Ray Setting")]
+        [SerializeField] private RayPoint _center;
         [SerializeField] private RayPoint _rayPerfab;
+        [SerializeField] private Transform _rayHolder;
 
         private int[] _direction = new int[] { 1, -1 };
-        private Point[,] _map = null;
         private Coroutine _runMode;
         private List<RayPoint> _rays = new List<RayPoint>();
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-            _rays = CreateRay(_countRay).ToList();
+            _rays = CreateRay(_countRay);
         }
         public override bool Activate()
         {
-            if (_runMode == null && IsReady)
+            if (_runMode == null)
             {
                 State = ModeState.Play;
                 _runMode = StartCoroutine(Rotate(_rays));
@@ -43,9 +41,21 @@ namespace Underworld
             return false;
         }
         #region Work Mode
-        private IEnumerator Rotate(List<RayPoint> rayList)
+        private IEnumerator Rotate(List<RayPoint> rays)
         {
+            State = ModeState.Play;
+            yield return new WaitWhile(() => !IsReady);
+            _center.ShowRay();
+            foreach (var ray in rays)
+            {
+                ray.ShowRay();
+            }
             yield return WaitTime(_warningTime);
+            _center.Activate();
+            foreach (var ray in rays)
+            {
+                ray.Activate();
+            }
             var progress = 0f;
             while (progress < 1f)
             {
@@ -56,14 +66,14 @@ namespace Underworld
                 {
                     yield return new WaitWhile(() => State == ModeState.Pause);
                     curretOffset = RotateRays(curretOffset, offset);
-                    progress += Time.deltaTime / _duration;
+                    progress += Time.deltaTime / workDuration;
                     yield return null;
                 }
                 yield return new WaitForSeconds(_delay);
-                progress += _delay / _duration;
+                progress += _delay / workDuration;
             }
-            DeactivateMap(out HandTermTile term);
-            yield return new WaitWhile(() => term.IsActive);
+            yield return WaitHideMap();
+            State = ModeState.Stop;
             _runMode = null;
         }
         private int GetDirection()
@@ -75,29 +85,31 @@ namespace Underworld
         {
             var curretOffset = Mathf.MoveTowards(previsious, ofsset, _speedOffset * Time.deltaTime);
             var steep = curretOffset - previsious;
-            transform.rotation *= Quaternion.Euler(Vector3.forward * steep);
+            _rayHolder.rotation *= Quaternion.Euler(Vector3.forward * steep);
             return curretOffset;
         }
         #endregion
         #region Create Ray for Mode
-        private IEnumerable<RayPoint> CreateRay(int count)
+        private List<RayPoint> CreateRay(int count)
         {
+            var list = new List<RayPoint>();
             var lostSteep = 0f;
             var steepRotation = 360 / count;
             for (int i = 0; i < count; i++)
             {
-                var ray = CreateRay(lostSteep);
-                if (ray != null)
-                    yield return ray;
+                if (CreateRay(lostSteep, out RayPoint ray))
+                    list.Add(ray);
                 lostSteep += steepRotation;
             }
+            return list;
         }
-        private RayPoint CreateRay(float lostSteep)
+        private bool CreateRay(float lostSteep, out RayPoint ray)
         {
-            var ray = Instantiate(_rayPerfab.gameObject).transform;
-            ray.parent = transform;
-            ray.rotation = Quaternion.Euler(Vector3.forward * lostSteep);
-            return GetComponent<RayPoint>();
+            ray = Instantiate(_rayPerfab.gameObject).GetComponent<RayPoint>();
+            ray.SetCenter(_center);
+            ray.transform.parent = _rayHolder;
+            ray.transform.rotation = Quaternion.Euler(Vector3.forward * lostSteep);
+            return ray;
         }
         #endregion
     }

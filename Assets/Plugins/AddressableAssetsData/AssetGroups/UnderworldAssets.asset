@@ -18,16 +18,12 @@ MonoBehaviour:
   m_GUID: e7c01724f140db44ba4cd2db5ec06cdd
   m_SerializeEntries:
   - m_GUID: e326640a2599fd74d9385cfeb6410c6b
-    m_Address: Assets/UnderWorldMode/Paterns/Perfabs/BaseMode.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 57820aca1efd6ea4980ad5b3dac07995
-    m_Address: DefoutTermTile
+    m_Address: DefautMode
     m_ReadOnly: 0
     m_SerializedLabels:
-    - term
+    - patern
   - m_GUID: 513635374147d0b4f90e0345108879ea
-    m_Address: HandTermTile
+    m_Address: Term
     m_ReadOnly: 0
     m_SerializedLabels:
     - term
@@ -38,6 +34,56 @@ MonoBehaviour:
     - underworld
   - m_GUID: 55cf426f2c2d4ca49b9608bf95ae0299
     m_Address: MarkerUnderworld
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - underworld
+  - m_GUID: 014c0d6dd4fb87f4b828f4f7765d75d8
+    m_Address: IslandMode
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - patern
+  - m_GUID: dd1e2b2d65c0eb64ebda9dab17eb6e0c
+    m_Address: BoxMode
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - patern
+  - m_GUID: 28f2839efc0345c44a2caa02f168360d
+    m_Address: RayMode
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - patern
+  - m_GUID: 232e14a3e9c6ab54e9620d5a316105dd
+    m_Address: RingMode
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - patern
+  - m_GUID: 1ac89288b21080844b16ed371d622dd3
+    m_Address: TridentMode
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - patern
+  - m_GUID: 476334cd69db1c34d85726d16bf21a03
+    m_Address: RunOrDead
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - patern
+  - m_GUID: b7eaac393df882b42a07b14c6ffdcc7e
+    m_Address: ViseMode
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - patern
+  - m_GUID: e829bdb2a414a8241a971fe1b5e68ab8
+    m_Address: TermWarningSprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - underworld
+  - m_GUID: d92d71f6db3a5984bad9f4e5541b0eae
+    m_Address: TermActiveSprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - underworld
+  - m_GUID: 8dbd73387c401f247a09b33fc763372d
+    m_Address: AutoTerm
     m_ReadOnly: 0
     m_SerializedLabels:
     - underworld

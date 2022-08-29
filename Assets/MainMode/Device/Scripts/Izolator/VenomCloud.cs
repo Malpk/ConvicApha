@@ -17,7 +17,7 @@ namespace MainMode
         protected override void Awake()
         {
             base.Awake();
-            SetMode(true);
+            Hide();
         }
 
         public void SetMode(bool mode)
@@ -26,11 +26,11 @@ namespace MainMode
         }
         public void Show()
         {
-                _cloudSprite.enabled = true;
+            _cloudSprite.enabled = true;
         }
         public void Hide()
         {
-                _cloudSprite.enabled = false;
+            _cloudSprite.enabled = false;
         }
     }
 }

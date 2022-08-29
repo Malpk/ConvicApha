@@ -77,9 +77,8 @@ namespace MainMode
                     if (GetFreePoints(_spawnRadius, pool, out List<Point> freePoints))
                     {
                         var point = freePoints[Random.Range(0, freePoints.Count)];
-                        if (pool.Create(out SpawnItem item))
+                        if (pool.Create(out SmartItem item))
                         {
-                            item.SetMode(true);
                             point.SetItem(item);
                             item.transform.parent = transform;
                         }

@@ -43,13 +43,6 @@ namespace Underworld
             holder.localPosition = Vector2.zero;
             return holder;
         }
-        public void Clear()
-        {
-            foreach (var points in Points)
-            {
-                points.RemoveObject();
-            }
-        }
         private Point[,] CreateMap()
         {
             var points = new Point[mapSize, mapSize];

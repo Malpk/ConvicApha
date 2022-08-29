@@ -17,8 +17,9 @@ namespace MainMode
         
         protected IJet[] jets;
 
-        protected override void Intilizate()
+        protected override void Awake()
         {
+            base.Awake();
             colider = GetComponent<Collider2D>();
             jets = GetComponentsInChildren<IJet>();
             foreach (var jet in jets)
@@ -26,36 +27,57 @@ namespace MainMode
                 jet.SetAttack(attackInfo);
             }
             SetState(false);
-            OnDeactivateJet();
         }
-        protected override void Activate()
+        private void Start()
         {
-            if (!isActiveDevice)
-            {
-                isActiveDevice = true;
-                if (destroyMode)
-                    StartCoroutine(DeactivateDevice());
-                base.Activate();
-            }
+            if(showOnStart)
+                ShowItem();
         }
-        public void OnActivateJet()
+        public override void Activate()
         {
             if (isActiveDevice)
+                return;
+#if UNITY_EDITOR
+             if (!IsShow)
+                throw new System.Exception("you can't activate a Izolator that is hide");
+#endif
+            if (destroyMode)
+                StartCoroutine(Delete());
+            SetDeviceMode(true);
+            StartCoroutine(Deactivate(_activateTime));
+        }
+        private IEnumerator Deactivate(float timeAcive)
+        {
+            yield return new WaitForSeconds(timeAcive);
+            Deactivate();
+        }
+        private IEnumerator WaitJet()
+        {
+            var jetActive = new List<IJet>();
+            jetActive.AddRange(jets);
+            while (jetActive.Count > 0)
             {
-                SetDeviceMode(true);
-                Invoke(nameof(OnDeactivateJet), _activateTime);
+                yield return new WaitForSeconds(0.1f);
+                var list = new List<IJet>();
+                for (int i = 0; i < jetActive.Count; i++)
+                {
+                    if (jetActive[i].IsActive)
+                        list.Add(jetActive[i]);
+                }
+                jetActive.Clear();
+                jetActive = list;
             }
         }
-
-        private void OnDeactivateJet()
+        public override void Deactivate()
         {
+#if UNITY_EDITOR
+            if (!isActiveDevice)
+                throw new System.Exception("Izolator is already deactive");
+#endif
             SetDeviceMode(false);
         }
-        protected virtual void SetDeviceMode(bool mode)
-        {
-            SetJetMode(mode);
-        }
-        private IEnumerator DeactivateDevice()
+
+        private IEnumerator Delete()
         {
             yield return new WaitWhile(() => !IsShow);
             var progress = 0f;
@@ -64,17 +86,38 @@ namespace MainMode
                 progress += Time.deltaTime / durationWork;
                 yield return null;
             }
-            isActiveDevice = false;
-            yield return new WaitWhile(() => jets[jets.Length-1].IsActive && IsShow);
+            yield return WaitJet();
             if (isActiveDevice)
                 throw new System.Exception("Error");
-            SetMode(false);
+            HideItem();
         }
+        protected virtual void SetDeviceMode(bool mode)
+        {
+            isActiveDevice = mode;
+            SetJetMode(mode);
+        }
+        #region Display Izolator
+        protected override void ShowDeviceAnimationEvent()
+        {
+            SetState(true);
+        }
+        protected override void HideDeviceAnimationEvent()
+        {
+            SetState(false);
+        }
+
+        protected void SetState(bool mode)
+        {
+            _body.enabled = mode;
+            colider.enabled = mode;
+        }
+        #endregion
+
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
             if (attackInfo.Effect == EffectType.None)
                 return;
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen) && isActiveDevice)
             {
                 screen.ShowEffect(attackInfo);
             }
@@ -83,17 +126,12 @@ namespace MainMode
         {
             if (attackInfo.Effect == EffectType.None)
                 return;
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
+            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen) && isActiveDevice)
             {
                 screen.ShowEffect(attackInfo);
             }
         }
-        protected override void SetState(bool mode)
-        {
-            isActiveDevice = mode;
-            _body.enabled = mode;
-            colider.enabled = mode;
-        }
+
         private void SetJetMode(bool mode)
         {
             foreach (var jet in jets)
@@ -101,5 +139,6 @@ namespace MainMode
                 jet.SetMode(mode);
             }
         }
+
     }
 }

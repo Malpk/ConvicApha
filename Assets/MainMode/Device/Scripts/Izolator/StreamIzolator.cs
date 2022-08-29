@@ -8,15 +8,11 @@ namespace MainMode
     {
         public override TrapType DeviceType => TrapType.SteamIsolator;
 
-        protected override void Intilizate()
-        {
-            base.Intilizate();
-        }
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.GetComponent<Character>() != null)
-                OnActivateJet();
+                Activate();
         }
 
     }

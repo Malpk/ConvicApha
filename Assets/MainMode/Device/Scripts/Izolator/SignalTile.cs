@@ -13,10 +13,9 @@ namespace MainMode
         [SerializeField] private Collider2D _collider;
         [SerializeField] private SpriteRenderer _body;
 
-
         public TrapType DeviceType => TrapType.SignalTile;
 
-        public delegate void Singnal(Collider2D collision);
+        public delegate void Singnal();
         public event Singnal SingnalAction;
 
         private void Awake()
@@ -24,17 +23,18 @@ namespace MainMode
             _body.enabled = false;
             _collider = GetComponent<Collider2D>();
             _collider.isTrigger = true;
+            SetMode(false);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (SingnalAction != null &&  collision.GetComponent<Player>())
-                SingnalAction(collision);
+                SingnalAction();
         }
 
         public void SetMode(bool mode)
         {
-            _body.enabled =IsShowTile ? mode : false;
+            _body.enabled = IsShowTile ? mode : false;
         }
     }
 }

@@ -28,6 +28,7 @@ namespace MainMode
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
+            SetMode(false);
         }
 
         public void SetAttack(DamageInfo info)

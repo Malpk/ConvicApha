@@ -10,18 +10,15 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.VenomIsolator;
 
-        protected override void SetState(bool mode)
+        public override void Activate()
         {
-            _cloud.SetMode(mode);
-            base.SetState(mode);
+            base.Activate();
+            _cloud.Show();
         }
-        protected override void SetDeviceMode(bool mode)
+        public override void Deactivate()
         {
-            base.SetDeviceMode(mode);
-            if (mode)
-                _cloud.Show();
-            else
-                _cloud.Hide();
+            base.Deactivate();
+            _cloud.Hide();
         }
     }
 }

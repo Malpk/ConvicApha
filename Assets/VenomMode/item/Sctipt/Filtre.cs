@@ -15,7 +15,7 @@ namespace MainMode.Mode1921
         public void Spawn(Vector2 position)
         {
             transform.position = position;
-            SetMode(true);
+            ShowItem();
         }
         public override void Use()
         {

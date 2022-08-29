@@ -12,8 +12,6 @@ namespace Underworld
         [Header("Mode Setting")]
         [Min(0)]
         [SerializeField] private float _warningTime = 0;
-        [Min(0)]
-        [SerializeField] private float _workTime = 1;
         [Header("Island Setting")]
         [Min(1)]
         [SerializeField] private int _minDistanceBothIsland = 1;
@@ -21,15 +19,13 @@ namespace Underworld
         [SerializeField] private int _maxSizeIsland;
         [Header("Map Setting")]
         [SerializeField] private MapBuilder _mapBuilder;
-        [AssetReferenceUILabelRestriction("term")]
-        [SerializeField] private AssetReferenceGameObject _handTermAsset;
+        [SerializeField] private Term _handTermPerfab;
 
         private int _mapSize;
         private bool _isReady = false;
         private Point[,] _map;
         private Coroutine _runMode = null;
-        private HandTermTile _handTermPerfab;
-        private List<HandTermTile> _activeTils = new List<HandTermTile>();
+        private List<Term> _activeTils = new List<Term>();
         private Vector2Int[] _bounds;
 
         private readonly Vector2Int[] offset = new Vector2Int[]
@@ -37,12 +33,8 @@ namespace Underworld
             Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down
         };
 
-        public override bool IsReady => _isReady;
+        public override bool IsReady => _mapBuilder && _handTermPerfab && _isReady;
 
-        protected override void Awake()
-        {
-            base.Awake();
-        }
         private void Start()
         {
             if (_mapBuilder)
@@ -50,38 +42,14 @@ namespace Underworld
             if (playOnStart)
                 Activate();
         }
-        #region Intializate
         public override void Intializate(MapBuilder builder, Player player)
         {
             _mapBuilder = builder;
             _map = _mapBuilder.Points;
             _mapSize = _map.GetLength(0);
             _bounds = SetBounds(_mapSize);
+            _isReady = true;
         }
-        protected async override Task<bool> LoadAsync()
-        {
-            if (_handTermAsset == null)
-                throw new System.NullReferenceException();
-            var task = _handTermAsset.LoadAssetAsync().Task;
-            await task;
-            if (task.Result.TryGetComponent(out HandTermTile term))
-            {
-                _isReady = true;
-                _handTermPerfab = term;
-                return true;
-            }
-            else
-            {
-                throw new System.NullReferenceException("Gameobject is not component HandTermTile");
-            }
-        }
-
-        protected override void Unload()
-        {
-            _handTermAsset.ReleaseAsset();
-            _isReady = false;
-        }
-        #endregion
         public override bool Activate()
         {
             if (_runMode == null)
@@ -100,40 +68,28 @@ namespace Underworld
             _activeTils = CreateMap();
             yield return WaitTime(_warningTime);
             MapActivate();
-            yield return WaitTime(_workTime);
-            Debug.Log("DeaActivate");
-            var deactivateMap = MapDeactivate(_activeTils);
-            yield return new WaitWhile(() => deactivateMap.IsCompleted);
-            yield return new WaitWhile(() => deactivateMap.Result.IsActive);
+            yield return WaitTime(workDuration);
+            yield return MapDeactivate(_activeTils);
             State = ModeState.Stop;
             _runMode = null;
-            yield return null;
         }
 
         private void MapActivate()
         {
-            int index = 0;
-            int steep = (int)Mathf.Sqrt(_activeTils.Count);
-            while (_activeTils.Count > index)
+            foreach (var tile in _activeTils)
             {
-                var progress = 0;
-                while (_activeTils.Count > index && progress < steep)
-                {
-                    _activeTils[index].Activate(FireState.Start);
-                    index++;
-                }
+                tile.Activate(FireState.Start);
             }
         }
-        private async Task<HandTermTile> MapDeactivate(List<HandTermTile> activateMap)
+        private IEnumerator MapDeactivate(List<Term> activateMap)
         {
-            await Task.Run(() =>
+            foreach (var term in activateMap)
             {
-                foreach (var point in activateMap)
-                {
-                    point.Deactivate();
-                }
-            });
-            return activateMap[activateMap.Count - 1];
+                term.Deactivate();
+                term.StartCoroutine(term.HideByDeactivation());
+            }
+            var endTile = activateMap[activateMap.Count - 1];
+            yield return new WaitWhile(() => endTile.IsDamageMode);
         }
         #endregion
         #region Get Seeds
@@ -204,9 +160,9 @@ namespace Underworld
         }
         #endregion
         #region Create Map
-        private List<HandTermTile> CreateMap()
+        private List<Term> CreateMap()
         {
-            var result = new List<HandTermTile>();
+            var result = new List<Term>();
             var seeds = GetSeed(GetStartPoint(_mapSize), _bounds);
             var islands = new List<Vector2Int>();
             foreach (var seed in seeds)
@@ -216,9 +172,10 @@ namespace Underworld
             var mapActive = GetMapActive(_map, islands).ToList();
             for (int i = 0; i < mapActive.Count; i++)
             {
-                var term = Instantiate(_handTermPerfab, transform);
+                var term = Instantiate(_handTermPerfab.gameObject, transform).GetComponent<Term>();
                 mapActive[i].SetItem(term);
                 result.Add(term);
+                term.ShowItem();
             }
             return result;
         }
@@ -259,12 +216,6 @@ namespace Underworld
             }
             return island.ToArray();
         }
-
-
-
-
-
-
         private Vector2Int[] SetBounds(int mapSize)
         {
             if (mapSize <= 0)

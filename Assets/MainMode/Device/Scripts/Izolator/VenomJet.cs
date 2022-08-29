@@ -19,6 +19,11 @@ namespace MainMode
 
         public bool IsActive => _isActivate;
 
+        private void Awake()
+        {
+            SetMode(false);
+        }
+
         public void SetAttack(DamageInfo info)
         {
             _attackInfo = info;

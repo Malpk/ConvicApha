@@ -11,12 +11,6 @@ namespace MainMode
         
         public override TrapType DeviceType => TrapType.N7;
 
-        protected override void Intilizate()
-        {
-            base.Intilizate();
-            OffItem();
-        }
-
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

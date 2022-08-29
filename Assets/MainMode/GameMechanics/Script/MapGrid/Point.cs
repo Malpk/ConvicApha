@@ -5,7 +5,7 @@ using MainMode.Items;
 
 public class Point
 {
-    private SpawnItem _item;
+    private SmartItem _item;
 
     public bool IsBusy => _item ? _item.IsShow : false;
     public Vector2 Position { get; private set; }
@@ -15,19 +15,13 @@ public class Point
         Position = position;
     }
 
-    public void SetItem(SpawnItem item)
+    public void SetItem(SmartItem item)
     {
-        if (_item != null)
-            RemoveObject();
+#if UNITY_EDITOR
+        if (IsBusy)
+            throw new System.Exception("this point is already busy");
+#endif
         item.SetPosition(Position);
         _item = item;
-    }
-    public void RemoveObject()
-    {
-        if (_item)
-        {
-            _item.SetMode(false);
-            _item = null;
-        }
     }
 }

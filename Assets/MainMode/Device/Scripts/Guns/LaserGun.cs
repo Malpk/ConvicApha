@@ -6,7 +6,8 @@ namespace MainMode
 {
     public class LaserGun : Gun
     {
-        [Header("Time setting")]
+        [Header("LaserGun setting")]
+        [SerializeField] private bool _activateOnStart;
         [Min(1)]
         [SerializeField] private float _timeReload = 1f;
         [Min(1)]
@@ -14,34 +15,43 @@ namespace MainMode
         [Header("Movement setting")]
         [Min(1)]
         [SerializeField] private float _speedRotation = 1f;
-        [Header("Reqired component")]
+        [Header("Reference")]
         [SerializeField] private Laser _laser;
         [SerializeField] private Rigidbody2D _rotateBody;
+        [SerializeField] private Collider2D _collider;
 
         private Coroutine _coroutine = null;
 
         public override TrapType DeviceType => TrapType.LaserGun;
 
-        protected override void Intilizate()
+        protected override void Awake()
         {
-            base.Intilizate();
+            base.Awake();
+            _collider.enabled = !_activateOnStart;
             _laser.SetAttack(attackInfo);
+        }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            if(_activateOnStart)
+                CompliteUpAnimation += Activate;
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            if (_activateOnStart)
+                CompliteUpAnimation -= Activate;
         }
         private void Start()
         {
-            if (playOnStart)
-            {
-                Run();
-            }
+            if (showOnStart)
+                ShowItem();
         }
-        public override void Run(Collider2D target = null)
+        public override void Activate()
         {
-            if (_coroutine == null)
-            {
-                isActiveDevice = true;
-                _coroutine = StartCoroutine(Rotate());
-                StartCoroutine(ShootLaser());
-            }
+            base.Activate();
+            _coroutine = StartCoroutine(Rotate());
+            StartCoroutine(ShootLaser());
         }
         private IEnumerator Rotate()
         {
@@ -57,9 +67,9 @@ namespace MainMode
             }
             _coroutine = null;
             yield return StartCoroutine(ReturnState());
-            isActiveDevice = false;
-            if(destroyMode)
-                SetMode(false);
+            Deactivate();
+            if (destroyMode)
+                HideItem();
         }
         private IEnumerator ReturnState()
         {

@@ -18,10 +18,10 @@ public class PoolItem
     [AssetReferenceUILabelRestriction("device")]
     [SerializeField] private AssetReferenceGameObject _perfabAsset;
 
-    private SpawnItem _perfab;
+    private SmartItem _perfab;
 
-    private List<SpawnItem> _poolActive = new List<SpawnItem>();
-    private List<SpawnItem> _poolDeactive = new List<SpawnItem>();
+    private List<SmartItem> _poolActive = new List<SmartItem>();
+    private List<SmartItem> _poolDeactive = new List<SmartItem>();
 
     public int DistanceFromPlayer => _distanceFormPlayer;
     public bool IsAcces => _poolActive.Count < _maxCount || _isInfinity;
@@ -33,7 +33,7 @@ public class PoolItem
         await load;
         try
         {
-            if (!load.Result.TryGetComponent(out SpawnItem item))
+            if (!load.Result.TryGetComponent(out SmartItem item))
                 throw new System.NullReferenceException("GameObject is not SpawnItem component");
             _perfab = item;
         }
@@ -53,10 +53,10 @@ public class PoolItem
         {
             var item = _poolActive[0];
             _poolActive.Remove(item);
-            item.OffItem();
+            item.HideItem();
         }
     }
-    public bool Create(out SpawnItem item)
+    public bool Create(out SmartItem item)
     {
         CheakState();
         if (IsAcces)
@@ -72,7 +72,7 @@ public class PoolItem
         }
     }
 
-    private SpawnItem Instantiate()
+    private SmartItem Instantiate()
     {
         if (_poolDeactive.Count > 0)
         {
@@ -80,7 +80,7 @@ public class PoolItem
             _poolDeactive.Remove(item);
             return item;
         }
-        return MonoBehaviour.Instantiate(_perfab.gameObject).GetComponent<SpawnItem>();
+        return MonoBehaviour.Instantiate(_perfab.gameObject).GetComponent<SmartItem>();
     }
     private void CheakState()
     {
@@ -103,7 +103,7 @@ public class PoolItem
             MonoBehaviour.Destroy(item.gameObject);
         }
     }
-    private IEnumerator AddInPool(SpawnItem item)
+    private IEnumerator AddInPool(SmartItem item)
     {
         yield return new WaitWhile(() => !item.IsShow);
         _poolActive.Add(item);

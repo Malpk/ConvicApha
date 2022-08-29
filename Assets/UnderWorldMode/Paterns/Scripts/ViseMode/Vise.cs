@@ -13,7 +13,7 @@ namespace Underworld
 
         private Transform _leftVise;
         private Transform _rightVise;
-        private List<HandTermTile> _termList = new List<HandTermTile>();
+        private List<Term> _termList = new List<Term>();
         
         public bool IsMoveVise => _startMove != null;
 
@@ -24,10 +24,8 @@ namespace Underworld
             if (!_leftVise || !_rightVise)
             {
                 transform.rotation = Quaternion.Euler(Vector3.forward * GetAngel(typeWork));
-                if(_leftVise)
-                    _leftVise = CreateVise(map, 0, tile);
-                if(_rightVise)
-                    _rightVise = CreateVise(map, map.GetLength(0) - 1, tile);
+                _leftVise = CreateVise(map, 0, tile);
+                _rightVise = CreateVise(map, map.GetLength(0) - 1, tile);
                 _way = GetWay(typeWork, map, _leftVise.position);
                 return true;
             }
@@ -73,7 +71,7 @@ namespace Underworld
             holder.position = Vector3.right * map[0, position].Position.x;
             for (int i = 0; i < map.GetLength(0); i++)
             {
-                if (CreateTerm(tile, map[i, position].Position, out HandTermTile term))
+                if (CreateTerm(tile, map[i, position].Position, out Term term))
                 {
                     _termList.Add(term);
                     term.transform.parent = holder;
@@ -87,10 +85,10 @@ namespace Underworld
             holder.parent = transform;
             return holder;
         }
-        private bool CreateTerm(GameObject tile, Vector2 position, out HandTermTile term)
+        private bool CreateTerm(GameObject tile, Vector2 position, out Term term)
         {
             var instateTile = Instantiate(tile, position, Quaternion.identity);
-            if (instateTile.TryGetComponent(out HandTermTile handTerm))
+            if (instateTile.TryGetComponent(out Term handTerm))
             {
                 term = handTerm;
                 return true;
@@ -107,29 +105,22 @@ namespace Underworld
                 return false;
             foreach (var term in _termList)
             {
-                term.SetMode(true);
+                term.ShowItem();
             }
             _startMove = StartCoroutine(MoveVise(moveDelay));
             return true;
         }
         #region Work
-        public void Activate()
+        private void Activate()
         {
             foreach (var term in _termList)
             {
                 term.Activate(FireState.Stay);
             }
         }
-        public IEnumerator Deactivate()
-        {
-            foreach (var term in _termList)
-            {
-                term.Deactivate();
-            }
-            yield return new WaitWhile(() => _termList[_termList.Count - 2].IsActive);
-        }
         private IEnumerator MoveVise(float moveDelay)
         {
+            Activate();
             for (int i = 0; i < _way.Length; i++)
             {
                 _leftVise.localPosition = _way[i];
@@ -143,7 +134,7 @@ namespace Underworld
         {
             foreach (var term in _termList)
             {
-                term.SetMode(false);
+                term.HideItem();
             }
             yield return new WaitWhile(() => _termList[_termList.Count - 1].IsShow);
         }

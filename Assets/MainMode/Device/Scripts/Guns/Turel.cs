@@ -7,6 +7,7 @@ namespace MainMode
     public class Turel : Gun
     {
         [Header("Attacks properties")]
+        [SerializeField] private bool _activateOnStart;
         [SerializeField]
         protected float _activationTime = 1f;
         [SerializeField]
@@ -15,27 +16,39 @@ namespace MainMode
         protected Bullet _bulletPrefab;
         [SerializeField]
         protected Transform _spawnTransform;
-
         [Header("Move properties")]
         [SerializeField] protected float _rotationAngleOnSeconds;
         [SerializeField] protected Rigidbody2D _rigidbody;
+        [SerializeField] private Collider2D _collider;
 
         public override TrapType DeviceType => TrapType.Turel;
-
+        protected override void Awake()
+        {
+            base.Awake();
+            _collider.enabled = !_activateOnStart;
+        }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            if (_activateOnStart)
+                CompliteUpAnimation += Activate;
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            if (_activateOnStart)
+                CompliteUpAnimation -= Activate;
+        }
         private void Start()
         {
-            if (playOnStart)
-                Run();
+            if (showOnStart)
+                ShowItem();
         }
-
-        public override void Run(Collider2D collision = null)
+        public override void Activate()
         {
-            if (!isActiveDevice)
-            {
-                isActiveDevice = true;
-                StartCoroutine(Rotate());
-                StartCoroutine(Shoot());
-            }
+            base.Activate();
+            StartCoroutine(Rotate());
+            StartCoroutine(Shoot());
         }
 
         protected IEnumerator Rotate()
@@ -50,9 +63,9 @@ namespace MainMode
                 yield return null;
             }
             _rigidbody.rotation = startAngle;
-            isActiveDevice = false;
-            if(destroyMode)
-                SetMode(false);
+            Deactivate();
+            if (destroyMode)
+                HideItem();
         }
         protected IEnumerator Shoot()
         {

@@ -7,22 +7,16 @@ using UnityEngine;
     [RequireComponent(typeof(SpriteRenderer),typeof(Rigidbody2D))]
     public class Trident : MonoBehaviour, IPause
     {
-        [SerializeField] private Marker _marker;
         [Header("Effect Setting")]
+        [SerializeField] private TridentConfig _config;
         [SerializeField] private Animator _effect;
         [SerializeField] private SpriteRenderer _effectSpiteBody;
 
         private bool _isPause;
-        private float _warningTime;
-        private float _speedMovement;
         private Coroutine _corotine;
         private Rigidbody2D _rigidBody;
         private SpriteRenderer _sprite;
-
-        private int _curretDirection = 0;
-
-        private int[] _direction = new int[] { -1, 1 };
-        private int[] _angls = new int[] { 0, 180 };
+        private Vector3 _startPostion;
 
         public bool IsActive => _corotine != null;
 
@@ -31,44 +25,39 @@ using UnityEngine;
             _sprite = GetComponent<SpriteRenderer>();
             _rigidBody = GetComponent<Rigidbody2D>();
             _rigidBody.isKinematic = true;
-            Show(false); 
+            DisplayTrident(false);
+            _startPostion = transform.position;
         }
-        public void Intilizate(TridentSetting setting)
+        public void SetConfig(TridentConfig config)
         {
-            _warningTime = setting.WarningTime;
-            _speedMovement = setting.SpeedMovement;
+            _config = config;
+        }
+        public void SetDistances(float distance)
+        {
+            transform.position = _startPostion - transform.up * distance;
         }
         #region Movement
         public bool Activate()
         {
-            if (_corotine != null)
-                return false;
-            //IntilizateTrident(angle, marker);
-            _corotine = StartCoroutine(Move());
-            Show(true);
-            return true;
-        }
-        public void SetDistance(float distacne)
-        {
-            var index = Random.Range(0, _angls.Length);
-            _curretDirection = _direction[index];
-            transform.localRotation = Quaternion.Euler(Vector3.forward * _angls[index]);
-            transform.localPosition += Vector3.up * _curretDirection *  distacne;
+            if (_corotine == null)
+            {
+                DisplayTrident(true);
+                _corotine = StartCoroutine(Move());
+                return true;
+            }
+            return false;
         }
         private IEnumerator Move()
         {
-            //_marker.ActiveMarker();
-            yield return new WaitWhile(() => _marker.IsActive);
-            Vector2 startPosition = transform.localPosition;
-            var target = new Vector2(startPosition.x, -startPosition.y);
-            while (Vector2.Distance(transform.localPosition, target) > 0.05f)
+            Vector2 startPosition = transform.position;
+            while (Vector2.Distance(transform.position, startPosition) < _config.DistanceFly)
             {
-                _rigidBody.MovePosition(transform.TransformPoint(transform.localPosition +
-                    Vector3.up * _speedMovement * Time.fixedDeltaTime));
-                yield return null;
+                _rigidBody.MovePosition(transform.position +
+                   transform.up * _config.SpeedMovement * Time.fixedDeltaTime);
+                yield return new WaitForFixedUpdate();
                 yield return new WaitWhile(() => _isPause);
             }
-            Show(false);
+            DisplayTrident(false);
             _corotine = null;
         }
         #endregion
@@ -79,7 +68,7 @@ using UnityEngine;
                 target.Dead();
             }
         }
-        private void Show(bool mode)
+        private void DisplayTrident(bool mode)
         {
             _effect.enabled = mode;
             _sprite.enabled = mode;

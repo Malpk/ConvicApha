@@ -11,6 +11,9 @@ namespace MainMode.GameInteface
         protected InterfaceSwitcher swithchInteface;
      
         public abstract UserInterfaceType Type { get; }
+        public bool IsShow { get; private set; }
+
+        protected event System.Action HideAction;
 
         protected virtual void Awake()
         {
@@ -22,11 +25,15 @@ namespace MainMode.GameInteface
         }
         public void OnShow()
         {
+            IsShow = true;
             _parentCanvas.enabled = true;
         }
         public void Hide()
         {
+            IsShow = false;
             _parentCanvas.enabled = false;
+            if (HideAction != null)
+                HideAction();
         }
 
         public GameObject InstateElement(GameObject element)

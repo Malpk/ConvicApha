@@ -8,15 +8,10 @@ namespace MainMode
     {
         public override TrapType DeviceType => TrapType.U92;
 
-        protected override void Intilizate()
-        {
-            base.Intilizate();
-            OffItem();
-        }
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision, attackInfo);
+            if(isActiveDevice)
+                SetScreen(collision, attackInfo);
         }
     }
 }

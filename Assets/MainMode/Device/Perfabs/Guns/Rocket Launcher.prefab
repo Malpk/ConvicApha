@@ -404,7 +404,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7194119081482484992}
-  - component: {fileID: 7194119081482484995}
   - component: {fileID: 7194119081482484994}
   - component: {fileID: 7194119081482484997}
   - component: {fileID: 7194119081482484996}
@@ -434,22 +433,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7194119081482484995
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7194119081482484998}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.445, y: 0}
-  m_Size: {x: 0.5, y: 1}
-  m_Direction: 0
 --- !u!114 &7194119081482484994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,15 +446,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
+  showOnStart: 1
   durationWork: 15
-  isDebug: 0
-  playOnStart: 0
+  _isShowTriger: 0
+  _trigerArean: {fileID: 7194119080931255040}
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
     _attack: 2
   gunAnimator: {fileID: 7194119081331237773}
-  triger: {fileID: 7194119080931255070}
+  _bodyCollider: {fileID: 7194119081331237809}
   _spriteRender: {fileID: 7194119081331237772}
   _aimTime: 2
   _speedRotation: 5
@@ -495,7 +479,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 5.4
 --- !u!95 &7194119081482484996
 Animator:
   serializedVersion: 3
@@ -700,6 +684,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _fireEffect: 0.5
+  _sprite: {fileID: 7194119081575162920}
+  _colider: {fileID: 7194119081575162922}
+  _animator: {fileID: 7194119081575162923}
 --- !u!1 &7194119082003873814
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +821,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _fireEffect: 0.5
+  _sprite: {fileID: 7194119082003873810}
+  _colider: {fileID: 7194119082003873812}
+  _animator: {fileID: 7194119082003873813}
 --- !u!1001 &1474728466214466842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -844,7 +834,7 @@ PrefabInstance:
     - target: {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
       propertyPath: _collider
       value: 
-      objectReference: {fileID: 7194119080931255071}
+      objectReference: {fileID: 0}
     - target: {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
       propertyPath: IsShowTile
       value: 0
@@ -897,26 +887,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
+    - {fileID: 8620431239785666053, guid: 767f3776764bb6d4caef518bda403516, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 767f3776764bb6d4caef518bda403516, type: 3}
 --- !u!4 &7194119080931255041 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8620431239785666075, guid: 767f3776764bb6d4caef518bda403516, type: 3}
   m_PrefabInstance: {fileID: 1474728466214466842}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7194119080931255071 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 8620431239785666053, guid: 767f3776764bb6d4caef518bda403516, type: 3}
+--- !u!212 &7194119080931255040 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8620431239785666074, guid: 767f3776764bb6d4caef518bda403516, type: 3}
   m_PrefabInstance: {fileID: 1474728466214466842}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7194119080931255070 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
-  m_PrefabInstance: {fileID: 1474728466214466842}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

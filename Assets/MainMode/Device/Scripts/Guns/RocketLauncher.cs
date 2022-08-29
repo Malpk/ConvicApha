@@ -21,11 +21,11 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.RocketLauncher;
 
-        protected override void Intilizate()
+        protected override void Awake()
         {
+            base.Awake();
             _wave.SetAttack(attackInfo);
             _rocket.SetAttack(attackInfo);
-            base.Intilizate();
         }
         protected override void OnEnable()
         {
@@ -37,16 +37,18 @@ namespace MainMode
             base.OnDisable();
             _shoot.FireAction -= Fire;
         }
-        public override void Run(Collider2D target)
+        public override void Activate()
         {
-            if (_coroutine == null && IsShow)
+            base.Activate();
+            if (_coroutine == null)
             {
                 isActiveDevice = true;
-                _coroutine = StartCoroutine(Rotate(target.transform));
-                if(destroyMode)
+                _coroutine = StartCoroutine(Rotate(_target));
+                if (destroyMode)
                     StartCoroutine(Delete());
             }
         }
+
         private IEnumerator Rotate(Transform target)
         {
             float progress = 0f;
@@ -68,7 +70,7 @@ namespace MainMode
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(ReturnState());
             _coroutine = null;
-            isActiveDevice = false;
+            Deactivate();
         }
         private IEnumerator ReturnState()
         {
@@ -87,7 +89,7 @@ namespace MainMode
                 yield return null;
             }
             yield return new WaitWhile(() => isActiveDevice);
-            SetMode(false);
+            HideItem();
         }
         private void Shoot()
         {
@@ -106,7 +108,5 @@ namespace MainMode
             _rocket.SetMode(true);
             _rocket.SetTarget(_lostTargetPosition);
         }
-
-
     }
 }

@@ -14,11 +14,9 @@ namespace Underworld
         [SerializeField] private float _maxTimeOffset;
         [Header("Reference")]
         [SerializeField] private MapBuilder _builder;
-        [AssetReferenceUILabelRestriction("term")]
-        [SerializeField] private AssetReferenceGameObject _handTernAsset;
+        [SerializeField] private Term _handTernAsset;
 
         private bool _isReady = false;
-        private HandTermTile _handTermPerfab;
 
         private ViseTypeWork[] _workTypeVise = new ViseTypeWork[] { ViseTypeWork.Vertical, ViseTypeWork.Horizontal };
 
@@ -27,24 +25,12 @@ namespace Underworld
 
         public override bool IsReady => _isReady && _builder && _vises.Count > 0;
 
-        protected async override Task<bool> LoadAsync()
+        private void Start()
         {
-            if (!IsReady)
+            if (_builder && _handTernAsset)
             {
-                var load = _handTernAsset.LoadAssetAsync().Task;
-                await load;
-                if (load.Result.TryGetComponent(out HandTermTile term))
-                    throw new System.NullReferenceException("GameObject is not component HandTermTile");
-                _handTermPerfab = term;
-                _isReady = true;
-                return true;
+                Intializate(_builder, null);
             }
-            return false;
-        }
-        protected override void Unload()
-        {
-            _handTernAsset.ReleaseAsset();
-            _isReady = false;
         }
         #region Intilizate
         public override void Intializate(MapBuilder builder, Player player)
@@ -54,10 +40,10 @@ namespace Underworld
                 DeleteVise();
             foreach (var work in _workTypeVise)
             {
-                _vises.Add(GetVise(_handTermPerfab, work));
+                _vises.Add(GetVise(_handTernAsset, work));
             }
         }
-        private Vise GetVise(HandTermTile handterm, ViseTypeWork type)
+        private Vise GetVise(Term handterm, ViseTypeWork type)
         {
             var vise = GetHolder("ViseHolder").gameObject.AddComponent<Vise>();
             vise.CreateVise(handterm.gameObject, _builder.Points, type);
@@ -97,9 +83,9 @@ namespace Underworld
             while (vise.IsMoveVise && State == ModeState.Stop)
             {
                 yield return new WaitWhile(() => State == ModeState.Pause);
-                yield return StartCoroutine(vise.Deactivate());
+                //yield return StartCoroutine(vise.Deactivate());
                 yield return WaitTime(_warningTime);
-                vise.Activate();
+                //vise.Activate();
                 yield return WaitTime(timeOffset * 2);
             }
             _runMods.Remove(_runMods[0]);

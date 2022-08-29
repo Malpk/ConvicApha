@@ -12,31 +12,28 @@ namespace MainMode
         [SerializeField] private Rigidbody2D _fireGun;
         [SerializeField] private ParticleSystem _fireParticale;
 
-        
+        private bool _particaleMode;
+
         private int[] _directions = new int[] { -1, 1 };
 
         public override TrapType DeviceType => TrapType.FireGun;
 
-        protected override void Intilizate()
+        protected override void Awake()
         {
-            base.Intilizate();
+            base.Awake();
             _fireParticale.Pause();
             _fire.SetAttack(attackInfo);
         }
-
         private void Start()
         {
-            if(playOnStart)
-                Run();
+            if (showOnStart)
+                Activate();
         }
-
-        public override void Run(Collider2D collision = null)
+        public override void Activate()
         {
-            if (!isActiveDevice)
-            {
-                _fire.SetMode(true);
-                StartCoroutine(Rotate());
-            }
+            base.Activate();
+            _fire.SetMode(true);
+            StartCoroutine(Rotate());
         }
         private IEnumerator Rotate()
         {
@@ -50,6 +47,7 @@ namespace MainMode
             {
                 progress += Time.deltaTime / durationWork;
                 _fireGun.MoveRotation(_fireGun.rotation + direction * _speedRotation * Time.deltaTime);
+                yield return new WaitWhile(() => _isPause);
                 yield return null;
             }
             yield return ReturnState();
@@ -58,7 +56,7 @@ namespace MainMode
             _fireParticale.Clear();
             isActiveDevice = false;
             if(destroyMode)
-                SetMode(false);
+                HideItem();
         }
         private IEnumerator ReturnState()
         {
@@ -68,6 +66,17 @@ namespace MainMode
                 yield return new WaitForFixedUpdate();
             }
         }
-
+        public override void UnPause()
+        {
+            base.UnPause();
+            if (_particaleMode)
+                _fireParticale.Play();
+        }
+        public override void Pause()
+        {
+            base.Pause();
+            _particaleMode = _fireParticale.isPlaying;
+            _fireParticale.Pause();
+        }
     }
 }

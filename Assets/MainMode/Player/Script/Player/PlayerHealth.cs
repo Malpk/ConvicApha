@@ -46,7 +46,8 @@ public class PlayerHealth
             _healthPoints = _maxHealthPoint;
         else
             _healthPoints = newHealthPoints;
-        _display.Display(_healthPoints);
+        if(_display)
+            _display.Display(_healthPoints);
     }
 
 }

@@ -2,60 +2,121 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Underworld
 {
-    public class PaternCreater : TotalMapMode
+    public sealed class PaternCreater : TotalMapMode
     {
         [Header("Game setting")]
-        [SerializeField] protected bool iversionMode;
-        [SerializeField] protected float errorColorDefaout;
-        [SerializeField] protected Color _deffaout;
-        [SerializeField] protected Vector2Int _unitySprite;
-        [SerializeField] protected Sprite _spriteAtlas;
-       
-        protected int oneSecond = 1;
-        protected Color deactiveColor;
-        protected Point[,] _map;
-        protected Coroutine _runMode = null;
+        [SerializeField] private bool _iversionMode;
+        [SerializeField] private float _warningTime;
+        [SerializeField] private float _errorColorDefaout;
+        [SerializeField] private Color _deffaout;
+        [SerializeField] private Vector2Int _unitySprite;
+        [SerializeField] private Texture2D _spriteAtlas;
 
-        public bool IsAttackMode => _runMode != null;
+        private Color deactiveColor;
+        private Coroutine _runMode = null;
 
-        protected override void Awake()
+        public bool IsActive { get; private set; } = false;
+
+        private void Awake()
         {
-            base.Awake();
-            deactiveColor = iversionMode ? Color.black : Color.white;
+            deactiveColor = _iversionMode ? Color.black : Color.white;
         }
         public override bool Activate()
         {
-            if (_runMode == null && IsReady)
+            if (_runMode == null)
             {
                 State = ModeState.Play;
-                _runMode = StartCoroutine(RunPatern());
+                _runMode = StartCoroutine(StartMode());
                 return true;
             }
             return false;
         }
-        private IEnumerator RunPatern()
+        private IEnumerator StartMode()
+        {
+            State = ModeState.Play;
+            yield return new WaitWhile(() => !IsReady);
+            var firstFrame = GetFrame(_spriteAtlas, Vector2Int.zero).ToList();
+            foreach (var term in firstFrame)
+            {
+                term.ShowItem();
+            }
+            yield return WaitTime(_warningTime);
+            ActivateTerms(firstFrame);
+            yield return ReadAnimation(firstFrame);
+            State = ModeState.Stop;
+            _runMode = null;
+        }
+        private IEnumerator ReadAnimation(List<Term> previousFrame)
         {
             var countOffset = GetCountOffset();
-            List<HandTermTile> previousFrame = null;
+            var delay = (workDuration / countOffset.x);
             for (int i = 0; i < countOffset.y; i++)
             {
                 for (int j = 0; j < countOffset.x && State != ModeState.Stop; j++)
                 {
                     var curretPosition = new Vector2Int(i * _unitySprite.y, j * _unitySprite.y);
-                    var curretFrame = ReadTexture(_spriteAtlas.texture, curretPosition).ToList();
-                    DeactivePreviusTils(curretFrame, previousFrame);
+                    var curretFrame = GetFrame(_spriteAtlas, curretPosition).ToList();
+                    var getDeactivateTermTask = Task.Run(() => GetPreviusTils(curretFrame, previousFrame));
+                    var getActivateTermTask = Task.Run(() => GetCurretTiles(curretFrame));
+                    yield return WaitTime(delay);
+                    yield return new WaitWhile(() => !(getDeactivateTermTask.IsCompleted && getActivateTermTask.IsCompleted));
+                    ActivateTerms(getActivateTermTask.Result);
+                    yield return delay;
+                    DectivateTerms(getDeactivateTermTask.Result);
                     previousFrame = curretFrame;
-                    yield return WaitTime((workDuration / countOffset.x) + oneSecond);
                 }
             }
+            yield return WaitTime(1f);
+            yield return WaitHideMap();
             State = ModeState.Stop;
-            _runMode = null;
+        }
+        private void ActivateTerms(List<Term> terms)
+        {
+            foreach (var term in terms)
+            {
+                if(!term.IsShow)
+                    term.ShowItem();
+                term.Activate(FireState.Start);
+            }
+        }
+        private void DectivateTerms(List<Term> terms)
+        {
+            foreach (var term in terms)
+            {
+                term.Deactivate();
+                term.StartCoroutine(term.HideByDeactivation());
+            }
+        }
+        private List<Term> GetPreviusTils(List<Term> curretFrame, List<Term> previousFrame)
+        {
+            var list = new List<Term>();
+            for (int i = 0; i < previousFrame.Count; i++)
+            {
+                if (!curretFrame.Contains(previousFrame[i]))
+                {
+                    list.Add(previousFrame[i]);
+                }
+            }
+            return list;
+        }
+        private List<Term> GetCurretTiles(List<Term> frame)
+        {
+            var list = new List<Term>();
+            for (int i = 0; i < frame.Count; i++)
+            {
+                if (!frame[i].IsDamageMode)
+                {
+                    list.Add(frame[i]);
+                }
+            }
+            return list;
         }
         #region Pacing Sprite
-        private IEnumerable<HandTermTile> ReadTexture(Texture2D texture, Vector2Int startPosition)
+        private IEnumerable<Term> GetFrame(Texture2D texture, Vector2Int startPosition)
         {
             for (int i = 0; i < _unitySprite.y; i++)
             {
@@ -64,41 +125,26 @@ namespace Underworld
                 {
                     var inkecJ = startPosition.x + j;
                     var color = texture.GetPixel(indexI, inkecJ);
-                    var term = DefineState(color, new Vector2Int(i, j));
-                    if (term != null)
+                    if (DefineState(color, new Vector2Int(i, j), out Term term))
                     {
                         yield return term;
                     }
                 }
             }
         }
-        private HandTermTile DefineState(Color color, Vector2Int termPosition)
+        private bool DefineState(Color color, Vector2Int termPosition,out Term term)
         {
+            term = null;
             if (color == deactiveColor)
-                return null;
-            if (!Equale(color, _deffaout, errorColorDefaout))
             {
-                var term = termArray[termPosition.x, termPosition.y];
-                term.Activate(FireState.Start);
-                return term;
-            }
-            return null;
-        }
-        #endregion
-        private void DeactivePreviusTils(List<HandTermTile> curret, List<HandTermTile> previous)
-        {
-            if (previous == null)
-                return;
-            var count = previous.Count();
-            for (int i = 0; i < count; i++)
-            {
-                if (!curret.Contains(previous[i]))
+                if (!Equale(color, _deffaout, _errorColorDefaout))
                 {
-                    previous[i].Deactivate();
+                    term = termArray[termPosition.x, termPosition.y];
                 }
             }
+            return term;
         }
-
+        #endregion
         private bool Equale(Color to, Color from, float errorFiltr = 0f)
         {
             var b = Mathf.Abs(to.b - from.b);
@@ -109,8 +155,8 @@ namespace Underworld
 
         private Vector2Int GetCountOffset()
         {
-            var x = _spriteAtlas.texture.width / _unitySprite.x;
-            var y = _spriteAtlas.texture.height / _unitySprite.y;
+            var x = _spriteAtlas.width / _unitySprite.x;
+            var y = _spriteAtlas.height / _unitySprite.y;
             return new Vector2Int(x, y);
         }
     }

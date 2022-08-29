@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4082129344648491972
+--- !u!1 &6073439045178571993
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4082129344648491974}
-  - component: {fileID: 4082129344648491975}
+  - component: {fileID: 9051362300991553862}
+  - component: {fileID: 7761956282780177285}
   m_Layer: 0
   m_Name: IslandMode
   m_TagString: Untagged
@@ -17,42 +17,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4082129344648491974
+--- !u!4 &9051362300991553862
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4082129344648491972}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24420574, y: -5.4237795, z: -11.8019495}
+  m_GameObject: {fileID: 6073439045178571993}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.6821253, y: -2.1000948, z: -11.203074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4082129344648491975
+--- !u!114 &7761956282780177285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4082129344648491972}
+  m_GameObject: {fileID: 6073439045178571993}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcbd43a16acfed84389de5a762bbd807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebug: 0
   playOnStart: 0
-  workDuration: 0
-  _warningTime: 4
-  _workTime: 1
+  workDuration: 10
+  _warningTime: 2
   _minDistanceBothIsland: 4
   _minSizeIsland: 4
   _maxSizeIsland: 10
   _mapBuilder: {fileID: 0}
-  _handTermAsset:
-    m_AssetGUID: 513635374147d0b4f90e0345108879ea
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  _handTermPerfab: {fileID: 2755220189578518561, guid: 513635374147d0b4f90e0345108879ea, type: 3}

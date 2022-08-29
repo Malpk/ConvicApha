@@ -4,35 +4,136 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class RayPoint : MonoBehaviour
+    public class RayPoint : MonoBehaviour, IPause
     {
-        [Header("Game Setting")]
-        [SerializeField] private float _period;
-        [SerializeField] private Vector3[] _amplituds;
+        private RayPoint _center;
+        private List<Term> _terms = new List<Term>();
 
-        private Coroutine _coroutine = null;
+        public bool IsActive { get; private set; } = false;
 
-        public bool StartScaleAnimation()
+        public void SetCenter(RayPoint center)
         {
-            if (_coroutine != null)
-                return false;
-            _coroutine = StartCoroutine(RunAnimation());
-            return true;
+            _center = center;
+        }
+        public bool Containe(Term term)
+        {
+            return _terms.Contains(term);
         }
 
-        private IEnumerator RunAnimation()
+        #region Work ray
+        public void ShowRay()
         {
-            while (true)
+            foreach (var term in _terms)
             {
-                foreach (var target in _amplituds)
+                if (!term.IsShow)
+                    term.ShowItem();
+            }
+        }
+        public void Activate()
+        {
+#if UNITY_EDITOR
+            if (IsActive)
+                throw new System.Exception("Ray is already activation");
+#endif
+            IsActive = true;
+            ClearFromCenterPoints();
+            for (int i = 0; i < _terms.Count; i++)
+            {
+                if (!_terms[i].IsDamageMode)
+                    _terms[i].Activate(FireState.Start);
+            }
+        }
+        public void Deactivate(out Term endTerm)
+        {
+#if UNITY_EDITOR
+            if (!IsActive)
+                throw new System.Exception("Ray is already Deactivation");
+#endif
+            IsActive = false;
+            for (int i = 0; i < _terms.Count; i++)
+            {
+                if (_terms[i].IsShow)
                 {
-                    while (transform.localScale != target)
-                    {
-                        transform.localScale = Vector3.MoveTowards(transform.localScale, target, _period);
-                        yield return null;
-                    }
+                    _terms[i].Deactivate(false);
+                    _terms[i].HideItem();
                 }
-                yield return null;
+            }
+            endTerm = _terms[_terms.Count - 1];
+        }
+        public void Pause()
+        {
+            foreach (var term in _terms)
+            {
+                term.Pause();
+            }
+        }
+        public void UnPause()
+        {
+            foreach (var term in _terms)
+            {
+                term.UnPause();
+            }
+        }
+        #endregion
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out Term term))
+            {
+                if (!CheakContainCenter(term))
+                    ActivateTerm(term);
+            }
+        }
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out Term term))
+            {
+                if (!CheakContainCenter(term))
+                    DeactivateTerm(term);
+            }
+        }
+        private bool CheakContainCenter(Term term)
+        {
+            if (_center)
+            {
+                var value = _center.Containe(term);
+                return value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private void ActivateTerm(Term term)
+        {
+            _terms.Add(term);
+            if (IsActive && !term.IsDamageMode)
+            {
+                term.ShowItem();
+                term.Activate(FireState.Start);
+            }
+        }
+        private void DeactivateTerm(Term term)
+        {
+            _terms.Remove(term);
+            if (IsActive)
+            {
+                term.Deactivate();
+                StartCoroutine(term.HideByDeactivation());
+            }
+        }
+        private void ClearFromCenterPoints()
+        {
+            if (_center)
+            {
+                var list = new List<Term>();
+                for (int i = 0; i < _terms.Count; i++)
+                {
+                    if (!_center.Containe(_terms[i]))
+                        list.Add(_terms[i]);
+                }
+                _terms.Clear();
+                _terms = list;
             }
         }
     }

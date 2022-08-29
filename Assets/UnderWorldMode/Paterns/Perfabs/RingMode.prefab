@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3468715773357789379
+--- !u!1 &8093603327325007297
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3468715773357789381}
-  - component: {fileID: 3468715773357789378}
+  - component: {fileID: 8093603327325007303}
+  - component: {fileID: 8093603327325007296}
   m_Layer: 0
   m_Name: RingMode
   m_TagString: Untagged
@@ -17,43 +17,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3468715773357789381
+--- !u!4 &8093603327325007303
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3468715773357789379}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 8093603327325007297}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.4379196, y: 3.3236852, z: 0.598875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3468715773357789378
+--- !u!114 &8093603327325007296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3468715773357789379}
+  m_GameObject: {fileID: 8093603327325007297}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c332e6838fec0143bde090096a7dd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebug: 0
   playOnStart: 0
-  workDuration: 0
+  workDuration: 10
   player: {fileID: 0}
-  handTermAsset:
-    m_AssetGUID: 513635374147d0b4f90e0345108879ea
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
   _builder: {fileID: 0}
-  iversionMode: 0
-  errorColorDefaout: 0.1
+  _handTermPerfab: {fileID: 2755220189578518561, guid: 513635374147d0b4f90e0345108879ea, type: 3}
+  _iversionMode: 1
+  _warningTime: 2
+  _errorColorDefaout: 0
   _deffaout: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
-  _unitySprite: {x: 16, y: 16}
-  _spriteAtlas: {fileID: 21300000, guid: 32d42507c0e09984da12bb2e611a2cd8, type: 3}
+  _unitySprite: {x: 20, y: 20}
+  _spriteAtlas: {fileID: 2800000, guid: 894a45a5d1fc9b245b1babfebe7c40d1, type: 3}

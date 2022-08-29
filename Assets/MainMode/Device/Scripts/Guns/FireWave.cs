@@ -4,23 +4,20 @@ using UnityEngine;
 
 namespace MainMode
 {
-    [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(Animator))]
     public class FireWave : MonoBehaviour, ISetAttack
     {
         [Min(1)]
         [SerializeField] private int _damage;
         [Min(0)]
         [SerializeField] private float _fireEffect;
+        [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private Collider2D _colider;
+        [SerializeField] private Animator _animator;
 
-        private Animator _animator;
-        private Collider2D _colider;
         private DamageInfo _attackInfo;
-        private SpriteRenderer _sprite;
 
         private void Awake()
         {
-            _sprite = GetComponent<SpriteRenderer>();
-            _colider = GetComponent<Collider2D>();
             _animator = GetComponent<Animator>();
             DestroyObject();
         }

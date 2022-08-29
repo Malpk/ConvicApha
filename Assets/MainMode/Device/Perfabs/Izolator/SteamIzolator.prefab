@@ -343,7 +343,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6670340497542324525}
         m_TargetAssemblyTypeName: MainMode.Izolator, Assembly-CSharp
-        m_MethodName: OnActivateJet
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -648,7 +648,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: a072a2f3f196a4044851f2cb0715e401, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -656,7 +656,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &6670340497542324525
@@ -672,9 +672,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
+  showInStart: 0
   durationWork: 10
-  isDebug: 0
-  playOnStart: 0
   _activateTime: 5
   _jetHolder: {fileID: 6670340496782743740}
   attackInfo:

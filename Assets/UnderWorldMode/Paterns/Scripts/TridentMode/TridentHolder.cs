@@ -1,76 +1,124 @@
 using System.Collections;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Underworld
 {
-    public class TridentHolder : MonoBehaviour
+    public class TridentHolder : MonoBehaviour,IPause
     {
-        [Header("Build Setting")]
-        [SerializeField] private bool _playOnAwake;
-        [SerializeField] private int _countTrident;
-        [SerializeField] private float _widthUnit;
-        [SerializeField] private float _distanceOnCenter;
+        [Header("General Setting")]
+        [SerializeField] private int _countTridentPoint;
+        [SerializeField] private float _delayShoot;
+        [SerializeField] private TridentPointConfig _config;
         [Header("Reference")]
-        [SerializeField] private Trident _trident;
-        [SerializeField] private TridentSetting _tridentSetting;
-        private Dictionary<Trident, Vector2> _tridentPool = new Dictionary<Trident, Vector2>();
+        [SerializeField] private TridentPoint _pointPerfabs;
 
-        public bool IsIntializate { get; private set; } = false;
+        private bool _isPause = false;
+        private bool _isCreate = false;
 
-        private async void Awake()
+        private List<TridentPoint> _points = new List<TridentPoint>();
+
+        private Coroutine _start;
+
+        public bool IsActive => _start != null;
+
+        #region Intilizate
+        public void Intilizate(TridentPointConfig setting ,int countTrindentPoint)
         {
-            if(_trident && _tridentSetting && _playOnAwake)
-                await IntializateAsync(_trident, _tridentSetting, _countTrident);
-        }
-        #region Intializate
-        public async Task<bool> IntializateAsync(Trident trident, TridentSetting setting, int count)
-        {
-            if (!IsIntializate)
-            {
-                _countTrident = count;
-                _trident = trident;
-                IsIntializate = true;
-                await Task.Run(()=>CreateTrident(count % 2 == 0 ? count : count - 1, setting));
-            }
-            return false;
+            _config = setting;
+            _countTridentPoint = countTrindentPoint;
         }
 
-        private void CreateTrident(int count,TridentSetting setting)
+        public void CreatePoints()
         {
-            var position = Vector2.left * (count/2 * _widthUnit - _widthUnit / 2);
-            for (int i = 0; i < count; i++)
+#if UNITY_EDITOR
+            if (_isCreate)
+                throw new System.Exception("Point is already created");
+#endif
+            _isCreate = true;
+            var widthPoint = _pointPerfabs.WidthTrident * _config.CountTrident;
+            var startPosition = (widthPoint * (_countTridentPoint - 1)) / 2;
+            for (int i = 0; i < _countTridentPoint; i++)
             {
-                var trident = Instantiate(_trident.gameObject, transform).GetComponent<Trident>();
-                trident.transform.localPosition = position + Vector2.right * i * _widthUnit;
-                trident.Intilizate(setting);
-                _tridentPool.Add(trident, trident.transform.localPosition);
+                var position = startPosition - widthPoint * i;
+                var point = Instantiate(_pointPerfabs.gameObject, 
+                    transform.right * position, transform.rotation).
+                        GetComponent<TridentPoint>();
+                point.transform.parent = transform;
+                point.Intilizate(_config);
+                point.CreateTridents();
+                _points.Add(point);
             }
         }
         #endregion
-
-        public bool GetFreeTrident(out Trident trident)
+        #region Work Controler
+        public void Activate(float timeActive)
         {
-            foreach (var pool in _tridentPool)
+#if UNITY_EDITOR
+            if (IsActive)
+                throw new System.Exception("TridentHolder is already activated");
+            else if(!_isCreate)
+                throw new System.Exception("TridentPoints is not created");
+#endif
+            _start = StartCoroutine(Run(timeActive));
+        }
+
+        public void Pause()
+        {
+            _isPause = true;
+            foreach (var point in _points)
             {
-                if (!pool.Key.IsActive)
+                point.Pause();
+            }
+        }
+
+        public void UnPause()
+        {
+            _isPause = false;
+            foreach (var point in _points)
+            {
+                point.UnPause();
+            }
+        }
+        #endregion
+        private IEnumerator Run(float timeActive)
+        {
+            var progress = 0f;
+            while (progress < 1f)
+            {
+                yield return new WaitWhile(() => _isPause);
+                if (GetPoint(out TridentPoint point))
                 {
-                    trident = pool.Key;
-                    trident.transform.localPosition = pool.Value;
-                    trident.SetDistance(_distanceOnCenter);
-                    return true;
+                    point.Activate();
+                    yield return new WaitForSeconds(_delayShoot);
+                    progress += _delayShoot / timeActive;
+                }
+                else
+                {
+                    progress += Time.deltaTime/ timeActive;
+                    yield return null;
                 }
             }
-            trident = null;
-            return false;
         }
-        public bool GetGroup( out Trident[] group)
+        private bool GetPoint(out TridentPoint point)
         {
-
-            group = null;
-            return false;
+            if (_points.Count > 0)
+            {
+                point = _points[Random.Range(0, _points.Count)];
+                _points.Remove(point);
+                point.CompliteAction += ReturnPoint;
+                return point;
+            }
+            else
+            {
+                point = null;
+                return false;
+            }
+        }
+        private void ReturnPoint(TridentPoint point)
+        {
+            _points.Add(point);
+            point.CompliteAction -= ReturnPoint;
         }
     }
 }

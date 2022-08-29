@@ -5,107 +5,87 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Animator))]
-    public abstract class Device : SpawnItem
+    public abstract class Device : SmartItem,IPause
     {
         [Header("General")]
-#if UNITY_EDITOR
-        [SerializeField] protected bool isDebug = false;
-#endif
-        [SerializeField] protected bool playOnStart = true;
+        [SerializeField] protected bool destroyMode = false;
+        [SerializeField] protected bool showOnStart = true;
+        [Min(1)]
+        [SerializeField] protected float durationWork = 1f;
 
+        protected bool _isPause;
         protected bool isActiveDevice = false;
         protected Animator animator;
 
-        private bool _isMode = false;
-        private Coroutine _trakingActive = null;
-        private Coroutine _destroy = null;
-
-        public override bool IsShow => _isMode;
+        public bool IsActive => isActiveDevice;
+        public bool IsPause => _isPause;
 
         public abstract TrapType DeviceType { get; }
 
-        protected void Awake()
+        protected event System.Action CompliteUpAnimation;
+
+        protected virtual void Awake()
         {
             animator = GetComponent<Animator>();
+        }
+        protected virtual void OnEnable()
+        {
+            ShowItemAction += ShowDevice;
+            HideItemAction += HideDevice;
+        }
+        protected virtual void OnDisable()
+        {
+            ShowItemAction -= ShowDevice;
+            HideItemAction -= HideDevice;
+        }
+        #region Dispaly Device
+        private void ShowDevice()
+        {
             UpDevice();
-            Intilizate();
         }
-        protected abstract void Intilizate();
-
-        public virtual void Show()
-        {
-            SetMode(true);
-        }
-        public override void SetMode(bool mode)
-        {
-            if (mode)
-            {
-#if UNITY_EDITOR
-                if (isDebug)
-                    Debug.Log("UpDevice");
-#endif
-                UpDevice();
-            }
-            else if (IsShow && _trakingActive == null)
-            {
-                if (!isActiveDevice)
-                {
-                    DownDevice();
-                }
-                else if (_trakingActive == null)
-                {
-                    _trakingActive = StartCoroutine(TrakingCompliteWorkDevice());
-                }
-            }
-        }
-        private IEnumerator TrakingCompliteWorkDevice()
+        private void HideDevice()
         {
 #if UNITY_EDITOR
-            if (isDebug)
-                Debug.Log("DeviceDownWait");
+            if (isActiveDevice)
+                throw new System.Exception("you can't hide a device that is active");
 #endif
-            yield return new WaitWhile(() => isActiveDevice);
-
             DownDevice();
-            _trakingActive = null;
         }
-        protected virtual void Activate()
-        {
-            SetState(true);
-        }
-        private void SetShowState()
-        {
-            _isMode = true;
-        }
-        public override void OffItem()
-        {
-            _destroy = null;
-            SetState(false);
-            animator.SetTrigger("Drop");
-        }
-
         private void DownDevice()
         {
-#if UNITY_EDITOR
-            if (isDebug)
-                Debug.Log("DownDevice");
-#endif
-            _isMode = false; 
             animator.SetBool("Show", false);
         }
         private void UpDevice()
         {
-            animator.SetBool("Show",true );
+            animator.SetBool("Show", true);
         }
-        protected abstract void SetState(bool mode);
-
-        //private void OnBecameInvisible()
-        //{;
-        //    SetMode(false);
-        //}
-        //private void OnBecameVisible()
-        //{
-        //    SetMode(true);
-        //}
+        #endregion
+        #region Work Device
+        public abstract void Activate();
+        public abstract void Deactivate();
+        public virtual void UnPause()
+        {
+#if UNITY_EDITOR
+            if (!_isPause)
+                throw new System.Exception("Device is already play");
+#endif
+            _isPause = false;
+        }
+        public virtual void Pause()
+        {
+#if UNITY_EDITOR
+            if (_isPause)
+                throw new System.Exception("Device is already pause");
+#endif
+            _isPause = true;
+        }
+        #endregion
+        protected abstract void ShowDeviceAnimationEvent();
+        protected abstract void HideDeviceAnimationEvent();
+        protected void CompliteUpAnimationEvent()
+        {
+            if (CompliteUpAnimation != null)
+                CompliteUpAnimation();
+        }
     }
 }

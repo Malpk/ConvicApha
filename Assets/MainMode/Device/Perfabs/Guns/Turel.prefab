@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4878198611252494078}
   - component: {fileID: 4318679566918645197}
-  - component: {fileID: 1816629728905682699}
-  - component: {fileID: 5529154456162584297}
   m_Layer: 10
   m_Name: Triger
   m_TagString: Untagged
@@ -84,37 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1816629728905682699
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7091981213950580225}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5
---- !u!114 &5529154456162584297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7091981213950580225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsShowTile: 0
-  _collider: {fileID: 1816629728905682699}
-  _body: {fileID: 4318679566918645197}
 --- !u!1 &7142385477910206621
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,11 +158,11 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.19970673}
-  m_Size: {x: 0.5, y: 1.0117475}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 2.96, y: 1.0117475}
   m_Direction: 0
 --- !u!114 &7142385478768023677
 MonoBehaviour:
@@ -210,22 +177,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
+  showInStart: 0
   durationWork: 15
-  isDebug: 0
-  playOnStart: 1
+  _isShowTriger: 0
+  _trigerArean: {fileID: 4318679566918645197}
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
     _attack: 5
   gunAnimator: {fileID: 7142385478994254715}
-  triger: {fileID: 5529154456162584297}
+  _bodyCollider: {fileID: 6267167530786115895}
   _spriteRender: {fileID: 7142385478994254714}
+  _activateOnStart: 1
   _activationTime: 6
   _firingRateOnSeconds: 1
   _bulletPrefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
   _spawnTransform: {fileID: 7142385477910206618}
   _rotationAngleOnSeconds: 120
   _rigidbody: {fileID: 7142385478994254716}
+  _collider: {fileID: 7142385478768023674}
 --- !u!95 &7142385478768023676
 Animator:
   serializedVersion: 3
@@ -308,6 +278,7 @@ GameObject:
   - component: {fileID: 7142385478994254714}
   - component: {fileID: 7142385478994254716}
   - component: {fileID: 7142385478994254715}
+  - component: {fileID: 6267167530786115895}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -421,3 +392,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &6267167530786115895
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142385478994254719}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.61, y: 0.99}
+  m_Direction: 0

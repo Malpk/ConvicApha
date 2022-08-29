@@ -48,15 +48,13 @@ namespace MainMode.LoadScene
         public async virtual Task LoadAsync(PlayerConfig config)
         {
             var list = new List<Task>();
-            var loadPlayer = playerLoader.PlayerLaodAsync(_spwanPoint, config.characterType);
             var loadReciver = intefaceLoader.LoadReceiverAsync();
             var loadInterface = intefaceLoader.LoadIntefaceAsync();
-            list.Add(loadPlayer);
-            list.Add(loadReciver);
-            list.Add(loadInterface);
+            await Task.WhenAll(loadReciver, loadInterface);
+            var loadPlayer = playerLoader.PlayerLaodAsync(_spwanPoint, config.characterType);
+            await loadPlayer;
             if (Application.platform == RuntimePlatform.Android)
                 list.Add(_perfabAndroidController.LoadAssetAsync().Task);
-            await Task.WhenAll(list);
             player = loadPlayer.Result;
             holder = loadInterface.Result;
 #if UNITY_EDITOR
@@ -71,14 +69,17 @@ namespace MainMode.LoadScene
 
         private void Intializate(PlayerConfig config)
         {
-            var hud = holder.GetComponentInChildren<HUDInteface>();
             var senders = player.GetComponents<ISender>();
-            for (int i = 0; i < senders.Length; i++)
+            var hud = holder.GetComponentInChildren<HUDInteface>();
+            if (hud)
             {
-                if (!hud.GetReceiver(senders[i]))
+                for (int i = 0; i < senders.Length; i++)
                 {
-                    if (GetReceiverPerfab(senders[i].TypeDisplay, out Receiver perfab))
-                        senders[i].AddReceiver(hud.CreateReceiver(perfab));
+                    if (!hud.GetReceiver(senders[i]))
+                    {
+                        if (GetReceiverPerfab(senders[i].TypeDisplay, out Receiver perfab))
+                            senders[i].AddReceiver(hud.CreateReceiver(perfab));
+                    }
                 }
             }
             SetController(player);

@@ -8,42 +8,85 @@ namespace MainMode
     [RequireComponent(typeof(Collider2D))]
     public abstract class Gun : Device
     {
+        [Header("TrigerSetting")]
+        [SerializeField] private bool _isShowTriger;
+        [SerializeField] private SpriteRenderer _trigerArean;
         [Header("Reference")]
         [SerializeField] protected DamageInfo attackInfo;
         [SerializeField] protected Animator gunAnimator;
-        [SerializeField] protected SignalTile triger;
-
+        [SerializeField] private Collider2D _bodyCollider;
         [SerializeField] private SpriteRenderer _spriteRender;
 
-        private Collider2D _collider;
+        protected Transform _target;
+        
 
-        protected override void Intilizate()
+        protected override void Awake()
         {
-            _collider = GetComponent<Collider2D>();
+            base.Awake();
+            SetState(false);
+            _trigerArean.enabled = false;
         }
-        protected virtual void OnEnable()
+        protected override void OnEnable()
         {
-            if (!playOnStart)
-            {
-                triger.SetMode(true);
-                triger.SingnalAction += Run;
-            }
+            base.OnEnable();
+            ShowItemAction += () => _trigerArean.enabled = _isShowTriger;
+            HideItemAction += () => _trigerArean.enabled = false;
         }
-        protected virtual void OnDisable()
+        protected override void OnDisable()
         {
-            if (!playOnStart)
-            {
-                triger.SetMode(false);
-                triger.SingnalAction -= Run;
-            }
+            base.OnDisable();
+            ShowItemAction -= () => _trigerArean.enabled = _isShowTriger;
+            HideItemAction -= () => _trigerArean.enabled = false;
         }
-        public abstract void Run(Collider2D collision);
-
-        protected override void SetState(bool mode)
+        private void Start()
+        {
+            if (showOnStart)
+                ShowItem();
+        }
+        public override void Activate()
+        {
+#if UNITY_EDITOR
+            if (isActiveDevice)
+                throw new System.Exception("gun is already active");
+            else if (!IsShow)
+                throw new System.Exception("you can't activate a gun that is hide");
+#endif
+            isActiveDevice = true;
+        }
+        public override void Deactivate()
+        {
+#if UNITY_EDITOR
+            if(!isActiveDevice)
+                throw new System.Exception("gun is already deactive");
+#endif
+            isActiveDevice = false;
+        }
+        protected override void ShowDeviceAnimationEvent()
+        {
+            SetState(true);
+            _trigerArean.enabled = _isShowTriger;
+        }
+        protected override void HideDeviceAnimationEvent()
+        {
+            SetState(false);
+            _trigerArean.enabled = false;
+        }
+        private void SetState(bool mode)
         {
             _spriteRender.enabled = mode;
-            _collider.enabled = mode;
-            triger.SetMode(mode);
+            _bodyCollider.enabled = mode;
         }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!isActiveDevice)
+            {
+                if (collision.TryGetComponent(out Player player))
+                {
+                    _target = player.transform;
+                    Activate();
+                }
+            }
+        }
+
     }
 }

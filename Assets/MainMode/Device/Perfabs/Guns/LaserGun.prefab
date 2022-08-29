@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 609064225060795421}
   - component: {fileID: 6075503573318152831}
-  - component: {fileID: 7408266301341491924}
-  - component: {fileID: 5668781766931168403}
   m_Layer: 10
   m_Name: Triger
   m_TagString: Untagged
@@ -84,37 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7408266301341491924
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 779581772229009337}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5
---- !u!114 &5668781766931168403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 779581772229009337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsShowTile: 0
-  _collider: {fileID: 7408266301341491924}
-  _body: {fileID: 6075503573318152831}
 --- !u!1 &1876974867802433553
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,11 +128,11 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.010576248, y: -0.012087226}
-  m_Size: {x: 0.13234329, y: 0.74616694}
+  m_Size: {x: 2.99, y: 0.74616694}
   m_Direction: 0
 --- !u!114 &1876974867802433564
 MonoBehaviour:
@@ -180,21 +147,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
+  showInStart: 0
   durationWork: 15
-  isDebug: 0
-  playOnStart: 1
+  _isShowTriger: 0
+  _trigerArean: {fileID: 6075503573318152831}
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
     _attack: 1
   gunAnimator: {fileID: 1876974868247512200}
-  triger: {fileID: 5668781766931168403}
+  _bodyCollider: {fileID: 3263451438933997880}
   _spriteRender: {fileID: 1876974868247512207}
+  _activateOnStart: 1
   _timeReload: 3
   _shootDuration: 6
   _speedRotation: 2.5
   _laser: {fileID: 1876974867974195046}
   _rotateBody: {fileID: 1876974868247512205}
+  _collider: {fileID: 1876974867802433565}
 --- !u!95 &1876974867802433555
 Animator:
   serializedVersion: 3
@@ -400,6 +370,7 @@ GameObject:
   - component: {fileID: 1876974868247512207}
   - component: {fileID: 1876974868247512205}
   - component: {fileID: 1876974868247512200}
+  - component: {fileID: 3263451438933997880}
   m_Layer: 10
   m_Name: Laser Sprite
   m_TagString: Untagged
@@ -513,3 +484,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &3263451438933997880
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876974868247512204}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.15}
+  m_Size: {x: 0.25, y: 0.95}
+  m_Direction: 0

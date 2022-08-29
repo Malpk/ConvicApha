@@ -26,29 +26,30 @@ namespace Underworld
             new Vector3(1,-1), new Vector3(-1,1)
         };
 
+        private bool _isActive = false;
         private Coroutine _corotine;
         private BoxCollider2D _collider;
         private Vector2 _defoutSize;
 
-        protected override void Awake()
+        public bool IsActive => _isActive;
+
+        protected void Awake()
         {
-            base.Awake();
             _collider = GetComponent<BoxCollider2D>();
             _collider.enabled = false;
             _defoutSize = _collider.size;
             _maxOffset -= Vector2.one * _minSize / 2;
         }
 
-        protected override void Start()
-        {
-            base.Start();
-            if (playOnStart)
-                Activate();
-        }
         public override bool Activate()
         {
+#if(UNITY_EDITOR)
+            if (_isActive)
+                throw new System.Exception("patern is already play");
+#endif
             if (_corotine == null)
             {
+                _isActive = true;
                 _collider.enabled = true;
                 State = ModeState.Play;
                 _corotine = StartCoroutine(Scale(transform.position, _defoutSize));
@@ -87,9 +88,10 @@ namespace Underworld
                 var duration = CalculateDuration(target, _speedMovement);
                 yield return StartCoroutine(Move(target, duration));
             }
+            yield return WaitHideMap();
             _collider.enabled = false;
-            DeactivateMap(out HandTermTile term);
-            yield return new WaitWhile(() => term.IsActive);
+            State = ModeState.Stop;
+            _isActive = false;
         }
         private IEnumerator Move(Vector3 target, float duration)
         {
@@ -137,17 +139,29 @@ namespace Underworld
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out HandTermTile term))
+            if (!_isActive)
+                return;
+            if (collision.TryGetComponent(out Term term))
             {
-                term.Deactivate(false);
+                if (term.IsActive)
+                {
+                    term.Deactivate(false);
+                    term.HideItem();
+                }
             }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out HandTermTile term) && _collider.enabled)
+            if (!_isActive)
+                return;
+            if (collision.TryGetComponent(out Term term) && _collider.enabled)
             {
-                term.Activate(FireState.Stay);
+                if (!term.IsActive)
+                {
+                    term.ShowItem();
+                    term.Activate(FireState.Stay);
+                }
             }
         }
     }

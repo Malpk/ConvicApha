@@ -12,17 +12,63 @@ namespace MainMode
 
         private Collider2D _collider;
 
-        protected override void Intilizate()
+        protected override void Awake()
         {
+            base.Awake();
             _collider = GetComponent<Collider2D>();
+            SetMode(false);
+        }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            CompliteUpAnimation += Activate;
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            CompliteUpAnimation -= Activate;
         }
         private void Start()
         {
-            Show();
-            if(destroyMode)
-                Invoke("DownDevice", durationWork);
+            if(showOnStart)
+                ShowItem();
+            if (destroyMode)
+                StartCoroutine(HideITem(durationWork));
         }
-        protected override void SetState(bool mode)
+        private IEnumerator HideITem(float timeActive)
+        {
+            yield return new WaitForSeconds(timeActive);
+            Deactivate();
+            HideItem();
+        }
+        public override void Activate()
+        {
+#if UNITY_EDITOR
+            if (isActiveDevice)
+                throw new System.Exception("Izolator is already active");
+            else if (!IsShow)
+                throw new System.Exception("you can't activate a Izolator that is hide");
+#endif
+            isActiveDevice = true;
+        }
+        public override void Deactivate()
+        {
+#if UNITY_EDITOR
+            if (!isActiveDevice)
+                throw new System.Exception("Tile is already deactive");
+#endif
+            isActiveDevice = false;
+        }
+
+        protected override void ShowDeviceAnimationEvent()
+        {
+            SetMode(true);
+        }
+        protected override void HideDeviceAnimationEvent()
+        {
+            SetMode(false);
+        }
+        protected void SetMode(bool mode)
         {
             _body.enabled = mode;
             _collider.enabled = mode;

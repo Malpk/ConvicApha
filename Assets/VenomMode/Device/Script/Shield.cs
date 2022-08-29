@@ -5,23 +5,21 @@ using UnityEngine;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(Animator), typeof(BoxCollider2D))]
-    public class Shield : SpawnItem, IItemInteractive
+    public class Shield : SmartItem, IItemInteractive
     {
         [Header("Requred Reference")]
         [Min(0)]
         [SerializeField] private int _countGames = 3;
         [Header("Requred Reference")]
-        [SerializeField] private Canvas _canvas;
+        [SerializeField] private SpriteRenderer _display;
 
         private int _curretCount;
-        private bool _isMode = true;
         private ToolSet _curretToolSet;
         private Animator _animator;
         private Collider2D _collider;
         private ChangeTest _changeTest;
         private IBlock[] _blockElements;
 
-        public override bool IsShow => throw new System.NotImplementedException();
 
         public delegate void Action(Shield parent);
         public event Action RepairShieldAction;
@@ -32,7 +30,19 @@ namespace MainMode.Mode1921
             _animator = GetComponent<Animator>();
             _curretCount = _countGames;
             _collider.isTrigger = true;
+            SetMode(false);
         }
+        private void OnEnable()
+        {
+            ShowItemAction += () => SetMode(true);
+            HideItemAction += () => SetMode(false);
+        }
+        private void OnDisable()
+        {
+            ShowItemAction -= () => SetMode(true);
+            HideItemAction -= () => SetMode(false);
+        }
+
         private void Start()
         {
             HideUI();
@@ -117,19 +127,20 @@ namespace MainMode.Mode1921
             }
         }
         #endregion
-        public override void SetMode(bool mode)
+        #region Display Items
+        protected void SetMode(bool mode)
         {
-            _isMode = mode;
             _curretCount = mode ? _countGames : 0; 
             _collider.enabled = mode;
             _animator.SetBool("Mode", !mode);
         }
+        #endregion
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if(collision.TryGetComponent(out Player player))
             {
-                _canvas.enabled = true;
+                _display.enabled = true;
             }
         }
         private void OnTriggerExit2D(Collider2D collision)
@@ -142,12 +153,7 @@ namespace MainMode.Mode1921
 
         private void HideUI()
         {
-            _canvas.enabled = false;
-        }
-
-        public override void OffItem()
-        {
-            Destroy(gameObject);
+            _display.enabled = false;
         }
     }
 }
