@@ -114,6 +114,10 @@ namespace Underworld
                 {
                     list.Add(activeTerms[i]);
                 }
+                else
+                {
+                    Destroy(activeTerms[i].gameObject);
+                }
             }
             return list;
         }

@@ -99,6 +99,7 @@ namespace Underworld
                     yield return null;
                 }
             }
+            _start = null;
         }
         private bool GetPoint(out TridentPoint point)
         {

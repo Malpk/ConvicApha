@@ -63,6 +63,8 @@ using UnityEngine;
         #endregion
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (!IsActive)
+                return;
             if (collision.TryGetComponent(out IDamage target))
             {
                 target.Dead();

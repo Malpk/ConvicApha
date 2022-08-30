@@ -19,7 +19,7 @@ public abstract class SmartItem : MonoBehaviour
     {
 #if UNITY_EDITOR
         if (IsShow)
-            throw new System.Exception("item is already active");
+            throw new System.Exception("item is already show");
 #endif
         IsShow = true;
         if (ShowItemAction != null)
@@ -29,8 +29,9 @@ public abstract class SmartItem : MonoBehaviour
     {
 #if UNITY_EDITOR
         if (!IsShow)
-            throw new System.Exception("item is already deactive");
+            throw new System.Exception("item is already hide");
 #endif
+        IsShow = false;
         if (HideItemAction != null)
             HideItemAction();
     }

@@ -109,8 +109,10 @@ namespace Underworld
             _terms.Add(term);
             if (IsActive && !term.IsDamageMode)
             {
-                term.ShowItem();
-                term.Activate(FireState.Start);
+                if(!term.IsShow)
+                    term.ShowItem();
+                if (!term.IsActive)
+                    term.Activate(FireState.Start);
             }
         }
         private void DeactivateTerm(Term term)
@@ -118,7 +120,8 @@ namespace Underworld
             _terms.Remove(term);
             if (IsActive)
             {
-                term.Deactivate();
+                if(term.IsActive)
+                    term.Deactivate();
                 StartCoroutine(term.HideByDeactivation());
             }
         }

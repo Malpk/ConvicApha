@@ -35,7 +35,6 @@ namespace Underworld
 #if UNITY_EDITOR
                 throw new System.Exception("You can't hide an while run AutoMode");
 #endif
-            _term.HideItem();
         }
         public void StartAutoMode()
         {
@@ -65,7 +64,7 @@ namespace Underworld
             _term.Deactivate();
             yield return _term.HideByDeactivation();
             _autoMode = null;
-            HideTerm();
+            HideItem();
         }
         private IEnumerator WaitTime(float waitTime)
         {

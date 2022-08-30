@@ -28,7 +28,7 @@ namespace Underworld
 
         private void Awake()
         {
-            SetMode(false);
+            HideTerm();
         }
 
         private void OnEnable()

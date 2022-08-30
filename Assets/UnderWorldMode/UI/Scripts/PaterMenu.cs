@@ -85,6 +85,7 @@ namespace Underworld
             _signalImage.color = Color.green;
             if (_selectButton != null)
                 _startModeButton.interactable = true;
+            _startMode = null;
         }
         private void ResetMenu()
         {
