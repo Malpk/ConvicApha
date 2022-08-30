@@ -14,7 +14,7 @@ namespace Underworld
         [SerializeField] private float _warningTime = 0;
         [Header("Island Setting")]
         [Min(1)]
-        [SerializeField] private int _minDistanceBothIsland = 1;
+        [SerializeField] private float _minDistanceBothIsland = 1;
         [SerializeField] private int _minSizeIsland;
         [SerializeField] private int _maxSizeIsland;
         [Header("Map Setting")]
@@ -34,13 +34,20 @@ namespace Underworld
         };
 
         public override bool IsReady => _mapBuilder && _handTermPerfab && _isReady;
-
-        private void Start()
+        public override void Intializate(PaternConfig config)
         {
-            if (_mapBuilder)
-                Intializate(_mapBuilder, null);
-            if (playOnStart)
-                Activate();
+            if (config is IslandModeConfig islandModeConfig) 
+            {
+                workDuration = islandModeConfig.WorkDuration;
+                _warningTime = islandModeConfig.WarningTime;
+                _minDistanceBothIsland = islandModeConfig.MinDistanceBothIsland;
+                _minSizeIsland = islandModeConfig.IslandSize.x;
+                _maxSizeIsland = islandModeConfig.IslandSize.y;
+            }
+            else
+            {
+                throw new System.NullReferenceException("IslandModeConfig is null");
+            }
         }
         public override void Intializate(MapBuilder builder, Player player)
         {
@@ -50,6 +57,14 @@ namespace Underworld
             _bounds = SetBounds(_mapSize);
             _isReady = true;
         }
+        private void Start()
+        {
+            if (_mapBuilder)
+                Intializate(_mapBuilder, null);
+            if (playOnStart)
+                Activate();
+        }
+
         public override bool Activate()
         {
             if (_runMode == null)

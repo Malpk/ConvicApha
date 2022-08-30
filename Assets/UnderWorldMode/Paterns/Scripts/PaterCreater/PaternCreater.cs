@@ -11,11 +11,11 @@ namespace Underworld
         [Header("Game setting")]
         [SerializeField] private bool _iversionMode;
         [SerializeField] private float _warningTime;
-        [SerializeField] private float _errorColorDefaout;
         [SerializeField] private Color _deffaout;
         [SerializeField] private Vector2Int _unitySprite;
         [SerializeField] private Texture2D _spriteAtlas;
 
+        private float _errorColorDefaout;
         private Color deactiveColor;
         private Coroutine _runMode = null;
 
@@ -24,6 +24,19 @@ namespace Underworld
         private void Awake()
         {
             deactiveColor = _iversionMode ? Color.black : Color.white;
+        }
+        public override void Intializate(PaternConfig config)
+        {
+            if (config is PaternCreaterConfig paternCreaterConfig)
+            {
+                _iversionMode = paternCreaterConfig.InversMode;
+                _warningTime = paternCreaterConfig.WarningTime;
+                workDuration = paternCreaterConfig.WorkDuration;
+            }
+            else
+            {
+                throw new System.NullReferenceException("PaternCreaterConfig is null");
+            }
         }
         public override bool Activate()
         {

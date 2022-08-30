@@ -52,7 +52,6 @@ namespace Underworld
             if (!_isCreate)
                 throw new System.Exception("Tridents is not created");
 #endif
-            _isActive = true;
             StartCoroutine(Work());
         }
         public void Pause()
@@ -74,6 +73,7 @@ namespace Underworld
         }
         private IEnumerator Work()
         {
+            _isActive = true;
             yield return WarningAnimation();
             yield return ActiveTridents();
             yield return WaitDactivationTridents();

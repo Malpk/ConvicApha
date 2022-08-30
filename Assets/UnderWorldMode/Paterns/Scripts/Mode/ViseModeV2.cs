@@ -25,6 +25,19 @@ namespace Underworld
                 _vises.Add(vise);
             }
         }
+        public override void Intializate(PaternConfig config)
+        {
+            if (config is ViseModeConfig viseModeConfig)
+            {
+                workDuration = viseModeConfig.WorkDuration;
+                _activeTime = viseModeConfig.ActiveTime;
+                _warningTime = viseModeConfig.WarningTime;
+            }
+            else
+            {
+                throw new System.NullReferenceException("ViseModeConfig is null");
+            }
+        }
         private ViseState[] GetViseState(ViseState state)
         {
             if (_mode == ViseState.GeneralMode)

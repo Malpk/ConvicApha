@@ -105,21 +105,12 @@ namespace Underworld
             yield return new WaitWhile(() => _isDamageMode && !_isActive);
             if (!_isActive)
             {
-                HideItem();
+                if(IsShow)
+                    HideItem();
             }
         }
 
         #endregion
-        private IEnumerator WaitTime(float waitTime)
-        {
-            var progress = 0f;
-            while (progress <= 1f)
-            {
-                yield return new WaitWhile(() => _isPause);
-                yield return null;
-                progress += Time.deltaTime / waitTime;
-            }
-        }
         private IEnumerator StartDeactivate(bool waitAnimation)
         {
             if (waitAnimation)

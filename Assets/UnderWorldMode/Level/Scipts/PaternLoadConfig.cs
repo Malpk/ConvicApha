@@ -4,8 +4,8 @@ using UnityEngine.AddressableAssets;
 
 namespace Underworld
 {
-    [CreateAssetMenu(menuName ="UnderWorld/PaternConfig")]
-    public class PaternConfig : ScriptableObject
+    [CreateAssetMenu(menuName ="UnderWorld/PaternLoadConfig")]
+    public class PaternLoadConfig : ScriptableObject
     {
         [SerializeField] private ModeType _typeMode;
         [SerializeField] private string _loadKey;

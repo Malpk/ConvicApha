@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2198cc9f3ca1db142a28fdbb6baae4bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 79fe41fc1072c314ead88127ca424116, type: 3}
   m_Name: Island Mode Config
   m_EditorClassIdentifier: 
-  _typeMode: 1
-  _loadKey: IslandMode
+  _workDuration: 1
+  _warningTime: 2
+  _minDistanceBothIsland: 4
+  _islandSize: {x: 4, y: 10}

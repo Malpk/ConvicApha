@@ -10,7 +10,7 @@ namespace Underworld
     {
         [Header("Spawn Setting")]
         [Min(1)]
-        [SerializeField] private int _spawnDistance = 1;
+        [SerializeField] private float _spawnDistance = 1;
         [Range(0.005f, 1)]
         [SerializeField] private float _delay = 1f;
         [SerializeField] private AutoTerm _termPerfab;
@@ -34,7 +34,19 @@ namespace Underworld
             if (playOnStart)
                 Activate();
         }
-
+        public override void Intializate(PaternConfig config)
+        {
+            if (config is DefoutModeConfig defoutModeConfig)
+            {
+                workDuration = defoutModeConfig.WorkDuration;
+                _spawnDistance = defoutModeConfig.SpawnDistance;
+                _delay = defoutModeConfig.SpawnDelay;
+            }
+            else
+            {
+                throw new System.NullReferenceException("DefoutModeConfig is null");
+            }
+        }
         public override void Intializate(MapBuilder builder, Player player)
         {
             _builder = builder;

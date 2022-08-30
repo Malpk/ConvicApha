@@ -49,6 +49,7 @@ namespace Underworld
             if (!IsActive)
                 throw new System.Exception("Ray is already Deactivation");
 #endif
+            Debug.Log("deactivate");
             IsActive = false;
             for (int i = 0; i < _terms.Count; i++)
             {

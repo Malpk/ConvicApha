@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class CoruselMode : TotalMapMode
+    public class RunOrDeadlMode : TotalMapMode
     {
         [Header("Movement Setting")]
         [SerializeField] private float _speedRotation;
@@ -17,6 +17,20 @@ namespace Underworld
         private bool _isActive = false;
         private Coroutine _runMode;
         private int[] _direction = new int[] { -1, 1 };
+
+        public override void Intializate(PaternConfig config)
+        {
+            if (config is RunOrDeadConfig runOrDeadConfig)
+            {
+                workDuration = runOrDeadConfig.WorkDuration;
+                _warningTime = runOrDeadConfig.WarningTime;
+                _speedRotation = runOrDeadConfig.SpeedRotation;
+            }
+            else
+            {
+                throw new System.NullReferenceException("RunOrDeadConfig is null");
+            }
+        }
 
         public override bool Activate()
         {

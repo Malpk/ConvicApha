@@ -14,7 +14,7 @@ namespace Underworld
         [Header("Time Setting")] [Min(1)]
         [SerializeField] private float _scaleDuration;
         [Min(0)]
-        [SerializeField] private float _delay;
+        [SerializeField] private float _delayMove;
         [Header("Scale Setting")]
         [SerializeField] private Vector2 _minSize;
         [SerializeField] private Vector2 _maxOffset;
@@ -41,6 +41,20 @@ namespace Underworld
             _maxOffset -= Vector2.one * _minSize / 2;
         }
 
+        public override void Intializate(PaternConfig config)
+        {
+            if (config is BoxModeConfig boxModeConfig)
+            {
+                _countMove = boxModeConfig.CountMove;
+                _delayMove = boxModeConfig.DealyMove;
+                _scaleDuration = boxModeConfig.ScaleTime;
+                workDuration = boxModeConfig.WorkDuration;
+            }
+            else
+            {
+                throw new System.NullReferenceException("BoxModeConfig is null");
+            }
+        }
         public override bool Activate()
         {
 #if(UNITY_EDITOR)
@@ -73,7 +87,7 @@ namespace Underworld
         }
         private IEnumerator MoveSqurt()
         {
-            yield return new WaitForSeconds(_delay);
+            yield return new WaitForSeconds(_delayMove);
             Vector3 direction = Vector3.zero;
             for (int i = 0; i < _countMove; i++)
             {
@@ -164,5 +178,6 @@ namespace Underworld
                 }
             }
         }
+
     }
 }

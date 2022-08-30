@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Underworld
 {
-    public class RayMode : TotalMapMode
+    public class SunMode : TotalMapMode
     {
         [Header("General Setting")]
         [Min(1)]
@@ -29,6 +29,21 @@ namespace Underworld
         protected void Awake()
         {
             _rays = CreateRay(_countRay);
+        }
+        public override void Intializate(PaternConfig config)
+        {
+            if (config is SunModeConfig sunModeConfig)
+            {
+                _countRay = sunModeConfig.CountRay;
+                _offset = sunModeConfig.AngleOffet;
+                _speedOffset = sunModeConfig.SpeedOffset;
+                _warningTime = sunModeConfig.WarningTime;
+                _delay = sunModeConfig.Delay;
+            }
+            else
+            {
+                throw new System.NullReferenceException("SunModeConfig is null");
+            }
         }
         public override bool Activate()
         {

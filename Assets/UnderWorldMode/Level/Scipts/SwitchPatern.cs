@@ -6,24 +6,25 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class SwitchPatern : MonoBehaviour
+    public class SwitchPatern : MonoBehaviour,IPause
     {
         [SerializeField] private bool _playOnStart;
         [SerializeField] private ModeType _chooseMode;
         [Header("Reference")]
         [SerializeField] private Player _player;
         [SerializeField] private MapBuilder _builder;
-        [SerializeField] private PaternConfig[] _configs;
+        [SerializeField] private PaternLoadConfig[] _configs;
 
-        private PaternConfig  _curretConfig;
+        private PaternLoadConfig  _curretConfig;
 
         public bool IsReady { get; private set; } = true;
+        public bool IsPause { get; private set; } = false;
 
-        private void Start()
+        private async void Start()
         {
             if (_playOnStart)
             {
-               ActivateModeAsync(_chooseMode);
+                 await ActivateModeAsync(_chooseMode);
             }
         }
         public void Intializate(MapBuilder builder, Player player)
@@ -31,7 +32,7 @@ namespace Underworld
             _player = player;
             _builder = builder;
         }
-        public async void ActivateModeAsync(ModeType type)
+        public async Task ActivateModeAsync(ModeType type, PaternConfig config = null)
         {
             IsReady = false;
             _chooseMode = type;
@@ -40,9 +41,20 @@ namespace Underworld
             if (load.Result != null)
             {
                 load.Result.Intializate(_builder, _player);
+                if (config)
+                    load.Result.Intializate(config);
                 load.Result.Activate();
                 StartCoroutine(WaitComplitePatern(load.Result));
             }
+        }
+        public void Pause()
+        {
+            IsPause = true;
+        }
+
+        public void UnPause()
+        {
+            IsPause = false;
         }
         private async Task<GeneralMode> Load(ModeType type)
         {
@@ -67,5 +79,7 @@ namespace Underworld
             _curretConfig.UnLoad();
             IsReady = true;
         }
+
+
     }
 }

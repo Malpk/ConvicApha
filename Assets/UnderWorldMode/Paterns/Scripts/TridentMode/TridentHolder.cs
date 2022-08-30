@@ -17,6 +17,7 @@ namespace Underworld
         private bool _isCreate = false;
 
         private List<TridentPoint> _points = new List<TridentPoint>();
+        private List<TridentPoint> _activePoint = new List<TridentPoint>();
 
         private Coroutine _start;
 
@@ -99,7 +100,23 @@ namespace Underworld
                     yield return null;
                 }
             }
+            yield return WaitComplitePoints();
             _start = null;
+        }
+        private IEnumerator WaitComplitePoints()
+        {
+            while (_activePoint.Count > 0)
+            {
+                yield return new WaitForSeconds(0.2f);
+                var termp = new List<TridentPoint>();
+                for (int i = 0; i < _activePoint.Count; i++)
+                {
+                    if (_activePoint[i].IsActvate)
+                        termp.Add(_activePoint[i]);
+                }
+                _activePoint.Clear();
+                _activePoint = termp;
+            }
         }
         private bool GetPoint(out TridentPoint point)
         {
@@ -107,6 +124,7 @@ namespace Underworld
             {
                 point = _points[Random.Range(0, _points.Count)];
                 _points.Remove(point);
+                _activePoint.Add(point);
                 point.CompliteAction += ReturnPoint;
                 return point;
             }
@@ -119,6 +137,7 @@ namespace Underworld
         private void ReturnPoint(TridentPoint point)
         {
             _points.Add(point);
+            _activePoint.Remove(point);
             point.CompliteAction -= ReturnPoint;
         }
     }

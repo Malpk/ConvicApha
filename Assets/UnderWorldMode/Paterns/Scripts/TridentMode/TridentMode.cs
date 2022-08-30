@@ -24,6 +24,18 @@ namespace Underworld
         {
             _holders = GetComponentsInChildren<TridentHolder>();
         }
+        public override void Intializate(PaternConfig config)
+        {
+            if (config is TridentModeConfig tridentModeConfig)
+            {
+                workDuration = tridentModeConfig.WorkDuration;
+                _config = tridentModeConfig.PointConfig;
+            }
+            else
+            {
+                throw new System.NullReferenceException("TridentModeConfig is null");
+            }
+        }
         public override void Intializate(MapBuilder builder, Player player = null)
         {
         }
@@ -69,6 +81,6 @@ namespace Underworld
             State = ModeState.Stop;
             _waitComplite = null;
         }
-#endregion
+        #endregion
     }
 }

@@ -19,6 +19,7 @@ namespace Underworld
         public abstract bool IsReady { get; }
         public ModeState State { get; protected set; } = ModeState.Stop;
 
+        public abstract void Intializate(PaternConfig config);
         public abstract void Intializate(MapBuilder builder, Player player);
         public abstract bool Activate();
 
