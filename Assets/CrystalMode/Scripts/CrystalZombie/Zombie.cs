@@ -10,15 +10,7 @@ using Random = UnityEngine.Random;
 public class Zombie : MonoBehaviour
 {
    private NavMeshAgent agent;
-
-   private void OnCollisionStay2D(Collision2D collision)
-   {
-      if (collision.gameObject.GetComponent<CrystalSheild>())
-      {
-         gameObject.transform.Translate(Vector3.back * Time.deltaTime * 10);
-      }
-   }
-
+ 
    private void Start()
    {
       agent = gameObject.GetComponent<NavMeshAgent>();

@@ -104,7 +104,9 @@ MonoBehaviour:
     _effect: 0
     _attack: 0
   _wallCrystalPrefab: {fileID: 2780599325777319706, guid: 779647e867d05494ab6c09a421f799ad, type: 3}
-  _player: {fileID: 0}
+  dustAnim: {fileID: 1183736774346417609, guid: 0c85a4ccdef41a942ad501503d0b0c54, type: 3}
+  wallBreakParticle: {fileID: 4794832473774059272, guid: c702db3cf97907c4a8e11de235e34e74, type: 3}
+  blockPutParticle: {fileID: 4286512817860444515, guid: 1b93f5c8e6249754586dbea8c57ca29c, type: 3}
 --- !u!58 &2057335158860173926
 CircleCollider2D:
   m_ObjectHideFlags: 0

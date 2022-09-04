@@ -11,6 +11,7 @@ public class FogManager : MonoBehaviour
     private int currentGroup;
     [SerializeField] private int groupCount;
     [SerializeField] float fadeSpeed;
+    [SerializeField] private float range;
 
     private void Start()
     {
@@ -20,7 +21,7 @@ public class FogManager : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < groupCount; i++)
+        for (int i = 0; i < groupCount - 1; i++)
         {
             if (currentGroup == i)
             {
@@ -53,7 +54,7 @@ public class FogManager : MonoBehaviour
     {
         Vector3 dirToPlayer = player.position - fogTile.transform.position;
         RaycastHit2D hit = Physics2D.Raycast(fogTile.transform.position, dirToPlayer, 1000);
-        return hit && hit.collider.gameObject.CompareTag("Player");
+        return hit && hit.collider.gameObject.CompareTag("Player") && hit.distance < range;
     }
     
 
