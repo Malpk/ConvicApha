@@ -8,8 +8,9 @@ namespace MainMode.Effects
     public class MovementEffect : ScriptableObject
     {
         [Range(0,2f)]
-        [SerializeField] private float _effect = 1f;
-
-        public float Effect => _effect;
+        [SerializeField] private float _effectValue = 1f;
+        [SerializeField] private EffectType _effectType;
+        public float Value => _effectValue;
+        public EffectType Effect => _effectType;
     }
 }

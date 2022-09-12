@@ -32,7 +32,7 @@ namespace MainMode.Items
         {
             _fixedJoint.connectedBody = target;
         }
-
+        
         public void Exit()
         {
             _fixedJoint.connectedBody = null;

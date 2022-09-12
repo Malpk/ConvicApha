@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Collider2D))]
-    public abstract class Izolator : Device
+    public abstract class Izolator : DeviceV2
     {
         [SerializeField] private float _activateTime;
         [Header("Reference")]
@@ -13,9 +13,12 @@ namespace MainMode
         [SerializeField] protected DamageInfo attackInfo;
         [SerializeField] private SpriteRenderer _body;
 
+        protected bool isActiveDevice;
         protected Collider2D colider;
         
         protected IJet[] jets;
+        public override bool IsActive => isActiveDevice;
+
 
         protected override void Awake()
         {
@@ -26,7 +29,7 @@ namespace MainMode
             {
                 jet.SetAttack(attackInfo);
             }
-            SetState(false);
+            HideDeviceAnimationEvent();
         }
         private void Start()
         {
@@ -35,7 +38,7 @@ namespace MainMode
         }
         public override void Activate()
         {
-            if (isActiveDevice)
+            if (IsActive)
                 return;
 #if UNITY_EDITOR
              if (!IsShow)
@@ -48,8 +51,14 @@ namespace MainMode
         }
         private IEnumerator Deactivate(float timeAcive)
         {
-            yield return new WaitForSeconds(timeAcive);
-            Deactivate();
+            var progress = 0f;
+            while (progress < 1f && IsActive)
+            {
+                progress += Time.deltaTime/ timeAcive;
+                yield return null;
+            }
+            if(IsActive)
+                Deactivate();
         }
         private IEnumerator WaitJet()
         {
@@ -71,7 +80,7 @@ namespace MainMode
         public override void Deactivate()
         {
 #if UNITY_EDITOR
-            if (!isActiveDevice)
+            if (!IsActive)
                 throw new System.Exception("Izolator is already deactive");
 #endif
             SetDeviceMode(false);
@@ -87,7 +96,7 @@ namespace MainMode
                 yield return null;
             }
             yield return WaitJet();
-            if (isActiveDevice)
+            if (IsActive)
                 throw new System.Exception("Error");
             HideItem();
         }

@@ -4,13 +4,16 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Collider2D))]
-    public abstract class Trap : Device
+    public abstract class Trap : DeviceV2
     {
         [SerializeField] protected LayerMask playerLayer;
         [SerializeField] protected DamageInfo attackInfo;
         [SerializeField] protected SpriteRenderer _body;
 
         private Collider2D _collider;
+        protected bool isActiveDevice;
+
+        public override bool IsActive => isActiveDevice;
 
         protected override void Awake()
         {

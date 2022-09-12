@@ -15,8 +15,9 @@ namespace MainMode
 
         public TrapType DeviceType => TrapType.SignalTile;
 
-        public delegate void Singnal();
-        public event Singnal SingnalAction;
+        public delegate void TrigerEnter(Transform target);
+        public event System.Action SingnalAction;
+        public event TrigerEnter EnterAction;
 
         private void Awake()
         {
@@ -28,8 +29,13 @@ namespace MainMode
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (SingnalAction != null &&  collision.GetComponent<Player>())
-                SingnalAction();
+            if (collision.GetComponent<Player>())
+            {
+                if (EnterAction != null)
+                    EnterAction(collision.transform);
+                if (SingnalAction != null)
+                    SingnalAction();
+            }
         }
 
         public void SetMode(bool mode)

@@ -90,13 +90,13 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
         health.Heal(health.MaxHealth);
     }
     #region Add Effects
-    public void AddEffects(MovementEffect effect,float timeActive, EffectType type = EffectType.None)
+    public void AddEffects(MovementEffect effect,float timeActive)
     {
         if (!_movementEffects.ContainsKey(effect))
             _movementEffects.Add(effect, 1);
         else
             _movementEffects[effect]++;
-        StartCoroutine(DeleteEffect(timeActive, _movementEffects, effect, type));
+        StartCoroutine(DeleteEffect(timeActive, _movementEffects, effect, effect.Effect));
     }
     private void SetAnimationEffect(EffectType effect, bool mode)
     {
@@ -124,7 +124,7 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
         var amount = 1f;
         foreach (var effect in _movementEffects)
         {
-            amount *= effect.Key.Effect;
+            amount *= effect.Key.Value;
             if (amount == 0)
                 return 0;
         }

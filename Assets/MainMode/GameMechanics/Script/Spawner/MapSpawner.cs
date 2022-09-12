@@ -80,6 +80,8 @@ namespace MainMode
                         if (pool.Create(out SmartItem item))
                         {
                             point.SetItem(item);
+                            if (!item.IsShow)
+                                item.ShowItem();
                             item.transform.parent = transform;
                         }
                     }

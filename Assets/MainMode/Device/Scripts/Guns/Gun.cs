@@ -5,38 +5,47 @@ using UnityEngine;
 
 namespace MainMode
 {
-    [RequireComponent(typeof(Collider2D))]
-    public abstract class Gun : Device
+    public abstract class Gun : DeviceV2
     {
         [Header("TrigerSetting")]
         [SerializeField] private bool _isShowTriger;
-        [SerializeField] private SpriteRenderer _trigerArean;
+        [SerializeField] private bool _playOnStart;
+
+        [SerializeField] protected SignalTile triger;
         [Header("Reference")]
         [SerializeField] protected DamageInfo attackInfo;
         [SerializeField] protected Animator gunAnimator;
+
         [SerializeField] private Collider2D _bodyCollider;
         [SerializeField] private SpriteRenderer _spriteRender;
 
-        protected Transform _target;
-        
+        protected bool isActiveDevice;
+
+        public override bool IsActive => isActiveDevice;
+
+        public event System.Action ActivateAction;
+        public event System.Action DeactivateAction;
 
         protected override void Awake()
         {
             base.Awake();
-            SetState(false);
-            _trigerArean.enabled = false;
+            HideDeviceAnimationEvent();
         }
         protected override void OnEnable()
         {
             base.OnEnable();
-            ShowItemAction += () => _trigerArean.enabled = _isShowTriger;
-            HideItemAction += () => _trigerArean.enabled = false;
+            if (_playOnStart)
+                CompliteUpAnimation += Activate;
+            else
+                triger.SingnalAction += Activate;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
-            ShowItemAction -= () => _trigerArean.enabled = _isShowTriger;
-            HideItemAction -= () => _trigerArean.enabled = false;
+            if (_playOnStart)
+                CompliteUpAnimation -= Activate;
+            else
+                triger.SingnalAction -= Activate;
         }
         private void Start()
         {
@@ -45,13 +54,16 @@ namespace MainMode
         }
         public override void Activate()
         {
+            if (isActiveDevice && !IsShow)
+            {
 #if UNITY_EDITOR
-            if (isActiveDevice)
-                throw new System.Exception("gun is already active");
-            else if (!IsShow)
-                throw new System.Exception("you can't activate a gun that is hide");
+                Debug.LogError("you can't activate a gun that is hide");
 #endif
+                return;
+            }
             isActiveDevice = true;
+            if (ActivateAction != null)
+                ActivateAction();
         }
         public override void Deactivate()
         {
@@ -60,33 +72,24 @@ namespace MainMode
                 throw new System.Exception("gun is already deactive");
 #endif
             isActiveDevice = false;
+            if (DeactivateAction != null)
+                DeactivateAction();
         }
         protected override void ShowDeviceAnimationEvent()
         {
             SetState(true);
-            _trigerArean.enabled = _isShowTriger;
+            triger.SetMode(_isShowTriger);
         }
         protected override void HideDeviceAnimationEvent()
         {
             SetState(false);
-            _trigerArean.enabled = false;
+            triger.SetMode(false);
         }
         private void SetState(bool mode)
         {
+            transform.rotation = Quaternion.Euler(Vector3.zero);
             _spriteRender.enabled = mode;
             _bodyCollider.enabled = mode;
         }
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (!isActiveDevice)
-            {
-                if (collision.TryGetComponent(out Player player))
-                {
-                    _target = player.transform;
-                    Activate();
-                }
-            }
-        }
-
     }
 }

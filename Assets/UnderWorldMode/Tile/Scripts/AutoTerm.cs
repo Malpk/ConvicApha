@@ -7,6 +7,7 @@ namespace Underworld
     public sealed class AutoTerm : SmartItem,IPause
     {
         [Header("General Setting")]
+        [SerializeField] private bool _playOnStart;
         [SerializeField] private float _safeTime;
         [SerializeField] private float _activeTime;
         [Header("Reference")]
@@ -25,14 +26,22 @@ namespace Underworld
             ShowItemAction -= ShowTerm;
             HideItemAction -= HideTerm;
         }
+        private void Start()
+        {
+            if (_playOnStart)
+            {
+                ShowItem();
+                StartAutoMode();
+            }
+        }
         private void ShowTerm()
         {
             _term.ShowItem();
         }
         private void HideTerm()
         {
-            if (_autoMode != null)
 #if UNITY_EDITOR
+            if (_autoMode != null)
                 throw new System.Exception("You can't hide an while run AutoMode");
 #endif
         }

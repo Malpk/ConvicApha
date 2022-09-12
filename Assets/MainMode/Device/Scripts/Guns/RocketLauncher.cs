@@ -17,6 +17,8 @@ namespace MainMode
 
         private Vector3 _lostTargetPosition;
 
+        private Transform target;
+        
         private Coroutine _coroutine;
 
         public override TrapType DeviceType => TrapType.RocketLauncher;
@@ -31,24 +33,42 @@ namespace MainMode
         {
             base.OnEnable();
             _shoot.FireAction += Fire;
+            ActivateAction += Launch;
+            triger.EnterAction += SetTarget;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
             _shoot.FireAction -= Fire;
+            ActivateAction -= Launch;
+            triger.EnterAction -= SetTarget;
         }
-        public override void Activate()
+        private void Launch()
         {
-            base.Activate();
             if (_coroutine == null)
             {
                 isActiveDevice = true;
-                _coroutine = StartCoroutine(Rotate(_target));
+                _coroutine = StartCoroutine(Rotate(target));
                 if (destroyMode)
                     StartCoroutine(Delete());
             }
         }
-
+        private void SetTarget(Transform target)
+        {
+            this.target = target;
+        }
+        public IEnumerator Delete()
+        {
+            var progress = 0f;
+            while (progress < 1f)
+            {
+                progress += Time.deltaTime / durationWork;
+                yield return null;
+            }
+            yield return new WaitWhile(() => isActiveDevice);
+            if(IsShow)
+                HideItem();
+        }
         private IEnumerator Rotate(Transform target)
         {
             float progress = 0f;
@@ -79,17 +99,6 @@ namespace MainMode
                 _rotateBody.MoveRotation(Mathf.MoveTowards(_rotateBody.rotation, 0, _speedRotation));
                 yield return null;
             }
-        }
-        public IEnumerator Delete()
-        {
-            var progress = 0f;
-            while (progress < 1f)
-            {
-                progress += Time.deltaTime / durationWork;
-                yield return null;
-            }
-            yield return new WaitWhile(() => isActiveDevice);
-            HideItem();
         }
         private void Shoot()
         {

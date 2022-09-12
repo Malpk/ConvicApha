@@ -7,7 +7,6 @@ namespace MainMode
     public class FireGun : Gun
     {
         [SerializeField] private float _speedRotation;
-        [Header("Reference")]
         [SerializeField] private Laser _fire;
         [SerializeField] private Rigidbody2D _fireGun;
         [SerializeField] private ParticleSystem _fireParticale;
@@ -16,6 +15,7 @@ namespace MainMode
 
         private int[] _directions = new int[] { -1, 1 };
 
+        public override bool IsActive => isActiveDevice;
         public override TrapType DeviceType => TrapType.FireGun;
 
         protected override void Awake()
@@ -29,12 +29,26 @@ namespace MainMode
             if (showOnStart)
                 Activate();
         }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            PauseAction += Play;
+            UnPauseAction += Stop;
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            PauseAction -= Play;
+            UnPauseAction -= Stop;
+        }
         public override void Activate()
         {
             base.Activate();
             _fire.SetMode(true);
             StartCoroutine(Rotate());
         }
+
         private IEnumerator Rotate()
         {
             yield return new WaitWhile(() => !IsShow);
@@ -43,11 +57,11 @@ namespace MainMode
             isActiveDevice = true;
             var direction = _directions[Random.Range(0, _directions.Length)];
             _fireGun.rotation = 181;
-            while (progress <= 1f && IsShow)
+            while (progress <= 1f && isActiveDevice)
             {
                 progress += Time.deltaTime / durationWork;
                 _fireGun.MoveRotation(_fireGun.rotation + direction * _speedRotation * Time.deltaTime);
-                yield return new WaitWhile(() => _isPause);
+                yield return new WaitWhile(() => IsPause);
                 yield return null;
             }
             yield return ReturnState();
@@ -66,15 +80,13 @@ namespace MainMode
                 yield return new WaitForFixedUpdate();
             }
         }
-        public override void UnPause()
+        private void Stop()
         {
-            base.UnPause();
             if (_particaleMode)
                 _fireParticale.Play();
         }
-        public override void Pause()
+        private void Play()
         {
-            base.Pause();
             _particaleMode = _fireParticale.isPlaying;
             _fireParticale.Pause();
         }

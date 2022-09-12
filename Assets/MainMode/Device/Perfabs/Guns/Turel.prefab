@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4878198611252494078}
   - component: {fileID: 4318679566918645197}
+  - component: {fileID: 8402724444401866945}
+  - component: {fileID: 3919104519225648020}
   m_Layer: 10
   m_Name: Triger
   m_TagString: Untagged
@@ -82,6 +84,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &8402724444401866945
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7091981213950580225}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &3919104519225648020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7091981213950580225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsShowTile: 1
+  _collider: {fileID: 8402724444401866945}
+  _body: {fileID: 4318679566918645197}
 --- !u!1 &7142385477910206621
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,10 +154,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7142385478768023675}
-  - component: {fileID: 7142385478768023674}
-  - component: {fileID: 7142385478768023677}
-  - component: {fileID: 7142385478768023676}
   - component: {fileID: 7142385478768023679}
+  - component: {fileID: 7142385478768023676}
+  - component: {fileID: 7142385478768023677}
+  - component: {fileID: 8576126648688296845}
   m_Layer: 10
   m_Name: Turel
   m_TagString: Untagged
@@ -148,73 +181,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &7142385478768023674
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7142385478768023678}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2.96, y: 1.0117475}
-  m_Direction: 0
---- !u!114 &7142385478768023677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7142385478768023678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a14057f13d119044a30ae2cb322685c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyMode: 1
-  showInStart: 0
-  durationWork: 15
-  _isShowTriger: 0
-  _trigerArean: {fileID: 4318679566918645197}
-  attackInfo:
-    _timeEffect: 0.5
-    _effect: 6
-    _attack: 5
-  gunAnimator: {fileID: 7142385478994254715}
-  _bodyCollider: {fileID: 6267167530786115895}
-  _spriteRender: {fileID: 7142385478994254714}
-  _activateOnStart: 1
-  _activationTime: 6
-  _firingRateOnSeconds: 1
-  _bulletPrefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
-  _spawnTransform: {fileID: 7142385477910206618}
-  _rotationAngleOnSeconds: 120
-  _rigidbody: {fileID: 7142385478994254716}
-  _collider: {fileID: 7142385478768023674}
---- !u!95 &7142385478768023676
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7142385478768023678}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &7142385478768023679
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -266,6 +232,74 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7142385478768023676
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142385478768023678}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7142385478768023677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142385478768023678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a14057f13d119044a30ae2cb322685c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyMode: 1
+  showOnStart: 0
+  durationWork: 10
+  _isShowTriger: 0
+  _playOnStart: 0
+  triger: {fileID: 3919104519225648020}
+  attackInfo:
+    _timeEffect: 0.5
+    _effect: 6
+    _attack: 5
+  gunAnimator: {fileID: 7142385478994254715}
+  _bodyCollider: {fileID: 6267167530786115895}
+  _spriteRender: {fileID: 7142385478994254714}
+  _activateOnStart: 0
+  _activationTime: 6
+  _firingRateOnSeconds: 1
+  _bulletPrefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
+  _spawnTransform: {fileID: 7142385477910206618}
+  _rotationAngleOnSeconds: 120
+  _rigidbody: {fileID: 7142385478994254716}
+  _colliderBody: {fileID: 6267167530786115895}
+--- !u!70 &8576126648688296845
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142385478768023678}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.21}
+  m_Size: {x: 0.67, y: 1}
+  m_Direction: 0
 --- !u!1 &7142385478994254719
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,9 +15,6 @@ namespace MainMode.LoadScene
     public class BaseLoader : MonoBehaviour
     {
         [Header("General Setting")]
-#if UNITY_EDITOR
-        [SerializeField] protected bool isDebug;
-#endif
         [SerializeField] protected bool playOnStart;
         [Header("Player Load Setting")]
         [SerializeField] protected Transform _spwanPoint;
@@ -57,10 +54,6 @@ namespace MainMode.LoadScene
                 list.Add(_perfabAndroidController.LoadAssetAsync().Task);
             player = loadPlayer.Result;
             holder = loadInterface.Result;
-#if UNITY_EDITOR
-            if(isDebug)
-                Debug.Log($"Complite player and userInteface load");
-#endif
             Intializate(config);
             intefaceLoader.UnloadReceiver();
             if (Application.platform == RuntimePlatform.Android)
@@ -90,10 +83,6 @@ namespace MainMode.LoadScene
 
         protected bool GetReceiverPerfab(TypeDisplay display, out Receiver perfab)
         {
-#if UNITY_EDITOR
-            if (isDebug)
-                Debug.Log($"Add Receiver for {display}");
-#endif
             foreach (var receiver in intefaceLoader.Receivers)
             {
                 if (receiver.DisplayType == display)
@@ -114,10 +103,6 @@ namespace MainMode.LoadScene
                     {
                         var controller = Instantiate(perfab, holder.transform);
                         player.SetController(controller.GetComponent<AndroidController>());
-                    }
-                    else
-                    {
-                        throw new System.NullReferenceException();
                     }
                     break;
                 default:

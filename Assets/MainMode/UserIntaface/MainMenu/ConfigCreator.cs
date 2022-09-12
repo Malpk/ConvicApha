@@ -7,7 +7,7 @@ using UserIntaface.MainMenu;
 
 public class ConfigCreator : MonoBehaviour
 {
-    public MainLoader Loader;
+    [SerializeField] private BaseLoader _sceneLoader;
     [SerializeField] private ItemScroller _consumableItemScroller;
     [SerializeField] private ItemScroller _artifactItemScroller;
 
@@ -18,12 +18,12 @@ public class ConfigCreator : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        Loader = FindObjectOfType<MainLoader>();
+        _sceneLoader = FindObjectOfType<MainLoader>();
     }
     public async void CreateNewConfig()
     {
         _config = new PlayerConfig(_consumableItemScroller, _artifactItemScroller, _characterScroller);
         animator.SetBool("ShiftPanels", true);
-       await Loader.LoadAsync(_config);
+       await _sceneLoader.LoadAsync(_config);
     }
 }

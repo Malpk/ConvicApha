@@ -1,4 +1,3 @@
-#if  UNITY_ANDROID || UNITY_EDITOR
 using UnityEngine;
 
 namespace PlayerComponent
@@ -58,4 +57,3 @@ namespace PlayerComponent
         }
     }
 }
-#endif

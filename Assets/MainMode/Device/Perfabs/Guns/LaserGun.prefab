@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 609064225060795421}
   - component: {fileID: 6075503573318152831}
+  - component: {fileID: 5632839724486105084}
+  - component: {fileID: 228950105332962646}
   m_Layer: 10
   m_Name: Triger
   m_TagString: Untagged
@@ -82,6 +84,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &5632839724486105084
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779581772229009337}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &228950105332962646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779581772229009337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsShowTile: 1
+  _collider: {fileID: 5632839724486105084}
+  _body: {fileID: 6075503573318152831}
 --- !u!1 &1876974867802433553
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,10 +124,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1876974867802433566}
-  - component: {fileID: 1876974867802433565}
-  - component: {fileID: 1876974867802433564}
-  - component: {fileID: 1876974867802433555}
   - component: {fileID: 1876974867802433554}
+  - component: {fileID: 1876974867802433555}
+  - component: {fileID: 1876974867802433564}
+  - component: {fileID: 2796808296873204602}
   m_Layer: 10
   m_Name: LaserGun
   m_TagString: Untagged
@@ -118,72 +151,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &1876974867802433565
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876974867802433553}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.010576248, y: -0.012087226}
-  m_Size: {x: 2.99, y: 0.74616694}
-  m_Direction: 0
---- !u!114 &1876974867802433564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876974867802433553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27188d43ca8914c43aaa3f5dcb42642e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyMode: 1
-  showInStart: 0
-  durationWork: 15
-  _isShowTriger: 0
-  _trigerArean: {fileID: 6075503573318152831}
-  attackInfo:
-    _timeEffect: 0.5
-    _effect: 6
-    _attack: 1
-  gunAnimator: {fileID: 1876974868247512200}
-  _bodyCollider: {fileID: 3263451438933997880}
-  _spriteRender: {fileID: 1876974868247512207}
-  _activateOnStart: 1
-  _timeReload: 3
-  _shootDuration: 6
-  _speedRotation: 2.5
-  _laser: {fileID: 1876974867974195046}
-  _rotateBody: {fileID: 1876974868247512205}
-  _collider: {fileID: 1876974867802433565}
---- !u!95 &1876974867802433555
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876974867802433553}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &1876974867802433554
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -235,6 +202,73 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1876974867802433555
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876974867802433553}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba29cdda012bdb242b0355978f121cca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1876974867802433564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876974867802433553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27188d43ca8914c43aaa3f5dcb42642e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyMode: 1
+  showOnStart: 0
+  durationWork: 15
+  _isShowTriger: 0
+  _playOnStart: 0
+  triger: {fileID: 228950105332962646}
+  attackInfo:
+    _timeEffect: 0.5
+    _effect: 6
+    _attack: 1
+  gunAnimator: {fileID: 1876974868247512200}
+  _bodyCollider: {fileID: 3263451438933997880}
+  _spriteRender: {fileID: 1876974868247512207}
+  _activateOnStart: 0
+  _timeReload: 3
+  _shootDuration: 6
+  _speedRotation: 2.5
+  _laser: {fileID: 1876974867974195046}
+  _rotateBody: {fileID: 1876974868247512205}
+  _collider: {fileID: 3263451438933997880}
+--- !u!70 &2796808296873204602
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876974867802433553}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.21, y: 1}
+  m_Direction: 0
 --- !u!1 &1876974867974195034
 GameObject:
   m_ObjectHideFlags: 0

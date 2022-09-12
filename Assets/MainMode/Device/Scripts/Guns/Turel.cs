@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace MainMode
 {
-    [RequireComponent(typeof(CapsuleCollider2D))]
     public class Turel : Gun
     {
         [Header("Attacks properties")]
@@ -19,14 +18,10 @@ namespace MainMode
         [Header("Move properties")]
         [SerializeField] protected float _rotationAngleOnSeconds;
         [SerializeField] protected Rigidbody2D _rigidbody;
-        [SerializeField] private Collider2D _collider;
+        [SerializeField] protected Collider2D _colliderBody;
 
         public override TrapType DeviceType => TrapType.Turel;
-        protected override void Awake()
-        {
-            base.Awake();
-            _collider.enabled = !_activateOnStart;
-        }
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -54,18 +49,19 @@ namespace MainMode
         protected IEnumerator Rotate()
         {
             yield return new WaitWhile(() => !IsShow);
-            float startAngle = _rigidbody.rotation;
             var progress = 0f;
-            while (progress <= 1f && IsShow)
+            while (progress <= 1f && IsActive)
             {
                 _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _rigidbody.rotation + _rotationAngleOnSeconds, Time.deltaTime);
                 progress += Time.deltaTime / durationWork;
                 yield return null;
             }
-            _rigidbody.rotation = startAngle;
-            Deactivate();
-            if (destroyMode)
-                HideItem();
+            if (IsActive)
+            {
+                Deactivate();
+                if (destroyMode)
+                    HideItem();
+            }
         }
         protected IEnumerator Shoot()
         {

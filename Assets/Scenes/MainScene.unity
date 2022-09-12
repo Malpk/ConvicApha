@@ -255,6 +255,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.000061035156
       objectReference: {fileID: 0}
+    - target: {fileID: 3224199007801331279, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _listPrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3224199007801331279, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _listPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 7941292703991102249, guid: 09180cf56b2c5b442ba2309571e0a240, type: 3}
     - target: {fileID: 3423585139643641040, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_Name
       value: Characters
@@ -355,8 +363,20 @@ PrefabInstance:
       propertyPath: m_Navigation.m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6399883237165465090, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _listPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399883237165465090, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _listPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 8302113174635913109, guid: 386ae40e1ddc372489d10330619fee35, type: 3}
     - target: {fileID: 6404714896275012096, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: Loader
+      value: 
+      objectReference: {fileID: 1378236218}
+    - target: {fileID: 6404714896275012096, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _sceneLoader
       value: 
       objectReference: {fileID: 1378236218}
     - target: {fileID: 7357777244214982537, guid: da666bb457dd5af4399e54305d13e342, type: 3}

@@ -51,16 +51,28 @@ namespace MainMode
             _isActivate = false;
             _collider.enabled = false;
         }
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.collider.TryGetComponent<IDamage>(out IDamage target))
+            HitDamage(collision);
+            if (collision.TryGetComponent(out RobotMan man))
+                man.AddEffects(_effect, _attackInfo.TimeEffect);
+            if (collision.TryGetComponent(out Rigidbody2D body))
+                body.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
+        }
+        //private void OnCollisionEnter2D(Collision2D collision)
+        //{
+        //    HitDamage(collision.collider);
+        //    if (collision.collider.TryGetComponent(out RobotMan man))
+        //        man.AddEffects(_effect, _attackInfo.TimeEffect);
+        //    if (collision.rigidbody)
+        //        collision.rigidbody.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
+        //}
+        private void HitDamage(Collider2D collision)
+        {
+            if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
                 target.TakeDamage(_damage, _attackInfo);
             }
-            if (collision.collider.TryGetComponent(out RobotMan man))
-                man.AddEffects(_effect, _attackInfo.TimeEffect);
-            if (collision.rigidbody)
-                collision.rigidbody.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
         }
     }
 }

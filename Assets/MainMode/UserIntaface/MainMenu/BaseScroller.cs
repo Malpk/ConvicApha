@@ -13,6 +13,7 @@ namespace UserIntaface.MainMenu
         [SerializeField] protected List<RectTransform> _transforms;
         [SerializeField] protected List<T> _listPrefabs;
         [SerializeField] protected Transform _parentElements;
+
         protected BaseRingList<T> _ringList;
         public T SelectedElement { get => _ringList.SelectedElement; }
 

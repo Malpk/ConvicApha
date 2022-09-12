@@ -5002,6 +5002,7 @@ GameObject:
   - component: {fileID: 4713145465338025172}
   - component: {fileID: 4713145465338025175}
   - component: {fileID: 4713145464186150810}
+  - component: {fileID: 8493244478544648086}
   m_Layer: 0
   m_Name: FireGun Sprite
   m_TagString: Untagged
@@ -5096,6 +5097,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!70 &8493244478544648086
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4713145465338025173}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.010576248, y: -0.012087226}
+  m_Size: {x: 0.13234329, y: 0.74616694}
+  m_Direction: 0
 --- !u!1 &4713145465825030419
 GameObject:
   m_ObjectHideFlags: 0
@@ -5105,7 +5122,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4713145465825030422}
-  - component: {fileID: 4713145465825030423}
   - component: {fileID: 4713145465825030420}
   - component: {fileID: 4713145465825030421}
   - component: {fileID: 4713145465825030418}
@@ -5132,22 +5148,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &4713145465825030423
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4713145465825030419}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.010576248, y: -0.012087226}
-  m_Size: {x: 0.13234329, y: 0.74616694}
-  m_Direction: 0
 --- !u!95 &4713145465825030420
 Animator:
   serializedVersion: 3
@@ -5180,15 +5180,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyMode: 1
+  showOnStart: 0
   durationWork: 15
-  isDebug: 0
-  playOnStart: 1
+  _isShowTriger: 0
+  _playOnStart: 0
+  _triger: {fileID: 3886306221469778121}
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
     _attack: 1
-  gunAnimator: {fileID: 0}
-  triger: {fileID: 3886306221469778121}
+  gunAnimator: {fileID: 4713145465825030420}
+  _bodyCollider: {fileID: 8493244478544648086}
   _spriteRender: {fileID: 4713145465338025175}
   _speedRotation: 100
   _fire: {fileID: 4713145464962549070}

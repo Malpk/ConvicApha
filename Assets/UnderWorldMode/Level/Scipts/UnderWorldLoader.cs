@@ -8,7 +8,7 @@ namespace Underworld
 {
     public sealed class UnderWorldLoader : BaseLoader
     {
-        [SerializeField] private AssetReferenceGameObject _mapBuilder;
+        [SerializeField] private MapBuilder _mapBuilder;
 
         
     }
