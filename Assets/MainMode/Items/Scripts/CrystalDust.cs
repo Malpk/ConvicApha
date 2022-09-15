@@ -11,14 +11,15 @@ namespace MainMode.Items
     {
         [SerializeField] private CrystalSheild _wallCrystalPrefab;
         [SerializeField] GameObject dustAnim;
-        [SerializeField] private GameObject wallBreakParticle;
         [SerializeField] private GameObject blockPutParticle;
         private Tilemap wallsTileMap;
+        
         private NavMeshSurface2d agentSurface;
         private Player _player;
 
         public override void Use()
         {
+            Vector2Int v = new Vector2Int();
             FindGameObjAtScene();
             Vector3 posFrontPlayer = _player.Position + (Vector2) _player.transform.up;
             var AnimObj = Instantiate(dustAnim, _player.Position, _player.transform.rotation);
@@ -26,9 +27,11 @@ namespace MainMode.Items
             Vector3Int tilePos = wallsTileMap.WorldToCell(posFrontPlayer);
             if (wallsTileMap.GetTile<Tile>(tilePos))
             {
+                FogManager fogManager = GameObject.FindWithTag("FogManager").GetComponent<FogManager>();
                 wallsTileMap.SetTile(tilePos, null);
                 Instantiate(blockPutParticle, posFrontPlayer, Quaternion.identity);
-                agentSurface.BuildNavMesh();
+                agentSurface.UpdateNavMesh(agentSurface.navMeshData);
+                fogManager.FillFog();
             }
             else
             {

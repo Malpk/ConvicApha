@@ -11,6 +11,7 @@ public class Patrul : StateMachineBehaviour
     private List<Transform> points = new List<Transform>();
     private Transform player;
     [SerializeField] private float patrulSpeed;
+    [SerializeField] private float ableJumpDistance;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
@@ -30,15 +31,16 @@ public class Patrul : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         time += Time.deltaTime;
-        float distance = Vector3.Distance(animator.transform.position, currentPoint.transform.position);
-        if (distance < 5)
+        float distanceToPoint = Vector3.Distance(animator.transform.position, currentPoint.transform.position);
+        if (distanceToPoint < 2 || time > 30)
         {
             animator.SetBool("Patrul", false);
         }
-
-        if (time > 30)
+        
+        float distanceToPlayer = Vector3.Distance(animator.transform.position, player.transform.position);
+        if (distanceToPlayer < ableJumpDistance)
         {
-            animator.SetBool("Patrul", false);
+            animator.SetBool("Jump", true);
         }
         
         if (RayToPlayer(animator))
@@ -60,20 +62,12 @@ public class Patrul : StateMachineBehaviour
         currentPoint = points[rand];
     }
     
-
     private bool RayToPlayer(Animator animator)
     {
         Vector3 directionToPlayer = player.position - animator.transform.position;
-        RaycastHit2D hit2D = Physics2D.Raycast(animator.transform.position + directionToPlayer.normalized, directionToPlayer, 100);
-        Debug.DrawRay(animator.transform.position + directionToPlayer.normalized, directionToPlayer, Color.yellow);
-        if (hit2D.collider != null)
-        {
-            if (hit2D.collider.gameObject.CompareTag("Player") || hit2D.collider.GetComponent<Jeff>())
-            {
-                return true;
-            }
-        }
+        RaycastHit2D hit2D = Physics2D.Raycast(animator.transform.position + directionToPlayer.normalized,
+            directionToPlayer, 1000);
 
-        return false;
+        return hit2D.collider != null && hit2D.collider.gameObject.tag == "Player";
     }
 }

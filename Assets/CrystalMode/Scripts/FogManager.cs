@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class FogManager : MonoBehaviour
 {
@@ -12,9 +13,14 @@ public class FogManager : MonoBehaviour
     [SerializeField] private int groupCount;
     [SerializeField] float fadeSpeed;
     [SerializeField] private float range;
+    [SerializeField] private GameObject fogObj;
+    private int sizeX = 38, sizeY = 38;
+    private Tilemap crystalWallsTilemap;
 
     private void Start()
     {
+        crystalWallsTilemap = GameObject.FindWithTag("CrystalWalls").GetComponent<Tilemap>();
+        FillFog();
         FillGroups();
         player = GameObject.FindWithTag("Player").transform;
     }
@@ -71,6 +77,29 @@ public class FogManager : MonoBehaviour
                 groups.Add(currentGroup = new List<SpriteRenderer>());
             }
             currentGroup.Add(transform.GetChild(i).GetComponent<SpriteRenderer>());
+        }
+    }
+
+    public void FillFog()
+    {
+        if (transform.childCount > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i));
+            }
+        }
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int y = 0; y < sizeY; y++)
+            {
+                Vector3Int tilePos = crystalWallsTilemap.WorldToCell(new Vector3(x - 27.5f, y - 19.5f, 0));
+                if (!crystalWallsTilemap.GetTile<Tile>(tilePos))
+                {
+                    var fogTile = Instantiate(fogObj, transform);
+                    fogTile.transform.position = new Vector3(x - 27.5f, y - 19.5f, 0);
+                }
+            }
         }
     }
 }

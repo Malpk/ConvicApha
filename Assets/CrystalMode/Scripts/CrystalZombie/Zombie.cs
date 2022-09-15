@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using MainMode;
 using UnityEngine;
 using UnityEngine.AI;
-using NavMeshBuilder = UnityEditor.AI.NavMeshBuilder;
-using Random = UnityEngine.Random;
 
 public class Zombie : MonoBehaviour
 {
