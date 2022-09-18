@@ -518,9 +518,6 @@ MonoBehaviour:
   destroyMode: 1
   showOnStart: 0
   durationWork: 10
-  _isShowTriger: 0
-  _playOnStart: 0
-  triger: {fileID: 7194119080931255070}
   attackInfo:
     _timeEffect: 0.5
     _effect: 6
@@ -833,12 +830,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 7194119081482484992}
     m_Modifications:
     - target: {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
+      propertyPath: _device
+      value: 
+      objectReference: {fileID: 7194119081482484994}
+    - target: {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
       propertyPath: _collider
       value: 
       objectReference: {fileID: 7194119080931255071}
     - target: {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
       propertyPath: IsShowTile
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8620431239785666073, guid: 767f3776764bb6d4caef518bda403516, type: 3}
       propertyPath: m_Name
@@ -905,14 +906,3 @@ CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 8620431239785666053, guid: 767f3776764bb6d4caef518bda403516, type: 3}
   m_PrefabInstance: {fileID: 1474728466214466842}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7194119080931255070 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8620431239785666052, guid: 767f3776764bb6d4caef518bda403516, type: 3}
-  m_PrefabInstance: {fileID: 1474728466214466842}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c57d745011b7a49a6ede8f6d44843a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

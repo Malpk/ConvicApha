@@ -24,12 +24,12 @@ namespace MainMode
         protected override void OnEnable()
         {
             base.OnEnable();
-            CompliteUpAnimation += Activate;
+            CompliteShowAnimation += Activate;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
-            CompliteUpAnimation -= Activate;
+            CompliteShowAnimation -= Activate;
         }
         private void Start()
         {

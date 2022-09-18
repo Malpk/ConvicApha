@@ -200,12 +200,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978d7c78d4d36f948aaea9bcb5c239f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  izolator: {fileID: 8033671764934701580}
   _detect:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8033671764934701580}
-        m_TargetAssemblyTypeName: MainMode.Izolator, Assembly-CSharp
-        m_MethodName: OnActivateJet
+        m_TargetAssemblyTypeName: MainMode.VenomIzolator, Assembly-CSharp
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

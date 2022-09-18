@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +6,8 @@ namespace MainMode
     [RequireComponent(typeof(CircleCollider2D))]
     public class DetectDeviceSet : MonoBehaviour
     {
+        [SerializeField] protected Izolator izolator;
+
         [SerializeField] private UnityEvent _detect;
 
         private CircleCollider2D _collider;
@@ -27,7 +27,10 @@ namespace MainMode
         }
         protected virtual void SendMessange(Player player)
         {
-            _detect.Invoke();
+            if (izolator.IsShow && !izolator.IsActive)
+            {
+                _detect.Invoke();
+            }
         }
     }
 }

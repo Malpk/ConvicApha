@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class LaserGun : Gun
+    public class LaserGun : AutoGun
     {
         [Header("LaserGun setting")]
-        [SerializeField] private bool _activateOnStart;
         [Min(1)]
         [SerializeField] private float _timeReload = 1f;
         [Min(1)]
@@ -18,34 +17,16 @@ namespace MainMode
         [Header("Reference")]
         [SerializeField] private Laser _laser;
         [SerializeField] private Rigidbody2D _rotateBody;
-        [SerializeField] private Collider2D _collider;
 
         private Coroutine _coroutine = null;
 
         public override TrapType DeviceType => TrapType.LaserGun;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _collider.enabled = !_activateOnStart;
-            _laser.SetAttack(attackInfo);
-        }
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            ActivateAction += Launch;
-        }
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            ActivateAction -= Launch;
-        }
         private void Start()
         {
             if (showOnStart)
                 ShowItem();
         }
-        private void Launch()
+        protected override void Launch()
         {
             _coroutine = StartCoroutine(Rotate());
             StartCoroutine(ShootLaser());
@@ -58,24 +39,28 @@ namespace MainMode
             float progress = 0f;
             while (progress < 1f && IsActive)
             {
-                _rotateBody.MoveRotation(_rotateBody.rotation + _speedRotation * direction[index]);
-                progress += Time.deltaTime / durationWork;
-                yield return null;
+                while (Mathf.Abs(_rotateBody.rotation) <= 360 && IsActive)
+                {
+                    _rotateBody.MoveRotation(_rotateBody.rotation + _speedRotation * direction[index]);
+                    progress += Time.deltaTime / durationWork;
+                    yield return null;
+                }
+                _rotateBody.rotation -= 360 * direction[index];
             }
+            _coroutine = null;
             if (IsActive)
             {
-                _coroutine = null;
-                yield return StartCoroutine(ReturnState());
                 Deactivate();
+                yield return ReturnState();
                 if (destroyMode)
                     HideItem();
             }
         }
         private IEnumerator ReturnState()
         {
-            while (Mathf.Abs(_rotateBody.rotation) > 0.1f)
+            while (Mathf.Abs(_rotateBody.rotation) != 0)
             {
-                _rotateBody.MoveRotation(Mathf.LerpAngle(_rotateBody.rotation,0,Time.fixedDeltaTime * _speedRotation));
+                _rotateBody.MoveRotation(Mathf.MoveTowards(_rotateBody.rotation, 0, Time.fixedDeltaTime * _speedRotation));
                 yield return new WaitForFixedUpdate();
             }
         }

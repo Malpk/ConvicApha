@@ -12,11 +12,14 @@ namespace MainMode
         [SerializeField] protected bool showOnStart;
         [SerializeField] protected float durationWork;
 
+        private bool _isExplosion;
         private Animator _animator;
+
+        public event System.Action CompliteShowAnimation;
 
         protected event System.Action PauseAction;
         protected event System.Action UnPauseAction;
-        protected event System.Action CompliteUpAnimation;
+
 
         public bool IsPause { get; private set; }
 
@@ -27,7 +30,6 @@ namespace MainMode
         {
             _animator = GetComponent<Animator>();
         }
-
 
         protected virtual void OnEnable()
         {
@@ -79,7 +81,11 @@ namespace MainMode
         }
         public void Explosion()
         {
-            _animator.SetTrigger("Explosion");
+            if (!_isExplosion)
+            {
+                _isExplosion = true;
+                _animator.SetTrigger("Explosion");
+            }
         }
         #endregion
         protected abstract void ShowDeviceAnimationEvent();
@@ -87,16 +93,17 @@ namespace MainMode
 
         private void DestroyDeviceAnimationEvent()
         {
-            if(IsActive)
+            if (IsActive)
                 Deactivate();
             HideItem();
             DownDevice();
             HideDeviceAnimationEvent();
+            _isExplosion = false;
         }
         protected void CompliteUpAnimationEvent()
         {
-            if (CompliteUpAnimation != null)
-                CompliteUpAnimation();
+            if (CompliteShowAnimation != null)
+                CompliteShowAnimation();
         }
 
     }

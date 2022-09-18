@@ -9,7 +9,7 @@ namespace MainMode
         public override TrapType DeviceType => TrapType.SteamIsolator;
 
 
-        protected override void OnTriggerEnter2D(Collider2D collision)
+        protected  void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.GetComponent<Character>() != null)
                 Activate();

@@ -7,6 +7,7 @@ namespace MainMode.Items
     [RequireComponent(typeof(Collider2D))]
     public abstract class Item : SmartItem, IPickable, IUseable
     {
+        [SerializeField] private bool _hideOnAwake;
         [SerializeField] protected Sprite ItemSprite;
         [SerializeField] protected SpriteRenderer _spriteBody;
         
@@ -20,7 +21,10 @@ namespace MainMode.Items
         {
             _collider = GetComponent<Collider2D>(); 
             _collider.isTrigger = true;
-            SetMode(false);
+            if (_hideOnAwake)
+                SetMode(false);
+            else
+                ShowItem();
         }
         private void OnEnable()
         {

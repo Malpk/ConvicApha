@@ -19,7 +19,6 @@ namespace MainMode
         protected IJet[] jets;
         public override bool IsActive => isActiveDevice;
 
-
         protected override void Awake()
         {
             base.Awake();
@@ -121,25 +120,6 @@ namespace MainMode
             colider.enabled = mode;
         }
         #endregion
-
-        protected virtual void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (attackInfo.Effect == EffectType.None)
-                return;
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen) && isActiveDevice)
-            {
-                screen.ShowEffect(attackInfo);
-            }
-        }
-        protected virtual void OnTriggerExit2D(Collider2D collision)
-        {
-            if (attackInfo.Effect == EffectType.None)
-                return;
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen) && isActiveDevice)
-            {
-                screen.ShowEffect(attackInfo);
-            }
-        }
 
         private void SetJetMode(bool mode)
         {

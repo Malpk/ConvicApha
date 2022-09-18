@@ -12,8 +12,6 @@ namespace MainMode
         [SerializeField] private Collider2D _triger;
         [SerializeField] private SpriteRenderer _cloudSprite;
 
-        public DamageInfo DamageInfo => _damageInfo;
-
         protected override void Awake()
         {
             base.Awake();
@@ -31,6 +29,14 @@ namespace MainMode
         public void Hide()
         {
             _cloudSprite.enabled = false;
+        }
+        protected override void SendMessange(Player player)
+        {
+            base.SendMessange(player);
+            if (izolator.IsActive)
+            {
+                player.TakeDamage(0, _damageInfo);
+            }
         }
     }
 }

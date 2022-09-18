@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class RocketLauncher : Gun
+    public class RocketLauncher : Gun, ISetTarget
     {
         [Header("Geneeral Setting")]
         [SerializeField] private float _aimTime = 1f;
@@ -18,7 +18,8 @@ namespace MainMode
         private Vector3 _lostTargetPosition;
 
         private Transform target;
-        
+
+        private Coroutine _delete;
         private Coroutine _coroutine;
 
         public override TrapType DeviceType => TrapType.RocketLauncher;
@@ -34,30 +35,40 @@ namespace MainMode
             base.OnEnable();
             _shoot.FireAction += Fire;
             ActivateAction += Launch;
-            triger.EnterAction += SetTarget;
+            if (destroyMode)
+                ShowItemAction += DeleteGun;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
             _shoot.FireAction -= Fire;
             ActivateAction -= Launch;
-            triger.EnterAction -= SetTarget;
+            if(destroyMode)
+                ShowItemAction -= DeleteGun;
         }
-        private void Launch()
+        protected override void Launch()
         {
+#if UNITY_EDITOR
+            if(!IsActive)
+            throw new System.Exception("you can't launch to gun while he is deactivate");
+#endif
             if (_coroutine == null)
             {
-                isActiveDevice = true;
                 _coroutine = StartCoroutine(Rotate(target));
-                if (destroyMode)
-                    StartCoroutine(Delete());
             }
         }
-        private void SetTarget(Transform target)
+        public void SetTarget(Transform target)
         {
             this.target = target;
         }
-        public IEnumerator Delete()
+        private void DeleteGun()
+        {
+            if (_delete == null)
+            {
+                _delete = StartCoroutine(Delete());
+            }
+        }
+        private IEnumerator Delete()
         {
             var progress = 0f;
             while (progress < 1f)
@@ -65,9 +76,10 @@ namespace MainMode
                 progress += Time.deltaTime / durationWork;
                 yield return null;
             }
-            yield return new WaitWhile(() => isActiveDevice);
-            if(IsShow)
+            yield return new WaitWhile(() => IsActive);
+            if (IsShow)
                 HideItem();
+            _delete = null;
         }
         private IEnumerator Rotate(Transform target)
         {
@@ -90,7 +102,6 @@ namespace MainMode
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(ReturnState());
             _coroutine = null;
-            Deactivate();
         }
         private IEnumerator ReturnState()
         {

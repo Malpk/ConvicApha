@@ -15,7 +15,6 @@ namespace MainMode
 
         private int[] _directions = new int[] { -1, 1 };
 
-        public override bool IsActive => isActiveDevice;
         public override TrapType DeviceType => TrapType.FireGun;
 
         protected override void Awake()
@@ -54,10 +53,9 @@ namespace MainMode
             yield return new WaitWhile(() => !IsShow);
             _fireParticale.Play();
             var progress = 0f;
-            isActiveDevice = true;
             var direction = _directions[Random.Range(0, _directions.Length)];
             _fireGun.rotation = 181;
-            while (progress <= 1f && isActiveDevice)
+            while (progress <= 1f && IsActive)
             {
                 progress += Time.deltaTime / durationWork;
                 _fireGun.MoveRotation(_fireGun.rotation + direction * _speedRotation * Time.deltaTime);
@@ -68,7 +66,7 @@ namespace MainMode
             _fire.SetMode(false);
             _fireParticale.Pause();
             _fireParticale.Clear();
-            isActiveDevice = false;
+            Deactivate();
             if(destroyMode)
                 HideItem();
         }
@@ -89,6 +87,11 @@ namespace MainMode
         {
             _particaleMode = _fireParticale.isPlaying;
             _fireParticale.Pause();
+        }
+
+        protected override void Launch()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

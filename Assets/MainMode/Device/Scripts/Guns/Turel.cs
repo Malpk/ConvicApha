@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class Turel : Gun
+    public class Turel : AutoGun
     {
         [Header("Attacks properties")]
-        [SerializeField] private bool _activateOnStart;
         [SerializeField]
         protected float _activationTime = 1f;
         [SerializeField]
@@ -22,26 +21,13 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.Turel;
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            if (_activateOnStart)
-                CompliteUpAnimation += Activate;
-        }
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            if (_activateOnStart)
-                CompliteUpAnimation -= Activate;
-        }
         private void Start()
         {
             if (showOnStart)
                 ShowItem();
         }
-        public override void Activate()
+        protected override void Launch()
         {
-            base.Activate();
             StartCoroutine(Rotate());
             StartCoroutine(Shoot());
         }
@@ -66,7 +52,7 @@ namespace MainMode
         protected IEnumerator Shoot()
         {
             yield return new WaitWhile(() => !IsShow);
-            while (isActiveDevice)
+            while (IsActive)
             {
                 var progress = 0f;
                 while (progress <= 1f && isActiveAndEnabled)
