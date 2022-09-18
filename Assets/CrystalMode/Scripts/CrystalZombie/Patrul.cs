@@ -12,6 +12,7 @@ public class Patrul : StateMachineBehaviour
     private Transform player;
     [SerializeField] private float patrulSpeed;
     [SerializeField] private float ableJumpDistance;
+    [SerializeField] private float jumpCoolDown;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
@@ -38,8 +39,10 @@ public class Patrul : StateMachineBehaviour
         }
         
         float distanceToPlayer = Vector3.Distance(animator.transform.position, player.transform.position);
-        if (distanceToPlayer < ableJumpDistance)
+        
+        if (distanceToPlayer < ableJumpDistance && time > jumpCoolDown)
         {
+            time = 0;
             animator.SetBool("Jump", true);
         }
         

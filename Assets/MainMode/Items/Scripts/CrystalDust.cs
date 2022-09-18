@@ -31,7 +31,7 @@ namespace MainMode.Items
                 wallsTileMap.SetTile(tilePos, null);
                 Instantiate(blockPutParticle, posFrontPlayer, Quaternion.identity);
                 agentSurface.UpdateNavMesh(agentSurface.navMeshData);
-                fogManager.FillFog();
+                fogManager.PutFog(tilePos);
             }
             else
             {

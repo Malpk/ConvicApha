@@ -34,6 +34,7 @@ public class Chase : StateMachineBehaviour
         
         if (!RayToPlayer(animator))
         {
+            Debug.Log("ray");
             animator.SetBool("Patrul", true);
             animator.SetBool("Chase", false);
         }
