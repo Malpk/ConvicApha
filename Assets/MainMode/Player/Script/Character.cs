@@ -65,7 +65,7 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
         return false;
     }
     protected abstract void Move(Vector2 direction);
-    public abstract void Dead();
+    public abstract void Explosion();
     public abstract void TakeDamage(int damage,  DamageInfo type);
     public abstract void StopMove(float timeStop, EffectType effect = EffectType.None);
     public abstract void ChangeSpeed(float duration,EffectType effect, float value = 1);

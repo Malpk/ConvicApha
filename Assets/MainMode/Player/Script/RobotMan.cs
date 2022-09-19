@@ -112,7 +112,7 @@ public class RobotMan : Player
     private void ChangeTemaerature(float temperature = 0)
     {
         if (_bodyTemperature > 1f)
-            Dead();
+            Explosion();
         temperature = Mathf.Clamp01(temperature);
         _bodyTemperature += temperature;
         _sprite.color = Vector4.MoveTowards(_sprite.color, Color.red, temperature);

@@ -29,7 +29,7 @@ namespace MainMode
         {
             _curretEndurance = _endurance;
         }
-        public void Dead()
+        public void Explosion()
         {
             SetMode(false);
             _curretEndurance = 0;
@@ -40,7 +40,7 @@ namespace MainMode
             if (_curretEndurance - damage > 0 && _isDeactive)
                 _curretEndurance -= damage;
             else
-                Dead();
+                Explosion();
         }
 
         public bool ActiveShield()

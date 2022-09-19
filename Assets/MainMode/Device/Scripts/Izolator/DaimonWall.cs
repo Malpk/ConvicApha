@@ -27,7 +27,7 @@ namespace MainMode
             _animator.SetBool("Mode", false);
         }
 
-        public void Dead()
+        public void Explosion()
         {
             Activate();
         }
@@ -47,7 +47,7 @@ namespace MainMode
         {
             _curretHealht -= damage;
             if (_curretHealht <= 0)
-                Dead();
+                Explosion();
         }
         public void SetMode(bool mode)
         {

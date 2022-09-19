@@ -10,6 +10,7 @@ using PlayerComponent;
 [RequireComponent(typeof(PlayerScreen), typeof(Collider2D))]
 public class Player : Character, IResist
 {
+    [SerializeField] protected MarkerUI _markerUI;
     [SerializeField] protected Inventory _inventory;
     [SerializeField] protected Controller controller;
     [Header("Resist setting")]
@@ -20,6 +21,8 @@ public class Player : Character, IResist
     protected float stoneEffect = 1;
     protected Collider2D playerCollider = null;
     protected PlayerScreen screenEffect = null;
+
+    private float _angleUseItem;
     private IItemInteractive _interacive = null;
 
     private Coroutine _stopMoveCorotine;
@@ -85,7 +88,7 @@ public class Player : Character, IResist
             _baseMovement.Rotate(direction, speedRotation * speedDebaf);
     }
     #region Player Damage and Dead
-    public override void Dead()
+    public override void Explosion()
     {
         isDead = true;
         if (OnDead != null)
@@ -101,7 +104,7 @@ public class Player : Character, IResist
         {
             health.SetDamage(damage);
             if (health.Health <= 0)
-                Dead();
+                Explosion();
             screenEffect.ShowEffect(damageInfo);
         }
     }
@@ -158,6 +161,11 @@ public class Player : Character, IResist
     {
         if (_inventory.TryGetArtifact(out Artifact artifact))
         {
+            if (artifact.UseType == ItemUseType.Shoot && _markerUI)
+            {
+                _markerUI.ShowMarker();
+                transform.rotation = Quaternion.Euler(Vector3.forward * (_markerUI.CurretAngel-90));
+            }
             artifact.Use();
         }
     }

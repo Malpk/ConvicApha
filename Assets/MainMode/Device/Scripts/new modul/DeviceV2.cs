@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(Animator))]
-    public abstract class DeviceV2 : SmartItem, IPause
+    public abstract class DeviceV2 : SmartItem, IPause,IExplosion
     {
         [Header("Generate")]
         [SerializeField] protected bool destroyMode;
@@ -25,6 +25,8 @@ namespace MainMode
 
         public abstract bool IsActive { get; }
         public abstract TrapType DeviceType { get; }
+
+        public bool ReadyExplosion => IsShow;
 
         protected virtual void Awake()
         {

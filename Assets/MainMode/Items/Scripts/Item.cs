@@ -7,7 +7,10 @@ namespace MainMode.Items
     [RequireComponent(typeof(Collider2D))]
     public abstract class Item : SmartItem, IPickable, IUseable
     {
+        [Header("Setting")]
         [SerializeField] private bool _hideOnAwake;
+        [SerializeField] private ItemUseType _typeUse;
+        [Header("Reference")]
         [SerializeField] protected Sprite ItemSprite;
         [SerializeField] protected SpriteRenderer _spriteBody;
         
@@ -16,6 +19,7 @@ namespace MainMode.Items
         public bool Active { get; private set; }
 
         public Sprite Sprite => ItemSprite;
+        public ItemUseType UseType => _typeUse;
 
         protected virtual void Awake()
         {

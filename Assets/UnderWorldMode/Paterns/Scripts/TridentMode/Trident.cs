@@ -67,7 +67,7 @@ using UnityEngine;
                 return;
             if (collision.TryGetComponent(out IDamage target))
             {
-                target.Dead();
+                target.Explosion();
             }
         }
         private void DisplayTrident(bool mode)

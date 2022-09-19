@@ -66,7 +66,7 @@ namespace Underworld
             State = DeviceStateWork.Play;
             _termFire.Activate(firestate);
             if (_target != null)
-                _target.Dead();
+                _target.Explosion();
         }
 
         public void Deactivate(bool waitAnimation = true)
@@ -146,7 +146,7 @@ namespace Underworld
             {
                 _target = target;
                 if (_isDamageMode)
-                    _target.Dead();
+                    _target.Explosion();
             }
         }
         private void OnTriggerExit2D(Collider2D collision)

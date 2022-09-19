@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class EvilRobot : SmartItem, IDamage,IAddEffects
+    public class EvilRobot : SmartItem, IDamage,IAddEffects, IExplosion
     {
         [Header("General")]
         [SerializeField] private bool _playOnStart;
@@ -24,17 +24,14 @@ namespace MainMode
         [SerializeField] private SpriteRenderer _spritebody;
 
         private int _direction = 1;
-
         private int _health;
+        private bool _readyExlosion;
         private float angle = 0;
         public Dictionary<MovementEffect, int> _debafList = new Dictionary<MovementEffect, int>();
 
         public bool IsActive { get; private set; }
+        public bool ReadyExplosion => _readyExlosion;
 
-        private void Awake()
-        {
-            ShowItem();
-        }
         private void OnEnable()
         {
             ShowItemAction += () => SetMode(true);
@@ -47,6 +44,7 @@ namespace MainMode
         }
         private void Start()
         {
+            ShowItem();
             if (_playOnStart)
                 Activate();
         }
@@ -73,7 +71,7 @@ namespace MainMode
 #endif
             IsActive = false;
         }
-        public void Dead()
+        public void Explosion()
         {
             Deactivate();
             _effects.SetInteger("State", 2);
@@ -85,7 +83,7 @@ namespace MainMode
             {
                 _health--;
                 if (_health <= 0)
-                    Dead();
+                    Explosion();
                 else
                     _effects.SetInteger("State", 1);
             }
@@ -145,6 +143,7 @@ namespace MainMode
 
         private void SetMode(bool mode)
         {
+            _readyExlosion = mode;
             _rigidBody.simulated = mode;
             _spritebody.enabled = mode;
             _colliderBody.enabled = mode;
@@ -163,7 +162,7 @@ namespace MainMode
             {
                 if (collision.TryGetComponent(out IDamage target))
                 {
-                    target.Dead();
+                    target.Explosion();
                 }
                 else if (collision.TryGetComponent(out DeviceV2 device))
                 {

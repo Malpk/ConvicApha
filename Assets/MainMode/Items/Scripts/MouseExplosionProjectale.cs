@@ -37,11 +37,11 @@ namespace MainMode.Items
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out DeviceV2 device))
+            if (collision.TryGetComponent(out IExplosion target))
             {
-                if (device.IsShow)
+                if (target.ReadyExplosion)
                 {
-                    device.Explosion();
+                    target.Explosion();
                     SetMode(false);
                 }
             }
