@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MainMode.GameInteface;
@@ -19,6 +18,7 @@ namespace MainMode.LoadScene
         [Header("Player Load Setting")]
         [SerializeField] protected Transform _spwanPoint;
         [SerializeField] protected PlayerConfig choosePlayer;
+        [SerializeField] protected CameraFollowing _cameraFollowing;
         [AssetReferenceUILabelRestriction("controller")]
         [SerializeField] private AssetReferenceGameObject _perfabAndroidController;
 
@@ -27,6 +27,8 @@ namespace MainMode.LoadScene
 
         protected Player player;
         protected InterfaceSwitcher holder;
+
+        private string _cameraLoadKey = "CameraFollowing";
 
         private void Awake()
         {
@@ -49,7 +51,8 @@ namespace MainMode.LoadScene
             var loadInterface = intefaceLoader.LoadIntefaceAsync();
             await Task.WhenAll(loadReciver, loadInterface);
             var loadPlayer = playerLoader.PlayerLaodAsync(_spwanPoint, config.characterType);
-            await loadPlayer;
+            var loadCamera = LoadCameraFollowingAsync();
+            await Task.WhenAll(loadPlayer, loadCamera);
             if (Application.platform == RuntimePlatform.Android)
                 list.Add(_perfabAndroidController.LoadAssetAsync().Task);
             player = loadPlayer.Result;
@@ -64,6 +67,13 @@ namespace MainMode.LoadScene
         {
             var senders = player.GetComponents<ISender>();
             var hud = holder.GetComponentInChildren<HUDInteface>();
+            _cameraFollowing.SetTarget(player);
+            var marker = hud.GetComponentInChildren<MarkerUI>();
+            if (marker)
+            {
+                marker.Intilizate(player, _cameraFollowing);
+                marker.Play();
+            }
             if (hud)
             {
                 for (int i = 0; i < senders.Length; i++)
@@ -75,8 +85,9 @@ namespace MainMode.LoadScene
                     }
                 }
             }
-            SetController(player);
-            if(config.itemConsumable != null && config.itemArtifact != null)
+            SetController(out Controller controller);
+            player.Intiliazate(controller, marker);
+            if (config.itemConsumable != null && config.itemArtifact != null)
                 player.AddDefaultItems(config.itemConsumable.GetComponent<ConsumablesItem>(), 
                     config.itemArtifact.GetComponent<Artifact>());
         }
@@ -94,22 +105,59 @@ namespace MainMode.LoadScene
             perfab = null;
             return false;
         }
-        public void SetController(Player player)
+        public bool SetController(out Controller controller)
         {
             switch (Application.platform)
             {
                 case RuntimePlatform.Android:
                     if (_perfabAndroidController.Asset is GameObject perfab)
                     {
-                        var controller = Instantiate(perfab, holder.transform);
-                        player.SetController(controller.GetComponent<AndroidController>());
+                        controller = Instantiate(perfab, holder.transform).GetComponent<AndroidController>();
                     }
+                    else
+                        controller = null;
                     break;
                 default:
-                    player.SetController(player.gameObject.AddComponent<PcController>());
+                    controller = player.gameObject.AddComponent<PcController>();
                     break;
             }
+            return controller;
         }
         #endregion
+        private async Task LoadCameraFollowingAsync()
+        {
+            try
+            {
+                if (_cameraFollowing == null)
+                {
+                    var loadCamera = LoadCamera(_cameraLoadKey);
+                    await loadCamera;
+                    _cameraFollowing = loadCamera.Result;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+            _cameraFollowing.transform.position = _spwanPoint ?  new Vector3(_spwanPoint.position.x,
+                _spwanPoint.position.y, _cameraFollowing.transform.position.z) :
+                    Vector3.forward * _cameraFollowing.transform.position.z;
+        }
+        private async Task<CameraFollowing> LoadCamera(string keyLoad)
+        {
+            var load = Addressables.InstantiateAsync(keyLoad).Task;
+            await load;
+            var cameraFollowing = load.Result;
+            try
+            {
+                if (!cameraFollowing.TryGetComponent(out CameraFollowing camera))
+                    throw new System.Exception("GameObject is not component CameraFollowing");
+                return camera;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

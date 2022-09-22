@@ -7,7 +7,6 @@ namespace MainMode.LoadScene
     public class PlayerInfo : ScrollItem
     {
         [SerializeField] private PlayerType _type;
-        [AssetReferenceUILabelRestriction("player")]
 
         public PlayerType Type => _type;
 

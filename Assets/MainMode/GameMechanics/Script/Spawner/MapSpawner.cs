@@ -74,19 +74,16 @@ namespace MainMode
                 yield return WaitDelay(delay);
                 if (GetPool(out PoolItem pool))
                 {
-                    if (GetFreePoints(_spawnRadius, pool, out List<Point> freePoints))
+                    if (pool.Create(out SmartItem item))
                     {
-                        var point = freePoints[Random.Range(0, freePoints.Count)];
-                        if (pool.Create(out SmartItem item))
+                        if (_mapGrid.SpawnItem(item, _spawnRadius))
                         {
-                            point.SetItem(item);
-                            if (!item.IsShow)
-                                item.ShowItem();
                             item.transform.parent = transform;
                         }
                     }
                 }
             }
+            
         }
 
         private IEnumerator WaitDelay(float delay)
@@ -97,19 +94,6 @@ namespace MainMode
                 progress += Time.deltaTime / delay;
                 yield return null;
             }
-        }
-        private bool GetFreePoints(float filtrDistance, PoolItem perfab ,out List<Point> freePoints)
-        {
-            freePoints = new List<Point>();
-            foreach (var point in _mapGrid.Points)
-            {
-                var distance = Vector2.Distance(_player.Position, point.Position);
-                if (distance <= filtrDistance && distance > perfab.DistanceFromPlayer && !point.IsBusy)
-                {
-                    freePoints.Add(point);
-                }
-            }
-            return freePoints.Count > 0;
         }
         private bool GetPool(out PoolItem pool)
         {

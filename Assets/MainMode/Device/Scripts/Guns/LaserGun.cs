@@ -21,6 +21,11 @@ namespace MainMode
         private Coroutine _coroutine = null;
 
         public override TrapType DeviceType => TrapType.LaserGun;
+        protected override void Awake()
+        {
+            base.Awake();
+            _laser.SetAttack(attackInfo);
+        }
         private void Start()
         {
             if (showOnStart)

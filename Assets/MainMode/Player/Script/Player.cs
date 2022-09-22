@@ -22,7 +22,6 @@ public class Player : Character, IResist
     protected Collider2D playerCollider = null;
     protected PlayerScreen screenEffect = null;
 
-    private float _angleUseItem;
     private IItemInteractive _interacive = null;
 
     private Coroutine _stopMoveCorotine;
@@ -31,8 +30,7 @@ public class Player : Character, IResist
     protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
     protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
 
-    public delegate void Messange();
-    public event Messange OnDead;
+    public event System.Action DeadAction;
 
     public override bool IsDead => isDead;
 
@@ -45,7 +43,7 @@ public class Player : Character, IResist
         playerCollider = GetComponent<Collider2D>();
         base.Awake();
     }
-    #region SetController
+    #region Intilizate
     private void OnEnable()
     {
         if (controller != null)
@@ -56,10 +54,11 @@ public class Player : Character, IResist
         if (controller != null)
             UnBindController(controller);
     }
-    public void SetController(Controller controller)
+    public void Intiliazate(Controller controller, MarkerUI marker)
     {
         this.controller = controller;
         BindController(controller);
+        _markerUI = marker;
     }
     protected void BindController(Controller controller)
     {
@@ -91,8 +90,8 @@ public class Player : Character, IResist
     public override void Explosion()
     {
         isDead = true;
-        if (OnDead != null)
-            OnDead();
+        if (DeadAction != null)
+            DeadAction();
         animator.SetBool("Dead", true);
         rigidBody.velocity = Vector2.zero;
         if (respawn == null && isAutoRespawnMode)
@@ -161,7 +160,7 @@ public class Player : Character, IResist
     {
         if (_inventory.TryGetArtifact(out Artifact artifact))
         {
-            if (artifact.UseType == ItemUseType.Shoot && _markerUI)
+            if (artifact.UseType == ItemUseType.Shoot)
             {
                 _markerUI.ShowMarker();
                 transform.rotation = Quaternion.Euler(Vector3.forward * (_markerUI.CurretAngel-90));

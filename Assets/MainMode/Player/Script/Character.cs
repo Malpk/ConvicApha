@@ -20,6 +20,7 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
     [SerializeField] protected float respawnTime = 1f;
     [SerializeField] protected PlayerMovement _baseMovement;
 
+
     protected bool isDead = false;
     protected Animator animator;
     protected Rigidbody2D rigidBody;
@@ -31,6 +32,8 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
     private Vector3 _startPosition;
     private Coroutine _changeMovement = null;
     private Dictionary<MovementEffect, int> _movementEffects = new Dictionary<MovementEffect, int>();
+
+    public event System.Action RespawnAction;
 
     public int Health => health.Health;
     public bool IsUseEffect { get; protected set; } = true;
@@ -88,6 +91,8 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
         }
         rigidBody.rotation = 0;
         health.Heal(health.MaxHealth);
+        if (RespawnAction != null)
+            RespawnAction();
     }
     #region Add Effects
     public void AddEffects(MovementEffect effect,float timeActive)

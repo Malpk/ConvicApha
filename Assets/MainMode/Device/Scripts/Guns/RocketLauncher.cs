@@ -101,6 +101,7 @@ namespace MainMode
             }
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(ReturnState());
+            Deactivate();
             _coroutine = null;
         }
         private IEnumerator ReturnState()

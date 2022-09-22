@@ -17,6 +17,9 @@ namespace MainMode
         protected Collider2D colider;
         
         protected IJet[] jets;
+
+
+        public bool IsReadyActivate { private set; get; } = false;
         public override bool IsActive => isActiveDevice;
 
         protected override void Awake()
@@ -30,6 +33,18 @@ namespace MainMode
             }
             HideDeviceAnimationEvent();
         }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            CompliteShowAnimation += LaunchDelete;
+            HideItemAction += ()=> IsReadyActivate = false;
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            CompliteShowAnimation -= LaunchDelete;
+            HideItemAction -= () => IsReadyActivate = false;
+        }
         private void Start()
         {
             if(showOnStart)
@@ -37,16 +52,17 @@ namespace MainMode
         }
         public override void Activate()
         {
-            if (IsActive)
-                return;
+            if (IsReadyActivate)
+            {
+                if (IsActive)
+                    return;
 #if UNITY_EDITOR
-             if (!IsShow)
-                throw new System.Exception("you can't activate a Izolator that is hide");
+                if (!IsShow)
+                    throw new System.Exception("you can't activate a Izolator that is hide");
 #endif
-            if (destroyMode)
-                StartCoroutine(Delete());
-            SetDeviceMode(true);
-            StartCoroutine(Deactivate(_activateTime));
+                SetDeviceMode(true);
+                StartCoroutine(Deactivate(_activateTime));
+            }
         }
         private IEnumerator Deactivate(float timeAcive)
         {
@@ -84,7 +100,12 @@ namespace MainMode
 #endif
             SetDeviceMode(false);
         }
-
+        private void LaunchDelete()
+        {
+            IsReadyActivate = true;
+            if (destroyMode)
+                StartCoroutine(Delete());
+        }
         private IEnumerator Delete()
         {
             yield return new WaitWhile(() => !IsShow);
@@ -97,7 +118,8 @@ namespace MainMode
             yield return WaitJet();
             if (IsActive)
                 throw new System.Exception("Error");
-            HideItem();
+            if(IsShow)
+                HideItem();
         }
         protected virtual void SetDeviceMode(bool mode)
         {

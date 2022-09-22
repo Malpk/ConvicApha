@@ -44,9 +44,15 @@ namespace MainMode
         }
         private void Start()
         {
-            ShowItem();
             if (_playOnStart)
+            {
+                ShowItem();
                 Activate();
+            }
+            else
+            {
+                SetMode(false);
+            }
         }
         public void Activate()
         {
@@ -67,12 +73,13 @@ namespace MainMode
         {
 #if UNITY_EDITOR
             if (!IsActive)
-                throw new System.Exception("enemy is Dealready activate");
+                throw new System.Exception("enemy is already deactivate");
 #endif
             IsActive = false;
         }
         public void Explosion()
         {
+            _readyExlosion = false;
             Deactivate();
             _effects.SetInteger("State", 2);
         }

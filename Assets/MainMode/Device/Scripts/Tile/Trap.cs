@@ -10,6 +10,8 @@ namespace MainMode
         [SerializeField] protected DamageInfo attackInfo;
         [SerializeField] protected SpriteRenderer _body;
 
+        private Coroutine _delete;
+
         private Collider2D _collider;
         protected bool isActiveDevice;
 
@@ -33,16 +35,18 @@ namespace MainMode
         }
         private void Start()
         {
-            if(showOnStart)
+            if (showOnStart)
                 ShowItem();
-            if (destroyMode)
-                StartCoroutine(HideITem(durationWork));
         }
         private IEnumerator HideITem(float timeActive)
         {
             yield return new WaitForSeconds(timeActive);
-            Deactivate();
-            HideItem();
+            if (IsShow)
+            {
+                if (IsActive)
+                    Deactivate();
+                HideItem();
+            }
         }
         public override void Activate()
         {
@@ -53,6 +57,7 @@ namespace MainMode
                 throw new System.Exception("you can't activate a Izolator that is hide");
 #endif
             isActiveDevice = true;
+            DelayDelete();
         }
         public override void Deactivate()
         {
@@ -70,6 +75,7 @@ namespace MainMode
         protected override void HideDeviceAnimationEvent()
         {
             SetMode(false);
+            _delete = null;
         }
         protected void SetMode(bool mode)
         {
@@ -83,6 +89,11 @@ namespace MainMode
             {
                 screen.ShowEffect(attackInfo);
             }
+        }
+        private void DelayDelete()
+        {
+            if (destroyMode && _delete == null)
+                _delete = StartCoroutine(HideITem(durationWork));
         }
     }
 }

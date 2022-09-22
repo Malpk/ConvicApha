@@ -9,7 +9,6 @@ public abstract class SmartItem : MonoBehaviour
     public event System.Action HideItemAction;
     public event System.Action ShowItemAction;
 
-
     public void SetPosition(Vector2 position)
     {
         transform.position = position;

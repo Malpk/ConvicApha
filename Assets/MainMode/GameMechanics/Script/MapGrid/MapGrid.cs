@@ -6,22 +6,32 @@ namespace MainMode
 {
     public class MapGrid : MonoBehaviour
     {
+        [Header("General")]
         [SerializeField] private Vector2 _unitSize;
         [SerializeField] private Vector2Int _mapSize;
+        [Header("Reference")]
+        [SerializeField]private Player _player;
 #if UNITY_EDITOR
+        [Header("Debug")]
         [SerializeField] private bool _showMarker;
         [SerializeField] private GameObject _marker;
 
         private List<GameObject> _markers = new List<GameObject>();
 #endif
+
         private Point[,] _points;
 
         public Point[,] PointsArray => _points;
         public List<Point> Points { get; private set; }
+        public Vector2 MapSize => new Vector2(_mapSize.x * _unitSize.x, _mapSize.y * _unitSize.y);
         private void Awake()
         {
             _points = CreateMap(_unitSize, _mapSize);
-            Points = GetFreePoints();
+        }
+        public void Intilizate(Player player)
+        {
+            _player = player;
+            GetFreePoints(out List<Point> Points);
         }
         #region SearchPoint
         public Vector2 SearchPoint(Vector2 position)
@@ -62,17 +72,32 @@ namespace MainMode
         }
         #endregion
 
-        public List<Point> GetFreePoints()
+        public bool GetFreePoints(out List<Point> freePoints, float distanceFromPlayer = 0f, float minDistance = 0f)
         {
-            var freePoints = new List<Point>();
+            minDistance = minDistance < 0 ? 0 : minDistance;
+            freePoints = new List<Point>();
             foreach (var point in _points)
             {
-                if (!point.IsBusy)
+                var distance = Vector2.Distance(_player.Position, point.Position);
+                var cheak = (distance <= distanceFromPlayer || distanceFromPlayer == 0) && distance > minDistance;
+                if (!point.IsBusy && cheak)
                     freePoints.Add(point);
             }
-            return freePoints;
+            return freePoints.Count > 0;
         }
 
+        public bool SpawnItem(SmartItem smartItem, float distanceFromPlayer = 0, float minDistance = 0)
+        {
+            if (GetFreePoints(out List<Point> points, distanceFromPlayer, minDistance))
+            {
+                var index = Random.Range(0, points.Count);
+                if(!smartItem.IsShow)
+                    smartItem.ShowItem();
+                points[index].SetItem(smartItem);
+                return true;
+            }
+            return false;
+        }
         private Point[,] CreateMap(Vector2 unity, Vector2Int mapSize)
         {
             mapSize = (mapSize / 2) * 2;

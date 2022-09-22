@@ -50,16 +50,6 @@ namespace MainMode.Mode1921
             }
             return list;
         }
-        private List<Point> GetPoints()
-        {
-            var freePoints = new List<Point>();
-            foreach (var point in _mapGrid.GetFreePoints())
-            {
-                if (Vector2.Distance(point.Position, _target.position) <= _maxDistanceOnTarget)
-                    freePoints.Add(point);
-            }
-            return freePoints;
-        }
         private IEnumerator SpwanwItem()
         {
             while (true)
@@ -71,11 +61,7 @@ namespace MainMode.Mode1921
                     return items.Count > 0;
                 });
                 List<Point> freePoints = null;
-                yield return new WaitUntil(() =>
-                {
-                    freePoints = GetPoints();
-                    return freePoints.Count > 0;
-                });
+                yield return new WaitUntil(() => _mapGrid.GetFreePoints(out freePoints, _maxDistanceOnTarget));
                 var item = items[Random.Range(0, items.Count)].Instantiate(transform);
                 if (item != null)
                     freePoints[Random.Range(0, freePoints.Count)].SetItem(item);

@@ -50,7 +50,7 @@ namespace MainMode.Mode1921
             if (_mode)
                 _mode.Win.AddListener(ShowEndMenu);
             if (player != null)
-                player.OnDead += ShowEndMenu;
+                player.DeadAction += ShowEndMenu;
         }
         private void UnSubcriteEvents()
         {
@@ -59,7 +59,7 @@ namespace MainMode.Mode1921
             if (_mode)
                 _mode.Win.RemoveListener(ShowEndMenu);
             if (player != null)
-                player.OnDead -= ShowEndMenu;
+                player.DeadAction -= ShowEndMenu;
         }
         private void ShowEndMenu()
         {
