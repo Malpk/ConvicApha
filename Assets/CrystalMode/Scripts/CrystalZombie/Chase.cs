@@ -30,7 +30,7 @@ public class Chase : StateMachineBehaviour
             animator.SetBool("Attack", true);
         }
         
-        if (!RayToPlayer(animator) && time > 3)
+        if (!RayToPlayer(animator) && time > 1)
         {
             animator.SetBool("Patrul", true);
         }

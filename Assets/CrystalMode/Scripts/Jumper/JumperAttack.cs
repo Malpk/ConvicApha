@@ -11,12 +11,13 @@ public class JumperAttack : StateMachineBehaviour
     private Vector2 oldPosPlayer;
     private float i;
     private bool wasInPlayer;
-    [SerializeField] private float attackFrequency = 3;
+    [SerializeField] private float attackFrequency;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindWithTag("Player").transform;
         oldPosPlayer = player.position;
         dirToPlayer = player.position - animator.transform.position;
+        wasInPlayer = false;
         i = 0;
     }
     
@@ -31,15 +32,18 @@ public class JumperAttack : StateMachineBehaviour
 
         if (wasInPlayer)
         {
-            i += Time.deltaTime * attackFrequency;
-            if (i > 200)
+            i += Time.deltaTime;
+            if (i > attackFrequency)
             {
                 animator.SetBool("Chase", true);
             }
         }
 
+        if (i > 0.2)
+            return;
+        
         Vector3 pos = animator.transform.position;
-        Vector3 norm = dirToPlayer.normalized * Time.deltaTime * 5;
+        Vector3 norm = dirToPlayer.normalized * Time.deltaTime * 3;
         animator.transform.position = new Vector2(pos.x + norm.x, pos.y + norm.y);
     }
     

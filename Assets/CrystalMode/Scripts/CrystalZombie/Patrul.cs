@@ -29,9 +29,13 @@ public class Patrul : StateMachineBehaviour
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (agent.velocity == Vector3.zero)
+        {
+            SetDistancion();
+        }
         time += Time.deltaTime;
-        float distanceToPoint = Vector3.Distance(animator.transform.position, currentPoint.transform.position);
-        if (distanceToPoint < 2 || time > 30)
+        float distanceToPoint = Vector2.Distance(animator.transform.position, currentPoint.transform.position);
+        if (distanceToPoint < 0.2 || time > 30)
         {
             animator.SetBool("Patrul", false);
         }

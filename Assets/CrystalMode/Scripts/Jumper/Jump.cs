@@ -7,6 +7,7 @@ public class Jump : StateMachineBehaviour
 {
     private Transform player;
     private NavMeshAgent agent;
+    private float time;
     [SerializeField] private float jumpSpeed;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -14,14 +15,18 @@ public class Jump : StateMachineBehaviour
         agent = animator.GetComponent<NavMeshAgent>();
         agent.speed = 0;
         animator.GetComponent<NavMeshAgent>().enabled = false;
+        time = 0;
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        time += Time.deltaTime;
         jumpSpeed += Time.deltaTime * 2;
+        
         TranslateToPlayer(animator);
+        
         float distanceToPlayer = Vector2.Distance(animator.transform.position, player.position);
-        if (distanceToPlayer < 0.3)
+        if (distanceToPlayer < 0.3 || time > 4)
         {
             animator.SetBool("Attack", true);
         }
