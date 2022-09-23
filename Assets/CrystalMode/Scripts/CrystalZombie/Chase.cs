@@ -7,36 +7,32 @@ public class Chase : StateMachineBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
+    private float time;
     [SerializeField] private float chaseSpeed;
-    [SerializeField] private float stopChaseDistance;
     [SerializeField] private float startAttackDistance;
+    [SerializeField] private float hitCoolDown;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
-        agent.speed = chaseSpeed;
+        agent.speed = chaseSpeed + Random.Range(0.01f, 0.3f);
         player = GameObject.FindWithTag("Player").transform;
+        time = 0;
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        time += Time.deltaTime;
         agent.SetDestination(player.position);
-        float distance = Vector3.Distance(animator.transform.position, player.position);
-        if (distance > stopChaseDistance)
-        {
-            animator.SetBool("Patrul", true);
-        }
-
+        float distance = Vector2.Distance(animator.transform.position, player.position);
+        
         if (distance < startAttackDistance)
         {
             animator.SetBool("Attack", true);
-            animator.SetBool("Chase", false);
         }
         
-        if (!RayToPlayer(animator))
+        if (!RayToPlayer(animator) && time > 3)
         {
-            Debug.Log("ray");
             animator.SetBool("Patrul", true);
-            animator.SetBool("Chase", false);
         }
     }
     
@@ -49,11 +45,7 @@ public class Chase : StateMachineBehaviour
     {
         Vector3 directionToPlayer = player.position - animator.transform.position;
         RaycastHit2D hit2D = Physics2D.Raycast(animator.transform.position + directionToPlayer.normalized, directionToPlayer, 100);
-        if (hit2D.collider != null)
-        {
-            return hit2D.collider.GetComponent<Jeff>();
-        }
-
-        return false;
+        
+        return hit2D.collider != null && hit2D.collider.gameObject.CompareTag("Player");
     }
 }

@@ -19,7 +19,6 @@ namespace MainMode.Items
 
         public override void Use()
         {
-            Vector2Int v = new Vector2Int();
             FindGameObjAtScene();
             Vector3 posFrontPlayer = _player.Position + (Vector2) _player.transform.up;
             var AnimObj = Instantiate(dustAnim, _player.Position, _player.transform.rotation);

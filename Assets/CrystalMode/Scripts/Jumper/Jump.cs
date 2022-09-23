@@ -6,10 +6,8 @@ using UnityEngine.AI;
 public class Jump : StateMachineBehaviour
 {
     private Transform player;
-    private int i;
     private NavMeshAgent agent;
     [SerializeField] private float jumpSpeed;
-    [SerializeField] private int playerDetectingFrames;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -20,17 +18,12 @@ public class Jump : StateMachineBehaviour
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Vector2 dirToPlayer =  player.position - animator.transform.position;
-        Vector3 tr = (dirToPlayer * Time.deltaTime * jumpSpeed);
-        Vector3 pos = animator.transform.position;
-        animator.transform.position = new Vector3(tr.x + pos.x, tr.y + pos.y, pos.z);
-        if (RayToPlayer(animator))
+        jumpSpeed += Time.deltaTime * 2;
+        TranslateToPlayer(animator);
+        float distanceToPlayer = Vector2.Distance(animator.transform.position, player.position);
+        if (distanceToPlayer < 0.3)
         {
-            i++;
-            if (i > playerDetectingFrames)
-            {
-                animator.SetBool("Chase", true);
-            }
+            animator.SetBool("Attack", true);
         }
     }
     
@@ -39,12 +32,12 @@ public class Jump : StateMachineBehaviour
         animator.GetComponent<NavMeshAgent>().enabled = true;
         animator.SetBool("Jump", false);
     }
-    private bool RayToPlayer(Animator animator)
-    {
-        Vector3 directionToPlayer = player.position - animator.transform.position;
-        RaycastHit2D hit2D = Physics2D.Raycast(animator.transform.position,
-            directionToPlayer, 1000);
 
-        return hit2D.collider != null && hit2D.collider.gameObject.tag == "Player";
+    private void TranslateToPlayer(Animator animator) 
+    {
+        Vector2 dirToPlayer =  player.position - animator.transform.position;
+        Vector2 tr = (dirToPlayer * Time.deltaTime * jumpSpeed);
+        Vector2 pos = animator.transform.position;
+        animator.transform.position = new Vector2(tr.x + pos.x, tr.y + pos.y);
     }
 }

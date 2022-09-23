@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using MainMode;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 
 public class Zombie : MonoBehaviour
 {
    private NavMeshAgent agent;
+   public AttackInfo attackInfo;
  
    private void Start()
    {
@@ -19,6 +21,14 @@ public class Zombie : MonoBehaviour
    private void Update()
    {
       RotateToDirection();
+   }
+
+   private void OnCollisionEnter2D(Collision2D col)
+   {
+      if (col.gameObject.GetComponent<TilemapCollider2D>())
+      {
+         Debug.Log(col);
+      }
    }
 
    private void RotateToDirection()

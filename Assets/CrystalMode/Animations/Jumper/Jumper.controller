@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06e4e7390839a74aa03e068bf9dd2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopAttackingDistance: 1
 --- !u!1107 &-232854535789907066
 AnimatorStateMachine:
   serializedVersion: 6
@@ -140,7 +139,7 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4274529431825396236}
-    m_Position: {x: 470, y: 120, z: 0}
+    m_Position: {x: 460, y: 120, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -157,7 +156,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u041F\u0440\u044B\u0433\u0430\u043B\u043E"
+  m_Name: Jumper
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Chase
@@ -210,22 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpSpeed: 2
-  playerDetectingFrames: 400
---- !u!114 &1383204877170352243
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbdfa0ffffec5854a953e10612f90f03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrulSpeed: 1
-  ableJumpDistance: 3
-  jumpCoolDown: 5
 --- !u!1101 &2229593686151983193
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -263,9 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8372171fe01ee64c8f79f3158a3a65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 2
-  stopChaseDistance: 3
-  startAttackDistance: 2
+  chaseSpeed: 1.5
+  startAttackDistance: 5
+  hitCoolDown: 1
 --- !u!1101 &3270887743848043059
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -305,7 +288,7 @@ AnimatorState:
   - {fileID: 2229593686151983193}
   - {fileID: 7743562187684645847}
   m_StateMachineBehaviours:
-  - {fileID: 1383204877170352243}
+  - {fileID: 7102503746915590928}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -329,7 +312,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Hit
+    m_ConditionEvent: Attack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4274529431825396236}
@@ -337,10 +320,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.73214287
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -399,6 +382,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &7102503746915590928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee0c855d7df17e448a0fb7a2a5642cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrulSpeed: 1
+  ableJumpDistance: 3
+  jumpCoolDown: 5
 --- !u!1101 &7743562187684645847
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
