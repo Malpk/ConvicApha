@@ -20,9 +20,9 @@ namespace Underworld
         public bool IsPlay { get; private set; } = false;
         public bool IsPause { get; private set; } = false;
 
-        public void Intilizate(SwitchPatern switchPatern)
+        public void Intilizate(Player player)
         {
-            _switchPatern = switchPatern;
+            _switchPatern.Intializate(player);
         }
 
         private void Start()
@@ -51,6 +51,11 @@ namespace Underworld
 #endif
             IsPlay = false;
             IsPause = false;
+        }
+
+        public void Restart()
+        {
+            
         }
         public void Pause()
         {

@@ -65,7 +65,8 @@ namespace MainMode
         {
             foreach (var item in _pool)
             {
-                item.HideItem();
+                if(item.IsShow)
+                    item.HideItem();
             }
         }
     }

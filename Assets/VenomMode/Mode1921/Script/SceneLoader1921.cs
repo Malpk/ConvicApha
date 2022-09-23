@@ -10,11 +10,9 @@ namespace MainMode.Mode1921
 {
     public sealed class SceneLoader1921 : BaseLoader
     {
-        [SerializeField] private Mode1921 _perfab;
+        [SerializeField] private Mode1921 _mode;
 
-        private Mode1921 _mode;
         private EndMenu _endMenu;
-        private ItemSpwaner _itemSpawner;
 
         private void OnEnable()
         {
@@ -28,27 +26,22 @@ namespace MainMode.Mode1921
         {
             await base.LoadAsync(config);
             _endMenu = holder.GetComponentInChildren<EndMenu>();
-            _mode = Instantiate(_perfab.gameObject, transform).GetComponent<Mode1921>();
-            _mode.Intializate(holder.GetComponentInChildren<ChangeTest>());
-            _itemSpawner = _mode.GetComponent<ItemSpwaner>();
-            _itemSpawner.Run(player.transform);
             SubcriteEvents();
+            if (autoRestart)
+                StartCoroutine(TracingCompliteGame());
+            _mode.Intializate(holder.GetComponentInChildren<ChangeTest>());
+            _mode.Play();
         }
         public void ResetGame()
         {
-            _mode.CreateMap();
+            _mode.Restart();
             if (player.TryGetComponent(out IReset restart))
                 restart.Restart();
-            _itemSpawner.Restart();
             player.Respawn();
             holder.SetShow(holder.GetComponentInChildren<HUDInteface>());
         }
         private void SubcriteEvents()
         {
-            if (_endMenu)
-                _endMenu.Restart += ResetGame;
-            if (_mode)
-                _mode.Win.AddListener(ShowEndMenu);
             if (player != null)
                 player.DeadAction += ShowEndMenu;
         }
@@ -65,6 +58,13 @@ namespace MainMode.Mode1921
         {
             holder.SetShow(_endMenu);
         }
-       
+        private IEnumerator TracingCompliteGame()
+        {
+            while (true)
+            {
+                yield return new WaitWhile(() => !player.IsDead);
+                ResetGame();
+            }
+        }
     }
 }

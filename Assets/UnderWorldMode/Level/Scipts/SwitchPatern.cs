@@ -27,10 +27,9 @@ namespace Underworld
                  await ActivateModeAsync(_chooseMode);
             }
         }
-        public void Intializate(MapBuilder builder, Player player)
+        public void Intializate( Player player)
         {
             _player = player;
-            _builder = builder;
         }
         public async Task ActivateModeAsync(ModeType type, PaternConfig config = null)
         {

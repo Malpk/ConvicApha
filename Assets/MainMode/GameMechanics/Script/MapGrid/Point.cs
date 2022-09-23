@@ -24,4 +24,8 @@ public class Point
         item.SetPosition(Position);
         _item = item;
     }
+    public void ResetPoint()
+    {
+        _item = null;
+    }
 }

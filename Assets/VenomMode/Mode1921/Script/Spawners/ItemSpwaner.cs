@@ -1,43 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MainMode.Items;
 
 namespace MainMode.Mode1921
 {
-    public class ItemSpwaner : MonoBehaviour
+    public class ItemSpwaner : GeneralSpawner
     {
-        [Header("General Setting")]
-        [SerializeField] private bool _onStart = true;
-        [Header("Spawn Setting")]
+        [Header("Spawner Setting")]
         [SerializeField] private float _maxDistanceOnTarget;
         [SerializeField] private Vector2 _rangeTimeSpawn;
         [SerializeField] private ItemInfo[] _items;
-        [Header("Requred Reference")]
-        [SerializeField] private MapGrid _mapGrid;
-        [SerializeField] private Transform _target;
 
         private Coroutine _run;
 
-        private void Start()
+        public override bool IsRedy => true;
+
+        private void OnEnable()
         {
-            _rangeTimeSpawn = new Vector2(Mathf.Abs(_rangeTimeSpawn.x), Mathf.Abs(_rangeTimeSpawn.y));
-            if (_onStart)
-                _run = StartCoroutine(SpwanwItem());
+            PlayAction += Run;
         }
-        public void Run(Transform target)
+
+        private void OnDisable()
         {
-            if (_run == null)
-            {
-                _target = target;
-                StartCoroutine(SpwanwItem());
-            }
+            PlayAction += Run;
         }
-        public void Restart()
+        public override void Replay()
         {
             foreach (var item in _items)
             {
                 item.DeSpawnItems();
+            }
+        }
+        private void Run()
+        {
+            if (_run == null)
+            {
+                StartCoroutine(SpwanwItem());
             }
         }
         private IReadOnlyList<ItemInfo> GetItems()
@@ -52,7 +50,7 @@ namespace MainMode.Mode1921
         }
         private IEnumerator SpwanwItem()
         {
-            while (true)
+            while (IsPaly)
             {
                 IReadOnlyList<ItemInfo> items = null;
                 yield return new WaitUntil(() =>
@@ -61,12 +59,14 @@ namespace MainMode.Mode1921
                     return items.Count > 0;
                 });
                 List<Point> freePoints = null;
-                yield return new WaitUntil(() => _mapGrid.GetFreePoints(out freePoints, _maxDistanceOnTarget));
+                yield return new WaitUntil(() => mapGrid.GetFreePoints(out freePoints, _maxDistanceOnTarget));
                 var item = items[Random.Range(0, items.Count)].Instantiate(transform);
                 if (item != null)
                     freePoints[Random.Range(0, freePoints.Count)].SetItem(item);
                 yield return new WaitForSeconds(Random.Range(_rangeTimeSpawn.x, _rangeTimeSpawn.y));
             }
         }
+
+
     }
 }

@@ -6,6 +6,7 @@ namespace MainMode.Mode1921
     [RequireComponent(typeof(CircleCollider2D))]
     public class VenomMine : SmartItem,IPause
     {
+        [SerializeField] private bool _showOnStart;
         [Min(0.05f)]
         [SerializeField] private float _trigerDistance = 0.1f;
         [SerializeField] private DamageInfo _attackInfo;
@@ -37,9 +38,15 @@ namespace MainMode.Mode1921
             ShowItemAction -= ShowMine;
             HideItemAction -= HideMine;
         }
+        private void Start()
+        {
+            if (_showOnStart)
+                ShowItem();
+        }
         #region Display Mine
         private void ShowMine()
         {
+            _explosion.SetMode(false);
             DisplayMine(true);
         }
         private void HideMine()
@@ -85,7 +92,7 @@ namespace MainMode.Mode1921
         {
             if (_targetTransform != null)
             {
-                if (Vector2.Distance(_targetTransform.position, transform.position) <= _trigerDistance + _bodyCollider.radius / 2)
+                if (Vector2.Distance(_targetTransform.position, transform.position) < _trigerDistance)
                 {
                     _targetTransform = null;
                     _explosion.Explosion();

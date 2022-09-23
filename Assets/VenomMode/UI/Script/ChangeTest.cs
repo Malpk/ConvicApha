@@ -37,6 +37,10 @@ namespace MainMode.Mode1921
                 {
                     swithchInteface.SetShow(this);
                 }
+                else
+                {
+                    OnShow();
+                }
                 SetMessange(_startMessnage, Color.white, _fontMessangeStart);
                 _runGame = StartCoroutine(ChangeTestUpdate(oxyGen,countTest));
             }
@@ -64,6 +68,8 @@ namespace MainMode.Mode1921
             }
             if (swithchInteface != null)
                 swithchInteface.SetHide();
+            else
+                Hide();
             if (CompliteGame != null)
                 CompliteGame((complite + 1));
             _runGame = null;

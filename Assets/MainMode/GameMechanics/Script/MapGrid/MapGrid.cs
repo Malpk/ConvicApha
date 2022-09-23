@@ -9,8 +9,6 @@ namespace MainMode
         [Header("General")]
         [SerializeField] private Vector2 _unitSize;
         [SerializeField] private Vector2Int _mapSize;
-        [Header("Reference")]
-        [SerializeField]private Player _player;
 #if UNITY_EDITOR
         [Header("Debug")]
         [SerializeField] private bool _showMarker;
@@ -28,9 +26,8 @@ namespace MainMode
         {
             _points = CreateMap(_unitSize, _mapSize);
         }
-        public void Intilizate(Player player)
+        public void Intilizate()
         {
-            _player = player;
             GetFreePoints(out List<Point> Points);
         }
         #region SearchPoint
@@ -72,13 +69,13 @@ namespace MainMode
         }
         #endregion
 
-        public bool GetFreePoints(out List<Point> freePoints, float distanceFromPlayer = 0f, float minDistance = 0f)
+        public bool GetFreePoints(out List<Point> freePoints, float distanceFromPlayer = 0f, float minDistance = 0f, Transform target = null)
         {
             minDistance = minDistance < 0 ? 0 : minDistance;
             freePoints = new List<Point>();
             foreach (var point in _points)
             {
-                var distance = Vector2.Distance(_player.Position, point.Position);
+                var distance = Vector2.Distance(target ? target.transform.position : Vector3.zero, point.Position);
                 var cheak = (distance <= distanceFromPlayer || distanceFromPlayer == 0) && distance > minDistance;
                 if (!point.IsBusy && cheak)
                     freePoints.Add(point);
@@ -86,9 +83,9 @@ namespace MainMode
             return freePoints.Count > 0;
         }
 
-        public bool SpawnItem(SmartItem smartItem, float distanceFromPlayer = 0, float minDistance = 0)
+        public bool SetItemOnMap(SmartItem smartItem, float distanceFromPlayer = 0, float minDistance = 0, Transform target = null)
         {
-            if (GetFreePoints(out List<Point> points, distanceFromPlayer, minDistance))
+            if (GetFreePoints(out List<Point> points, distanceFromPlayer, minDistance, target))
             {
                 var index = Random.Range(0, points.Count);
                 if(!smartItem.IsShow)
@@ -120,6 +117,13 @@ namespace MainMode
                 }
             }
             return map;
+        }
+        public void ClearMap()
+        {
+            foreach (var point in _points)
+            {
+                point.ResetPoint();
+            }
         }
     }
 }

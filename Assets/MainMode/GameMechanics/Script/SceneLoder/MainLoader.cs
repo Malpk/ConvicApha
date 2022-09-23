@@ -17,7 +17,7 @@ namespace MainMode
         {
             await base.LoadAsync(config);
             await _spawner.Intializate(player);
-            _mapGride.Intilizate(player);
+            _mapGride.Intilizate();
             _spawner.Run();
             _botSpawner.Intitlizate(player, _mapGride);
             _botSpawner.Play();

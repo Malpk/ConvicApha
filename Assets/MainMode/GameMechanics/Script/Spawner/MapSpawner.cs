@@ -76,7 +76,7 @@ namespace MainMode
                 {
                     if (pool.Create(out SmartItem item))
                     {
-                        if (_mapGrid.SpawnItem(item, _spawnRadius))
+                        if (_mapGrid.SetItemOnMap(item, _spawnRadius,pool.DistanceFromPlayer, _player.transform))
                         {
                             item.transform.parent = transform;
                         }

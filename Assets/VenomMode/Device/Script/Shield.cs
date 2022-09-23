@@ -20,9 +20,9 @@ namespace MainMode.Mode1921
         private ChangeTest _changeTest;
         private IBlock[] _blockElements;
 
+        public event System.Action RepairShieldAction;
 
-        public delegate void Action(Shield parent);
-        public event Action RepairShieldAction;
+        public bool IsRepair { get; private set; }
 
         private void Awake()
         {
@@ -72,15 +72,8 @@ namespace MainMode.Mode1921
             {
                 BlockPlayer(player);
                 _curretToolSet = toolSet;
-                if (player.TryGetComponent(out OxyGenSet oxyGen))
-                {
-                    _changeTest.RunGame(oxyGen, _curretCount);
-                    _changeTest.CompliteGame += OnRepairShield;
-                }
-                else
-                {
-                    OnRepairShield(_curretCount);
-                }
+                _changeTest.RunGame(player.GetComponent<OxyGenSet>(), _curretCount);
+                _changeTest.CompliteGame += OnRepairShield;
                 return true;
             }
             toolSet.ShowHint();
@@ -95,10 +88,11 @@ namespace MainMode.Mode1921
             {
                 HideUI();
                 SetMode(false);
+                IsRepair = true;
                 if(_curretToolSet)
                     _curretToolSet.UseTool();
                 if (RepairShieldAction != null)
-                    RepairShieldAction(this);
+                    RepairShieldAction();
             }
             _curretToolSet = null;
         }

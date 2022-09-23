@@ -8,7 +8,6 @@ namespace Underworld
     public class MapBuilder : MonoBehaviour
     {
         [Header("Map Setting")]
-        [SerializeField] protected bool playOnAwake;
         [Min(1)]
         [SerializeField] protected int mapSize = 1;
         [SerializeField] protected Vector2 unitSize;
@@ -20,8 +19,7 @@ namespace Underworld
         private void Awake()
         {
             FormattingData();
-            if (playOnAwake)
-                Intializate(transform);
+            Intializate(transform);
         }
 
         public bool Intializate(Transform parent = null)

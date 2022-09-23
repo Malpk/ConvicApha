@@ -15,6 +15,7 @@ namespace MainMode.LoadScene
     {
         [Header("General Setting")]
         [SerializeField] protected bool playOnStart;
+        [SerializeField] protected bool autoRestart;
         [Header("Player Load Setting")]
         [SerializeField] protected Transform _spwanPoint;
         [SerializeField] protected PlayerConfig choosePlayer;

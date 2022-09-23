@@ -12,10 +12,10 @@ namespace MainMode.LoadScene
 
         public async Task<Player> PlayerLaodAsync(Transform spawnPosition, PlayerType playerType = PlayerType.None)
         {
-            if (GetPerafab(playerType, out AssetReferenceGameObject prefab))
+            if (GetPerafab(playerType, out string loadKey))
             {
                 var position = spawnPosition ? spawnPosition.position : Vector3.zero;
-                var loadPlayer = prefab.InstantiateAsync(position, Quaternion.identity).Task;
+                var loadPlayer = Addressables.InstantiateAsync(loadKey, position, Quaternion.identity).Task;
                 await loadPlayer;
                 var player = loadPlayer.Result.GetComponent<Player>();
                 return player;
@@ -27,17 +27,17 @@ namespace MainMode.LoadScene
         }
 
             
-        private bool GetPerafab(PlayerType type,out AssetReferenceGameObject perfab)
+        private bool GetPerafab(PlayerType type,out string loadKey)
         {
             foreach (var player in _playerPerfabs)
             {
                 if (player.Type == type)
                 {
-                    perfab = player.PlayerPerfab;
+                    loadKey =   player.LoadKey;
                     return true;
                 }
             }
-            perfab = null;
+            loadKey = null;
             return false;
         }
     }

@@ -18,7 +18,6 @@ public class ConfigCreator : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        _sceneLoader = FindObjectOfType<MainLoader>();
     }
     public async void CreateNewConfig()
     {
