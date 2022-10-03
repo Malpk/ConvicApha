@@ -34,7 +34,7 @@ public class JumperPatrul : StateMachineBehaviour
         time += Time.deltaTime;
         float distanceToPoint = Vector2.Distance(animator.transform.position, currentPoint.transform.position);
         
-        if (distanceToPoint < 0.11)
+        if (distanceToPoint < 0.11 || agent.velocity == Vector3.zero && Time.time > 1f)
         {
             SetDistancion();
         }

@@ -317,6 +317,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d2ad00298684447a55565f7cf60901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackValue: 1
+  attackInfo:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
+  attackCoolDown: 2
   stopAttackingDistance: 1
 --- !u!1101 &4014360697094155872
 AnimatorStateTransition:

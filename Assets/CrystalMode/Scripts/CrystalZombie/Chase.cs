@@ -10,7 +10,6 @@ public class Chase : StateMachineBehaviour
     private float time;
     [SerializeField] private float chaseSpeed;
     [SerializeField] private float startAttackDistance;
-    [SerializeField] private float hitCoolDown;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
@@ -25,7 +24,7 @@ public class Chase : StateMachineBehaviour
         agent.SetDestination(player.position);
         float distance = Vector2.Distance(animator.transform.position, player.position);
         
-        if (distance < startAttackDistance)
+        if (distance < startAttackDistance && RayToPlayer(animator))
         {
             animator.SetBool("Attack", true);
         }

@@ -9,8 +9,7 @@ using UnityEngine.Tilemaps;
 public class Zombie : MonoBehaviour
 {
    private NavMeshAgent agent;
-   public AttackInfo attackInfo;
- 
+
    private void Start()
    {
       agent = gameObject.GetComponent<NavMeshAgent>();
@@ -22,15 +21,7 @@ public class Zombie : MonoBehaviour
    {
       RotateToDirection();
    }
-
-   private void OnCollisionEnter2D(Collision2D col)
-   {
-      if (col.gameObject.GetComponent<TilemapCollider2D>())
-      {
-         Debug.Log(col);
-      }
-   }
-
+   
    private void RotateToDirection()
    {
       if (agent.velocity == new Vector3(0,0,0))
