@@ -121,7 +121,7 @@ namespace MainMode.GameInteface
         {
             foreach (var point in _points)
             {
-                point.SetOffset(offset);
+                //point.SetOffset(offset);
             }
         }
         private void SetHidePoint()

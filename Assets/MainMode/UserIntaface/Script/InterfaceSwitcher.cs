@@ -24,7 +24,7 @@ namespace MainMode.GameInteface
                 if (element.Type == startInterface)
                 {
                     _curretInteface = element;
-                    _curretInteface.OnShow();
+                    _curretInteface.Show();
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace MainMode.GameInteface
             UpdateStack(_curretInteface);
             SetHide(_curretInteface);
             _curretInteface = inteface;
-            _curretInteface.OnShow();
+            _curretInteface.Show();
         }
         public void SetHide()
         {

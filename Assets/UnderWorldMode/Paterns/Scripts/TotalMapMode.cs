@@ -60,8 +60,14 @@ namespace Underworld
         {
             for (int i = 0; i < terms.Count; i++)
             {
-                if(terms[i].IsActive)
-                    terms[i].Deactivate(true);
+                try
+                {
+                    if (terms[i].IsActive)
+                        terms[i].Deactivate(true);
+                }
+                catch
+                {
+                }
             }
             yield return TrakingDeactiveTerms(terms);
         }

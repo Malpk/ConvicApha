@@ -6,15 +6,28 @@ namespace MainMode.GameInteface
 {
     public class HUDInteface : UserInterface
     {
+        [SerializeField] private Canvas _canvas;
+
         private List<Receiver> _recirvers = new List<Receiver>();
         public override UserInterfaceType Type => UserInterfaceType.HUD;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             var list = GetComponentsInChildren<Receiver>();
             if (list.Length > 0)
                 _recirvers.AddRange(list);
+        }
+
+        private void OnEnable()
+        {
+            ShowAction += () => _canvas.enabled = true;
+            HideAction += () => _canvas.enabled = false;
+        }
+
+        private void OnDisable()
+        {
+            ShowAction -= () => _canvas.enabled = true;
+            HideAction -= () => _canvas.enabled = false;
         }
 
         public bool GetReceiver(ISender sender)

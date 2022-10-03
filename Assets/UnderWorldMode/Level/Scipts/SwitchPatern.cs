@@ -15,6 +15,7 @@ namespace Underworld
         [SerializeField] private MapBuilder _builder;
         [SerializeField] private PaternLoadConfig[] _configs;
 
+        private GeneralMode _curretMode;
         private PaternLoadConfig  _curretConfig;
 
         public bool IsReady { get; private set; } = true;
@@ -46,6 +47,12 @@ namespace Underworld
                 StartCoroutine(WaitComplitePatern(load.Result));
             }
         }
+
+        public void Deactivate()
+        {
+            _curretMode.Deactivate();
+            _builder.ClearMap();
+        }
         public void Pause()
         {
             IsPause = true;
@@ -74,6 +81,7 @@ namespace Underworld
         }
         private IEnumerator WaitComplitePatern(GeneralMode patern)
         {
+            _curretMode = patern;
             yield return new WaitWhile(() => patern.State == ModeState.Play);
             _curretConfig.UnLoad();
             IsReady = true;

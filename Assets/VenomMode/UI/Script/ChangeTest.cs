@@ -19,6 +19,7 @@ namespace MainMode.Mode1921
 
         [Header("Requred Reference")]
         [SerializeField] private Triger _triger;
+        [SerializeField] private Canvas _canvas;
         [SerializeField] private TextMeshProUGUI _messnga;
 
         private Coroutine _runGame;
@@ -28,6 +29,18 @@ namespace MainMode.Mode1921
 
         public delegate void Action(int countComplite);
         public event Action CompliteGame;
+
+        private void OnEnable()
+        {
+            HideAction += () => _canvas.enabled = false;
+            ShowAction += () => _canvas.enabled = true;
+        }
+
+        private void OnDisable()
+        {
+            HideAction -= () => _canvas.enabled = false;
+            ShowAction -= () => _canvas.enabled = true;
+        }
 
         public void RunGame(OxyGenSet oxyGen, int countTest)
         {
@@ -39,7 +52,7 @@ namespace MainMode.Mode1921
                 }
                 else
                 {
-                    OnShow();
+                    Show();
                 }
                 SetMessange(_startMessnage, Color.white, _fontMessangeStart);
                 _runGame = StartCoroutine(ChangeTestUpdate(oxyGen,countTest));

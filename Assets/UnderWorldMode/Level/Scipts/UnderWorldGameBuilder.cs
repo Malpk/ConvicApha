@@ -51,12 +51,9 @@ namespace Underworld
 #endif
             IsPlay = false;
             IsPause = false;
+            _switchPatern.Deactivate();
         }
 
-        public void Restart()
-        {
-            
-        }
         public void Pause()
         {
             IsPause = true;
@@ -73,17 +70,18 @@ namespace Underworld
         private IEnumerator Build()
         {
             PaternConfig lastConfig = null;
+            yield return WaitTime(1f);
             while (IsPlay)
             {
                 CheakCountSequence();
                 var sequence = GetSequence(lastConfig);
                 _usedSequnce.Add(sequence);
                 _paternsSequnce.Remove(sequence);
-                foreach (var config in sequence.Configs)
+                for (int i = 0; i < sequence.Configs.Length && IsPlay; i++)
                 {
-                    yield return LaucnhPatern(config);
+                    yield return LaucnhPatern(sequence.Configs[i]);
                     yield return WaitTime(_switchDelay);
-                    lastConfig = config;
+                    lastConfig = sequence.Configs[i];
                 }
             }
         }

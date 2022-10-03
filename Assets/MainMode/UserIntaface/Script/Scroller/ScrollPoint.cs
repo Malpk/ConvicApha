@@ -9,10 +9,12 @@ namespace MainMode.GameInteface
         [SerializeField] private Image _iconItem;
         [SerializeField] private RectTransform _rectTransform;
 
+        private Vector3 _target;
         private ScrollItem _item;
 
         public ScrollItem Item => _item;
         public Vector3 Position => _rectTransform.localPosition;
+
 
         public void SetItem(ScrollItem item)
         {
@@ -23,9 +25,15 @@ namespace MainMode.GameInteface
         {
             _rectTransform.localPosition = position;
         }
-        public void SetOffset(Vector3 offset)
+        public void SetTarget(Vector3 offset)
         {
-            _rectTransform.localPosition += offset;
+            _target = _rectTransform.localPosition + offset;
+        }
+
+        public bool UpdatePosition(float move)
+        {
+            _rectTransform.localPosition = Vector3.MoveTowards(_rectTransform.localPosition, _target, move);
+            return _rectTransform.localPosition.x != _target.x;
         }
     }
 }

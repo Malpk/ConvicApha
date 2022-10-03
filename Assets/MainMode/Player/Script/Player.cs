@@ -89,13 +89,14 @@ public class Player : Character, IResist
     #region Player Damage and Dead
     public override void Explosion()
     {
-        isDead = true;
-        if (DeadAction != null)
-            DeadAction();
-        animator.SetBool("Dead", true);
-        rigidBody.velocity = Vector2.zero;
-        if (respawn == null && isAutoRespawnMode)
-            respawn = StartCoroutine(ReSpawn());
+        if (!isDead)
+        {
+            isDead = true;
+            animator.SetBool("Dead", true);
+            rigidBody.velocity = Vector2.zero;
+            if (respawn == null && isAutoRespawnMode)
+                respawn = StartCoroutine(ReSpawn());
+        }
     }
     public override void TakeDamage(int damage, DamageInfo damageInfo)
     {
@@ -106,6 +107,11 @@ public class Player : Character, IResist
                 Explosion();
             screenEffect.ShowEffect(damageInfo);
         }
+    }
+    private void DeadAnimationEvent()
+    {
+        if (DeadAction != null)
+            DeadAction();
     }
     #endregion
     #region Movement and Other Debaf

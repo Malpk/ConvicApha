@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6858238162431962287}
   - component: {fileID: 5646093357982817819}
-  - component: {fileID: 2197914146448254382}
+  - component: {fileID: 6350070336211171590}
   - component: {fileID: 8108289573350474917}
   m_Layer: 0
   m_Name: Balonchik
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 1331c5e2c7e45254686c45a18fe0fc4b, type: 3}
+  m_Sprite: {fileID: -2444852507885406923, guid: 0be3addbc5874e149a91272734af896b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,8 +84,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &2197914146448254382
-PolygonCollider2D:
+--- !u!70 &6350070336211171590
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -98,26 +98,8 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.33333334, y: 0.33333334}
-    newSize: {x: 0.26, y: 0.26}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.109375, y: 0.171875}
-      - {x: -0.1875, y: 0.125}
-      - {x: -0.1875, y: 0.046875}
-      - {x: -0.171875, y: 0.015625}
-      - {x: 0.015625, y: -0.171875}
-      - {x: 0.09375, y: -0.171875}
-      - {x: 0.171875, y: -0.125}
-      - {x: 0.171875, y: -0.046875}
-      - {x: -0.046875, y: 0.171875}
+  m_Size: {x: 0.17, y: 0.5}
+  m_Direction: 0
 --- !u!114 &8108289573350474917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hideOnAwake: 1
   _typeUse: 1
-  ItemSprite: {fileID: 21300000, guid: 8d765ad5ad6f81f479e75dc55c43f54b, type: 3}
+  ItemSprite: {fileID: 7397371678690673091, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 5646093357982817819}
   Count: 1
   IsInfinity: 0

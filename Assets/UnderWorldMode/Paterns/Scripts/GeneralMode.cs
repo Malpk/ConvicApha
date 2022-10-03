@@ -15,7 +15,10 @@ namespace Underworld
         [Min(0)]
         [SerializeField] protected float workDuration;
 
+        protected event System.Action DeactivateAction;
+
         private ModeState _previus;
+
         public abstract bool IsReady { get; }
         public ModeState State { get; protected set; } = ModeState.Stop;
 
@@ -26,6 +29,8 @@ namespace Underworld
         public void Deactivate()
         {
             State = ModeState.Stop;
+            if (DeactivateAction != null)
+                DeactivateAction();
         }
         public virtual void Pause()
         {

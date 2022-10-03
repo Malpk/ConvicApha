@@ -24,8 +24,10 @@ public class Point
         item.SetPosition(Position);
         _item = item;
     }
-    public void ResetPoint()
+    public void ResetPoint(bool destroy = false)
     {
+        if (destroy && _item)
+            MonoBehaviour.Destroy(_item.gameObject);
         _item = null;
     }
 }

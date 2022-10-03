@@ -51,7 +51,7 @@ namespace MainMode.LoadScene
             var loadReciver = intefaceLoader.LoadReceiverAsync();
             var loadInterface = intefaceLoader.LoadIntefaceAsync();
             await Task.WhenAll(loadReciver, loadInterface);
-            var loadPlayer = playerLoader.PlayerLaodAsync(_spwanPoint, config.characterType);
+            var loadPlayer = playerLoader.PlayerLaodAsync(_spwanPoint, config.player);
             var loadCamera = LoadCameraFollowingAsync();
             await Task.WhenAll(loadPlayer, loadCamera);
             if (Application.platform == RuntimePlatform.Android)
@@ -68,7 +68,6 @@ namespace MainMode.LoadScene
         {
             var senders = player.GetComponents<ISender>();
             var hud = holder.GetComponentInChildren<HUDInteface>();
-            _cameraFollowing.SetTarget(player);
             var marker = hud.GetComponentInChildren<MarkerUI>();
             if (marker)
             {
@@ -85,7 +84,9 @@ namespace MainMode.LoadScene
                             senders[i].AddReceiver(hud.CreateReceiver(perfab));
                     }
                 }
+                holder.SetShow(hud);
             }
+            _cameraFollowing.SetTarget(player);
             SetController(out Controller controller);
             player.Intiliazate(controller, marker);
             if (config.itemConsumable != null && config.itemArtifact != null)

@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MainMode.Items
 {
     [RequireComponent(typeof(CircleCollider2D))]
-    public class CrystalDust : Artifact
+    public class CrystalDust : ConsumablesItem
     {
         [SerializeField] private CrystalSheild _wallCrystalPrefab;
         [SerializeField] private SpriteRenderer _sprite;

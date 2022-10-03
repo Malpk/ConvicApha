@@ -12,6 +12,7 @@ namespace Underworld
         [SerializeField] private PaternButton _perfab;
         [SerializeField] private PaternButtonInfo[] _buttonConfig;
         [Header("Reference")]
+        [SerializeField] private Canvas _canvas;
         [SerializeField] private SwitchPatern _switcher;
         [SerializeField] private Transform _contentView;
         [SerializeField] private Button _startModeButton;
@@ -25,9 +26,8 @@ namespace Underworld
 
         public override UserInterfaceType Type => UserInterfaceType.Other;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             foreach (var config in _buttonConfig)
             {
                 var button = Instantiate(_perfab.gameObject, _contentView).GetComponent<PaternButton>();
@@ -41,11 +41,15 @@ namespace Underworld
         private void OnEnable()
         {
             HideAction += ResetMenu;
+            ShowAction += () => _canvas.enabled = true;
+            HideAction += () => _canvas.enabled = false;
             _startModeButton.onClick.AddListener(StartMode);
         }
         private void OnDisable()
         {
             HideAction -= ResetMenu;
+            ShowAction -= () => _canvas.enabled = true;
+            HideAction -= () => _canvas.enabled = false;
             _startModeButton.onClick.RemoveListener(StartMode);
         }
         private void Update()
@@ -53,7 +57,7 @@ namespace Underworld
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 if (!IsShow)
-                    OnShow();
+                    Show();
                 else
                     Hide();
             }

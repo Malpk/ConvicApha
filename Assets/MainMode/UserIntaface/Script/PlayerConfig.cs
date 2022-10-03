@@ -1,20 +1,22 @@
-﻿using MainMode;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using MainMode.Items;
 
-namespace UserIntaface.MainMenu
+namespace MainMode.LoadScene
 {
     [System.Serializable]
     public class PlayerConfig
-    {      
-        public GameObject itemConsumable;
-        public GameObject itemArtifact;
-        public PlayerType characterType;
-        public PlayerConfig(ItemScroller consumableScroller,ItemScroller artifactScroller, CharacterScroller characterScroller) 
+    {
+        public readonly PlayerType player;
+        public readonly Artifact itemArtifact;
+        public readonly ConsumablesItem itemConsumable;
+
+        public PlayerConfig(GameObject itemConsumable, GameObject itemArtifact, PlayerType player)
         {
-            itemConsumable = GameObject.Instantiate(consumableScroller.SelectedElement.itemPrefab);
-            itemArtifact = GameObject.Instantiate(artifactScroller.SelectedElement.itemPrefab);
-            characterType = characterScroller.SelectedElement.PlayerType;
-        }     
+            Debug.Log(itemConsumable.name);
+            this.itemConsumable = itemConsumable.GetComponent<ConsumablesItem>();
+            this.itemArtifact = itemArtifact.GetComponent<Artifact>();
+            this.player = player;
+        }
     }
 }
+

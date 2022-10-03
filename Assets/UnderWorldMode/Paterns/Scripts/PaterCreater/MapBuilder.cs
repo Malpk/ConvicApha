@@ -34,6 +34,13 @@ namespace Underworld
             }
             return true;
         }
+        public void ClearMap()
+        {
+            foreach (var point in Points)
+            {
+                point.ResetPoint(true);
+            }
+        }
         public Transform GetHolder(string name)
         {
             var holder = new GameObject("PointHolder").transform;

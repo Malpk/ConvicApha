@@ -26,14 +26,14 @@ namespace MainMode.LoadScene
             }
         }
 
-            
+
         private bool GetPerafab(PlayerType type,out string loadKey)
         {
             foreach (var player in _playerPerfabs)
             {
                 if (player.Type == type)
                 {
-                    loadKey =   player.LoadKey;
+                    loadKey = player.LoadKey;
                     return true;
                 }
             }

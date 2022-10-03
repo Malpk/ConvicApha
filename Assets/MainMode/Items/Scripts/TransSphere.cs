@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode.Items
 {
-    public class TransSphere : Artifact
+    public class TransSphere : ConsumablesItem
     {
         [Header("Setting")]
         [SerializeField] private int _unitDistance;
