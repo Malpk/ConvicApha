@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class CameraFollowing : MonoBehaviour
 {
+    [Header("Genral setting")]
     [SerializeField] private bool _playOnStart;
+    [Min(0)]
+    [SerializeField] private float _maxOffset = 1;
+    [Min(0)]
+    [SerializeField] private float _timeSmooth;
+    [Min(1)]
     [SerializeField] private float _speedFollowing;
+    [Header("Reference")]
     [SerializeField] private Camera _camera;
     [SerializeField] private Character _target;
 
+    private Vector2 _velocity = Vector2.zero;
+
     public bool IsPlay { private set; get; }
     public Camera Camera => _camera;
+
 
 
     private void OnEnable()
@@ -51,15 +61,22 @@ public class CameraFollowing : MonoBehaviour
     {
         IsPlay = false; 
     }
+
     private IEnumerator FollowingTheCamera()
     {
         yield return new WaitWhile(() => !_target);
         while (IsPlay)
         {
-            Vector2 velocity = Vector2.zero;
-            Vector2 newPosition = Vector2.SmoothDamp(transform.position, _target.Position, ref velocity, Time.deltaTime, _speedFollowing);
-            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
-            yield return new WaitForEndOfFrame();
+            if (Vector2.Distance(transform.position, _target.Position) <= _maxOffset)
+            {
+                Vector2 newPosition = Vector2.SmoothDamp(transform.position, _target.Position, ref _velocity, _timeSmooth, _speedFollowing);
+                transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+            }
+            else
+            {
+                transform.position = (Vector3)_target.Position + Vector3.forward * transform.position.z;
+            }
+            yield return null;
         }
     }
     private void SetDefoutPosition()

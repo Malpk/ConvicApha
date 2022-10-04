@@ -46,19 +46,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cc79889da25e443bc10ccc8bb16dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 0
   playOnStart: 0
-  _spwanPoint: {fileID: 712250180901146399}
-  choosePlayer:
-    itemConsumable: {fileID: 0}
-    itemArtifact: {fileID: 0}
-    characterType: 0
+  autoRestart: 0
+  mainMenu: {fileID: 0}
+  spwanPoint: {fileID: 712250180901146399}
+  cameraFollowing: {fileID: 0}
   _perfabAndroidController:
     m_AssetGUID: 9c884674542b64b4685544b59d331be5
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  _mapGride: {fileID: 0}
   _spawner: {fileID: 0}
+  _botSpawner: {fileID: 0}
 --- !u!114 &712250180671689830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,12 +77,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abe64453c9b8cdc4596ec2613605d242, type: 2}
   - {fileID: 11400000, guid: 28bec856fe1e03440944ff4978e7c9fd, type: 2}
   - {fileID: 11400000, guid: b2dc89fc5e2073c4a876ecb63ac48c34, type: 2}
-  _cameraFollowing: {fileID: 0}
-  _cameraPerfab:
-    m_AssetGUID: 76c085706cba4194489301218e79c9cb
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
 --- !u!114 &712250180671689831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,12 +96,16 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  - m_AssetGUID: 2b9ce0354bf052b4ba15036c66973fd8
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   _reciversAssets:
   - m_AssetGUID: 048cd5a01b93885449e1ebf01b8bfe1d
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  - m_AssetGUID: 048cd5a01b93885449e1ebf01b8bfe1d
+  - m_AssetGUID: 559d567f1a2473c46a4fdcdbca7547a3
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
@@ -139,7 +137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712250180901146396}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.3, y: -5.55, z: -2.0705516}
+  m_LocalPosition: {x: 4.64, y: 0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 712250180671689829}

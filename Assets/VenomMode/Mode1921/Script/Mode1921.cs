@@ -56,24 +56,6 @@ namespace MainMode.Mode1921
                 StartCoroutine(PlayToReady());
             }
         }
-
-        private IEnumerator PlayToReady()
-        {
-            yield return new WaitWhile(() =>
-            {
-                foreach (var spawner in _spawners)
-                {
-                    if (!spawner.IsRedy)
-                        return true;
-                }
-                return false;
-            });
-            foreach (var spawner in _spawners)
-            {
-                spawner.Play();
-            }
-        }
-
         public void Stop()
         {
             if (IsPlay)
@@ -93,9 +75,26 @@ namespace MainMode.Mode1921
             }
         }
 
+        private IEnumerator PlayToReady()
+        {
+            yield return new WaitWhile(() =>
+            {
+                foreach (var spawner in _spawners)
+                {
+                    if (!spawner.IsRedy)
+                        return true;
+                }
+                return false;
+            });
+            foreach (var spawner in _spawners)
+            {
+                spawner.Play();
+            }
+        }
+
+
         private void CompliteShieldQuest()
         {
-            Debug.Log("Complite");
             Win.Invoke();
         }
     }

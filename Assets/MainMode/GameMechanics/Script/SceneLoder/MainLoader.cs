@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MainMode.LoadScene;
-using UserIntaface.MainMenu;
-using System.Threading.Tasks;
 
 namespace MainMode
 {
@@ -13,14 +9,51 @@ namespace MainMode
         [SerializeField] private MapSpawner _spawner;
         [SerializeField] private EviilBotSpawner _botSpawner;
 
-        public async override Task LoadAsync(PlayerConfig config)
+        private bool _isLoad;
+
+        protected override void OnEnable()
         {
-            await base.LoadAsync(config);
-            await _spawner.Intializate(player);
-            _mapGride.Intilizate();
-            _spawner.Run();
-            _botSpawner.Intitlizate(player, _mapGride);
+            base.OnEnable();
+            LoadAction += LoadMainMode;
+            PlayAction += PlayMainMode;
+            StopGameAction += StopMainMode;
+            playerLoader.PlayerLoadAction += IntializateAsync;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            LoadAction -= LoadMainMode;
+            PlayAction -= PlayMainMode;
+            StopGameAction -= StopMainMode;
+            playerLoader.PlayerLoadAction -= IntializateAsync;
+        }
+
+        private async void LoadMainMode()
+        {
+            if (!_isLoad)
+            {
+                _isLoad = true;
+                await _spawner.Load();
+                _mapGride.Intilizate();
+                _botSpawner.SetMapGrid(_mapGride);
+            }
+        }
+        private void IntializateAsync(Player player)
+        {
+            _spawner.Intializate(player);
+            _botSpawner.SetPlayer(player);
+        }
+        private void PlayMainMode()
+        {
+            _spawner.Play();
             _botSpawner.Play();
         }
+        private void StopMainMode()
+        {
+            _spawner.Stop();
+            _botSpawner.Stop();
+        }
+
     }
 }

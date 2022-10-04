@@ -24,7 +24,6 @@ namespace MainMode.Mode1921
 
         public override bool IsRedy => _isReady;
 
-
         private async void Awake()
         {
             var shieldLoadTask = LoadAssetAsync<Shield>(_shieldLoadKey);
@@ -76,6 +75,7 @@ namespace MainMode.Mode1921
         }
         private void SetPosition()
         {
+            Debug.Log(_tools);
             SetDistribution(_tools, _distanceBothItems,
                 SetDistribution(_shields, _distanceBothItems));
         }

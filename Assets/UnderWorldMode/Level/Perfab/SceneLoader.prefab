@@ -47,9 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playOnStart: 0
-  _spwanPoint: {fileID: 4329172616868449968}
-  choosePlayer: 0
-  _perfabController: {fileID: 4461776345514264974, guid: 9c884674542b64b4685544b59d331be5, type: 3}
+  autoRestart: 0
+  mainMenu: {fileID: 0}
+  spwanPoint: {fileID: 4329172616868449968}
+  cameraFollowing: {fileID: 0}
+  _builder: {fileID: 0}
 --- !u!114 &4329172616640992713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,23 +65,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPerfabs:
-  - nameCell: Base Player
-    _type: 0
-    _playerPerfab: {fileID: 2289660620136117451, guid: 54c4db7212ebf2e4bbb9e9af5ed69d02, type: 3}
-  - nameCell: Jeff
-    _type: 1
-    _playerPerfab: {fileID: 5614930928919736659, guid: a8451f8c279e6e94a8cf37ba0128fd41, type: 3}
-  - nameCell: Jman
-    _type: 2
-    _playerPerfab: {fileID: 868995220648947401, guid: 8d6adb076c90b6b4595fa0fa5a4a119b, type: 3}
-  - nameCell: RobotMan
-    _type: 3
-    _playerPerfab: {fileID: 5517268123668547750, guid: a5ead33611b67d648adb14ffc6337c3a, type: 3}
-  - nameCell: CristalMan
-    _type: 4
-    _playerPerfab: {fileID: 8626755286193916105, guid: 22faf304cf0f79140bd97f3cd651741a, type: 3}
-  _cameraPerfab: {fileID: 4274786918816332358, guid: 76c085706cba4194489301218e79c9cb, type: 3}
-  _cameraFollowing: {fileID: 0}
+  - {fileID: 11400000, guid: bd968cb8e1b040947951b588461b4db3, type: 2}
+  - {fileID: 11400000, guid: 1e4ee3e8363eaba49ba5d36a4bec8b57, type: 2}
+  - {fileID: 11400000, guid: abe64453c9b8cdc4596ec2613605d242, type: 2}
+  - {fileID: 11400000, guid: 28bec856fe1e03440944ff4978e7c9fd, type: 2}
+  - {fileID: 11400000, guid: b2dc89fc5e2073c4a876ecb63ac48c34, type: 2}
+  _perfabAndroidController:
+    m_AssetGUID: 9c884674542b64b4685544b59d331be5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!114 &4329172616640992712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,13 +88,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnAwake: 0
-  _startInterface: 0
+  _startInterface: 2
   _interfacesPerfab:
-  - {fileID: -6920262893417780073, guid: 52a9e770155cdb149842b84b8c9857aa, type: 3}
-  _receivers:
-  - {fileID: 3989325022343667299, guid: 559d567f1a2473c46a4fdcdbca7547a3, type: 3}
-  - {fileID: 5246592016933632915, guid: 048cd5a01b93885449e1ebf01b8bfe1d, type: 3}
-  - {fileID: 668942915446906196, guid: 106a4e8b9e40f9449b170d79ebee88f0, type: 3}
+  - m_AssetGUID: 2b9ce0354bf052b4ba15036c66973fd8
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 52a9e770155cdb149842b84b8c9857aa
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _reciversAssets:
+  - m_AssetGUID: 048cd5a01b93885449e1ebf01b8bfe1d
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 559d567f1a2473c46a4fdcdbca7547a3
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 106a4e8b9e40f9449b170d79ebee88f0
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!1 &4329172616868449971
 GameObject:
   m_ObjectHideFlags: 0

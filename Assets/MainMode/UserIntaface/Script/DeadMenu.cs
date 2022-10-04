@@ -1,62 +1,60 @@
 using UnityEngine;
 using UnityEngine.Video;
+using MainMode.LoadScene;
 using MainMode.GameInteface;
 
-namespace Underworld
+public class DeadMenu : UserInterface
 {
-    public class DeadMenu : UserInterface
+    [SerializeField] private bool _showOnStart;
+    [Header("Reference")]
+    [SerializeField] private Canvas _canvas;
+    [SerializeField] private BaseLoader _sceneLoader;
+    [SerializeField] private VideoPlayer _backGroundVideo;
+
+    public override UserInterfaceType Type => UserInterfaceType.EndMenu;
+
+    public void Intializate(BaseLoader loader)
     {
-        [SerializeField] private bool _showOnStart;
-        [Header("Reference")]
-        [SerializeField] private Canvas _canvas;
-        [SerializeField] private VideoPlayer _backGroundVideo;
-        [SerializeField] private UnderWorldLoader _underWorldLoader;
+        _sceneLoader = loader;
+    }
 
-        public override UserInterfaceType Type => UserInterfaceType.EndMenu;
+    private void OnEnable()
+    {
+        ShowAction += ShowMenu;
+        HideAction += HideMenu;
+    }
+    private void OnDisable()
+    {
+        ShowAction -= ShowMenu;
+        HideAction -= HideMenu;
+    }
+    private void Start()
+    {
+        if (_showOnStart)
+            Show();
+        else
+            Hide();
+    }
 
-        public void Intializate(UnderWorldLoader underWorldLoader)
-        {
-            _underWorldLoader = underWorldLoader;
-        }
+    public void OnRestart()
+    {
+        _sceneLoader.Play();
+    }
 
-        private void OnEnable()
-        {
-           ShowAction += ShowMenu;
-           HideAction += HideMenu;
-        }
-        private void OnDisable()
-        {
-            ShowAction -= ShowMenu;
-            HideAction -= HideMenu;
-        }
-        private void Start()
-        {
-            if (_showOnStart)
-                Show();
-            else
-                Hide();
-        }
+    public void OnBackMainMenu()
+    {
+        _sceneLoader.BackMainMenu();
+    }
 
-        public void OnRestart()
-        {
-            _underWorldLoader.Restart();
-        }
+    private void ShowMenu()
+    {
+        _canvas.enabled = true;
+        _backGroundVideo.Play();
+    }
 
-        public void OnBackMainMenu()
-        {
-            _underWorldLoader.BackMainMenu();
-        }
-
-        private void ShowMenu()
-        {
-            _canvas.enabled = true;
-            _backGroundVideo.Play();
-        }
-
-        private void HideMenu()
-        {
-            _canvas.enabled = false;
-            _backGroundVideo.Stop();
-        }
+    private void HideMenu()
+    {
+        _canvas.enabled = false;
+        _backGroundVideo.Stop();
     }
 }

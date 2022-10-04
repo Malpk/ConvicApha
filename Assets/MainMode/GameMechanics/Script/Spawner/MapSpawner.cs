@@ -22,18 +22,17 @@ namespace MainMode
         [SerializeField] private AnimationCurve _curveDificle;
         [Header("Reference")]
         [SerializeField] private Player _player;
-        
+
+        private bool _isPlay = false;
         private MapGrid _mapGrid;
-        private Coroutine _corotine;
 
         private void Awake()
         {
             _mapGrid = GetComponent<MapGrid>();
         }
 
-        public async Task Intializate(Player player)
+        public async Task Load()
         {
-            _player = player;
             var list = new List<Task>();
             foreach (var pool in _pools)
             {
@@ -41,49 +40,65 @@ namespace MainMode
             }
             await Task.WhenAll(list);
         }
-        private void OnDestroy()
+
+        public void Intializate(Player player)
+        {
+            _player = player;
+        }
+        private void UnLoad()
         {
             foreach (var pool in _pools)
             {
                 pool.UnLaodAsset();
             }
         }
-        public void Run()
+        public void Play()
         {
-            if (_corotine == null)
+            if (!_isPlay)
             {
-                Restart();
-                _corotine = StartCoroutine(Spawning());
+                _isPlay = true;
+                StartCoroutine(Spawning());
             }
         }
-        private void Restart()
+        public void Stop()
         {
-            foreach (var pool in _pools)
+            if (_isPlay)
             {
-                pool.ResetItem();
+                _isPlay = false;
+                foreach (var pool in _pools)
+                {
+                    pool.ClearPool();
+                }
             }
         }
+
         private IEnumerator Spawning()
         {
             var duration = 0f;
-            while (!_player.IsDead)
+            while (_isPlay)
             {
                 var delay = _timeDelay / (1f +  _difficleGame / 10f *
                     _curveDificle.Evaluate(duration / _difficleTimeLimite));
                 duration += delay;
                 yield return WaitDelay(delay);
-                if (GetPool(out PoolItem pool))
+                if (_isPlay)
+                    SpawnItem();
+            }
+            
+        }
+
+        private void SpawnItem()
+        {
+            if (GetPool(out PoolItem pool))
+            {
+                if (pool.Create(out SmartItem item))
                 {
-                    if (pool.Create(out SmartItem item))
+                    if (_mapGrid.SetItemOnMap(item, _spawnRadius, pool.DistanceFromPlayer, _player.transform))
                     {
-                        if (_mapGrid.SetItemOnMap(item, _spawnRadius,pool.DistanceFromPlayer, _player.transform))
-                        {
-                            item.transform.parent = transform;
-                        }
+                        item.transform.parent = transform;
                     }
                 }
             }
-            
         }
 
         private IEnumerator WaitDelay(float delay)

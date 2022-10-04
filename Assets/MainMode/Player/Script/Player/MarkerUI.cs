@@ -56,6 +56,7 @@ public class MarkerUI : MonoBehaviour
     public void Stop()
     {
         IsPlay = false;
+        Hide();
     }
 
     private IEnumerator UpdateMarker()

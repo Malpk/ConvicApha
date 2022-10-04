@@ -36,9 +36,13 @@ namespace MainMode
         {
             Addressables.Release<GameObject>(_perfab.gameObject);
         }
-        public void Intitlizate(Player target, MapGrid mapGrid)
+        public void SetPlayer(Player target)
         {
             _target = target;
+           
+        }
+        public void SetMapGrid(MapGrid mapGrid)
+        {
             _mapGrid = mapGrid;
         }
 
@@ -58,7 +62,12 @@ namespace MainMode
         }
         public void Stop()
         {
-            _isPlay = false;
+            if (_isPlay)
+            {
+                _isPlay = false;
+                _evilBot.Deactivate();
+                _evilBot.HideItem();
+            }
         }
         public void Pause()
         {
@@ -85,9 +94,9 @@ namespace MainMode
         private IEnumerator WaitTime(float timeActive)
         {
             var progress = 0f;
-            while (progress < 1f)
+            while (progress < 1f && _isPlay)
             {
-                yield return new WaitWhile(() => _isPause);
+                yield return new WaitWhile(() => _isPause && _isPlay);
                 progress += Time.deltaTime / timeActive;
                 yield return null;
             }

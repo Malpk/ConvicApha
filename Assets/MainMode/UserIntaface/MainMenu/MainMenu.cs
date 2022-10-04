@@ -24,7 +24,6 @@ public sealed class MainMenu : UserInterface
 
     public override UserInterfaceType Type => UserInterfaceType.MainMenu;
 
-
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -50,19 +49,17 @@ public sealed class MainMenu : UserInterface
 
     public async void CreateNewConfig()
     {
-        if (!_isRun)
-        {
-            _isRun = true;
-            var artifactTask = Addressables.InstantiateAsync(_artifactItemScroller.GetSelectItem().LoadKey).Task;
-            var consumableItemTask = Addressables.InstantiateAsync(_consumableItemScroller.GetSelectItem().LoadKey).Task;
-            await Task.WhenAll(artifactTask, consumableItemTask);
-            await _sceneLoader.LoadAsync(new PlayerConfig(consumableItemTask.Result, artifactTask.Result, GetPlayerType()));
-            _backGround.enabled = false;
-            if (swithchInteface)
-                swithchInteface.SetHide(this);
-            else
-                Hide();
-        }
+        _isRun = true;
+        var artifactTask = Addressables.InstantiateAsync(_artifactItemScroller.GetSelectItem().LoadKey).Task;
+        var consumableItemTask = Addressables.InstantiateAsync(_consumableItemScroller.GetSelectItem().LoadKey).Task;
+        await Task.WhenAll(artifactTask, consumableItemTask);
+        await _sceneLoader.LoadAsync(new PlayerConfig(consumableItemTask.Result, artifactTask.Result, GetPlayerType()));
+        _sceneLoader.Play();
+        _backGround.enabled = false;
+        if (swithchInteface)
+            swithchInteface.SetHide(this);
+        else
+            Hide();
     }
 
     private PlayerType GetPlayerType()

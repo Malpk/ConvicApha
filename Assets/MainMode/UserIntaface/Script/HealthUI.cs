@@ -14,11 +14,18 @@ public class HealthUI : Receiver
 
     public void SetupHelth(int maxHealth)
     {
-        for (int i = 0; i < maxHealth; i++)
+        var count = maxHealth - _healthIcons.Count;
+        if (count > 0)
         {
-            var newIcon = Instantiate(HealthIconPrefab, transform);
-            newIcon.SetActive(true);
-            _healthIcons.Add(newIcon);
+            for (int i = 0; i < count; i++)
+            {
+                var newIcon = Instantiate(HealthIconPrefab, transform);
+                _healthIcons.Add(newIcon);
+            }
+        }
+        foreach (var icon in _healthIcons)
+        {
+            icon.SetActive(true);
         }
     }
     public void Display(int health)

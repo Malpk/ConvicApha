@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -118,11 +117,11 @@ namespace MainMode
             }
             return map;
         }
-        public void ClearMap()
+        public void ClearMap(bool destroy = false)
         {
             foreach (var point in _points)
             {
-                point.ResetPoint();
+                point.ResetPoint(destroy);
             }
         }
     }

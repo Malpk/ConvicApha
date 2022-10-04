@@ -20,6 +20,7 @@ public class PoolItem
 
     private SmartItem _perfab;
 
+    private List<SmartItem> _pool = new List<SmartItem>();
     private List<SmartItem> _poolActive = new List<SmartItem>();
     private List<SmartItem> _poolDeactive = new List<SmartItem>();
 
@@ -47,13 +48,13 @@ public class PoolItem
         _perfab = null;
         _perfabAsset.ReleaseAsset();
     }
-    public void ResetItem()
+    public void ClearPool()
     {
-        while (_poolActive.Count > 0)
+        while (_pool.Count > 0)
         {
-            var item = _poolActive[0];
-            _poolActive.Remove(item);
-            item.HideItem();
+            var item = _pool[0];
+            _pool.Remove(item);
+            MonoBehaviour.Destroy(item.gameObject);
         }
     }
     public bool Create(out SmartItem item)
@@ -62,7 +63,6 @@ public class PoolItem
         if (IsAcces)
         {
             item = Instantiate();
-            item.StartCoroutine(AddInPool(item));
             return item;
         }
         else
@@ -78,9 +78,12 @@ public class PoolItem
         {
             var item = _poolDeactive[0];
             _poolDeactive.Remove(item);
+            _poolActive.Add(item);
             return item;
         }
-        return MonoBehaviour.Instantiate(_perfab.gameObject).GetComponent<SmartItem>();
+        var newItem = MonoBehaviour.Instantiate(_perfab.gameObject).GetComponent<SmartItem>();
+        _pool.Add(newItem);
+        return newItem;
     }
     private void CheakState()
     {
@@ -102,11 +105,6 @@ public class PoolItem
             _poolDeactive.Remove(item);
             MonoBehaviour.Destroy(item.gameObject);
         }
-    }
-    private IEnumerator AddInPool(SmartItem item)
-    {
-        yield return new WaitWhile(() => !item.IsShow);
-        _poolActive.Add(item);
     }
     private float GetProbility()
     {

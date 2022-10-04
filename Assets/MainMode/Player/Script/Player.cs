@@ -1,6 +1,5 @@
 using MainMode;
 using MainMode.Items;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,11 +53,14 @@ public class Player : Character, IResist
         if (controller != null)
             UnBindController(controller);
     }
-    public void Intiliazate(Controller controller, MarkerUI marker)
+    public void SetMarker(MarkerUI marker)
+    {
+        _markerUI = marker;
+    }
+    public void SetControoler(Controller controller)
     {
         this.controller = controller;
         BindController(controller);
-        _markerUI = marker;
     }
     protected void BindController(Controller controller)
     {
@@ -196,20 +198,10 @@ public class Player : Character, IResist
 
     public void AddDefaultItems(ConsumablesItem consumablesItem, Artifact artifact)
     {
-        if (consumablesItem != null && artifact != null)
-        {
+        if (consumablesItem != null)
             _inventory.AddConsumablesItem(consumablesItem);
+        if (artifact != null)
             _inventory.AddArtifact(artifact);
-#if UNITY_EDITOR 
-            Debug.Log($"default items was added!");
-#endif
-        }
-#if UNITY_EDITOR
-        else
-        {
-            Debug.LogError($"default items have not been added!");
-        }
-#endif
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)

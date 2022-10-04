@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MainMode.LoadScene;
-using MainMode.GameInteface;
-using System.Threading.Tasks;
-using UserIntaface.MainMenu;
 
 namespace MainMode.Mode1921
 {
@@ -12,59 +7,48 @@ namespace MainMode.Mode1921
     {
         [SerializeField] private Mode1921 _mode;
 
-        private EndMenu _endMenu;
+        private ToolSet _toolSet;
+        private OxyGenSet _oxySet;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
-            SubcriteEvents();
+            base.OnEnable();
+            PlayAction += PlayVenomMode;
+            LoadAction += LoadVenomMode;
+            playerLoader.PlayerLoadAction += Intializate;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
-            UnSubcriteEvents();
+            base.OnDisable();
+            PlayAction -= PlayVenomMode;
+            LoadAction -= LoadVenomMode;
+            playerLoader.PlayerLoadAction -= Intializate;
         }
-        public override async Task LoadAsync(PlayerConfig config)
+
+        private void Intializate(Player player)
         {
-            await base.LoadAsync(config);
-            _endMenu = holder.GetComponentInChildren<EndMenu>();
-            SubcriteEvents();
             if (autoRestart)
-                StartCoroutine(TracingCompliteGame());
-            _mode.Intializate(holder.GetComponentInChildren<ChangeTest>());
-            _mode.Play();
+            {
+                if(this.player)
+                    this.player.DeadAction -= Play;
+            }
+            this.player = player;
+            if(autoRestart)
+                this.player.DeadAction += Play;
         }
-        public void ResetGame()
+        private void LoadVenomMode()
+        {
+            _mode.Intializate(holder.GetComponentInChildren<ChangeTest>());
+            _oxySet = holder.GetComponentInChildren<OxyGenSet>();
+            _toolSet = holder.GetComponentInChildren<ToolSet>();
+        }
+        private void RestartVenomMode()
         {
             _mode.Restart();
-            if (player.TryGetComponent(out IReset restart))
-                restart.Restart();
-            player.Respawn();
-            holder.SetShow(holder.GetComponentInChildren<HUDInteface>());
         }
-        private void SubcriteEvents()
+        private void PlayVenomMode()
         {
-            if (player != null)
-                player.DeadAction += ShowEndMenu;
-        }
-        private void UnSubcriteEvents()
-        {
-            if (_endMenu)
-                _endMenu.Restart -= ResetGame;
-            if (_mode)
-                _mode.Win.RemoveListener(ShowEndMenu);
-            if (player != null)
-                player.DeadAction -= ShowEndMenu;
-        }
-        private void ShowEndMenu()
-        {
-            holder.SetShow(_endMenu);
-        }
-        private IEnumerator TracingCompliteGame()
-        {
-            while (true)
-            {
-                yield return new WaitWhile(() => !player.IsDead);
-                ResetGame();
-            }
+            _mode.Play();
         }
     }
 }
