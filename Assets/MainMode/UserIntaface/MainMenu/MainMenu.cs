@@ -53,7 +53,9 @@ public sealed class MainMenu : UserInterface
         var artifactTask = Addressables.InstantiateAsync(_artifactItemScroller.GetSelectItem().LoadKey).Task;
         var consumableItemTask = Addressables.InstantiateAsync(_consumableItemScroller.GetSelectItem().LoadKey).Task;
         await Task.WhenAll(artifactTask, consumableItemTask);
-        await _sceneLoader.LoadAsync(new PlayerConfig(consumableItemTask.Result, artifactTask.Result, GetPlayerType()));
+        var config = new PlayerConfig();
+        config.SetConfig(consumableItemTask.Result, artifactTask.Result, GetPlayerType());
+        await _sceneLoader.LoadAsync(config);
         _sceneLoader.Play();
         _backGround.enabled = false;
         if (swithchInteface)

@@ -285,9 +285,11 @@ MonoBehaviour:
   controller: {fileID: 0}
   _defoutResistAttack: 
   _defoutResistEffect: 
-  _timeActive: 0
-  _forceJerk: 750
-  _debaf: {fileID: 0}
+  _timeReload: 3
+  _durationJerk: 0.2
+  _timeActiveDebaf: 2
+  _jerkDistance: 3
+  _debaf: {fileID: 11400000, guid: e72de282fdc363f43a55f20888f0af4d, type: 2}
 --- !u!114 &854305113421834015
 MonoBehaviour:
   m_ObjectHideFlags: 0

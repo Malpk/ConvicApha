@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MainMode.Effects
 {
-    [CreateAssetMenu(menuName = "Effects/Movement")]
+    [CreateAssetMenu(menuName = "PlayerComponent/Effects/Movement")]
     public class MovementEffect : ScriptableObject
     {
         [Range(0,2f)]

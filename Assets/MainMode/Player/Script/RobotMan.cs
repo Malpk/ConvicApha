@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MainMode;
-using PlayerComponent;
+using MainMode.Effects;
 
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class RobotMan : Player
@@ -14,6 +14,10 @@ public class RobotMan : Player
     [SerializeField] private float _distanceAttack = 1;
     [SerializeField] private LayerMask _deviceLayer;
     [Header("Character Setting")]
+    [Min(0)]
+    [SerializeField] private float _reduceSpeed;
+    [Min(0)]
+    [SerializeField] private float _reduceTemperatureTime;
     [Range(0, 1f)]
     [SerializeField] private float _movementDebaf = 0.7f;
     [Range(0, 1f)]
@@ -31,6 +35,7 @@ public class RobotMan : Player
     protected override float speedMovement => base.speedMovement * _movementDebaf;
     protected override float speedRotation => base.speedRotation * _rotationDebaf;
 
+
     private CapsuleCollider2D _collider;
     
     private IMode _target = null;
@@ -41,12 +46,18 @@ public class RobotMan : Player
     protected override void Awake()
     {
         _startColor = _sprite.color;
+        ChangeTemaerature();
         _collider = GetComponent<CapsuleCollider2D>();
         base.Awake();
     }
-    private void OnValidate()
+
+
+    public override void Respawn()
     {
-        ChangeTemaerature(_bodyTemperature);
+        base.Respawn();
+        _bodyTemperature = 0;
+        ChangeTemaerature();
+        _sprite.color = _startColor;
     }
 
     protected override void UseAbillity()
@@ -94,19 +105,21 @@ public class RobotMan : Player
         }
         base.TakeDamage(damage, attack);
     }
-    public override void StopMove(float timeStop, EffectType effect)
+    public override void AddEffects(MovementEffect effect, float duration)
     {
-        if (effect == EffectType.Freez)
-            {
+        if (effect.Effect == EffectType.Freez)
+        {
             if (_bodyTemperature < 0.3f)
             {
-                base.StopMove(timeStop,effect);
+                base.AddEffects(effect, duration);
             }
             _bodyTemperature = 0;
             ChangeTemaerature();
         }
         else
-            base.StopMove(timeStop, effect);
+        {
+            base.AddEffects(effect, duration);
+        }
     }
 
     private void ChangeTemaerature(float temperature = 0)
@@ -115,13 +128,6 @@ public class RobotMan : Player
             Explosion();
         temperature = Mathf.Clamp01(temperature);
         _bodyTemperature += temperature;
-        _sprite.color = Vector4.MoveTowards(_sprite.color, Color.red, temperature);
-    }
-    public override void Respawn()
-    {
-        base.Respawn();
-        _bodyTemperature = 0;
-        ChangeTemaerature();
-        _sprite.color = _startColor;
+        _sprite.color = Vector4.MoveTowards(_startColor, Color.red, _bodyTemperature);
     }
 }

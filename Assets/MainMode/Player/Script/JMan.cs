@@ -7,36 +7,37 @@ public class JMan : Player
 {
     [Header("Ability")]
     [Min(1)]
-    [SerializeField] private float _timeActive;
-    [SerializeField] private float _forceJerk;
-    [Range(0,1f)]
+    [SerializeField] private float _timeReload;
+    [SerializeField] private float _durationJerk;
+    [SerializeField] private float _timeActiveDebaf;
+    [SerializeField] private float _jerkDistance;
     [SerializeField] private MovementEffect _debaf;
 
     private Coroutine _reload = null;
 
     protected override void UseAbillity()
     {
-        rigidBody.AddForce(Jerk());
-    }
-    private Vector2 Jerk()
-    {
         if (_reload == null)
         {
-            AddEffects(_debaf, _timeActive);
-            _reload = StartCoroutine(Reload());
+            AddEffects(_debaf, _timeActiveDebaf);
+            _reload = StartCoroutine(Jerk());
         }
-        else
-        {
-            return Vector2.zero;
-        }
-        IsUseEffect = false;
-        playerCollider.enabled = false;
-        return transform.up * _forceJerk;
     }
 
-    private IEnumerator Reload()
+    private IEnumerator Jerk()
     {
-        yield return new WaitForSeconds(_timeActive);
+        var progress = 0f;
+        var startPosition = transform.position;
+        var direction = transform.up;
+        playerCollider.enabled = false;
+        while (progress < 1f)
+        {
+            rigidBody.MovePosition(startPosition + direction * progress * _jerkDistance);
+            progress += Time.deltaTime / _durationJerk;
+            yield return null;
+        }
+        playerCollider.enabled = true;
+        yield return new WaitForSeconds(_timeReload);
         playerCollider.enabled = true;
         IsUseEffect = true;
         _reload = null;

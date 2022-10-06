@@ -70,8 +70,6 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
     protected abstract void Move(Vector2 direction);
     public abstract void Explosion();
     public abstract void TakeDamage(int damage,  DamageInfo type);
-    public abstract void StopMove(float timeStop, EffectType effect = EffectType.None);
-    public abstract void ChangeSpeed(float duration,EffectType effect, float value = 1);
 
     protected IEnumerator ReSpawn()
     {
@@ -95,7 +93,7 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
             RespawnAction();
     }
     #region Add Effects
-    public void AddEffects(MovementEffect effect,float timeActive)
+    public virtual void AddEffects(MovementEffect effect,float timeActive)
     {
         if (!_movementEffects.ContainsKey(effect))
             _movementEffects.Add(effect, 1);

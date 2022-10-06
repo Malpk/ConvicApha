@@ -81,7 +81,7 @@ public class CameraFollowing : MonoBehaviour
     }
     private void SetDefoutPosition()
     {
-        transform.position =new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
+        transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, transform.position.z);
         Play();
     }
 }

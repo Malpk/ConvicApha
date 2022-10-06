@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4430792831323366009}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.4, y: -3.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4430792831545030912}
@@ -76,18 +76,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3680fafb66843714395a5ef51dff1535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 0
   playOnStart: 1
-  _spwanPoint: {fileID: 4430792831323366010}
-  choosePlayer:
-    itemConsumable: {fileID: 0}
-    itemArtifact: {fileID: 0}
-    characterType: 0
-  _perfabAndroidController:
-    m_AssetGUID: 9c884674542b64b4685544b59d331be5
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  autoRestart: 0
+  mainMenu: {fileID: 0}
+  spwanPoint: {fileID: 4430792831323366010}
+  cameraFollowing: {fileID: 0}
 --- !u!114 &4430792831545030915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,9 +99,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abe64453c9b8cdc4596ec2613605d242, type: 2}
   - {fileID: 11400000, guid: 28bec856fe1e03440944ff4978e7c9fd, type: 2}
   - {fileID: 11400000, guid: b2dc89fc5e2073c4a876ecb63ac48c34, type: 2}
-  _cameraFollowing: {fileID: 0}
-  _cameraPerfab:
-    m_AssetGUID: 76c085706cba4194489301218e79c9cb
+  _perfabAndroidController:
+    m_AssetGUID: 9c884674542b64b4685544b59d331be5
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
@@ -128,19 +120,6 @@ MonoBehaviour:
   _startInterface: 0
   _interfacesPerfab:
   - m_AssetGUID: 52a9e770155cdb149842b84b8c9857aa
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  _reciversAssets:
-  - m_AssetGUID: 048cd5a01b93885449e1ebf01b8bfe1d
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 048cd5a01b93885449e1ebf01b8bfe1d
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 106a4e8b9e40f9449b170d79ebee88f0
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

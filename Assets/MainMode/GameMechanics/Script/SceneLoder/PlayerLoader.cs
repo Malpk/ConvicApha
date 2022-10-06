@@ -21,11 +21,11 @@ namespace MainMode.LoadScene
 
         public async Task<Player> PlayerLaodAsync(Transform spawnPosition, PlayerConfig config)
         {
-            if (_type != config.type || !Player)
+            if (_type != config.Type || !Player)
             {
-                _type = config.type;
+                _type = config.Type;
                 UnLoadPLayer();
-                var task = LoadPlayer(config.type);
+                var task = LoadPlayer(config.Type);
                 await task;
                 Player = task.Result.GetComponent<Player>();
                 SetController(Player);
@@ -34,7 +34,7 @@ namespace MainMode.LoadScene
                     PlayerLoadAction(Player);
                 }
             }
-            Player.AddDefaultItems(config.itemConsumable, config.itemArtifact);
+            Player.AddDefaultItems(config.ItemConsumable, config.ItemArtifact);
             Player.transform.position = spawnPosition ? spawnPosition.position : Vector3.zero;
             return Player;
         }

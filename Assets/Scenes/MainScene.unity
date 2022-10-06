@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_FirstSelected
       value: 
       objectReference: {fileID: 1378236215}
+    - target: {fileID: 2244692132284249520, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.15638733
+      objectReference: {fileID: 0}
     - target: {fileID: 3423585140850362371, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_Name
       value: MainMenuUI
@@ -307,6 +311,22 @@ PrefabInstance:
       propertyPath: _sceneLoader
       value: 
       objectReference: {fileID: 1378236218}
+    - target: {fileID: 7054730912332841670, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _maxXOffset
+      value: 295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054730912332841670, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _scrollItems.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: e7c655facbc49e944bfd87d5f7d1b11f, type: 2}
+    - target: {fileID: 7054730912332841670, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _scrollItems.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8358944eb845bc24bb70f3af3f1d0823, type: 2}
+    - target: {fileID: 7054730913504191838, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _maxXOffset
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da666bb457dd5af4399e54305d13e342, type: 3}
 --- !u!114 &126906809 stripped
@@ -435,6 +455,10 @@ PrefabInstance:
     - target: {fileID: 4274786918816332358, guid: 76c085706cba4194489301218e79c9cb, type: 3}
       propertyPath: _timeSmooth
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4274786918816332358, guid: 76c085706cba4194489301218e79c9cb, type: 3}
+      propertyPath: _playOnStart
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4274786918816332359, guid: 76c085706cba4194489301218e79c9cb, type: 3}
       propertyPath: m_RootOrder

@@ -6,15 +6,19 @@ namespace MainMode.LoadScene
     [System.Serializable]
     public class PlayerConfig
     {
-        public readonly PlayerType type;
-        public readonly Artifact itemArtifact;
-        public readonly ConsumablesItem itemConsumable;
+        [SerializeField] private PlayerType _type;
+        [SerializeField] private Artifact _artifact;
+        [SerializeField] private ConsumablesItem _itemConsumable;
 
-        public PlayerConfig(GameObject itemConsumable, GameObject itemArtifact, PlayerType player)
+        public PlayerType Type => _type;
+        public Artifact ItemArtifact => _artifact;
+        public ConsumablesItem ItemConsumable => _itemConsumable;
+
+        public void SetConfig (GameObject itemConsumable, GameObject itemArtifact, PlayerType player)
         {
-            this.itemConsumable = itemConsumable.GetComponent<ConsumablesItem>();
-            this.itemArtifact = itemArtifact.GetComponent<Artifact>();
-            this.type = player;
+            _itemConsumable = itemConsumable.GetComponent<ConsumablesItem>();
+            _artifact = itemArtifact.GetComponent<Artifact>();
+            _type = player;
         }
     }
 }

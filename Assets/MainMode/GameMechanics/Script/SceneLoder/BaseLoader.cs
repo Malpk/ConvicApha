@@ -70,7 +70,8 @@ namespace MainMode.LoadScene
                 _marker = _intefaceLoader.Marker;
                 holder = _intefaceLoader.Holder;
                 deadMenu = _intefaceLoader.DeadMenu;
-                deadMenu.Intializate(this);
+                if(deadMenu)
+                    deadMenu.Intializate(this);
                 await playerLoader.PlayerLaodAsync(spwanPoint, config);
                 if (LoadAction != null)
                     LoadAction();
@@ -101,6 +102,7 @@ namespace MainMode.LoadScene
             marker.Intilizate(player, cameraFollowing);
             player.SetMarker(marker);
             cameraFollowing.SetTarget(player);
+            cameraFollowing.Play();
         }
         #endregion
         #region Conrollers
@@ -126,6 +128,7 @@ namespace MainMode.LoadScene
         private void StopGame()
         {
             _marker.Stop();
+            cameraFollowing.Stop();
             cameraFollowing.transform.position = new Vector3(spwanPoint.position.x, 
                 spwanPoint.position.y, cameraFollowing.transform.position.z); 
             holder.SetShow(deadMenu);

@@ -116,39 +116,6 @@ public class Player : Character, IResist
             DeadAction();
     }
     #endregion
-    #region Movement and Other Debaf
-    public override void StopMove(float timeStop, EffectType effect)
-    {
-        if (_stopMoveCorotine == null && !IsResist(effect))
-        {
-            _stopMoveCorotine = StartCoroutine(StopMovement(timeStop));
-        }
-    }
-    public override void ChangeSpeed(float duration, EffectType effect, float value = 1)
-    {
-        if (_utpdateMoveCorotine == null && !IsResist(effect))
-        {
-            _utpdateMoveCorotine = StartCoroutine(UpdateSpeed(duration, value));
-        }
-    }
-
-    private IEnumerator StopMovement(float duratuin)
-    {
-        stopEffect = 0f;
-        animator.SetBool("Freez", true);
-        yield return new WaitForSeconds(duratuin);
-        animator.SetBool("Freez", false);
-        stopEffect = 1;
-        _stopMoveCorotine = null;
-    }
-    private IEnumerator UpdateSpeed(float duration, float value)
-    {
-        stoneEffect = value;
-        yield return new WaitForSeconds(duration);
-        stoneEffect = 1;
-        _utpdateMoveCorotine = null;
-    }
-    #endregion
     #region Interactive and Useble
     private void InteractiveWhithObject()
     {
