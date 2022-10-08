@@ -313,6 +313,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5384519521847957957, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5384519521847957958, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.66
@@ -336,6 +340,14 @@ PrefabInstance:
     - target: {fileID: 5384519522703417609, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
       propertyPath: m_Size.y
       value: 23.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384519522703417615, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384519522758845676, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5384519522758845677, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -397,6 +409,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Borders
       objectReference: {fileID: 0}
+    - target: {fileID: 5384519522887314283, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5384519523201131788, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.15
@@ -408,6 +424,10 @@ PrefabInstance:
     - target: {fileID: 5384519523201131789, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
       propertyPath: m_Size.y
       value: 27.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384519523201131827, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23db3901bae484147b6d02c79156fab1, type: 3}
@@ -9286,7 +9306,7 @@ PrefabInstance:
       objectReference: {fileID: 531375715}
     - target: {fileID: 3791816888958479718, guid: 6e80bf31a6ba51e4bae949ee59c5a214, type: 3}
       propertyPath: choosePlayer._type
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4430792831545030912, guid: 6e80bf31a6ba51e4bae949ee59c5a214, type: 3}
       propertyPath: m_RootOrder

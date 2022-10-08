@@ -12,19 +12,37 @@ public class JMan : Player
     [SerializeField] private float _timeActiveDebaf;
     [SerializeField] private float _jerkDistance;
     [SerializeField] private MovementEffect _debaf;
+    [SerializeField] private LayerMask _wallLayer;
 
     private Coroutine _reload = null;
 
-    protected override void UseAbillity()
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        UseAbillityAction += JerkForward;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        UseAbillityAction -= JerkForward;
+    }
+    private void JerkForward()
     {
         if (_reload == null)
         {
             AddEffects(_debaf, _timeActiveDebaf);
-            _reload = StartCoroutine(Jerk());
+            var distance = _jerkDistance;
+            var hit = Physics2D.Raycast(transform.position, transform.up, distance, _wallLayer);
+            if (hit)
+            {
+                distance = Vector2.Distance(transform.position, hit.point);
+            }
+            _reload = StartCoroutine(Jerk(distance));
         }
     }
 
-    private IEnumerator Jerk()
+    private IEnumerator Jerk(float distance)
     {
         var progress = 0f;
         var startPosition = transform.position;
@@ -32,7 +50,7 @@ public class JMan : Player
         playerCollider.enabled = false;
         while (progress < 1f)
         {
-            rigidBody.MovePosition(startPosition + direction * progress * _jerkDistance);
+            rigidBody.MovePosition(startPosition + direction * progress * distance);
             progress += Time.deltaTime / _durationJerk;
             yield return null;
         }

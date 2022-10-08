@@ -4,22 +4,22 @@ using UnityEngine;
 public class PlayerHealth
 {
     [SerializeField] private int _healthPoints = 5;
-    [SerializeField] private int _maxHealthPoint = 7;
     [SerializeField] private HealthUI _display;
 
     private bool _isStart;
 
     public int Health => _healthPoints;
-    public int MaxHealth => _maxHealthPoint;
+    public int MaxHealth { get; private set; }
     public bool IsLoadDisplay => _display;
 
 
-    public void Start()
+    public void Intializate()
     {
         if (_display && !_isStart)
         {
             _isStart = true;
             _display.SetupHelth(_healthPoints);
+            MaxHealth = _healthPoints;
         }
     }
     public bool SetReceiver(HealthUI display)
@@ -38,8 +38,8 @@ public class PlayerHealth
     public void Heal(int value)
     {
         var newHealthPoints = _healthPoints + value;
-        if (newHealthPoints > _maxHealthPoint)
-            _healthPoints = _maxHealthPoint;
+        if (newHealthPoints > MaxHealth)
+            _healthPoints = MaxHealth;
         else
             _healthPoints = newHealthPoints;
         if(_display)

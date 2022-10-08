@@ -12,12 +12,21 @@ namespace MainMode.Mode1921
 
         public int FiltrationTime => _filtrationTime;
 
+
+        private void OnEnable()
+        {
+            UseAction += Actvate;
+        }
+        private void OnDisable()
+        {
+            UseAction -= Actvate;
+        }
         public void Spawn(Vector2 position)
         {
             transform.position = position;
             ShowItem();
         }
-        public override void Use()
+        private void Actvate()
         {
             if (user.TryGetComponent<OxyGenSet>(out OxyGenSet oxyGen))
             {

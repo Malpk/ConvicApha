@@ -24,7 +24,18 @@ public class CristalMan : Player
     protected override float speedMovement => base.speedMovement * _movementDebaf;
     protected override float speedRotation => base.speedRotation * _rotationDebaf;
 
-    protected override void UseAbillity()
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        UseAbillityAction += SetChild;
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        UseAbillityAction -= SetChild;
+    }
+
+    private void SetChild()
     {
         if (_isReload)
             return;

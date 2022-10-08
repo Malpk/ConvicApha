@@ -11,12 +11,6 @@ namespace MainMode.GameInteface
 
         public override TypeDisplay DisplayType => TypeDisplay.ItemInventory;
 
-        public void Restart()
-        {
-            DisplayArtifact(null);
-            DisplayConsumablesItem(null);
-        }
-     
         public void DisplayConsumablesItem(Sprite itemIcon, int count = 0)
         {
             ShowObject(itemIcon, count, _item);

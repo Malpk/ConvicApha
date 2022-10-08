@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MainMode.Mode1921
 {
-    public class ToolSet : MonoBehaviour,ISender, IReset
+    public class ToolSet : MonoBehaviour,ISender
     {
         [SerializeField] private ToolDisplay _toolDisplay;
 

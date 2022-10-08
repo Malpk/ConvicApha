@@ -5,12 +5,20 @@ using MainMode.Effects;
 
 namespace MainMode.Items
 {
-    public class Balonchik : Artifact
+    public class Balonchik : Item
     {
         [SerializeField] private float _timeActive;
         [SerializeField] private AirJet perfab;
 
-        public override void Use()
+        private void OnEnable()
+        {
+            UseAction += Actvate;
+        }
+        private void OnDisable()
+        {
+            UseAction -= Actvate;
+        }
+        private void Actvate()
         {
             var jet = Instantiate(perfab, user.transform.position, user.transform.rotation).GetComponent<AirJet>();
             user.AddEffects(jet, _timeActive);

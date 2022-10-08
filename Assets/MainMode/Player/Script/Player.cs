@@ -16,22 +16,17 @@ public class Player : Character, IResist
     [SerializeField] protected List<AttackType> _defoutResistAttack;
     [SerializeField] protected List<EffectType> _defoutResistEffect;
 
-    protected float stopEffect = 1;
-    protected float stoneEffect = 1;
-    protected Collider2D playerCollider = null;
+    protected CapsuleCollider2D playerCollider = null;
     protected PlayerScreen screenEffect = null;
 
     private IItemInteractive _interacive = null;
-
-    private Coroutine _stopMoveCorotine;
-    private Coroutine _utpdateMoveCorotine;
 
     protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
     protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
 
     public event System.Action DeadAction;
 
-    public override bool IsDead => isDead;
+    protected event System.Action UseAbillityAction;
 
     protected virtual float speedMovement => state.SpeedMovement * GetMovementEffect();
     protected virtual float speedRotation => state.SpeedRotation;
@@ -39,16 +34,16 @@ public class Player : Character, IResist
     protected override void Awake()
     {
         screenEffect = GetComponent<PlayerScreen>();
-        playerCollider = GetComponent<Collider2D>();
+        playerCollider = GetComponent<CapsuleCollider2D>();
         base.Awake();
     }
     #region Intilizate
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         if (controller != null)
             BindController(controller);
     }
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         if (controller != null)
             UnBindController(controller);
@@ -81,19 +76,20 @@ public class Player : Character, IResist
     #endregion
     protected override void Move(Vector2 direction)
     {
-        if (isDead)
-            return;
-        var speedDebaf = GetMovementEffect();
-        movement.Move(direction * speedMovement);
-        if (direction != Vector2.zero)
-            _baseMovement.Rotate(direction, speedRotation * speedDebaf);
+        if (IsPlay)
+        {
+            var speedDebaf = GetMovementEffect();
+            movement.Move(direction * speedMovement);
+            if (direction != Vector2.zero)
+                _baseMovement.Rotate(direction, speedRotation * speedDebaf);
+        }
     }
     #region Player Damage and Dead
     public override void Explosion()
     {
-        if (!isDead)
+        if (IsPlay)
         {
-            isDead = true;
+            Stop();
             animator.SetBool("Dead", true);
             rigidBody.velocity = Vector2.zero;
             if (respawn == null && isAutoRespawnMode)
@@ -126,14 +122,14 @@ public class Player : Character, IResist
     }
     private void UseItem()
     {
-        if (_inventory.TryGetConsumableItem(out Item item))
+        if (_inventory.TryGetConsumableItem(out ConsumablesItem item))
         {
             item.Use();
         }
     }
     private void UseArtifact()
     {
-        if (_inventory.TryGetArtifact(out Artifact artifact))
+        if (_inventory.TryGetArtifact(out Item artifact))
         {
             if (artifact.UseType == ItemUseType.Shoot)
             {
@@ -143,33 +139,17 @@ public class Player : Character, IResist
             artifact.Use();
         }
     }
-    public void ApplyEffect(IItemEffect itemEffect)
+    private void UseAbillity()
     {
-        itemEffect.UseEffect(this);
-    }
-    protected virtual void UseAbillity()
-    {
-
+        if (UseAbillityAction != null)
+            UseAbillityAction();
     }
     #endregion
     public void Heal(int point)
     {
         health.Heal(point);
     }
-    public override void Respawn()
-    {
-        stopEffect = 1f;
-        stoneEffect = 1f;
-        base.Respawn();
-    }
 
-    public void AddDefaultItems(ConsumablesItem consumablesItem, Artifact artifact)
-    {
-        if (consumablesItem != null)
-            _inventory.AddConsumablesItem(consumablesItem);
-        if (artifact != null)
-            _inventory.AddArtifact(artifact);
-    }
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
@@ -179,9 +159,9 @@ public class Player : Character, IResist
             {
                 _inventory.AddConsumablesItem(item as ConsumablesItem);
             }
-            if (item is Artifact)
+            if (item is Item)
             {
-                _inventory.AddArtifact(item as Artifact);
+                _inventory.AddArtifact(item as Item);
             }
         }
         if (collision.TryGetComponent(out IItemInteractive interactive))

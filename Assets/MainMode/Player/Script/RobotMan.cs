@@ -35,13 +35,13 @@ public class RobotMan : Player
     protected override float speedMovement => base.speedMovement * _movementDebaf;
     protected override float speedRotation => base.speedRotation * _rotationDebaf;
 
-
     private CapsuleCollider2D _collider;
     
-    private IMode _target = null;
+    private DeviceV2 _target = null;
 
     private Color _startColor;
     private Coroutine _abillityActive = null;
+    private Coroutine _cooling;
 
     protected override void Awake()
     {
@@ -51,16 +51,29 @@ public class RobotMan : Player
         base.Awake();
     }
 
-
-    public override void Respawn()
+    protected override void OnEnable()
     {
-        base.Respawn();
+        base.OnEnable();
+        PlayAction += PlaytCooling;
+        PlayAction += PlayRobotMan;
+        UseAbillityAction += ShootLighting;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        PlayAction -= PlaytCooling;
+        PlayAction -= PlayRobotMan;
+        UseAbillityAction -= ShootLighting;
+    }
+    private void PlayRobotMan()
+    {
         _bodyTemperature = 0;
         ChangeTemaerature();
         _sprite.color = _startColor;
     }
 
-    protected override void UseAbillity()
+    protected void ShootLighting()
     {
         TrakingDevice();
         if (_abillityActive == null)
@@ -70,15 +83,35 @@ public class RobotMan : Player
             _lightHit.SetTrigger("Hit");
             if (_target != null)
             {
-                _target.TurnOff();
+                if (_target.IsActive)
+                    _target.Deactivate();
+                if(_target.IsShow)
+                    _target.HideItem();
                 _target = null;
             }
+        }
+    }
+    private void PlaytCooling()
+    {
+        if (_cooling == null)
+        {
+            _cooling = StartCoroutine(Cooling());
         }
     }
     private IEnumerator AbillitReload()
     {
         yield return new WaitForSeconds(_abilityReloadTime);
         _abillityActive = null;
+    }
+    private IEnumerator Cooling()
+    {
+        while (IsPlay)
+        {
+            yield return new WaitWhile(() => _bodyTemperature == 0);
+            yield return new WaitForSeconds(_reduceTemperatureTime);
+            ChangeTemaerature(-_reduceSpeed);
+        }
+        _cooling = null;
     }
     private void TrakingDevice()
     {
@@ -93,9 +126,13 @@ public class RobotMan : Player
 #endif
         }
         if (hit)
-            _target = hit.transform.GetComponent<IMode>();
+        {
+            _target = hit.transform.GetComponent<DeviceV2>();
+        }
         else
+        {
             _target = null;
+        }
     }
     public override void TakeDamage(int damage, DamageInfo attack)
     {
@@ -124,10 +161,9 @@ public class RobotMan : Player
 
     private void ChangeTemaerature(float temperature = 0)
     {
-        if (_bodyTemperature > 1f)
+        if (_bodyTemperature >= 1f)
             Explosion();
-        temperature = Mathf.Clamp01(temperature);
-        _bodyTemperature += temperature;
+        _bodyTemperature = Mathf.Clamp01(_bodyTemperature + temperature);
         _sprite.color = Vector4.MoveTowards(_startColor, Color.red, _bodyTemperature);
     }
 }

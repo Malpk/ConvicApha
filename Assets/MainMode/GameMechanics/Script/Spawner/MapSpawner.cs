@@ -24,6 +24,7 @@ namespace MainMode
         [SerializeField] private Player _player;
 
         private bool _isPlay = false;
+        private bool _isLoad = false;
         private MapGrid _mapGrid;
 
         private void Awake()
@@ -39,6 +40,7 @@ namespace MainMode
                 list.Add(pool.LoadAsset());
             }
             await Task.WhenAll(list);
+            _isLoad = true;
         }
 
         public void Intializate(Player player)
@@ -47,6 +49,7 @@ namespace MainMode
         }
         private void UnLoad()
         {
+            _isLoad = false;
             foreach (var pool in _pools)
             {
                 pool.UnLaodAsset();
@@ -74,6 +77,7 @@ namespace MainMode
 
         private IEnumerator Spawning()
         {
+            yield return new WaitWhile(() => !_isLoad);
             var duration = 0f;
             while (_isPlay)
             {
@@ -104,7 +108,7 @@ namespace MainMode
         private IEnumerator WaitDelay(float delay)
         {
             var progress = 0f;
-            while (progress <= 1f && !_player.IsDead)
+            while (progress <= 1f && _player.IsPlay)
             {
                 progress += Time.deltaTime / delay;
                 yield return null;

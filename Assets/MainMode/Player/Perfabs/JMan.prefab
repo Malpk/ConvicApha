@@ -273,10 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd76b5104eba11a4786d292adfaef222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playOnStart: 1
   state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   health:
     _healthPoints: 4
-    _maxHealthPoint: 4
     _display: {fileID: 0}
   isAutoRespawnMode: 0
   respawnTime: 1
@@ -290,6 +290,9 @@ MonoBehaviour:
   _timeActiveDebaf: 2
   _jerkDistance: 3
   _debaf: {fileID: 11400000, guid: e72de282fdc363f43a55f20888f0af4d, type: 2}
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &854305113421834015
 MonoBehaviour:
   m_ObjectHideFlags: 0

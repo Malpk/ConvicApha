@@ -34,7 +34,6 @@ namespace MainMode.LoadScene
                     PlayerLoadAction(Player);
                 }
             }
-            Player.AddDefaultItems(config.ItemConsumable, config.ItemArtifact);
             Player.transform.position = spawnPosition ? spawnPosition.position : Vector3.zero;
             return Player;
         }

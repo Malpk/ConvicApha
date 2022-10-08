@@ -20,6 +20,7 @@ namespace MainMode.LoadScene
         [SerializeField] protected CameraFollowing cameraFollowing;
 
         private MarkerUI _marker;
+        private PlayerConfig _config;
         private IntefaceLoader _intefaceLoader;
 
         protected Player player;
@@ -73,6 +74,7 @@ namespace MainMode.LoadScene
                 if(deadMenu)
                     deadMenu.Intializate(this);
                 await playerLoader.PlayerLaodAsync(spwanPoint, config);
+                _config = config;
                 if (LoadAction != null)
                     LoadAction();
             }
@@ -111,11 +113,12 @@ namespace MainMode.LoadScene
             if (PlayAction != null)
                 PlayAction();
             _marker.Play();
-            if (player.IsDead)
-                player.Respawn();
+            if (!player.IsPlay)
+                player.Play();
+            cameraFollowing.Play();
             holder.SetShow(_intefaceLoader.Hud);
             if (player.TryGetComponent(out IReset restart))
-                restart.Restart();
+                restart.Restart(_config);
         }
         public void BackMainMenu()
         {

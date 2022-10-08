@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MainMode
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class CrystalSheild : MonoBehaviour, IDamage
+    public class CrystalSheild : SmartItem, IDamage
     {
         [Header("Setting")]
         [SerializeField] private int _endurance;
@@ -25,11 +25,34 @@ namespace MainMode
             _collider.isTrigger = false;
             _curretEndurance = _endurance;
         }
+        private void OnEnable()
+        {
+            ShowItemAction += ShowShield;
+            HideItemAction += HideShield;
+        }
+        private void OnDisable()
+        {
+            HideItemAction -= HideShield;
+        }
         private void OnValidate()
         {
             _curretEndurance = _endurance;
         }
         public void Explosion()
+        {
+            if (IsShow)
+                HideItem();
+        }
+        private void ShowShield()
+        {
+            if (_corotine == null)
+            {
+                SetMode(true);
+                _curretEndurance = _endurance;
+                _corotine = StartCoroutine(Deactivete(_timeDestroy));
+            }
+        }
+        private void HideShield()
         {
             SetMode(false);
             _curretEndurance = 0;
@@ -40,18 +63,9 @@ namespace MainMode
             if (_curretEndurance - damage > 0 && _isDeactive)
                 _curretEndurance -= damage;
             else
-                Explosion();
+                HideShield();
         }
 
-        public bool ActiveShield()
-        {
-            if (_corotine != null)
-                return false;
-            SetMode(true);
-            _curretEndurance = _endurance;
-            _corotine = StartCoroutine(Deactivete(_timeDestroy));
-            return true;
-        }
         private void SetMode(bool mode)
         {
             _isDeactive = mode;
@@ -60,8 +74,16 @@ namespace MainMode
         }
         private IEnumerator Deactivete(float timeDeactivete)
         {
-            yield return new WaitForSeconds(timeDeactivete);
-            SetMode(false);
+            var progress = 0f;
+            while (progress < 1f && IsShow)
+            {
+                progress += Time.deltaTime / timeDeactivete;
+                yield return null;
+            }
+            Explosion();
+            _corotine = null;
         }
+
+
     }
 }

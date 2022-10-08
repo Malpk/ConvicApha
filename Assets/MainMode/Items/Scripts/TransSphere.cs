@@ -8,7 +8,15 @@ namespace MainMode.Items
         [SerializeField] private int _unitDistance;
         [SerializeField] private TransSpherePoint _point;
 
-        public override void Use()
+        private void OnEnable()
+        {
+            UseAction += Actvate;
+        }
+        private void OnDisable()
+        {
+            UseAction -= Actvate;
+        }
+        private void Actvate()
         {
             var point = Instantiate(_point.gameObject, user.transform.position, user.transform.rotation).
                 GetComponent<TransSpherePoint>();

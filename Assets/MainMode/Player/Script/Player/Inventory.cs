@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+using MainMode.LoadScene;
 using System.Collections.Generic;
 using UnityEngine;
 using MainMode.Items;
@@ -11,9 +10,9 @@ namespace MainMode
     public class Inventory : MonoBehaviour, ISender, IReset
     {
         [SerializeField] private Player _player;
-        [SerializeField] private Artifact _artifact;
+        [SerializeField] private Item _artifact;
         [SerializeField] private InventroryUI _display;
-        [SerializeField] private List<ConsumablesItem> _consumablesItem = new List<ConsumablesItem>();
+        [SerializeField] private ConsumablesItem _consumablesItem;
 
         public TypeDisplay TypeDisplay => TypeDisplay.ItemInventory;
 
@@ -22,11 +21,23 @@ namespace MainMode
             _player = GetComponent<Player>();
         }
 
-        public void Restart()
+        public void Restart(PlayerConfig config)
         {
-            _artifact = null;
-            _consumablesItem.Clear();
-            _display.Restart();
+            if (config != null)
+            {
+                _artifact = config.ItemArtifact;
+                _consumablesItem = config.ItemConsumable;
+                _artifact.SetDefoutValue();
+                _consumablesItem.SetDefoutValue();
+                _artifact.Pick(_player);
+                _consumablesItem.Pick(_player);
+            }
+            else
+            {
+                _artifact = null;
+                _consumablesItem = null;
+            }
+            UpdateInventory();
         }
         public bool AddReceiver(Receiver receiver)
         {
@@ -34,107 +45,74 @@ namespace MainMode
                 return false;
             if (receiver is InventroryUI display)
                 _display = display;
+            UpdateInventory();
             return _display;
         }
         public void AddConsumablesItem(ConsumablesItem item)
         {
             if (item != null)
             {
-                if (_consumablesItem.Count == 0)
-                {
-                    _consumablesItem.Add(item);
-
-                    item.Pick(_player);
-                }
-                else
-                    if (_consumablesItem[0].GetType() == item.GetType())
-                {
-                    _consumablesItem.Add(item);
-
-                    item.Pick(_player);
-                }
-
-                UpdateInventory();
+                item.Pick(_player);
+                _consumablesItem = item;
             }
+            UpdateInventory();
         }
 
-        public void AddArtifact(Artifact artifact)
+        public void AddArtifact(Item artifact)
         {
             if (artifact != null)
             {
-                if (artifact.IsInfinity || artifact.Count > 0)
+                if (artifact.IsShow)
                 {
                     _artifact = artifact;
                     _artifact.Pick(_player);
-
                 }
-
                 UpdateInventory();
             }
         }
 
-        public bool TryGetConsumableItem(out Item item)
+        public bool TryGetConsumableItem(out ConsumablesItem item)
         {
-            if (_consumablesItem.Count > 0)
+            item = null;
+            if (_consumablesItem)
             {
-                item = _consumablesItem[_consumablesItem.Count - 1];
-                _consumablesItem.Remove((ConsumablesItem)item);
-                UpdateInventory();
-                return true;
+                item = _consumablesItem;
+                _consumablesItem = null;
             }
-            else
-            {
-                item = null;
-                UpdateInventory();
-                return false;
-            }
+            UpdateInventory();
+            return item;
         }
 
-        public bool TryGetArtifact(out Artifact artifact)
+        public bool TryGetArtifact(out Item artifact)
         {
-            if (_artifact != null)
+            artifact = null;
+            if (_artifact)
             {
-                if (_artifact.IsInfinity)
-                {
-                    artifact = _artifact;
-                    return true;
-                }
-
                 if (_artifact.Count > 0)
-                {
                     artifact = _artifact;
-                    _artifact.Count--;
-                    UpdateInventory();
-                    return true;
-                }
                 else
-                {
-                    artifact = null;
-                    UpdateInventory();
-                    return false;
-                }
+                    _artifact = null;
             }
-            else
-            {
-                artifact = null;
-                return false;
-            }
+            UpdateInventory();
+            return artifact;
         }
 
         private void UpdateInventory()
         {
-            if (_consumablesItem.Count > 0)
-                _display.DisplayConsumablesItem(_consumablesItem[0].Sprite, _consumablesItem.Count);
+            if (_consumablesItem)
+                _display.DisplayConsumablesItem(_consumablesItem.Sprite, _consumablesItem.Count);
             else
                 _display.DisplayConsumablesItem(null);
-            if (_artifact != null)
+            if (_artifact)
             {
                 if (_artifact.IsInfinity)
                     _display.DisplayInfinity(_artifact.Sprite);
                 else if (_artifact.Count > 0)
                     _display.DisplayArtifact(_artifact.Sprite, _artifact.Count);
-                else
-                    _display.DisplayArtifact(null);
+            }
+            else
+            {
+                _display.DisplayArtifact(null);
             }
         }
 

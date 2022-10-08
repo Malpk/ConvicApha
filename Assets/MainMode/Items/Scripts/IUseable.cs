@@ -2,6 +2,6 @@
 {
     public interface IUseable
     {
-        void Use();
+        public bool Use();
     }
 }

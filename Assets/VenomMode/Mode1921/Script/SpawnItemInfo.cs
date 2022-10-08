@@ -8,7 +8,7 @@ namespace MainMode.Mode1921
     public class SpawnItemInfo 
     {
         [SerializeField] private float _spawnDistance;
-        [SerializeField] private Device _perfab;
+        [SerializeField] private DeviceV2 _perfab;
 
         private List<GameObject> _items = new List<GameObject>();
 

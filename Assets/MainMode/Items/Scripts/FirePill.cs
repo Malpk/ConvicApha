@@ -12,11 +12,18 @@ namespace MainMode.Items
             base.Awake();
             _itemEffect = GetComponent<ItemEffect>();
         }
-        public override void Use()
+        private void OnEnable()
+        {
+            UseAction += Actvate;
+        }
+        private void OnDisable()
+        {
+            UseAction -= Actvate;
+        }
+        private void Actvate()
         {
             var shield = Instantiate(_fireShield);
             shield.transform.SetParent(user.transform, false);        
-            user.ApplyEffect(_itemEffect);
             user.AddResistAttack(attackResist,resistDuration);
             Destroy(shield, _itemEffect.Duration);
         }

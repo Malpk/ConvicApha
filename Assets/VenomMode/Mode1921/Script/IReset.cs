@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using MainMode.LoadScene;
 
 namespace MainMode
 {
     public interface IReset
     {
-        public void Restart();
+        public void Restart(PlayerConfig config = null);
     }
 }

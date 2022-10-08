@@ -21,6 +21,8 @@ public sealed class MainMenu : UserInterface
     private Animator _animator;
 
     private bool _isRun = false;
+    private PlayerConfig _config = new PlayerConfig();
+
 
     public override UserInterfaceType Type => UserInterfaceType.MainMenu;
 
@@ -50,12 +52,11 @@ public sealed class MainMenu : UserInterface
     public async void CreateNewConfig()
     {
         _isRun = true;
-        var artifactTask = Addressables.InstantiateAsync(_artifactItemScroller.GetSelectItem().LoadKey).Task;
-        var consumableItemTask = Addressables.InstantiateAsync(_consumableItemScroller.GetSelectItem().LoadKey).Task;
-        await Task.WhenAll(artifactTask, consumableItemTask);
-        var config = new PlayerConfig();
-        config.SetConfig(consumableItemTask.Result, artifactTask.Result, GetPlayerType());
-        await _sceneLoader.LoadAsync(config);
+        var consubleTask = _config.SetConsumableAsync(_consumableItemScroller.GetSelectItem().LoadKey);
+        var artifactLoadTask = _config.SetArtifactAsync(_artifactItemScroller.GetSelectItem().LoadKey);
+        _config.SetPlayerType(GetPlayerType());
+        await Task.WhenAll(consubleTask, artifactLoadTask);
+        await _sceneLoader.LoadAsync(_config);
         _sceneLoader.Play();
         _backGround.enabled = false;
         if (swithchInteface)
@@ -77,6 +78,7 @@ public sealed class MainMenu : UserInterface
         _canvas.enabled = true;
         _backGround.enabled = true;
         _animator.SetBool("ShiftPanels", false);
+        _config.Restart();
     }
 
     private void HideAnimationEvent()

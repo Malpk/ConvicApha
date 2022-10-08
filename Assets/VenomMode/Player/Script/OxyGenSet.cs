@@ -51,7 +51,7 @@ namespace MainMode.Mode1921
         }
         private IEnumerator OxyGenFieldUpdate()
         {
-            while (!_player.IsDead)
+            while (_player.IsPlay)
             {
                 if (_curretAirSupply > 0)
                 {
@@ -69,7 +69,7 @@ namespace MainMode.Mode1921
         }
         private IEnumerator HitDamage()
         {
-            while (!_player.IsDead && _curretAirSupply <= 0)
+            while (_player.IsPlay && _curretAirSupply <= 0)
             {
                 var progress = 0f;
                 while (progress < 1f && _curretAirSupply <= 0)

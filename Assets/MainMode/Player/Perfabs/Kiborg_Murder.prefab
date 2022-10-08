@@ -274,10 +274,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd49758d272cb544b8cc1187d0006c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playOnStart: 1
   state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   health:
     _healthPoints: 5
-    _maxHealthPoint: 7
     _display: {fileID: 0}
   isAutoRespawnMode: 0
   respawnTime: 1
@@ -287,12 +287,12 @@ MonoBehaviour:
   _defoutResistAttack: 03000000
   _defoutResistEffect: 
   _abilityReloadTime: 1
-  _distanceAttack: 1
+  _distanceAttack: 2
   _deviceLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _reduceSpeed: 0
-  _reduceTemperatureTime: 0
+  _reduceSpeed: 0.15
+  _reduceTemperatureTime: 3
   _movementDebaf: 0.7
   _rotationDebaf: 0.7
   _bodyTemperature: 0

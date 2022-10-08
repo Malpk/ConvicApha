@@ -11,6 +11,7 @@ using MainMode.Items;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
 {
+    [SerializeField] private bool _playOnStart = true;
     [Header("Movement Setting")]
     [SerializeField] protected PlayerState state;
     [SerializeField] protected PlayerHealth health;
@@ -20,8 +21,6 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
     [SerializeField] protected float respawnTime = 1f;
     [SerializeField] protected PlayerMovement _baseMovement;
 
-
-    protected bool isDead = false;
     protected Animator animator;
     protected Rigidbody2D rigidBody;
     protected IPlayerComponent[] _component;
@@ -35,10 +34,13 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
 
     public event System.Action RespawnAction;
 
+    protected event System.Action PlayAction;
+    protected event System.Action StopAction;
+
     public int Health => health.Health;
     public bool IsUseEffect { get; protected set; } = true;
 
-    public abstract bool IsDead { get; }
+    public bool IsPlay { get; private set; } = false;
     public Vector2 Position => transform.position;
     public Quaternion Rotation => transform.rotation;
     public TypeDisplay TypeDisplay => TypeDisplay.HealthUI;
@@ -52,17 +54,52 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
         _component = GetComponents<IPlayerComponent>();
         movement = _baseMovement;
     }
-    protected virtual void Start()
+    private void Start()
     {
-        if(health.IsLoadDisplay)
-            health.Start();
+        if (_playOnStart)
+        {
+            Play();
+        }
     }
+
+    public void Play()
+    {
+        if (!IsPlay)
+        {
+            IsPlay = true;
+            transform.position = _startPosition;
+            animator.SetBool("Dead", false);
+            rigidBody.rotation = 0;
+            foreach (var component in _component)
+            {
+                component.Play();
+            }
+            if (health.IsLoadDisplay)
+            {
+                health.Intializate();
+                health.Heal(health.MaxHealth);
+            }
+            if (PlayAction != null)
+                PlayAction();
+        }
+    }
+
+    public void Stop()
+    {
+        if (IsPlay)
+        {
+            IsPlay = false;
+            if (StopAction != null)
+                StopAction();
+        }
+    }
+
     public bool AddReceiver(Receiver receiver)
     {
         if (receiver is HealthUI display)
         {
             health.SetReceiver(display);
-            health.Start();
+            health.Intializate();
             return true;
         }
         return false;
@@ -74,23 +111,8 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
     protected IEnumerator ReSpawn()
     {
         yield return new WaitForSeconds(respawnTime);
-        Respawn();
+        Play();
         respawn = null;
-    }
-
-    public virtual void Respawn()
-    {
-        isDead = false;
-        transform.position = _startPosition;
-        animator.SetBool("Dead", false);
-        foreach (var component in _component)
-        {
-            component.Play();
-        }
-        rigidBody.rotation = 0;
-        health.Heal(health.MaxHealth);
-        if (RespawnAction != null)
-            RespawnAction();
     }
     #region Add Effects
     public virtual void AddEffects(MovementEffect effect,float timeActive)
@@ -138,7 +160,7 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
     {
         SetAnimationEffect(type, true);
         var progress = 0f;
-        while (!isDead && progress <= 1f)
+        while (IsPlay && progress <= 1f)
         {
             progress += Time.deltaTime / timeActive;
             yield return null;
@@ -154,7 +176,7 @@ public abstract class Character : MonoBehaviour, IAddEffects, IDamage, ISender
     private IEnumerator ResetMovement(ITransport transport,float timeActive)
     {
         var progress = 0f;
-        while (!isDead && progress <= 1f)
+        while (IsPlay && progress <= 1f)
         {
             progress += Time.deltaTime / timeActive;
             yield return null;

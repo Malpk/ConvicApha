@@ -9,26 +9,33 @@ public class Jeff : Player
     [SerializeField] private float _delayAbillity;
 
     private Coroutine _reserHealth;
-    protected override void Start()
+
+    protected override void OnEnable()
     {
-        base.Start();
-        _reserHealth = StartCoroutine(ResertUnitHealth(_delayAbillity));
+        base.OnEnable();
+        PlayAction += PlayAbility;
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        PlayAction -= PlayAbility;
+    }
+
+    private void PlayAbility()
+    {
+        if (_reserHealth == null)
+            _reserHealth = StartCoroutine(ResertUnitHealth(_delayAbillity));
+    }
     private IEnumerator ResertUnitHealth(float delay)
     {
-        while (!isDead)
+        while (IsPlay)
         {
             yield return new WaitWhile(() => health.Health == health.MaxHealth);
             yield return new WaitForSeconds(delay);
             animator.SetTrigger("Heal");
             Heal(_healValue);
         }
-    }
-    public override void Respawn()
-    {
-        if (_reserHealth == null)
-            _reserHealth = StartCoroutine(ResertUnitHealth(_delayAbillity));
-        base.Respawn();
+        _reserHealth = null;
     }
 }

@@ -6,14 +6,34 @@ namespace MainMode.Items
     public class CrystalDust : ConsumablesItem
     {
         [SerializeField] private CrystalSheild _wallCrystalPrefab;
-        [SerializeField] private SpriteRenderer _sprite;
 
-        private CircleCollider2D _collider;
+        private CrystalSheild crystalSheild;
 
-        public override void Use()
+        private void OnEnable()
         {
-            Instantiate(_wallCrystalPrefab.gameObject,
-            user.Position + (Vector2)user.transform.up, Quaternion.identity);
+            UseAction += Actvate;
+            ResetAction += ResetWall;
+        }
+        private void OnDisable()
+        {
+            UseAction -= Actvate;
+            ResetAction -= ResetWall;
+        }
+        private void Actvate()
+        {
+            if (!crystalSheild)
+            {
+                crystalSheild = Instantiate(_wallCrystalPrefab.gameObject).GetComponent<CrystalSheild>();
+                crystalSheild.transform.parent = transform;
+            }
+            crystalSheild.ShowItem();
+            crystalSheild.transform.position = user.Position + (Vector2)user.transform.up;
+        }
+
+        private void ResetWall()
+        {
+            if (crystalSheild)
+                crystalSheild.Explosion();
         }
     }
 }

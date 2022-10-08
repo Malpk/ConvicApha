@@ -96,14 +96,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83250dc3a8e3da49a5fd73b69d73759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _count: 1
+  _isInfinity: 0
   _hideOnAwake: 1
   _typeUse: 0
   ItemSprite: {fileID: 4858452443649745831, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 2057335158860173925}
-  Count: 1
-  IsInfinity: 0
+  resistDuration: 5
+  attackResist:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
   _wallCrystalPrefab: {fileID: 2780599325777319706, guid: 779647e867d05494ab6c09a421f799ad, type: 3}
-  _sprite: {fileID: 2057335158860173925}
 --- !u!58 &2057335158860173926
 CircleCollider2D:
   m_ObjectHideFlags: 0

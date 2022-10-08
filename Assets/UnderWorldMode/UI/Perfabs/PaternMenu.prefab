@@ -216,6 +216,7 @@ MonoBehaviour:
   - _buttonName: RingMode
     _type: 7
     _buttonIcon: {fileID: -6117228987246990781, guid: dc834d4de067a2e4297379034557879a, type: 3}
+  _canvas: {fileID: 7157729357978260789}
   _switcher: {fileID: 0}
   _contentView: {fileID: 7157729359993501832}
   _startModeButton: {fileID: 7157729359216292360}
@@ -450,7 +451,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7157729359911040555}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9996362
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1055,7 +1056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000052954997}
+  m_AnchoredPosition: {x: 0, y: 0.00005309005}
   m_SizeDelta: {x: 0, y: 793.023}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7157729359993501833

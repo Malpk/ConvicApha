@@ -96,7 +96,7 @@ public class MarkerUI : MonoBehaviour
             yield return null;
             _previuslyAngle = CurretAngel;
         }
-        _marker.enabled = progress < _timeDeactivaMarker && !_player.IsDead;
+        _marker.enabled = progress < _timeDeactivaMarker && _player.IsPlay;
         yield return new WaitWhile(() =>
         {
             if (Mathf.Abs(_previuslyAngle - CurretAngel) < _minVisableOffset)
