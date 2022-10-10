@@ -38,18 +38,22 @@ namespace MainMode
 
         public void SetMode(bool mode)
         {
-            _body.enabled = mode;
             _jetAnimator.SetBool("Mode", mode);
         }
-        private void SetActivateState()
+        private void SetActivateStateAnimationEvent()
         {
-            _isActivate = true;
-            _collider.enabled = true;
+            SetState(true);
         }
-        private void SetDeactivateState()
+        private void SetDeactivateStateAnimatuinEvent()
         {
-            _isActivate = false;
-            _collider.enabled = false;
+            SetState(false);
+        }
+
+        private void SetState(bool mode)
+        {
+            _isActivate = mode;
+            _collider.enabled = mode;
+            _body.enabled = mode;
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -59,14 +63,7 @@ namespace MainMode
             if (collision.TryGetComponent(out Rigidbody2D body))
                 body.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
         }
-        //private void OnCollisionEnter2D(Collision2D collision)
-        //{
-        //    HitDamage(collision.collider);
-        //    if (collision.collider.TryGetComponent(out RobotMan man))
-        //        man.AddEffects(_effect, _attackInfo.TimeEffect);
-        //    if (collision.rigidbody)
-        //        collision.rigidbody.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
-        //}
+
         private void HitDamage(Collider2D collision)
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))

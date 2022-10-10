@@ -71,11 +71,8 @@ namespace MainMode
         }
         public void Deactivate()
         {
-#if UNITY_EDITOR
-            if (!IsActive)
-                throw new System.Exception("enemy is already deactivate");
-#endif
-            IsActive = false;
+            if (IsActive)
+                IsActive = false;
         }
         public void Explosion()
         {

@@ -9,7 +9,8 @@ namespace MainMode
     {
         [Min(1)]
         [SerializeField] private int _damage = 1;
-        
+        [SerializeField] private SpriteRenderer _laserGun;
+
         private DamageInfo _attackInfo;
         private BoxCollider2D _collider;
         private void Awake()
@@ -20,6 +21,7 @@ namespace MainMode
         public void SetMode(bool mode)
         {
             _collider.enabled = mode;
+            _laserGun.enabled = mode;
         }
         public void SetAttack(DamageInfo info)
         {
