@@ -16,19 +16,24 @@ public class Chase : StateMachineBehaviour
         agent.speed = chaseSpeed + Random.Range(0.01f, 0.3f);
         player = GameObject.FindWithTag("Player").transform;
         time = 0;
+        float distance = Vector2.Distance(animator.transform.position, player.position);
+        if (distance < startAttackDistance && RayToPlayer(animator))
+        {
+            animator.SetBool("Attack", true);
+        }
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        time += Time.deltaTime;
-        agent.SetDestination(player.position);
         float distance = Vector2.Distance(animator.transform.position, player.position);
-        
         if (distance < startAttackDistance && RayToPlayer(animator))
         {
             animator.SetBool("Attack", true);
         }
         
+        time += Time.deltaTime;
+        agent.SetDestination(player.position);
+
         if (!RayToPlayer(animator) && time > 1)
         {
             animator.SetBool("Patrul", true);

@@ -61,9 +61,12 @@ public class JumperPatrul : StateMachineBehaviour
 
     private void SetDistancion()
     {
-        Transform point = points[Random.Range(0, points.Count)];
-        agent.SetDestination(point.position);
-        currentPoint = point;
+        if (agent.isOnNavMesh)
+        {
+            Transform point = points[Random.Range(0, points.Count)];
+            agent.SetDestination(point.position);
+            currentPoint = point;
+        }
     }
     
     private bool RayToPlayer(Animator animator)
