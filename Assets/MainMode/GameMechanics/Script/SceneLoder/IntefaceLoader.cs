@@ -1,85 +1,67 @@
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
 using MainMode.GameInteface;
+using UnityEngine;
 
 namespace MainMode.LoadScene
 {
-    public class IntefaceLoader : MonoBehaviour, ILoader
+    public class IntefaceLoader : MonoBehaviour
     {
         [Header("General Setting")]
-        [SerializeField] private bool _playOnAwake;
         [SerializeField] private UserInterfaceType _startInterface;
         [Header("Requred Perfab")]
-        [AssetReferenceUILabelRestriction("userInterface")]
-        [SerializeField] private AssetReferenceGameObject[] _interfacesPerfab;
+        [SerializeField] private Receiver[] _reciverPerfabs;
+        [SerializeField] private UserInterface[] _userInterfacePerfab;
 
-        public bool IsLoad { get; private set; }
-        public HUDInteface Hud { get; private set; }
-        public DeadMenu DeadMenu { get; private set; }
-        public MarkerUI Marker { get; private set; }
         public InterfaceSwitcher Holder { get; private set; }
+        public HUDInteface HUD { get; private set; }
 
-        private async void Awake()
-        {
-            if (_playOnAwake)
-               await LoadAsync();
-        }
         #region Load Interface
-        public async Task LoadAsync()
+        public InterfaceSwitcher LoadInteface()
         {
-            if (!IsLoad)
-            {
-                IsLoad = true;
-                var tasks = new List<Task<GameObject>>();
-                Holder = new GameObject("UserInterface").AddComponent<InterfaceSwitcher>();
-                Holder.transform.position = Vector3.zero;
-                foreach (var perfab in _interfacesPerfab)
-                {
-                    tasks.Add(perfab.InstantiateAsync().Task);
-                }
-                await Task.WhenAll(tasks);
-                Holder.Intializate(GetIntefaces(tasks, Holder.transform), _startInterface);
-                Hud = Holder.GetComponentInChildren<HUDInteface>();
-                DeadMenu = Holder.GetComponentInChildren<DeadMenu>();
-                Marker = Hud.GetComponentInChildren<MarkerUI>();
-            }
+            Holder = new GameObject("UserInterface").AddComponent<InterfaceSwitcher>();
+            Holder.Intializate(GetIntefaces(Holder.transform), _startInterface);
+            HUD = Holder.GetComponentInChildren<HUDInteface>();
+            return Holder;
         }
 
-        public void Unload()
-        {
-            if (IsLoad)
-            {
-                IsLoad = false;
-                var interfaces = Holder.GetComponentsInChildren<UserInterface>();
-                foreach (var unload in interfaces)
-                {
-                    Addressables.ReleaseInstance(unload.gameObject);
-                }
-                Destroy(Holder.gameObject);
-            }
-        }
         public void Intializate(Player player)
         {
             var senders = player.GetComponents<ISender>();
-            for (int i = 0; i < senders.Length; i++)
+            if (HUD)
             {
-                Hud.GetReceiver(senders[i]);
+                for (int i = 0; i < senders.Length; i++)
+                {
+                    if (!HUD.GetReceiver(senders[i]))
+                    {
+                        if (GetReceiverPerfab(senders[i].TypeDisplay, out Receiver perfab))
+                            senders[i].AddReceiver(HUD.CreateReceiver(perfab));
+                    }
+                }
+                Holder.SetShow(HUD);
             }
         }
-        private UserInterface[] GetIntefaces(List<Task<GameObject>> tasks, Transform holder)
+        private UserInterface[] GetIntefaces(Transform holder)
         {
             var list = new List<UserInterface>();
-            foreach (var task in tasks)
+            foreach (var perfab in _userInterfacePerfab)
             {
-                if (task.Result.TryGetComponent(out UserInterface ui))
-                {
-                    list.Add(ui);
-                    ui.transform.parent = holder;
-                }
+                list.Add(Instantiate(perfab.gameObject, holder).GetComponent<UserInterface>());
             }
             return list.ToArray();
+        }
+        protected bool GetReceiverPerfab(TypeDisplay display, out Receiver perfab)
+        {
+            foreach (var receiver in _reciverPerfabs)
+            {
+                if (receiver.DisplayType == display)
+                {
+                    perfab = receiver;
+                    return true;
+                }
+            }
+            perfab = null;
+            return false;
         }
         #endregion
     }
