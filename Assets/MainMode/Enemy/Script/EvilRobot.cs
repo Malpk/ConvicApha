@@ -57,13 +57,14 @@ namespace MainMode
         public void Activate()
         {
 #if UNITY_EDITOR
-            if (IsActive)
-                throw new System.Exception("enemy is already activate");
-            else if (!IsShow)
+             if (!IsShow)
                 throw new System.Exception("you can't activate an object while it's hidden");
 #endif
-            IsActive = true;
-            _health = _startHealth;
+            if (!IsActive)
+            {
+                IsActive = true;
+                _health = _startHealth;
+            }
         }
         public void SetTarget(Player target)
         {

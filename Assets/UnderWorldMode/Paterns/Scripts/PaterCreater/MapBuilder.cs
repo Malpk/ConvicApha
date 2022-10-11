@@ -11,10 +11,11 @@ namespace Underworld
         [Min(1)]
         [SerializeField] protected int mapSize = 1;
         [SerializeField] protected Vector2 unitSize;
-
+        [Header("Reference")]
+        [SerializeField] private Term _perfab;
         public Vector2 MapSize => unitSize * mapSize;
-        public Point[,] Points { get; private set; } = null;
-        public List<Point> PointsList { get; private set; } = new List<Point>();
+        public Term[,] Terms { get; private set; }
+        public List<Point> Points { get; private set; } = new List<Point>();
 
         private void Awake()
         {
@@ -24,33 +25,33 @@ namespace Underworld
 
         public bool Intializate(Transform parent = null)
         {
-            if (Points != null)
-                return false;
-            FormattingData();
-            Points = CreateMap();
-            foreach (var point in Points)
+            if (Terms == null)
             {
-                PointsList.Add(point);
+                FormattingData();
+                Terms = CreateMap();
+                return true;
             }
-            return true;
+            return false;
         }
         public void ClearMap()
         {
             foreach (var point in Points)
             {
-                point.ResetPoint(true);
+                point.Delete();
             }
         }
-        public Transform GetHolder(string name)
+        public Transform GetHolder()
         {
             var holder = new GameObject("PointHolder").transform;
             holder.parent = transform.parent;
             holder.localPosition = Vector2.zero;
             return holder;
         }
-        private Point[,] CreateMap()
+        private Term[,] CreateMap()
         {
-            var points = new Point[mapSize, mapSize];
+            var holder = new GameObject("Terms").transform;
+            holder.transform.parent = transform;
+            var terms = new Term[mapSize, mapSize];
             var sideSize = mapSize % 2 == 0 ? mapSize  : mapSize - 1;
             var start = new Vector2(unitSize.x / 2 - unitSize.x * sideSize/2 ,
                 -unitSize.y / 2 + unitSize.y * sideSize / 2);
@@ -58,10 +59,14 @@ namespace Underworld
             {
                 for (int j = 0; j < sideSize; j++)
                 {
-                    points[i, j] = new Point(start + new Vector2(unitSize.x * j, -unitSize.y * i));
+                    var position = start + new Vector2(unitSize.x * j, -unitSize.y * i);
+                    Points.Add(new Point(position));
+                    terms[i, j] = Instantiate(_perfab.gameObject).GetComponent<Term>();
+                    terms[i, j].transform.parent = holder;
+                    terms[i, j].transform.localPosition = position;
                 }
             }
-            return points;
+            return terms;
         }
         private void FormattingData()
         {

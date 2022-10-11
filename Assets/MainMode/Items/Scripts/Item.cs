@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode.Items
@@ -11,7 +9,7 @@ namespace MainMode.Items
         [Min(1)]
         [SerializeField] private int _count = 1;
         [SerializeField] private bool _isInfinity;
-        [SerializeField] private bool _hideOnAwake;
+        [SerializeField] private bool _showOnStart;
         [SerializeField] private ItemUseType _typeUse;
         [Header("Reference")]
         [SerializeField] protected Sprite ItemSprite;
@@ -34,20 +32,23 @@ namespace MainMode.Items
         {
             _collider = GetComponent<Collider2D>(); 
             _collider.isTrigger = true;
-            if (_hideOnAwake)
-                SetMode(false);
-            else
-                ShowItem();
+            Count = _count;
+            SetMode(false);
         }
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             ShowItemAction +=() => SetMode(true);
             HideItemAction += () => SetMode(false);
         }
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             ShowItemAction -= () => SetMode(true);
             HideItemAction -= () => SetMode(false);
+        }
+        private void Start()
+        {
+            if (_showOnStart)
+                ShowItem();
         }
         public void Pick(Player player)
         {
@@ -66,7 +67,7 @@ namespace MainMode.Items
             }
             return Count > 0;
         }
-        public void SetDefoutValue()
+        public void Reset()
         {
             Count = _count;
             if (ResetAction != null)

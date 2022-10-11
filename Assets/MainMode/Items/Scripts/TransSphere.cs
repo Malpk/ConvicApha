@@ -8,12 +8,14 @@ namespace MainMode.Items
         [SerializeField] private int _unitDistance;
         [SerializeField] private TransSpherePoint _point;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             UseAction += Actvate;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             UseAction -= Actvate;
         }
         private void Actvate()

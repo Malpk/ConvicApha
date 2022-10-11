@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using UnityEngine.AddressableAssets;
 
 [System.Serializable]
 public class PoolItem
@@ -15,10 +12,7 @@ public class PoolItem
     [Min(1f)]
     [SerializeField] private float _spawnProbility = 1f;
     [Header("Referemce")]
-    [AssetReferenceUILabelRestriction("device")]
-    [SerializeField] private AssetReferenceGameObject _perfabAsset;
-
-    private SmartItem _perfab;
+    [SerializeField] private SmartItem _perfab;
 
     private List<SmartItem> _pool = new List<SmartItem>();
     private List<SmartItem> _poolActive = new List<SmartItem>();
@@ -28,26 +22,6 @@ public class PoolItem
     public bool IsAcces => _poolActive.Count < _maxCount || _isInfinity;
     public float SpawnProbility => GetProbility();
 
-    public async Task LoadAsset()
-    {
-        var load = _perfabAsset.LoadAssetAsync().Task;
-        await load;
-        try
-        {
-            if (!load.Result.TryGetComponent(out SmartItem item))
-                throw new System.NullReferenceException("GameObject is not SpawnItem component");
-            _perfab = item;
-        }
-        catch (System.Exception ex)
-        {
-            throw ex;
-        }
-    }
-    public void UnLaodAsset()
-    {
-        _perfab = null;
-        _perfabAsset.ReleaseAsset();
-    }
     public void ClearPool()
     {
         while (_pool.Count > 0)

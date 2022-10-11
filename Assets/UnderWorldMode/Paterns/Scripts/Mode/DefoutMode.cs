@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
 
 namespace Underworld
 {
@@ -19,7 +17,7 @@ namespace Underworld
         [SerializeField] private MapBuilder _builder;
 
 
-        private Point[,] _map;
+        private List<Point> _map;
         private Coroutine _startMode;
 
         private List<AutoTerm> _poolActive = new List<AutoTerm>();
@@ -27,7 +25,6 @@ namespace Underworld
 
         public bool IsActive => _startMode != null;
 
-        public override bool IsReady => _builder && _player && _termPerfab;
 
         private void Start()
         {
@@ -51,6 +48,7 @@ namespace Underworld
         {
             _builder = builder;
             _player = player;
+            _map = _builder.Points;
         }
 
         public override bool Activate()
@@ -61,16 +59,11 @@ namespace Underworld
                 _startMode = StartCoroutine(Spawn());
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private IEnumerator Spawn()
         {
-            yield return new WaitWhile(() => !IsReady);
-            _map = _builder.Points;
             float progress = 0;
             while (progress < 1f && State != ModeState.Stop)
             {
@@ -88,6 +81,7 @@ namespace Underworld
             ClearPool(_poolDeactive);
             yield return ClearActivePool();
             _startMode = null;
+            _builder.ClearMap();
             State = ModeState.Stop;
         }
 
@@ -131,14 +125,11 @@ namespace Underworld
         {
             point = null;
             var freePoints = new List<Point>();
-            for (int i = 0; i < _map.GetLength(0); i++)
+            foreach (var map in _map)
             {
-                for (int j = 0; j < _map.GetLength(1); j++)
+                if (!map.IsBusy && Vector2.Distance(map.Position, target.Position) <= spawnDistance)
                 {
-                    if (!_map[i, j].IsBusy && Vector2.Distance(_map[i,j].Position, target.Position) <= spawnDistance)
-                    {
-                        freePoints.Add(_map[i, j]);
-                    }
+                    freePoints.Add(map);
                 }
             }
             if (freePoints.Count > 0)

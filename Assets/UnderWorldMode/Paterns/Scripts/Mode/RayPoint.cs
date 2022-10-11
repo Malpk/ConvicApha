@@ -31,35 +31,34 @@ namespace Underworld
         }
         public void Activate()
         {
-#if UNITY_EDITOR
-            if (IsActive)
-                throw new System.Exception("Ray is already activation");
-#endif
-            IsActive = true;
-            ClearFromCenterPoints();
-            for (int i = 0; i < _terms.Count; i++)
-            {
-                if (!_terms[i].IsDamageMode)
-                    _terms[i].Activate(FireState.Start);
-            }
-        }
-        public void Deactivate(out Term endTerm)
-        {
-#if UNITY_EDITOR
             if (!IsActive)
-                throw new System.Exception("Ray is already Deactivation");
-#endif
-            Debug.Log("deactivate");
-            IsActive = false;
-            for (int i = 0; i < _terms.Count; i++)
             {
-                if (_terms[i].IsShow)
+                IsActive = true;
+                ClearFromCenterPoints();
+                for (int i = 0; i < _terms.Count; i++)
                 {
-                    _terms[i].Deactivate(false);
-                    _terms[i].HideItem();
+                    if (!_terms[i].IsDamageMode)
+                        _terms[i].Activate(FireState.Start);
                 }
             }
-            endTerm = _terms[_terms.Count - 1];
+        }
+        public List<Term> Deactivate()
+        {
+            var terms = new List<Term>();
+            if (IsActive)
+            {
+                IsActive = false;
+                for (int i = 0; i < _terms.Count; i++)
+                {
+                    if (_terms[i].IsShow)
+                    {
+                        _terms[i].Deactivate(false);
+                        _terms[i].HideItem();
+                        terms.Add(_terms[i]);
+                    }
+                }
+            }
+            return terms;
         }
         public void Pause()
         {

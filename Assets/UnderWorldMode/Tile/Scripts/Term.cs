@@ -48,9 +48,6 @@ namespace Underworld
         }
         private void HideTerm()
         {
-#if UNITY_EDITOR
-            CheakHideItem();
-#endif
             DisplayTerm(false);
         }
         #endregion
@@ -58,15 +55,15 @@ namespace Underworld
 
         public void Activate(FireState firestate = FireState.Start)
         {
-#if UNITY_EDITOR
-            CheakOnActive();
-#endif
-            _isActive = true;
-            SetMode(true);
-            State = DeviceStateWork.Play;
-            _termFire.Activate(firestate);
-            if (_target != null)
-                _target.Explosion();
+            if (!_isActive)
+            {
+                _isActive = true;
+                SetMode(true);
+                State = DeviceStateWork.Play;
+                _termFire.Activate(firestate);
+                if (_target != null)
+                    _target.Explosion();
+            }
         }
 
         public void Deactivate(bool waitAnimation = true)
@@ -157,19 +154,5 @@ namespace Underworld
             }
         }
 
-#if UNITY_EDITOR
-        private void CheakOnActive()
-        {
-             if (_isActive)
-                throw new System.Exception("Term is already activation");
-        }
-        private void CheakHideItem()
-        {
-            if (_taskDeactivate != null)
-                throw new System.Exception("Deañtication has already started");
-            else if (IsDamageMode)
-                throw new System.Exception("You cannot hide an activated object");
-        }
-#endif
     }
 }

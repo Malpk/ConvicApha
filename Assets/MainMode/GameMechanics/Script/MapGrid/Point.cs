@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MainMode.Items;
 
 public class Point
 {
@@ -24,9 +23,9 @@ public class Point
         item.SetPosition(Position);
         _item = item;
     }
-    public void ResetPoint(bool destroy = false)
+    public void Delete()
     {
-        if (destroy && _item)
+        if(_item)
             MonoBehaviour.Destroy(_item.gameObject);
         _item = null;
     }

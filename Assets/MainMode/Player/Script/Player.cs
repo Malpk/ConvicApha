@@ -153,15 +153,17 @@ public class Player : Character, IResist
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPickable item))
+        if (collision.TryGetComponent(out IPickable itemUse))
         {
-            if (item is ConsumablesItem)
+            if (itemUse is ConsumablesItem consumablesItem)
             {
-                _inventory.AddConsumablesItem(item as ConsumablesItem);
+                consumablesItem.Pick(this);
+                _inventory.AddConsumablesItem(consumablesItem);
             }
-            if (item is Item)
+            else if (itemUse is Item item)
             {
-                _inventory.AddArtifact(item as Item);
+                item.Pick(this);
+                _inventory.AddArtifact(itemUse as Item);
             }
         }
         if (collision.TryGetComponent(out IItemInteractive interactive))

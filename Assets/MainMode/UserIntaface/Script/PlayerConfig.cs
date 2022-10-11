@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using MainMode.Items;
-using System.Threading.Tasks;
-using UnityEngine.AddressableAssets;
+using MainMode.GameInteface;
 
 namespace MainMode.LoadScene
 {
@@ -12,50 +11,26 @@ namespace MainMode.LoadScene
         [SerializeField] private Item _artifact;
         [SerializeField] private ConsumablesItem _itemConsumable;
 
-        private string _artifactLoad = "";
-        private string _consumableItemLoad = "";
-
         public PlayerType Type => _type;
         public Item ItemArtifact => _artifact;
         public ConsumablesItem ItemConsumable => _itemConsumable;
 
-        public void SetPlayerType(PlayerType player)
+        public void SetPlayerType(PlayerType type)
         {
-            _type = player;
+            _type = type;
         }
 
-        public async Task SetArtifactAsync (string itemArtifact)
+        public void SetArtifactAsync(ScrollItem itemArtifact)
         {
-            if (itemArtifact != _artifactLoad)
-            { 
-                _artifactLoad = itemArtifact;
-                var taskArtifact = Addressables.InstantiateAsync(itemArtifact).Task;
-                await taskArtifact;
-                if(_artifact)
-                    MonoBehaviour.Destroy(_artifact.gameObject);
-                _artifact = taskArtifact.Result.GetComponent<Item>();
-            }
+            _artifact = itemArtifact.Create<Item>();
+            _artifact.Reset();
         }
-        public async Task SetConsumableAsync(string itemConsumable)
+        public void SetConsumableAsync(ScrollItem itemConsumable)
         {
-            if (itemConsumable != _consumableItemLoad)
-            {
-                _consumableItemLoad = itemConsumable;
-                var taskConsumable = Addressables.InstantiateAsync(itemConsumable).Task;
-                await taskConsumable;
-                if(_itemConsumable)
-                    MonoBehaviour.Destroy(_itemConsumable.gameObject);
-                _itemConsumable = taskConsumable.Result.GetComponent<ConsumablesItem>();
-            }
+            _itemConsumable = itemConsumable.Create<ConsumablesItem>();
+            _itemConsumable.Reset();
         }
 
-        public void Restart()
-        {
-            if (_itemConsumable)
-                _itemConsumable.SetDefoutValue();
-            if (_artifact)
-                _artifact.SetDefoutValue();
-        }
     }
 }
 

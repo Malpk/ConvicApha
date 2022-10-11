@@ -412,6 +412,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 4329172616640992712, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _reciverPerfabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329172616640992712, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _reciverPerfabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 5246592016933632915, guid: 048cd5a01b93885449e1ebf01b8bfe1d, type: 3}
+    - target: {fileID: 4329172616640992712, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _reciverPerfabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 668942915446906196, guid: 106a4e8b9e40f9449b170d79ebee88f0, type: 3}
+    - target: {fileID: 4329172616640992712, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _reciverPerfabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 3989325022343667299, guid: 559d567f1a2473c46a4fdcdbca7547a3, type: 3}
+    - target: {fileID: 4329172616640992712, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _userInterfacePerfab.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329172616640992712, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _userInterfacePerfab.Array.data[0]
+      value: 
+      objectReference: {fileID: -6920262893417780073, guid: 52a9e770155cdb149842b84b8c9857aa, type: 3}
+    - target: {fileID: 4329172616640992712, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _userInterfacePerfab.Array.data[1]
+      value: 
+      objectReference: {fileID: 6138426382758569247, guid: 2b9ce0354bf052b4ba15036c66973fd8, type: 3}
+    - target: {fileID: 4329172616640992713, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
+      propertyPath: _perfabAndroidController
+      value: 
+      objectReference: {fileID: 4461776345514264974, guid: 9c884674542b64b4685544b59d331be5, type: 3}
     - target: {fileID: 4329172616640992714, guid: dfc2d9060c88dfa4089bb11ed59cb2d1, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -665,6 +697,10 @@ PrefabInstance:
       propertyPath: _builder
       value: 
       objectReference: {fileID: 336707109628682434}
+    - target: {fileID: 4741605475358712007, guid: 1c9bc42890edf7e4293c75dfd7d7bad4, type: 3}
+      propertyPath: _perfab
+      value: 
+      objectReference: {fileID: 2755220189578518561, guid: 513635374147d0b4f90e0345108879ea, type: 3}
     - target: {fileID: 4741605475358712007, guid: 1c9bc42890edf7e4293c75dfd7d7bad4, type: 3}
       propertyPath: playOnAwake
       value: 1

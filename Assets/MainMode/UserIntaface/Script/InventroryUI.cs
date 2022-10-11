@@ -13,17 +13,13 @@ namespace MainMode.GameInteface
 
         public void DisplayConsumablesItem(Sprite itemIcon, int count = 0)
         {
-            ShowObject(itemIcon, count, _item);
+            _item.Display(itemIcon, count);
         }
         public void DisplayArtifact(Sprite itemIcon, int count = 0)
         {
-            ShowObject(itemIcon, count, _artifact);
+            _artifact.Display(itemIcon, count);
         }
 
-        private void ShowObject(Sprite itemIcon,int count, InventoryView view)
-        {
-            view.Display(itemIcon, count);
-        }
         public void DisplayInfinity(Sprite itemIcon)
         {
             _artifact.DisplayInfinity(itemIcon);

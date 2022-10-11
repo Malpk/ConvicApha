@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using MainMode.Effects;
 
 namespace MainMode.Items
 {
@@ -10,12 +7,14 @@ namespace MainMode.Items
         [SerializeField] private float _timeActive;
         [SerializeField] private AirJet perfab;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             UseAction += Actvate;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             UseAction -= Actvate;
         }
         private void Actvate()

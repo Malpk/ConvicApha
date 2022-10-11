@@ -42,10 +42,6 @@ namespace MainMode.Mode1921
             _oxySet = holder.GetComponentInChildren<OxyGenSet>();
             _toolSet = holder.GetComponentInChildren<ToolSet>();
         }
-        private void RestartVenomMode()
-        {
-            _mode.Restart();
-        }
         private void PlayVenomMode()
         {
             _mode.Play();

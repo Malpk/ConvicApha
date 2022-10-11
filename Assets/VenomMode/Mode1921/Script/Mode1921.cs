@@ -53,7 +53,10 @@ namespace MainMode.Mode1921
             if (!IsPlay)
             {
                 IsPlay = true;
-                StartCoroutine(PlayToReady());
+                foreach (var spawner in _spawners)
+                {
+                    spawner.Play();
+                }
             }
         }
         public void Stop()
@@ -72,23 +75,6 @@ namespace MainMode.Mode1921
             foreach (var spawner in _spawners)
             {
                 spawner.Replay();
-            }
-        }
-
-        private IEnumerator PlayToReady()
-        {
-            yield return new WaitWhile(() =>
-            {
-                foreach (var spawner in _spawners)
-                {
-                    if (!spawner.IsRedy)
-                        return true;
-                }
-                return false;
-            });
-            foreach (var spawner in _spawners)
-            {
-                spawner.Play();
             }
         }
 

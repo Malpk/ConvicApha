@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace MainMode
 {
@@ -14,32 +13,16 @@ namespace MainMode
         [Header("Reference")]
         [SerializeField] private Player _target;
         [SerializeField] private MapGrid _mapGrid;
+        [SerializeField] private EvilRobot _evilBot;
 
         private bool _isPlay;
         private bool _isPause;
-        private string _evilBotKeyLoad = "EvilBot_MainMode";
-        private EvilRobot _perfab;
-        private EvilRobot _evilBot;
+      
         public bool IsReady { private set; get; }
 
-        private async void OnEnable()
-        {
-            var task = Addressables.LoadAssetAsync<GameObject>(_evilBotKeyLoad).Task;
-            await task;
-            if (task.Result.TryGetComponent(out EvilRobot bot))
-                _perfab = bot;
-            else
-                throw new System.NullReferenceException();
-            IsReady = true;
-        }
-        private void OnDisable()
-        {
-            Addressables.Release<GameObject>(_perfab.gameObject);
-        }
         public void SetPlayer(Player target)
         {
             _target = target;
-           
         }
         public void SetMapGrid(MapGrid mapGrid)
         {
@@ -80,15 +63,13 @@ namespace MainMode
         }
         private IEnumerator Work()
         {
-            var bot = SpawnBot();
-            yield return null;
             while (_isPlay)
             {
                 ActivateBot();
                 yield return new WaitWhile(() => _evilBot.IsActive && _isPlay);
                 yield return WaitTime(_spawnDelay);
             }
-            Destroy(bot.gameObject);
+            Stop();
         }
 
         private IEnumerator WaitTime(float timeActive)
@@ -101,16 +82,9 @@ namespace MainMode
                 yield return null;
             }
         }
-
-        private EvilRobot SpawnBot()
-        {
-            _evilBot = Instantiate(_perfab.gameObject, Vector3.zero,
-                Quaternion.Euler(Vector3.zero)).GetComponent<EvilRobot>();
-            _evilBot.SetTarget(_target);
-            return _evilBot;
-        }
         private void ActivateBot()
         {
+            _evilBot.SetTarget(_target);
             if (_mapGrid.GetFreePoints(out List<Point> points, _spawnDistance.x, _spawnDistance.y))
             {
                 _evilBot.transform.position = points[Random.Range(0, points.Count)].Position;

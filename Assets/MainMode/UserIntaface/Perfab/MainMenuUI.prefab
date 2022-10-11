@@ -726,7 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvas: {fileID: 3423585140850362372}
   _backGround: {fileID: 3047989172132396615}
-  _player: {fileID: 6313494797063571723}
+  _videoPlayer: {fileID: 6313494797063571723}
   _sceneLoader: {fileID: 0}
   _characterScroller: {fileID: 6671422107037935721}
   _artifactItemScroller: {fileID: 7054730913504191838}
@@ -1030,7 +1030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2244692131871277890, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.15638745
+      value: -0.15638733
       objectReference: {fileID: 0}
     - target: {fileID: 4102680359537718584, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1125,6 +1125,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
+      propertyPath: _maxXOffset
+      value: 295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _speedOffset
       value: 10
       objectReference: {fileID: 0}
@@ -1143,11 +1147,11 @@ PrefabInstance:
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _scrollItems.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 8358944eb845bc24bb70f3af3f1d0823, type: 2}
+      objectReference: {fileID: 11400000, guid: e7c655facbc49e944bfd87d5f7d1b11f, type: 2}
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _scrollItems.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: e7c655facbc49e944bfd87d5f7d1b11f, type: 2}
+      objectReference: {fileID: 11400000, guid: 8358944eb845bc24bb70f3af3f1d0823, type: 2}
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _scrollItems.Array.data[4]
       value: 
@@ -1300,15 +1304,15 @@ PrefabInstance:
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _scrollItems.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 0cfe671041eceac42815b50ac151cf9b, type: 2}
+      objectReference: {fileID: 11400000, guid: 83877c965d69eee409656923ec523195, type: 2}
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _scrollItems.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 5854403c6ddec014dae35224cc6af252, type: 2}
+      objectReference: {fileID: 11400000, guid: 0cfe671041eceac42815b50ac151cf9b, type: 2}
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _scrollItems.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 83877c965d69eee409656923ec523195, type: 2}
+      objectReference: {fileID: 11400000, guid: 5854403c6ddec014dae35224cc6af252, type: 2}
     - target: {fileID: 7054730912729592884, guid: bea4a7824daef804789f731618d7e4df, type: 3}
       propertyPath: _scrollItems.Array.data[3]
       value: 

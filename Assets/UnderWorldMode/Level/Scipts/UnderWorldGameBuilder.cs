@@ -87,11 +87,8 @@ namespace Underworld
         }
         private IEnumerator LaucnhPatern(PaternConfig config)
         {
-            var task = _useDefoutSetting ?
-                _switchPatern.ActivateModeAsync(config.TypeMode) : 
-                _switchPatern.ActivateModeAsync(config.TypeMode, config);
-            yield return new WaitWhile(() => task.IsCompleted && IsPlay);
-            yield return new WaitWhile(() => !_switchPatern.IsReady);
+            _switchPatern.ActivateMode(config.TypeMode);
+            yield return new WaitWhile(() => !_switchPatern.IsReady && IsPlay);
         }
         private PaternSequnce GetSequence(PaternConfig previus)
         {

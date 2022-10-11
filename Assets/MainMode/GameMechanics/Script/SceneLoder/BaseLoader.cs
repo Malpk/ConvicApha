@@ -1,9 +1,6 @@
+using System;
 using UnityEngine;
-using PlayerComponent;
 using MainMode.GameInteface;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using UnityEngine.AddressableAssets;
 
 namespace MainMode.LoadScene
 {
@@ -28,11 +25,11 @@ namespace MainMode.LoadScene
         protected PlayerLoader playerLoader;
         protected InterfaceSwitcher holder;
 
-        protected event System.Action LoadAction;
-        protected event System.Action UnloadAction;
-        protected event System.Action PlayAction;
-        protected event System.Action StopGameAction;
-        protected event System.Action BackMainMenuAction;
+        protected event Action LoadAction;
+        protected event Action UnloadAction;
+        protected event Action PlayAction;
+        protected event Action StopGameAction;
+        protected event Action BackMainMenuAction;
 
         public bool IsReadyLoad { get; private set; }
 
@@ -54,37 +51,27 @@ namespace MainMode.LoadScene
             playerLoader.PlayerLoadAction -= Intializate;
         }
 
-        private async void Start()
+        private void Start()
         {
             if (playOnStart)
-            {
-                await LoadAsync(choosePlayer);
-            }
+                Load(choosePlayer);
         }
         #region LaodScene
-        public async Task LoadAsync(PlayerConfig config)
+        public void Load(PlayerConfig config)
         {
             if (IsReadyLoad)
             {
-                if(!_intefaceLoader.IsLoad)
-                    await _intefaceLoader.LoadAsync();
-                _marker = _intefaceLoader.Marker;
+                IsReadyLoad = true;
+                _intefaceLoader.LoadInteface();
                 holder = _intefaceLoader.Holder;
+                _marker = _intefaceLoader.HUD.GetComponentInChildren<MarkerUI>();
                 deadMenu = _intefaceLoader.DeadMenu;
-                if(deadMenu)
-                    deadMenu.Intializate(this);
-                await playerLoader.PlayerLaodAsync(spwanPoint, config);
-                _config = config;
+                deadMenu.Intializate(this);
                 if (LoadAction != null)
                     LoadAction();
             }
-        }
-        public void Unload()
-        {
-            playerLoader.UnLoadPLayer();
-            if (UnloadAction != null)
-                UnloadAction();
-            player.DeadAction -= StopGame;
+            playerLoader.PlayerLoad(spwanPoint, config);
+            _config = config;
         }
         
         #endregion
@@ -116,7 +103,7 @@ namespace MainMode.LoadScene
             if (!player.IsPlay)
                 player.Play();
             cameraFollowing.Play();
-            holder.SetShow(_intefaceLoader.Hud);
+            holder.SetShow(_intefaceLoader.HUD);
             if (player.TryGetComponent(out IReset restart))
                 restart.Restart(_config);
         }

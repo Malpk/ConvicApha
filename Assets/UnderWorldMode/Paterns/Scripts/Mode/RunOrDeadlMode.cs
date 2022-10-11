@@ -44,16 +44,15 @@ namespace Underworld
         }
         private IEnumerator StartMode()
         {
-            yield return new WaitWhile(() => !IsReady);
-            var task = Task.Run(() => GetActiveTerms(_deactiveTerms));
-            yield return new WaitWhile(() => task.IsCompleted);
-            foreach (var term in task.Result)
+            yield return null;
+            var mapActive = GetActiveTerms(_deactiveTerms);
+            foreach (var term in mapActive)
             {
                 term.ShowItem();
             }
             var speed = _speedRotation * ChooseDirection();
             yield return WaitTime(_warningTime);
-            foreach (var term in task.Result)
+            foreach (var term in mapActive)
             {
                 term.Activate(FireState.Stay);
             }
@@ -92,11 +91,11 @@ namespace Underworld
         private List<Term> GetActiveTerms(List<Term> deactiveTerms)
         {
             var list = new List<Term>();
-            for (int i = 0; i < terms.Count; i++)
+            foreach (var term in terms)
             {
-                if (!deactiveTerms.Contains(terms[i]))
+                if (!deactiveTerms.Contains(term))
                 {
-                    list.Add(terms[i]);
+                    list.Add(term);
                 }
             }
             return list;

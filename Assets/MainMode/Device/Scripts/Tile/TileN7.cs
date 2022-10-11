@@ -11,7 +11,6 @@ namespace MainMode
         
         public override TrapType DeviceType => TrapType.N7;
 
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             SetScreen(collision, attackInfo);

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MainMode.Items;
 
@@ -12,13 +10,14 @@ namespace MainMode.Mode1921
 
         public int FiltrationTime => _filtrationTime;
 
-
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             UseAction += Actvate;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             UseAction -= Actvate;
         }
         public void Spawn(Vector2 position)
@@ -28,7 +27,7 @@ namespace MainMode.Mode1921
         }
         private void Actvate()
         {
-            if (user.TryGetComponent<OxyGenSet>(out OxyGenSet oxyGen))
+            if (user.TryGetComponent(out OxyGenSet oxyGen))
             {
                 oxyGen.ChangeFitre(this);
             }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode.GameInteface
@@ -8,9 +6,27 @@ namespace MainMode.GameInteface
     public class ScrollItem : ScriptableObject
     {
         [SerializeField] private Sprite _itemImage;
-        [SerializeField] private string _loadKey;
-        
-        public string LoadKey => _loadKey;
+        [SerializeField] private GameObject _perfab;
+
+        private GameObject _asset;
+
         public Sprite ItemImage => _itemImage;
+
+        public T Create<T>() where T : MonoBehaviour
+        {
+            if (_asset)
+            {
+                _asset.SetActive(true);
+                return _asset.GetComponent<T>();
+            }
+            _asset = Instantiate(_perfab);
+            return _asset.GetComponent<T>();
+        }
+
+        public void Delete()
+        {
+            _asset.SetActive(false);
+        }
+
     }
 }

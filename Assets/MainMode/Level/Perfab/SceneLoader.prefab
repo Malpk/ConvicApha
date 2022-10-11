@@ -50,12 +50,11 @@ MonoBehaviour:
   autoRestart: 0
   mainMenu: {fileID: 0}
   spwanPoint: {fileID: 712250180901146399}
+  choosePlayer:
+    _type: 0
+    _artifact: {fileID: 0}
+    _itemConsumable: {fileID: 0}
   cameraFollowing: {fileID: 0}
-  _perfabAndroidController:
-    m_AssetGUID: 9c884674542b64b4685544b59d331be5
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
   _mapGride: {fileID: 0}
   _spawner: {fileID: 0}
   _botSpawner: {fileID: 0}
@@ -77,6 +76,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abe64453c9b8cdc4596ec2613605d242, type: 2}
   - {fileID: 11400000, guid: 28bec856fe1e03440944ff4978e7c9fd, type: 2}
   - {fileID: 11400000, guid: b2dc89fc5e2073c4a876ecb63ac48c34, type: 2}
+  _perfabAndroidController: {fileID: 4461776345514264974, guid: 9c884674542b64b4685544b59d331be5, type: 3}
 --- !u!114 &712250180671689831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,30 +89,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c5d75e775da414faa807d456b0bed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnAwake: 0
   _startInterface: 0
-  _interfacesPerfab:
-  - m_AssetGUID: 52a9e770155cdb149842b84b8c9857aa
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 2b9ce0354bf052b4ba15036c66973fd8
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  _reciversAssets:
-  - m_AssetGUID: 048cd5a01b93885449e1ebf01b8bfe1d
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 559d567f1a2473c46a4fdcdbca7547a3
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  - m_AssetGUID: 106a4e8b9e40f9449b170d79ebee88f0
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  _reciverPerfabs:
+  - {fileID: 5246592016933632915, guid: 048cd5a01b93885449e1ebf01b8bfe1d, type: 3}
+  - {fileID: 668942915446906196, guid: 106a4e8b9e40f9449b170d79ebee88f0, type: 3}
+  - {fileID: 3989325022343667299, guid: 559d567f1a2473c46a4fdcdbca7547a3, type: 3}
+  _userInterfacePerfab:
+  - {fileID: 6138426382758569247, guid: 2b9ce0354bf052b4ba15036c66973fd8, type: 3}
+  - {fileID: -6920262893417780073, guid: 52a9e770155cdb149842b84b8c9857aa, type: 3}
 --- !u!1 &712250180901146396
 GameObject:
   m_ObjectHideFlags: 0

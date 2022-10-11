@@ -84,6 +84,7 @@ namespace MainMode.Mode1921
         }
         public void ChangeFitre(Filtre filltre)
         {
+            Debug.Log("ûגפ");
             _safeTime = filltre.FiltrationTime;
             _curretAirSupply = _safeTime;
         }

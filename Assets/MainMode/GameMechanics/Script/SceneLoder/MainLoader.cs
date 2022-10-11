@@ -29,12 +29,11 @@ namespace MainMode
             playerLoader.PlayerLoadAction -= IntializateAsync;
         }
 
-        private async void LoadMainMode()
+        private void LoadMainMode()
         {
             if (!_isLoad)
             {
                 _isLoad = true;
-                await _spawner.Load();
                 _mapGride.Intilizate();
                 _botSpawner.SetMapGrid(_mapGride);
             }

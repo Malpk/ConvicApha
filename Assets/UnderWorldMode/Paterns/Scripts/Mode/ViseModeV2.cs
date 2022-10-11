@@ -68,8 +68,7 @@ namespace Underworld
         {
             State = ModeState.Play;
             _countViseActive++;
-            yield return new WaitWhile(() => !IsReady);
-            vise.Intializate(termArray);
+            vise.Intializate(terms);
             var timeWarning = Random.Range(_warningTime.x, _warningTime.y);
             var timeActive = Random.Range(_activeTime.x, _activeTime.y);
             while (vise.Next())

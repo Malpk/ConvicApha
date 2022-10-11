@@ -16,12 +16,18 @@ namespace MainMode.LoadScene
         public InterfaceSwitcher Holder { get; private set; }
         public HUDInteface HUD { get; private set; }
 
+        public DeadMenu DeadMenu { get; private set; }
+
         #region Load Interface
         public InterfaceSwitcher LoadInteface()
         {
-            Holder = new GameObject("UserInterface").AddComponent<InterfaceSwitcher>();
-            Holder.Intializate(GetIntefaces(Holder.transform), _startInterface);
-            HUD = Holder.GetComponentInChildren<HUDInteface>();
+            if (!Holder)
+            {
+                Holder = new GameObject("UserInterface").AddComponent<InterfaceSwitcher>();
+                Holder.Intializate(GetIntefaces(Holder.transform), _startInterface);
+                HUD = Holder.GetComponentInChildren<HUDInteface>();
+                DeadMenu = Holder.GetComponentInChildren<DeadMenu>();
+            }
             return Holder;
         }
 

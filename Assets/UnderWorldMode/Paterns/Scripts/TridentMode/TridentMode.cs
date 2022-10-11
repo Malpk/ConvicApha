@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEngine.AddressableAssets;
 
 namespace Underworld
 {
@@ -16,13 +15,17 @@ namespace Underworld
         private Coroutine _waitComplite;
         private TridentHolder[] _holders;
 
-        public override bool IsReady => _holders != null;
         public bool IsActive => _waitComplite != null;
 
         #region Intializate
         private void Awake()
         {
             _holders = GetComponentsInChildren<TridentHolder>();
+            foreach (var holder in _holders)
+            {
+                holder.Intilizate(_config, _countPointsInHolder);
+                holder.CreatePoints();
+            }
         }
         public override void Intializate(PaternConfig config)
         {
@@ -55,8 +58,6 @@ namespace Underworld
             var activeList = new List<TridentHolder>();
             foreach (var holder in _holders)
             {
-                holder.Intilizate(_config, _countPointsInHolder);
-                holder.CreatePoints();
                 holder.Activate(workDuration);
                 activeList.Add(holder);
             }

@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Threading.Tasks;
-using UnityEngine.AddressableAssets;
 
 namespace Underworld
 {
@@ -19,11 +17,8 @@ namespace Underworld
         [SerializeField] private int _maxSizeIsland;
         [Header("Map Setting")]
         [SerializeField] private MapBuilder _mapBuilder;
-        [SerializeField] private Term _handTermPerfab;
 
         private int _mapSize;
-        private bool _isReady = false;
-        private Point[,] _map;
         private Coroutine _runMode = null;
         private List<Term> _activeTils = new List<Term>();
         private Vector2Int[] _bounds;
@@ -33,7 +28,6 @@ namespace Underworld
             Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down
         };
 
-        public override bool IsReady => _mapBuilder && _handTermPerfab && _isReady;
         public override void Intializate(PaternConfig config)
         {
             if (config is IslandModeConfig islandModeConfig) 
@@ -52,10 +46,8 @@ namespace Underworld
         public override void Intializate(MapBuilder builder, Player player)
         {
             _mapBuilder = builder;
-            _map = _mapBuilder.Points;
-            _mapSize = _map.GetLength(0);
+            _mapSize = builder.Terms.GetLength(0);
             _bounds = SetBounds(_mapSize);
-            _isReady = true;
         }
         private void Start()
         {
@@ -79,7 +71,6 @@ namespace Underworld
         #region Work Mode
         private IEnumerator RunMode()
         {
-            yield return new WaitWhile(() => !IsReady);
             _activeTils = CreateMap();
             yield return WaitTime(_warningTime);
             MapActivate();
@@ -177,31 +168,27 @@ namespace Underworld
         #region Create Map
         private List<Term> CreateMap()
         {
-            var result = new List<Term>();
             var seeds = GetSeed(GetStartPoint(_mapSize), _bounds);
             var islands = new List<Vector2Int>();
             foreach (var seed in seeds)
             {
                 islands.AddRange(CreateIsland(seed, _mapSize));
             }
-            var mapActive = GetMapActive(_map, islands).ToList();
+            var mapActive = GetMapActive(_mapBuilder.Terms, islands).ToList();
             for (int i = 0; i < mapActive.Count; i++)
             {
-                var term = Instantiate(_handTermPerfab.gameObject, transform).GetComponent<Term>();
-                mapActive[i].SetItem(term);
-                result.Add(term);
-                term.ShowItem();
+                mapActive[i].ShowItem();
             }
-            return result;
+            return mapActive;
         }
-        private IEnumerable<Point> GetMapActive(Point[,] map, IReadOnlyList<Vector2Int> islands)
+        private IEnumerable<Term> GetMapActive(Term[,] terms, IReadOnlyList<Vector2Int> islands)
         {
-            for (int i = 0; i < map.GetLength(0); i++)
+            for (int i = 0; i < terms.GetLength(0); i++)
             {
-                for (int j = 0; j < map.GetLength(1); j++)
+                for (int j = 0; j < terms.GetLength(1); j++)
                 {
                     if (!islands.Contains<Vector2Int>(new Vector2Int(i, j)))
-                        yield return map[i, j];
+                        yield return terms[i,j];
                 }
             }
         }

@@ -12,12 +12,14 @@ namespace MainMode.Items
             base.Awake();
             _itemEffect = GetComponent<ItemEffect>();
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             UseAction += Actvate;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             UseAction -= Actvate;
         }
         private void Actvate()

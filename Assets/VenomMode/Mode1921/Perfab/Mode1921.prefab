@@ -119,10 +119,11 @@ MonoBehaviour:
   _playOnStart: 0
   mapGrid: {fileID: 2672508619372180804}
   _distanceBothItems: 7
-  _toolLoadKey:
-  - Tool_1
-  - Tool_2
-  - Tool_3
+  _shieldAsset: {fileID: 5641670352953023876, guid: 5d1e489a31de95c40bca23ca82716cee, type: 3}
+  _toolsAssets:
+  - {fileID: 6843293452440120864, guid: 8ec2bb9cb6b24d948a24ffee9e42c082, type: 3}
+  - {fileID: 2567757606809758297, guid: aa4521135e6b9a144833490dd331c540, type: 3}
+  - {fileID: 8954888755046884202, guid: 02504ce246a2ea44bb876ac1bdf48022, type: 3}
   _changeTest: {fileID: 0}
 --- !u!1 &2672508620078761221
 GameObject:
@@ -168,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  mapGrid: {fileID: 2672508619372180804}
+  mapGrid: {fileID: 0}
   _maxDistanceOnTarget: 5
   _rangeTimeSpawn: {x: 3, y: 7}
   _items:
@@ -219,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  mapGrid: {fileID: 2672508619372180804}
-  _keysLoad:
-  - VenomMine
+  mapGrid: {fileID: 0}
+  _perfab:
+  - {fileID: 1742522839190908354, guid: 5a1f08e00193d0d4fa3f5012cd5e9ab3, type: 3}
   _deviceCount: {x: 35, y: 50}

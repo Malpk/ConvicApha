@@ -3,15 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using MainMode.GameInteface;
-using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
 
 public sealed class MainMenu : UserInterface
 {
     [Header("Reference")]
     [SerializeField] private Canvas _canvas;
     [SerializeField] private RawImage _backGround;
-    [SerializeField] private VideoPlayer _player;
+    [SerializeField] private VideoPlayer _videoPlayer;
     [SerializeField] private BaseLoader _sceneLoader;
     [Header("Player Config")]
     [SerializeField] private ItemScroller _characterScroller;
@@ -49,20 +47,19 @@ public sealed class MainMenu : UserInterface
         HideAction -= () => _animator.SetBool("ShiftPanels", true); 
     }
 
-    public async void CreateNewConfig()
+    public void CreateNewConfig()
     {
-        _isRun = true;
-        var consubleTask = _config.SetConsumableAsync(_consumableItemScroller.GetSelectItem().LoadKey);
-        var artifactLoadTask = _config.SetArtifactAsync(_artifactItemScroller.GetSelectItem().LoadKey);
-        _config.SetPlayerType(GetPlayerType());
-        await Task.WhenAll(consubleTask, artifactLoadTask);
-        await _sceneLoader.LoadAsync(_config);
-        _sceneLoader.Play();
-        _backGround.enabled = false;
-        if (swithchInteface)
-            swithchInteface.SetHide(this);
-        else
+        if (!_isRun)
+        {
+            _isRun = true;
+            _config.SetArtifactAsync(_artifactItemScroller.GetSelectItem());
+            _config.SetConsumableAsync(_consumableItemScroller.GetSelectItem());
+            _config.SetPlayerType(GetPlayerType());
+            _sceneLoader.Load(_config);
+            _sceneLoader.Play();
+            _backGround.enabled = false;
             Hide();
+        }
     }
 
     private PlayerType GetPlayerType()
@@ -74,17 +71,17 @@ public sealed class MainMenu : UserInterface
 
     private void ShowEvent()
     {
-        _player.Play();
+        _isRun = false;
+        _videoPlayer.Play();
         _canvas.enabled = true;
         _backGround.enabled = true;
         _animator.SetBool("ShiftPanels", false);
-        _config.Restart();
     }
 
     private void HideAnimationEvent()
     {
         _canvas.enabled = false;
         _backGround.enabled = false;
-        _player.Stop();
+        _videoPlayer.Stop();
     }
 }

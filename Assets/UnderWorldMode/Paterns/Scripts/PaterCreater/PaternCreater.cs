@@ -51,7 +51,6 @@ namespace Underworld
         private IEnumerator StartMode()
         {
             State = ModeState.Play;
-            yield return new WaitWhile(() => !IsReady);
             var firstFrame = GetFrame(_spriteAtlas, Vector2Int.zero).ToList();
             foreach (var term in firstFrame)
             {
@@ -152,7 +151,7 @@ namespace Underworld
             {
                 if (!Equale(color, _deffaout, _errorColorDefaout))
                 {
-                    term = termArray[termPosition.x, termPosition.y];
+                    term = base.terms[termPosition.x, termPosition.y];
                 }
             }
             return term;

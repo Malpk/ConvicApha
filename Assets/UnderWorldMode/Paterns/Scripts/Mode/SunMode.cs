@@ -29,6 +29,7 @@ namespace Underworld
         protected void Awake()
         {
             _rays = CreateRay(_countRay);
+            _rays.Add(_center);
         }
         public override void Intializate(PaternConfig config)
         {
@@ -58,8 +59,8 @@ namespace Underworld
         #region Work Mode
         private IEnumerator Rotate(List<RayPoint> rays)
         {
+            yield return null;
             State = ModeState.Play;
-            yield return new WaitWhile(() => !IsReady);
             _center.ShowRay();
             foreach (var ray in rays)
             {
@@ -87,7 +88,12 @@ namespace Underworld
                 yield return new WaitForSeconds(_delay);
                 progress += _delay / workDuration;
             }
-            yield return WaitHideMap();
+            var list = new List<Term>();
+            foreach (var ray in _rays)
+            {
+                list.AddRange(ray.Deactivate());
+            }
+            yield return TrakingDeactiveTerms(list);
             State = ModeState.Stop;
             _runMode = null;
         }

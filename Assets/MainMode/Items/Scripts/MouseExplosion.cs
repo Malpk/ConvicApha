@@ -7,12 +7,14 @@ namespace MainMode.Items
         [SerializeField] private float _timeDestroy;
         [SerializeField] private MouseExplosionProjectale _projectale;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             UseAction += Actvate;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             UseAction -= Actvate;
         }
         private void Actvate()

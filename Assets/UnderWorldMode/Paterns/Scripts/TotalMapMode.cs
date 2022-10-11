@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+
 
 namespace Underworld
 {
@@ -10,18 +9,19 @@ namespace Underworld
     {
         [SerializeField] protected Player player;
         [SerializeField] private MapBuilder _builder;
-        [SerializeField] private Term _handTermPerfab;
 
-        protected Term[,] termArray;
-        protected List<Term> terms = new List<Term>();
+        protected Term[,] terms;
 
-        private bool _isCreate;
-
-        public override bool IsReady => _isCreate;
+        private void Awake()
+        {
+            if (_builder)
+            {
+                terms = _builder.Terms;
+            }
+        }
 
         protected virtual void Start()
         {
-            StartCoroutine(CreateMap());
             if (playOnStart)
                 Activate();
         }
@@ -30,7 +30,7 @@ namespace Underworld
         {
             this.player = player;
             _builder = builder;
-
+            terms = _builder.Terms;
         }
         public override void Pause()
         {
@@ -58,18 +58,16 @@ namespace Underworld
         #region Deactive Term
         protected IEnumerator WaitDeactivateMap()
         {
-            for (int i = 0; i < terms.Count; i++)
+            var deactive = new List<Term>();
+            foreach (var term in terms)
             {
-                try
+                if (term.IsActive)
                 {
-                    if (terms[i].IsActive)
-                        terms[i].Deactivate(true);
-                }
-                catch
-                {
+                    term.Deactivate(true);
+                    deactive.Add(term);
                 }
             }
-            yield return TrakingDeactiveTerms(terms);
+            yield return TrakingDeactiveTerms(deactive);
         }
         protected IEnumerator TrakingDeactiveTerms(List<Term> activeTerms)
         {
@@ -82,12 +80,16 @@ namespace Underworld
         protected IEnumerator WaitHideMap()
         {
             yield return WaitDeactivateMap();
-            for (int i = 0; i < terms.Count; i++)
+            var list = new List<Term>();
+            foreach (var term in terms)
             {
-                if(terms[i].IsShow)
-                    terms[i].HideItem();
+                if (term.IsShow)
+                {
+                    term.HideItem();
+                    list.Add(term);
+                }
             }
-            yield return TrakinHideMap(terms);
+            yield return TrakinHideMap(list);
         }
         #endregion
         #region Hide Term
@@ -122,29 +124,11 @@ namespace Underworld
                 }
                 else
                 {
-                    Destroy(activeTerms[i].gameObject);
+                    activeTerms[i].HideItem();
                 }
             }
             return list;
         }
         #endregion
-        protected IEnumerator CreateMap()
-        {
-            var points = _builder.Points;
-            termArray = new Term[points.GetLength(0), points.GetLength(1)];
-            for (int i = 0; i < points.GetLength(0); i++)
-            {
-                for (int j = 0; j < points.GetLength(1); j++)
-                {
-                    var term = Instantiate(_handTermPerfab.gameObject).GetComponent<Term>();
-                    term.transform.parent = _builder.transform;
-                    termArray[i, j] = term;
-                    terms.Add(termArray[i, j]);
-                    points[i, j].SetItem(termArray[i, j]);
-                }
-                yield return null;
-            }
-            _isCreate = true;
-        }
     }
 }

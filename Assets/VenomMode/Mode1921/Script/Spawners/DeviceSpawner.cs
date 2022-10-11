@@ -6,22 +6,11 @@ namespace MainMode.Mode1921
     public class DeviceSpawner : GeneralSpawner
     {
         [Header("Spawner Setting")]
-        [SerializeField] private string[] _keysLoad;
+        [SerializeField] private SmartItem[] _perfab;
         [SerializeField] private Vector2Int _deviceCount;
 
-        private bool _isRedy;
-        private SmartItem[] _assets;
         private List<SmartItem> _devices = new List<SmartItem>();
 
-        public override bool IsRedy => _isRedy;
-
-        private async void Awake()
-        {
-            var task = LoadAssetsAsync<SmartItem>(_keysLoad);
-            await task;
-            _assets = task.Result.ToArray();
-            _isRedy = true;
-        }
         private void OnEnable()
         {
             PlayAction += CreateMap;
@@ -65,8 +54,8 @@ namespace MainMode.Mode1921
         {
             for (int i = 0; i < count; i++)
             {
-                var index = Random.Range(0, _assets.Length);
-                var device = Instantiate(_assets[index].gameObject).GetComponent<SmartItem>();
+                var index = Random.Range(0, _perfab.Length);
+                var device = Instantiate(_perfab[index].gameObject).GetComponent<SmartItem>();
                 device.transform.parent = transform;
                 mapGrid.SetItemOnMap(device);
                 _devices.Add(device);

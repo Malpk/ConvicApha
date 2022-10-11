@@ -24,36 +24,15 @@ namespace MainMode
         [SerializeField] private Player _player;
 
         private bool _isPlay = false;
-        private bool _isLoad = false;
         private MapGrid _mapGrid;
 
         private void Awake()
         {
             _mapGrid = GetComponent<MapGrid>();
         }
-
-        public async Task Load()
-        {
-            var list = new List<Task>();
-            foreach (var pool in _pools)
-            {
-                list.Add(pool.LoadAsset());
-            }
-            await Task.WhenAll(list);
-            _isLoad = true;
-        }
-
         public void Intializate(Player player)
         {
             _player = player;
-        }
-        private void UnLoad()
-        {
-            _isLoad = false;
-            foreach (var pool in _pools)
-            {
-                pool.UnLaodAsset();
-            }
         }
         public void Play()
         {
@@ -77,7 +56,6 @@ namespace MainMode
 
         private IEnumerator Spawning()
         {
-            yield return new WaitWhile(() => !_isLoad);
             var duration = 0f;
             while (_isPlay)
             {
@@ -88,7 +66,6 @@ namespace MainMode
                 if (_isPlay)
                     SpawnItem();
             }
-            
         }
 
         private void SpawnItem()

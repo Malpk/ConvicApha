@@ -13,8 +13,6 @@ namespace MainMode.Mode1921
 
         private Coroutine _run;
 
-        public override bool IsRedy => true;
-
         private void OnEnable()
         {
             PlayAction += Run;
@@ -63,10 +61,9 @@ namespace MainMode.Mode1921
                 var item = items[Random.Range(0, items.Count)].Instantiate(transform);
                 if (item != null)
                     freePoints[Random.Range(0, freePoints.Count)].SetItem(item);
+                item.ShowItem();
                 yield return new WaitForSeconds(Random.Range(_rangeTimeSpawn.x, _rangeTimeSpawn.y));
             }
         }
-
-
     }
 }

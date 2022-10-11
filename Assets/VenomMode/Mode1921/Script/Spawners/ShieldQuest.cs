@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 
 namespace MainMode.Mode1921
 {
@@ -8,31 +7,15 @@ namespace MainMode.Mode1921
     {
         [Header("Spawner Setting")]
         [SerializeField] private float _distanceBothItems;
-        [SerializeField] private string[] _toolLoadKey;
+        [SerializeField] private Shield _shieldAsset;
+        [SerializeField] private ToolRepairs[] _toolsAssets;
+        [Header("Reference")]
         [SerializeField] private ChangeTest _changeTest;
-
-        private bool _isReady;
-        private string _shieldLoadKey = "Shield1921";
-
-        private Shield _shieldAsset;
-        private ToolRepairs[] _toolsAssets;
 
         private Shield[] _shields;
         private ToolRepairs[] _tools;
 
         public System.Action ConpliteQuestAction;
-
-        public override bool IsRedy => _isReady;
-
-        private async void Awake()
-        {
-            var shieldLoadTask = LoadAssetAsync<Shield>(_shieldLoadKey);
-            var toolsLoadTask = LoadAssetsAsync<ToolRepairs>(_toolLoadKey);
-            await Task.WhenAll(shieldLoadTask, toolsLoadTask);
-            _shieldAsset = shieldLoadTask.Result;
-            _toolsAssets = toolsLoadTask.Result.ToArray();
-            _isReady = true;
-        }
 
         public void Intializate(ChangeTest chelangeTest)
         {
@@ -75,7 +58,6 @@ namespace MainMode.Mode1921
         }
         private void SetPosition()
         {
-            Debug.Log(_tools);
             SetDistribution(_tools, _distanceBothItems,
                 SetDistribution(_shields, _distanceBothItems));
         }

@@ -19,7 +19,6 @@ namespace Underworld
 
         private ModeState _previus;
 
-        public abstract bool IsReady { get; }
         public ModeState State { get; protected set; } = ModeState.Stop;
 
         public abstract void Intializate(PaternConfig config);

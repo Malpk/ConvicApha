@@ -1,17 +1,12 @@
 using UnityEngine;
 using PlayerComponent;
-using System.Threading.Tasks;
-using UnityEngine.AddressableAssets;
 
 namespace MainMode.LoadScene
 {
     public class PlayerLoader : MonoBehaviour
     {
         [SerializeField] private PlayerInfo[] _playerPerfabs;
-        [AssetReferenceUILabelRestriction("controller")]
-        [SerializeField] private AssetReferenceGameObject _perfabAndroidController;
-
-        private PlayerType _type;
+        [SerializeField] private AndroidController _perfabAndroidController;
 
         public delegate void Loading(Player player);
         public event Loading PlayerLoadAction;
@@ -19,69 +14,42 @@ namespace MainMode.LoadScene
         public Player Player { get; private set; }
         public Controller Controller { get; private set; }
 
-        public async Task<Player> PlayerLaodAsync(Transform spawnPosition, PlayerConfig config)
+        public void PlayerLoad(Transform spawnPosition, PlayerConfig config)
         {
-            if (_type != config.Type || !Player)
+            var player = GetPlayer(config.Type);
+            if (player != Player)
             {
-                _type = config.Type;
-                UnLoadPLayer();
-                var task = LoadPlayer(config.Type);
-                await task;
-                Player = task.Result.GetComponent<Player>();
-                SetController(Player);
+                if(Player)
+                    Player.gameObject.SetActive(false);
+                SetController(player);
+                Player = player;
                 if (PlayerLoadAction != null)
-                {
-                    PlayerLoadAction(Player);
-                }
+                    PlayerLoadAction(player);
             }
             Player.transform.position = spawnPosition ? spawnPosition.position : Vector3.zero;
-            return Player;
-        }
-        private async Task<Player> LoadPlayer(PlayerType playerType)
-        {
-            if (GetLoadKey(playerType, out string loadKey))
+            if (Player.TryGetComponent(out Inventory inventorySet))
             {
-                var loadPlayer = Addressables.InstantiateAsync(loadKey).Task;
-                await loadPlayer;
-                var player = loadPlayer.Result.GetComponent<Player>();
-                return player;
+                inventorySet.AddArtifact(config.ItemArtifact);
+                inventorySet.AddConsumablesItem(config.ItemConsumable);
             }
-            return null;
         }
-        public void UnLoadPLayer()
+        private Player GetPlayer(PlayerType type)
         {
-            if(Player)
-                Addressables.ReleaseInstance(Player.gameObject);
-            if (Application.platform == RuntimePlatform.Android)
-                _perfabAndroidController.ReleaseAsset();
-        }
-  
-        private bool GetLoadKey(PlayerType type, out string loadKey)
-        {
-            foreach (var player in _playerPerfabs)
+            foreach (var config in _playerPerfabs)
             {
-                if (player.Type == type)
+                if (config.Type == type)
                 {
-                    loadKey = player.LoadKey;
-                    return true;
+                    return config.Create<Player>();
                 }
             }
-            loadKey = null;
-            return false;
+            return null;
         }
         private void SetController(Player player)
         {
             switch (Application.platform)
             {
                 case RuntimePlatform.Android:
-                    if (_perfabAndroidController.Asset is GameObject perfab)
-                    {
-                        Controller = Instantiate(perfab).GetComponent<AndroidController>();
-                    }
-                    else
-                    {
-                        Controller = null;
-                    }
+                    Controller = Instantiate(_perfabAndroidController.gameObject).GetComponent<AndroidController>();
                     break;
                 default:
                     Controller = player.gameObject.AddComponent<PcController>();

@@ -80,7 +80,7 @@ namespace Underworld
         }
         private void SetActivate(ModeType type)
         {
-            _switcher.ActivateModeAsync(type);
+            _switcher.ActivateMode(type);
             Hide();
         }
         private IEnumerator WaitCompliteMode()

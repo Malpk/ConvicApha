@@ -73,7 +73,6 @@ namespace Underworld
         }
         private IEnumerator Scale(Vector3 previsiousPosition, Vector2 previsiousSize)
         {
-            yield return new WaitWhile(() => !IsReady);
             float progress = 0f;
             var target = GetOffset(_maxOffset);
             while (progress < 1f)
@@ -84,6 +83,7 @@ namespace Underworld
                 yield return null;
             }
             yield return StartCoroutine(MoveSqurt());
+            yield return WaitHideMap();
         }
         private IEnumerator MoveSqurt()
         {

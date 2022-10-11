@@ -1,12 +1,10 @@
 using System.Collections;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 namespace Underworld
 {
-    public class SwitchPatern : MonoBehaviour,IPause
+    public class SwitchPatern : MonoBehaviour, IPause
     {
         [SerializeField] private bool _playOnStart;
         [SerializeField] private ModeType _chooseMode;
@@ -16,42 +14,33 @@ namespace Underworld
         [SerializeField] private PaternLoadConfig[] _configs;
 
         private GeneralMode _curretMode;
-        private PaternLoadConfig  _curretConfig;
 
         public bool IsReady { get; private set; } = true;
         public bool IsPause { get; private set; } = false;
 
-        private async void Start()
-        {
-            if (_playOnStart)
-            {
-                 await ActivateModeAsync(_chooseMode);
-            }
-        }
-        public void Intializate( Player player)
+        public void Intializate(Player player)
         {
             _player = player;
         }
-        public async Task ActivateModeAsync(ModeType type, PaternConfig config = null)
+
+        private void Start()
+        {
+            if (_playOnStart)
+                ActivateMode(_chooseMode);
+        }
+
+        public void ActivateMode(ModeType mode)
         {
             IsReady = false;
-            _chooseMode = type;
-            var load = Load(type);
-            await load;
-            if (load.Result != null)
-            {
-                load.Result.Intializate(_builder, _player);
-                if (config)
-                    load.Result.Intializate(config);
-                load.Result.Activate();
-                StartCoroutine(WaitComplitePatern(load.Result));
-            }
+            _curretMode = GetPatern(mode);
+            _curretMode.Intializate(_builder, _player);
+            _curretMode.Activate();
+            StartCoroutine(WaitComplitePatern(_curretMode));
         }
 
         public void Deactivate()
         {
             _curretMode.Deactivate();
-            _builder.ClearMap();
         }
         public void Pause()
         {
@@ -62,16 +51,13 @@ namespace Underworld
         {
             IsPause = false;
         }
-        private async Task<GeneralMode> Load(ModeType type)
+        private GeneralMode GetPatern(ModeType type)
         {
             foreach (var config in _configs)
             {
                 if (config.TypeMode == type)
                 {
-                    _curretConfig = config;
-                    var load = config.LoadAsync();
-                    await load;
-                    var patern = load.Result;
+                    var patern = config.Create();
                     patern.transform.position = transform.position;
                     patern.transform.parent = transform;
                     return patern;
@@ -83,10 +69,7 @@ namespace Underworld
         {
             _curretMode = patern;
             yield return new WaitWhile(() => patern.State == ModeState.Play);
-            _curretConfig.UnLoad();
             IsReady = true;
         }
-
-
     }
 }

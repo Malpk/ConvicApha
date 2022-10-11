@@ -7,7 +7,7 @@ using MainMode.GameInteface;
 
 namespace MainMode
 {
-    public class Inventory : MonoBehaviour, ISender, IReset
+    public class Inventory : MonoBehaviour, ISender
     {
         [SerializeField] private Player _player;
         [SerializeField] private Item _artifact;
@@ -21,52 +21,29 @@ namespace MainMode
             _player = GetComponent<Player>();
         }
 
-        public void Restart(PlayerConfig config)
-        {
-            if (config != null)
-            {
-                _artifact = config.ItemArtifact;
-                _consumablesItem = config.ItemConsumable;
-                _artifact.SetDefoutValue();
-                _consumablesItem.SetDefoutValue();
-                _artifact.Pick(_player);
-                _consumablesItem.Pick(_player);
-            }
-            else
-            {
-                _artifact = null;
-                _consumablesItem = null;
-            }
-            UpdateInventory();
-        }
+
         public bool AddReceiver(Receiver receiver)
         {
             if (_display != null)
                 return false;
             if (receiver is InventroryUI display)
                 _display = display;
-            UpdateInventory();
             return _display;
         }
         public void AddConsumablesItem(ConsumablesItem item)
         {
-            if (item != null)
-            {
-                item.Pick(_player);
+            if (item)
+            {        
                 _consumablesItem = item;
+                UpdateInventory();
             }
-            UpdateInventory();
         }
 
         public void AddArtifact(Item artifact)
         {
-            if (artifact != null)
+            if (artifact)
             {
-                if (artifact.IsShow)
-                {
-                    _artifact = artifact;
-                    _artifact.Pick(_player);
-                }
+                _artifact = artifact;
                 UpdateInventory();
             }
         }

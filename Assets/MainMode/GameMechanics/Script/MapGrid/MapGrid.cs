@@ -117,11 +117,11 @@ namespace MainMode
             }
             return map;
         }
-        public void ClearMap(bool destroy = false)
+        public void ClearMap()
         {
             foreach (var point in _points)
             {
-                point.ResetPoint(destroy);
+                point.Delete();
             }
         }
     }
