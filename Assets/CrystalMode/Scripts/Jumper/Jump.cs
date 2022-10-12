@@ -52,6 +52,6 @@ public class Jump : StateMachineBehaviour
         Vector2 dirToPlayer = oldPosPlayer - (Vector2)animator.transform.position;
         float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg + 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, q, Time.deltaTime * 3);
+        animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, q, Time.deltaTime * 5);
     }
 }

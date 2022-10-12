@@ -6,19 +6,22 @@ using UnityEngine.AI;
 
 public class JumperAttack : StateMachineBehaviour
 {
-    private bool wasAttack;
+    private bool wasDealDamage;
     private Transform player;
     private Vector2 oldPosPlayer;
     private float i;
     private bool wasInPlayer;
     private NavMeshAgent agent;
     private float time;
-    private float attackFrequency = 2;
     private Vector2 dirToPlayer;
+    [SerializeField] private float attackReloadTime;
     [SerializeField] private int damageValue;
     [SerializeField] private AttackInfo attackInfo;
+    [SerializeField] private float aimStrength;
+    [SerializeField] private float attackSpeed;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        dirToPlayer = oldPosPlayer - (Vector2)animator.transform.position;
         agent = animator.GetComponent<NavMeshAgent>();
         agent.speed = 0;
         player = GameObject.FindWithTag("Player").transform;
@@ -26,7 +29,7 @@ public class JumperAttack : StateMachineBehaviour
         wasInPlayer = false;
         i = 0;
         time = 0;
-        wasAttack = false;
+        wasDealDamage = false;
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -40,9 +43,12 @@ public class JumperAttack : StateMachineBehaviour
         }
 
         float distanceToPLayer = Vector2.Distance(animator.transform.position, player.position);
-        if (distanceToPLayer < 0.3f && !wasAttack)
+        if (distanceToPLayer < 0.3f && !wasDealDamage)
         {
-            wasAttack = true;
+            float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg + 90;
+            animator.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            wasDealDamage = true;
             Debug.Log("attacked");
             player.GetComponent<Player>().TakeDamage(damageValue, attackInfo);
         }
@@ -52,16 +58,20 @@ public class JumperAttack : StateMachineBehaviour
             i += Time.deltaTime;
         }
 
-        if (i > attackFrequency || time > attackFrequency + 0.2f)
+        if (i > attackReloadTime || time > attackReloadTime + 0.2f)
         {
             animator.SetBool("Chase", true);
         }
 
-        if (i < 0.4)
+        if (i < 0.3f)
         {
             TranslateToOldPosPlayer(animator);
         }
-        RotateToPlayer(animator);
+        
+        if (i == 0)
+        {
+            RotateToPlayer(animator);
+        }
     }
     private void RotateToPlayer(Animator animator)
     {
@@ -71,11 +81,13 @@ public class JumperAttack : StateMachineBehaviour
     }
     private void TranslateToOldPosPlayer(Animator animator)
     {
-        oldPosPlayer = Vector2.Lerp(oldPosPlayer, player.position, 0.004f);
-        dirToPlayer = oldPosPlayer - (Vector2)animator.transform.position;
-        Vector2 pos = animator.transform.position;
-        Vector2 norm = dirToPlayer.normalized * Time.deltaTime * 9;
-        animator.transform.position = pos + norm;
+        oldPosPlayer = Vector2.Lerp(oldPosPlayer, player.position, Time.deltaTime * aimStrength);
+        if (i == 0)
+        {
+            dirToPlayer = oldPosPlayer - (Vector2) animator.transform.position;
+        }
+        Vector2 norm = dirToPlayer.normalized * Time.deltaTime * attackSpeed;
+        animator.transform.position +=  (Vector3)norm;
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

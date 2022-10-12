@@ -229,7 +229,7 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7310797702419293009}
-    m_Position: {x: 490, y: 130, z: 0}
+    m_Position: {x: 490, y: 120, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -409,11 +409,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06e4e7390839a74aa03e068bf9dd2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackReloadTime: 2
   damageValue: 2
   attackInfo:
     _timeEffect: 0.5
     _effect: 0
     _attack: 0
+  aimStrength: 4
+  attackSpeed: 6
 --- !u!114 &4854301260756845867
 MonoBehaviour:
   m_ObjectHideFlags: 1
