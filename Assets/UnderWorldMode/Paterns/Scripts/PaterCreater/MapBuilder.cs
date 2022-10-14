@@ -13,22 +13,23 @@ namespace Underworld
         [SerializeField] protected Vector2 unitSize;
         [Header("Reference")]
         [SerializeField] private Term _perfab;
+
         public Vector2 MapSize => unitSize * mapSize;
         public Term[,] Terms { get; private set; }
         public List<Point> Points { get; private set; } = new List<Point>();
 
         private void Awake()
         {
-            FormattingData();
-            Intializate(transform);
+            CheakOutRange();
+            Intializate();
         }
 
-        public bool Intializate(Transform parent = null)
+        private bool Intializate()
         {
             if (Terms == null)
             {
-                FormattingData();
-                Terms = CreateMap();
+                CheakOutRange();
+                Terms = CreateMatrixMap();
                 return true;
             }
             return false;
@@ -40,20 +41,13 @@ namespace Underworld
                 point.Delete();
             }
         }
-        public Transform GetHolder()
-        {
-            var holder = new GameObject("PointHolder").transform;
-            holder.parent = transform.parent;
-            holder.localPosition = Vector2.zero;
-            return holder;
-        }
-        private Term[,] CreateMap()
+        private Term[,] CreateMatrixMap()
         {
             var holder = new GameObject("Terms").transform;
             holder.transform.parent = transform;
             var terms = new Term[mapSize, mapSize];
-            var sideSize = mapSize % 2 == 0 ? mapSize  : mapSize - 1;
-            var start = new Vector2(unitSize.x / 2 - unitSize.x * sideSize/2 ,
+            var sideSize = mapSize % 2 == 0 ? mapSize : mapSize - 1;
+            var start = new Vector2(unitSize.x / 2 - unitSize.x * sideSize / 2,
                 -unitSize.y / 2 + unitSize.y * sideSize / 2);
             for (int i = 0; i < sideSize; i++)
             {
@@ -68,12 +62,11 @@ namespace Underworld
             }
             return terms;
         }
-        private void FormattingData()
+        private void CheakOutRange()
         {
             var x = unitSize.x == 0 ? 1 : Mathf.Abs(unitSize.x);
             var y = unitSize.y == 0 ? 1 : Mathf.Abs(unitSize.y);
             unitSize = new Vector2(x, y);
         }
-
     }
 }

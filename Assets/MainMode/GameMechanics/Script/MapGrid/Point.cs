@@ -16,12 +16,11 @@ public class Point
 
     public void SetItem(SmartItem item)
     {
-#if UNITY_EDITOR
-        if (IsBusy)
-            throw new System.Exception("this point is already busy");
-#endif
-        item.SetPosition(Position);
-        _item = item;
+        if (!IsBusy)
+        {
+            item.SetPosition(Position);
+            _item = item;
+        }
     }
     public void Delete()
     {

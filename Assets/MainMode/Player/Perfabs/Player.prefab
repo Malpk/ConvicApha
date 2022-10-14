@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Sprite: {fileID: 1042967322853912762, guid: 1c013332af8645f44ba55d4055a42b89, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 0.6875, y: 0.4375}
   m_AdaptiveModeThreshold: 0.5
@@ -177,10 +177,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1953a3d267e66c4cb921e3d5a5db76a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playOnStart: 1
   state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   health:
     _healthPoints: 5
-    _maxHealthPoint: 5
     _display: {fileID: 0}
   isAutoRespawnMode: 0
   respawnTime: 1
@@ -300,4 +300,4 @@ MonoBehaviour:
   _player: {fileID: 2289660620136117451}
   _artifact: {fileID: 0}
   _display: {fileID: 0}
-  _consumablesItem: []
+  _consumablesItem: {fileID: 0}

@@ -31,45 +31,37 @@ namespace MainMode.LoadScene
         protected event Action StopGameAction;
         protected event Action BackMainMenuAction;
 
-        public bool IsReadyLoad { get; private set; }
-
         private void Awake()
         {
             playerLoader = GetComponent<PlayerLoader>();
             _intefaceLoader = GetComponent<IntefaceLoader>();
+            _intefaceLoader.LoadInteface();
+            holder = _intefaceLoader.Holder;
+            _marker = _intefaceLoader.HUD.GetComponentInChildren<MarkerUI>();
+            deadMenu = _intefaceLoader.DeadMenu;
+            deadMenu.Intializate(this);
         }
 
         protected virtual void OnEnable()
         {
-            IsReadyLoad = true;
             playerLoader.PlayerLoadAction += Intializate;
         }
 
         protected virtual void OnDisable()
         {
-            IsReadyLoad = false;
             playerLoader.PlayerLoadAction -= Intializate;
         }
 
         private void Start()
         {
             if (playOnStart)
-                Load(choosePlayer);
+                SetPlayerOnScene(choosePlayer);
         }
         #region LaodScene
-        public void Load(PlayerConfig config)
+        public void SetPlayerOnScene(PlayerConfig config)
         {
-            if (IsReadyLoad)
-            {
-                IsReadyLoad = true;
-                _intefaceLoader.LoadInteface();
-                holder = _intefaceLoader.Holder;
-                _marker = _intefaceLoader.HUD.GetComponentInChildren<MarkerUI>();
-                deadMenu = _intefaceLoader.DeadMenu;
-                deadMenu.Intializate(this);
-                if (LoadAction != null)
-                    LoadAction();
-            }
+            if (LoadAction != null)
+                LoadAction();
             playerLoader.PlayerLoad(spwanPoint, config);
             _config = config;
         }
@@ -85,27 +77,17 @@ namespace MainMode.LoadScene
             _intefaceLoader.Intializate(player);
             IntilizatePlayer(_marker);
         }
-
-        private void IntilizatePlayer(MarkerUI marker)
-        {
-            marker.Intilizate(player, cameraFollowing);
-            player.SetMarker(marker);
-            cameraFollowing.SetTarget(player);
-            cameraFollowing.Play();
-        }
-        #endregion
         #region Conrollers
         public void Play()
         {
-            if (PlayAction != null)
-                PlayAction();
             _marker.Play();
-            if (!player.IsPlay)
-                player.Play();
+            player.Play();
             cameraFollowing.Play();
             holder.SetShow(_intefaceLoader.HUD);
             if (player.TryGetComponent(out IReset restart))
                 restart.Restart(_config);
+            if (PlayAction != null)
+                PlayAction();
         }
         public void BackMainMenu()
         {
@@ -114,7 +96,17 @@ namespace MainMode.LoadScene
             if (BackMainMenuAction != null)
                 BackMainMenuAction();
         }
+
         #endregion
+        private void IntilizatePlayer(MarkerUI marker)
+        {
+            marker.Intilizate(player, cameraFollowing);
+            player.SetMarker(marker);
+            cameraFollowing.SetTarget(player);
+            cameraFollowing.Play();
+        }
+        #endregion
+
         private void StopGame()
         {
             _marker.Stop();

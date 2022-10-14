@@ -45,11 +45,15 @@ namespace Underworld
         public void Pause()
         {
             IsPause = true;
+            if (_curretMode)
+                _curretMode.Pause();
         }
 
         public void UnPause()
         {
             IsPause = false;
+            if (_curretMode)
+                _curretMode.UnPause();
         }
         private GeneralMode GetPatern(ModeType type)
         {

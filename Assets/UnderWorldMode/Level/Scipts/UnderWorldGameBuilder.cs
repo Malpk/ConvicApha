@@ -8,7 +8,6 @@ namespace Underworld
     {
         [Header("General Mode")]
         [SerializeField] private bool _playOnStart;
-        [SerializeField] private bool _useDefoutSetting;
         [Min(0)]
         [SerializeField] private float _switchDelay = 2f;
         [Header("Reference")]
@@ -33,10 +32,6 @@ namespace Underworld
         #region Controlers
         public void Play()
         {
-#if UNITY_EDITOR
-            if (IsPlay)
-                throw new System.Exception("UnderorldGameBuilder is already play");
-#endif
             if (!IsPlay)
             {
                 IsPlay = true;
@@ -45,13 +40,12 @@ namespace Underworld
         }
         public void Stop()
         {
-#if UNITY_EDITOR
-            if (!IsPlay)
-                throw new System.Exception("UnderorldGameBuilder is already stop");
-#endif
-            IsPlay = false;
-            IsPause = false;
-            _switchPatern.Deactivate();
+            if (IsPlay)
+            {
+                UnPause();
+                IsPause = false;
+                _switchPatern.Deactivate();
+            }
         }
 
         public void Pause()

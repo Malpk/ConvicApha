@@ -1,21 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
+using System;
 
 namespace Underworld
 {
     public abstract class GeneralMode : MonoBehaviour, IPause
     {
         [Header("General Setting")]
-#if UNITY_EDITOR
-        [SerializeField] protected bool isDebug;
-#endif
         [SerializeField] protected bool playOnStart;
         [Min(0)]
         [SerializeField] protected float workDuration;
 
-        protected event System.Action DeactivateAction;
+        protected event Action DeactivateAction;
 
         private ModeState _previus;
 

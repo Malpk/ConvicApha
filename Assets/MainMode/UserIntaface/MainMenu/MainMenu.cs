@@ -55,7 +55,7 @@ public sealed class MainMenu : UserInterface
             _config.SetArtifactAsync(_artifactItemScroller.GetSelectItem());
             _config.SetConsumableAsync(_consumableItemScroller.GetSelectItem());
             _config.SetPlayerType(GetPlayerType());
-            _sceneLoader.Load(_config);
+            _sceneLoader.SetPlayerOnScene(_config);
             _sceneLoader.Play();
             _backGround.enabled = false;
             Hide();

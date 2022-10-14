@@ -29,8 +29,16 @@ namespace MainMode.LoadScene
             Player.transform.position = spawnPosition ? spawnPosition.position : Vector3.zero;
             if (Player.TryGetComponent(out Inventory inventorySet))
             {
-                inventorySet.AddArtifact(config.ItemArtifact);
-                inventorySet.AddConsumablesItem(config.ItemConsumable);
+                if (config.ItemArtifact)
+                {
+                    config.ItemArtifact.Pick(Player);
+                    inventorySet.AddArtifact(config.ItemArtifact);
+                }
+                if (config.ItemConsumable)
+                {
+                    config.ItemConsumable.Pick(Player);
+                    inventorySet.AddConsumablesItem(config.ItemConsumable);
+                }
             }
         }
         private Player GetPlayer(PlayerType type)
