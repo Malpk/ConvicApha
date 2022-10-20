@@ -32,12 +32,12 @@ public class FlyerPatrul : StateMachineBehaviour
         }
         
         float distanceToPoint = Vector2.Distance(currentPoint.position, animator.transform.position);
-        if (distanceToPoint < 0.1f)
+        if (distanceToPoint < 0.3f)
         {
             SetRandomPoint();
         }
         
-        TranslateToPoint(currentPoint, animator);
+        TranslateForward(animator);
         RotateToPoint(animator);
     }
     
@@ -46,9 +46,9 @@ public class FlyerPatrul : StateMachineBehaviour
         animator.SetBool("Patrul", false);
     }
 
-    private void TranslateToPoint(Transform point, Animator animator)
+    private void TranslateForward(Animator animator)
     {
-        animator.transform.position += -animator.transform.up * Time.deltaTime * patrulSpeed;
+        animator.transform.position -= animator.transform.up * Time.deltaTime * patrulSpeed;
     }
     private void SetRandomPoint()
     {

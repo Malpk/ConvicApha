@@ -43,9 +43,8 @@ public class Jump : StateMachineBehaviour
     private void TranslateToPlayer(Animator animator) 
     {
         Vector2 dirToPlayer = oldPosPlayer - (Vector2)animator.transform.position;
-        Vector2 tr = (dirToPlayer * Time.deltaTime * jumpSpeed);
-        Vector2 pos = animator.transform.position;
-        animator.transform.position = new Vector2(tr.x + pos.x, tr.y + pos.y);
+        Vector2 dirToPlayer2 = (dirToPlayer * Time.deltaTime * jumpSpeed);
+        animator.transform.position = dirToPlayer2 + (Vector2)animator.transform.position;
     }
     private void RotateToPlayer(Animator animator)
     {

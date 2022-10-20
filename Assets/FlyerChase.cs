@@ -8,15 +8,19 @@ public class FlyerChase : StateMachineBehaviour
     [SerializeField] private float stopChaseDistance;
     [SerializeField] private float startAttackDistance;
     private Transform player;
+    private float coolDownToPatrul = 2f;
+    private float time;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindWithTag("Player").transform;
+        time = 0;
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        time += Time.deltaTime;
         float distanceToPlayer = Vector2.Distance(player.position, animator.transform.position);
-        if (distanceToPlayer > stopChaseDistance)
+        if (distanceToPlayer > stopChaseDistance && time > coolDownToPatrul)
         {
             animator.SetBool("Patrul", true);
         }

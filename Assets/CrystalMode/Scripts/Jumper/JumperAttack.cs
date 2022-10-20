@@ -63,7 +63,7 @@ public class JumperAttack : StateMachineBehaviour
             animator.SetBool("Chase", true);
         }
 
-        if (i < 0.3f)
+        if (i < 0.3f && Time.time > attackReloadTime)
         {
             TranslateToOldPosPlayer(animator);
         }
@@ -77,7 +77,7 @@ public class JumperAttack : StateMachineBehaviour
     {
         float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg + 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, q, Time.deltaTime * 10);
+        animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, q, Time.deltaTime * 5);
     }
     private void TranslateToOldPosPlayer(Animator animator)
     {
