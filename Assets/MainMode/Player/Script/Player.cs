@@ -41,7 +41,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
         _component = GetComponents<IPlayerComponent>();
     }
     [Inject]
-    public void Construct(HUDInteface hud, Controller controller, DeadMenu deadmenu)
+    public void Construct(HUDInteface hud, Controller controller)
     {
         _hud = hud;
         _controller = controller;
