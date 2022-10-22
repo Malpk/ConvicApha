@@ -1,9 +1,7 @@
-namespace MainMode
+namespace PlayerComponent
 {
     public interface IResist
     {
-        public void AddResistAttack(DamageInfo effectType,float timeActive);
-        public bool IsResist(EffectType type);
-        public bool IsResist(AttackType type);
+        public void AddResistAttack(DamageInfo damage,float timeActive);
     }
 }

@@ -19,27 +19,13 @@ namespace MainMode.GameInteface
             _sceen.enabled = false;
         }
 
-        public void Show(float timeDeactive)
-        {
-            timeDeactive = Mathf.Abs(timeDeactive);
-            Invoke("Hide", timeDeactive);
-            Show();
-        }
         public void Hide()
         {
-            _orders--;
-            if (_orders <= 0)
-                _sceen.enabled = false;
+            _sceen.enabled = false;
         }
 
         public void Show()
         {
-            if (_sceen.enabled)
-            {
-                _orders++;
-                return;
-            }
-            _orders = 1;
             _sceen.enabled = true;
         }
     }

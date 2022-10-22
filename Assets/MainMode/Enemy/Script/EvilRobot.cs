@@ -1,4 +1,4 @@
-using MainMode.Effects;
+using PlayerComponent;
 using MainMode.Items;
 using System.Collections;
 using System.Collections.Generic;
@@ -106,7 +106,7 @@ namespace MainMode
             }
         }
 
-        public bool AddEffects(ITransport movement, float timeActive)
+        public bool SeedToTransport(ITransport movement, float timeActive)
         {
             return false;
         }

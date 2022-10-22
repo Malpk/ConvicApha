@@ -8,7 +8,7 @@ public class ReturnPoint : MonoBehaviour
 
     private SpriteRenderer _sprite;
     public Vector3 Position => transform.position;
-    public bool State { get; private set; }
+    public bool IsActive { get; private set; }
 
     private void Awake()
     {
@@ -20,14 +20,14 @@ public class ReturnPoint : MonoBehaviour
         transform.position = point;
     }
 
-    public void Deactive(CristalMan player)
+    public void Deactive(Player player)
     {
         SetMode(false, player);
     }
 
-    private void SetMode(bool mode,CristalMan player = null)
+    private void SetMode(bool mode,Player player = null)
     {
-        State = mode;
+        IsActive = mode;
         _sprite.enabled = mode;
         if (player != null)
         {

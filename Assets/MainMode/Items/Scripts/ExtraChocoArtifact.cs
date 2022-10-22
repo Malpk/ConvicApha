@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using MainMode.Effects;
+using PlayerComponent;
 
 namespace MainMode.Items
 {

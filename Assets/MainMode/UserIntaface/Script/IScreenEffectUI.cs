@@ -7,7 +7,6 @@ namespace MainMode.GameInteface
     public interface IScreenEffectUI 
     {
         public EffectType Type { get; }
-        public void Show(float timeDeactive);
         public void Show();
         public void Hide();
     }

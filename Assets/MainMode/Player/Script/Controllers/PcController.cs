@@ -50,8 +50,13 @@ namespace PlayerComponent
         }
         private void UseAbillity()
         {
-            if (Input.GetKeyDown(_useAbility) && UseAbillityAction != null && !_isBlock)
-                UseAbillityAction();
+            if (!_isBlock)
+            {
+                if (Input.GetKeyDown(_useAbility) && UseAbillityAction != null)
+                {
+                    UseAbillityAction();
+                }
+            }
         }
         private void UseArtifact()
         {

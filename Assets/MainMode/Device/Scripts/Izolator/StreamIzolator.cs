@@ -11,7 +11,7 @@ namespace MainMode
 
         protected  void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<Character>() != null)
+            if (collision.GetComponent<Player>() != null)
                 Activate();
         }
 

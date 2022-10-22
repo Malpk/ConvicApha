@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace MainMode
 {
@@ -17,16 +18,26 @@ namespace MainMode
 
         private bool _isPlay;
         private bool _isPause;
-      
-        public bool IsReady { private set; get; }
+        private MainMenu _mainMode;
 
-        public void SetPlayer(Player target)
+        public bool IsReady { private set; get; }
+        
+        [Inject]
+        public void Construct(Player target, MapGrid mapGrid, MainMenu mainMode)
         {
             _target = target;
-        }
-        public void SetMapGrid(MapGrid mapGrid)
-        {
             _mapGrid = mapGrid;
+            _mainMode = mainMode;
+        }
+        private void OnEnable()
+        {
+            _mainMode.PlayGameAction += Play;
+            _target.DeadAction += Play;
+        }
+        private void OnDisable()
+        {
+            _mainMode.PlayGameAction -= Play;
+            _target.DeadAction -= Play;
         }
 
         private void Start()

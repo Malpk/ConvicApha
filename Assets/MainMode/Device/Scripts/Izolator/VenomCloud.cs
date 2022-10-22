@@ -38,5 +38,12 @@ namespace MainMode
                 player.TakeDamage(0, _damageInfo);
             }
         }
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out IDamage target))
+            {
+                target.TakeDamage(0, _damageInfo);
+            }
+        }
     }
 }

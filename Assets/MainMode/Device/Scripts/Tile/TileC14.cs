@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using MainMode.Effects;
+using PlayerComponent;
 
 namespace MainMode
 {
@@ -13,7 +11,6 @@ namespace MainMode
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision, attackInfo);
             if (collision.TryGetComponent(out IAddEffects target) && IsShow)
             {
                 target.AddEffects(_effect, attackInfo.TimeEffect);

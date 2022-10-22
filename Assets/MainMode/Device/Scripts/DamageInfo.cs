@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using MainMode;
+using UnityEngine;
 
-[System.Serializable]
-public class DamageInfo
+[CreateAssetMenu(menuName = "PlayerComponent/DamageInfo")]
+public class DamageInfo : ScriptableObject, IEffect
 {
     [Min(0)]
     [SerializeField] private float _timeEffect = 0.5f;

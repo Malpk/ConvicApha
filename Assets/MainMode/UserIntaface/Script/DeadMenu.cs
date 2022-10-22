@@ -1,6 +1,6 @@
+using System;
 using UnityEngine;
 using UnityEngine.Video;
-using MainMode.LoadScene;
 using MainMode.GameInteface;
 
 public class DeadMenu : UserInterface
@@ -8,15 +8,12 @@ public class DeadMenu : UserInterface
     [SerializeField] private bool _showOnStart;
     [Header("Reference")]
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private BaseLoader _sceneLoader;
     [SerializeField] private VideoPlayer _backGroundVideo;
 
-    public override UserInterfaceType Type => UserInterfaceType.EndMenu;
+    public event Action RestartAction;
+    public event Action BackMainMenuAction;
 
-    public void Intializate(BaseLoader loader)
-    {
-        _sceneLoader = loader;
-    }
+    public override UserInterfaceType Type => UserInterfaceType.EndMenu;
 
     private void OnEnable()
     {
@@ -38,12 +35,14 @@ public class DeadMenu : UserInterface
 
     public void OnRestart()
     {
-        _sceneLoader.Play();
+        if (RestartAction != null)
+            RestartAction();
     }
 
     public void OnBackMainMenu()
     {
-        _sceneLoader.BackMainMenu();
+        if (BackMainMenuAction != null)
+            BackMainMenuAction();
     }
 
     private void ShowMenu()

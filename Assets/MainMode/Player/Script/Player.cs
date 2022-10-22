@@ -1,63 +1,80 @@
+using UnityEngine;
+using Zenject;
+using PlayerComponent;
 using MainMode;
 using MainMode.Items;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using PlayerComponent;
+using MainMode.GameInteface;
 
-
-[RequireComponent(typeof(PlayerScreen), typeof(Collider2D))]
-public class Player : Character, IResist
+[RequireComponent(typeof(Rigidbody2D))]
+public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
 {
-    [SerializeField] protected MarkerUI _markerUI;
-    [SerializeField] protected Inventory _inventory;
-    [SerializeField] protected Controller controller;
-    [Header("Resist setting")]
-    [SerializeField] protected List<AttackType> _defoutResistAttack;
-    [SerializeField] protected List<EffectType> _defoutResistEffect;
+    [SerializeField] private bool _playOnStart = true;
+    [Header("General Setting")]
+    [SerializeField] private Controller _controller;
+    [SerializeField] private Collider2D _colliderBody;
+    [SerializeField] private ShootMarkerView _shootMarker;
+    [SerializeField] private PlayerState _state;
+    [SerializeField] private PlayerBaseBehaviour _behaviour;
 
-    protected CapsuleCollider2D playerCollider = null;
-    protected PlayerScreen screenEffect = null;
+    private HUDInteface _hud;
+    private Rigidbody2D _rigidBody;
+    private PlayerMovement _playerMovement = new PlayerMovement();
+    private IPlayerComponent[] _component;
+    private ITransport _transport;
+
+    private Vector3 _startPosition;
+    private PlayerInventory _inventory = new PlayerInventory();
 
     private IItemInteractive _interacive = null;
 
-    protected Dictionary<AttackType, int> attackResist = new Dictionary<AttackType, int>();
-    protected Dictionary<EffectType, int> effectResist = new Dictionary<EffectType, int>();
-
     public event System.Action DeadAction;
 
-    protected event System.Action UseAbillityAction;
+    public bool IsPlay { get; private set; } = false;
+    public Vector2 Position => transform.position;
+    public float MovementEffect => _behaviour.MoveEffect;
 
-    protected virtual float speedMovement => state.SpeedMovement * GetMovementEffect();
-    protected virtual float speedRotation => state.SpeedRotation;
-
-    protected override void Awake()
+    private void Awake()
     {
-        screenEffect = GetComponent<PlayerScreen>();
-        playerCollider = GetComponent<CapsuleCollider2D>();
-        base.Awake();
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _startPosition = transform.position;
+        _playerMovement.Intializate(this, _rigidBody);
+        _component = GetComponents<IPlayerComponent>();
+    }
+    [Inject]
+    public void Construct(HUDInteface hud, Controller controller, DeadMenu deadmenu)
+    {
+        _hud = hud;
+        _controller = controller;
+        if (_behaviour)
+            _behaviour.Intializate(this, hud);
+    }
+
+
+    public void SetBehaviour(PlayerBaseBehaviour behaviour)
+    {
+        if (_behaviour)
+        {
+            Destroy(_behaviour.gameObject);
+        }
+        _behaviour = behaviour;
+        _behaviour.Intializate(this, _hud);
+        _behaviour.transform.parent = transform;
+        _behaviour.transform.localPosition = Vector3.zero;
+        _behaviour.transform.localRotation = Quaternion.Euler(Vector3.zero);;
+        enabled = true;
     }
     #region Intilizate
-    protected virtual void OnEnable()
+    private void OnEnable()
     {
-        if (controller != null)
-            BindController(controller);
+        BindController(_controller);
+        _behaviour.DeadAction += DeadMessange;
     }
-    protected virtual void OnDisable()
+    private void OnDisable()
     {
-        if (controller != null)
-            UnBindController(controller);
+        UnBindController(_controller);
+        _behaviour.DeadAction -= DeadMessange;
     }
-    public void SetMarker(MarkerUI marker)
-    {
-        _markerUI = marker;
-    }
-    public void SetControoler(Controller controller)
-    {
-        this.controller = controller;
-        BindController(controller);
-    }
-    protected void BindController(Controller controller)
+    private void BindController(Controller controller)
     {
         controller.InteractiveAction += InteractiveWhithObject;
         controller.UseItemAction += UseItem;
@@ -65,66 +82,140 @@ public class Player : Character, IResist
         controller.MovementAction += Move;
         controller.UseAbillityAction += UseAbillity;
     }
-    protected void UnBindController(Controller controller)
+    private void UnBindController(Controller controller)
     {
         controller.InteractiveAction -= InteractiveWhithObject;
         controller.UseItemAction -= UseItem;
         controller.UseArtifactAction -= UseArtifact;
         controller.MovementAction -= Move;
-        controller.UseAbillityAction += UseAbillity;
+        controller.UseAbillityAction -= UseAbillity;
     }
     #endregion
-    protected override void Move(Vector2 direction)
+    private void Start()
+    {
+        if (_playOnStart)
+        {
+            Play();
+        }
+    }
+    private void Update()
+    {
+        _behaviour.UpdateBehaviour();
+    }
+    #region Controller
+    public void Play()
+    {
+        if (!IsPlay)
+        {
+            IsPlay = true;
+            transform.position = _startPosition;
+            _rigidBody.rotation = 0;
+            foreach (var component in _component)
+            {
+                component.Play();
+            }
+            _behaviour.Play();
+            _controller.UnBlock();
+        }
+    }
+
+    public void Stop()
     {
         if (IsPlay)
         {
-            var speedDebaf = GetMovementEffect();
-            movement.Move(direction * speedMovement);
-            if (direction != Vector2.zero)
-                _baseMovement.Rotate(direction, speedRotation * speedDebaf);
+            IsPlay = false;
+            _behaviour.Stop();
+            _controller.Block();
         }
     }
-    #region Player Damage and Dead
-    public override void Explosion()
+    public void Block()
+    {
+        _controller.MovementAction -= Move;
+    }
+
+    public void UnBlock()
+    {
+        _controller.MovementAction += Move;
+    }
+
+    public void SetImpactDamage(bool mode)
+    {
+        _colliderBody.enabled = mode;
+    }
+    #endregion
+    #region Change Health
+    public void Explosion()
     {
         if (IsPlay)
         {
             Stop();
-            animator.SetBool("Dead", true);
-            rigidBody.velocity = Vector2.zero;
-            if (respawn == null && isAutoRespawnMode)
-                respawn = StartCoroutine(ReSpawn());
+            _behaviour.Dead();
+            _rigidBody.velocity = Vector2.zero;
         }
     }
-    public override void TakeDamage(int damage, DamageInfo damageInfo)
+    public void TakeDamage(int damage, DamageInfo damgeInfo)
     {
-        if (!IsResist(damageInfo.Attack))
+        if (_behaviour.TakeDamage(damage, damgeInfo))
         {
-            health.SetDamage(damage);
-            if (health.Health <= 0)
+            _hud.SetHealth(_behaviour.Health);
+            if (_behaviour.Health == 0)
                 Explosion();
-            screenEffect.ShowEffect(damageInfo);
         }
     }
-    private void DeadAnimationEvent()
+    public void Heal(int value)
+    {
+        _behaviour.Heal(value);
+    }
+    private void DeadMessange()
     {
         if (DeadAction != null)
             DeadAction();
     }
     #endregion
-    #region Interactive and Useble
-    private void InteractiveWhithObject()
+    #region Add Effects
+    public void AddEffects(MovementEffect effect,float timeActive)
     {
-        if (_interacive != null)
+        _behaviour.AddEffects(effect, timeActive);
+    }
+    public void AddResistAttack(DamageInfo damage, float timeActive)
+    {
+        _behaviour.AddResist(damage, timeActive);
+    }
+
+    public bool SetTransport(ITransport transport)
+    {
+        if (_transport == null)
         {
-            _interacive.Interactive(this);
+            _transport = transport;
+            _transport.Enter(this ,_rigidBody ,_controller);
+            return true;
         }
+        return false;
+    }
+    #endregion
+    #region Interactive and Useble
+    public void PickItem(Item itemUse)
+    {
+        if (itemUse is ConsumablesItem consumablesItem)
+        {
+            itemUse.Pick(this);
+            _hud.DisplayConsumableItem(consumablesItem);
+            _inventory.AddConsumablesItem(consumablesItem);
+        }
+        else
+        {
+            itemUse.Pick(this);
+            _hud.DisplayArtifact(itemUse);
+            _inventory.AddArtifact(itemUse);
+        }
+       
     }
     private void UseItem()
     {
         if (_inventory.TryGetConsumableItem(out ConsumablesItem item))
         {
-            item.Use();
+            if(!item.Use())
+                _hud.DisplayConsumableItem(null);
         }
     }
     private void UseArtifact()
@@ -132,106 +223,52 @@ public class Player : Character, IResist
         if (_inventory.TryGetArtifact(out Item artifact))
         {
             if (artifact.UseType == ItemUseType.Shoot)
-            {
-                _markerUI.ShowMarker();
-                transform.rotation = Quaternion.Euler(Vector3.forward * (_markerUI.CurretAngel-90));
-            }
-            artifact.Use();
+                transform.rotation = Quaternion.Euler(Vector3.forward * (_shootMarker.Angel - 90));
+            if (!artifact.Use())
+                _hud.DisplayArtifact(null);
         }
     }
     private void UseAbillity()
     {
-        if (UseAbillityAction != null)
-            UseAbillityAction();
+        _behaviour.UseAbillity();
+    }
+
+    private void InteractiveWhithObject()
+    {
+        if (_interacive != null)
+        {
+            _interacive.Interactive(this);
+        }
     }
     #endregion
-    public void Heal(int point)
+    public void MoveToPosition(Vector2 position)
     {
-        health.Heal(point);
+        _rigidBody.MovePosition(position);
     }
-
-
-    protected void OnTriggerEnter2D(Collider2D collision)
+    private void Move(Vector2 direction)
     {
-        if (collision.TryGetComponent(out IPickable itemUse))
+        _playerMovement.Move(direction * _state.SpeedMovement * _behaviour.MoveEffect);
+        if (direction != Vector2.zero)
+            _playerMovement.Rotate(direction, _state.SpeedMovement * _behaviour.MoveEffect);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Item itemUse))
         {
-            if (itemUse is ConsumablesItem consumablesItem)
-            {
-                consumablesItem.Pick(this);
-                _inventory.AddConsumablesItem(consumablesItem);
-            }
-            else if (itemUse is Item item)
-            {
-                item.Pick(this);
-                _inventory.AddArtifact(itemUse as Item);
-            }
+            PickItem(itemUse);
         }
-        if (collision.TryGetComponent(out IItemInteractive interactive))
+        else if (collision.TryGetComponent(out IItemInteractive interactive))
         {
             _interacive = interactive;
         }
+
     }
-    protected void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IItemInteractive interactive))
         {
             _interacive = null;
         }
     }
-    #region SetResist
-    public void AddResistAttack(DamageInfo attackInfo, float timeActive)
-    {
-        if (!_defoutResistAttack.Contains(attackInfo.Attack))
-        {
-            AddAttackResist(attackInfo.Attack);
-            StartCoroutine(DeleteResist(attackInfo.Attack, timeActive));
-        }
-        if (!_defoutResistEffect.Contains(attackInfo.Effect))
-        {
-            AddEffectResist(attackInfo.Effect);
-            StartCoroutine(DeleteResist(attackInfo.Effect, timeActive));
-        }
-    }
-    private void AddEffectResist(EffectType effectType)
-    {
-        if (effectResist.ContainsKey(effectType))
-        {
-            effectResist[effectType]++;
-        }
-        else
-        {
-            effectResist.Add(effectType, 1);
-        }
-    }
-    private void AddAttackResist(AttackType effectType)
-    {
-        if (attackResist.ContainsKey(effectType))
-            attackResist[effectType]++;
-        else
-            attackResist.Add(effectType, 1);
-    }
-    private IEnumerator DeleteResist(AttackType type, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        attackResist[type]--;
-        if (attackResist[type] <= 0)
-            attackResist.Remove(type);
-    }
-    private IEnumerator DeleteResist(EffectType type, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        effectResist[type]--;
-        if (effectResist[type] <= 0)
-            effectResist.Remove(type);
-    }
-    public bool IsResist(EffectType effect)
-    {
-        return effectResist.ContainsKey(effect) || _defoutResistEffect.Contains(effect);
-    }
-    public bool IsResist(AttackType attack)
-    {
-        return attackResist.ContainsKey(attack) || _defoutResistAttack.Contains(attack);
-    }
-
-    #endregion
 }
+

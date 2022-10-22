@@ -10,7 +10,6 @@ namespace MainMode
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            SetScreen(collision, attackInfo);
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
                 target.TakeDamage(_damage, attackInfo);

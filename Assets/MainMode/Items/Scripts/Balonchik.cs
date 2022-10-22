@@ -5,7 +5,14 @@ namespace MainMode.Items
     public class Balonchik : Item
     {
         [SerializeField] private float _timeActive;
-        [SerializeField] private AirJet perfab;
+        [SerializeField] private AirJet _jetAir;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _jetAir.gameObject.SetActive(false);
+            _jetAir.Intializate(_timeActive);
+        }
 
         protected override void OnEnable()
         {
@@ -19,9 +26,8 @@ namespace MainMode.Items
         }
         private void Actvate()
         {
-            var jet = Instantiate(perfab, user.transform.position, user.transform.rotation).GetComponent<AirJet>();
-            user.AddEffects(jet, _timeActive);
-            jet.Enter(user.GetComponent<Rigidbody2D>());
+            _jetAir.gameObject.SetActive(true);
+            user.SetTransport(_jetAir);
         }
     }
 }

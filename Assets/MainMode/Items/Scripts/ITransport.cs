@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PlayerComponent;
 
-namespace MainMode.Items
+namespace PlayerComponent
 {
-    public interface ITransport : IMovement 
+    public interface ITransport 
     {
+
+        public void Enter(Player player,Rigidbody2D rigidBody ,Controller controller);
         public void Exit();
     }
 }

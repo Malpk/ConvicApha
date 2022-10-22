@@ -10,8 +10,10 @@ namespace MainMode
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(isActiveDevice)
-                SetScreen(collision, attackInfo);
+            if (collision.TryGetComponent(out IDamage damage))
+            {
+                damage.TakeDamage(0, attackInfo);
+            }
         }
     }
 }

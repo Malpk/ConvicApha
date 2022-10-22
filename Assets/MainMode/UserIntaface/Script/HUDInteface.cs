@@ -1,22 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using MainMode.Items;
 
 namespace MainMode.GameInteface
 {
     public class HUDInteface : UserInterface
     {
         [SerializeField] private Canvas _canvas;
+        [SerializeField] private HealthUI _healthUI;
+        [SerializeField] private InventroryUI _inventoryUI;
+        [SerializeField] private SwitchScreenEffectUI _screenSwitcher;
 
-        private List<Receiver> _recirvers = new List<Receiver>();
         public override UserInterfaceType Type => UserInterfaceType.HUD;
-
-        protected void Awake()
-        {
-            var list = GetComponentsInChildren<Receiver>();
-            if (list.Length > 0)
-                _recirvers.AddRange(list);
-        }
 
         private void OnEnable()
         {
@@ -29,29 +23,52 @@ namespace MainMode.GameInteface
             ShowAction -= () => _canvas.enabled = true;
             HideAction -= () => _canvas.enabled = false;
         }
-
-        public bool GetReceiver(ISender sender)
+        #region Health
+        public void SetHealthPoint(int health)
         {
-            foreach (var receiver in _recirvers)
-            {
-                if (receiver.DisplayType == sender.TypeDisplay)
-                {
-                    sender.AddReceiver(receiver);
-                    return true;
-                }
-            }
-            return false;
+            _healthUI.SetupHelth(health);
         }
-        public Receiver CreateReceiver(Receiver perfab)
+        public void SetHealth(int health)
         {
-            foreach (var element in _recirvers)
-            {
-                if (element.DisplayType == perfab.DisplayType)
-                    return element;
-            }
-            var receiver = Instantiate(perfab.gameObject, transform).GetComponent<Receiver>();
-            _recirvers.Add(receiver);
-            return receiver;
+            _healthUI.Display(health);
         }
+        #endregion
+        #region Invetrory
+        public void DisplayArtifact(Item item)
+        {
+            if (item)
+            {
+                if (!item.IsInfinity)
+                    _inventoryUI.DisplayArtifact(item.Sprite, item.Count);
+                else
+                    _inventoryUI.DisplayInfinity(item.Sprite);
+            }
+            else
+            {
+                _inventoryUI.DisplayArtifact(null);
+            }
+        }
+        public void DisplayConsumableItem(Item item)
+        {
+            if (item)
+            {
+                _inventoryUI.DisplayConsumablesItem(item.Sprite, item.Count);
+            }
+            else
+            {
+                _inventoryUI.DisplayConsumablesItem(null);
+            }
+        }
+        #endregion
+        #region ScreenEffect 
+        public void ShowScreenEffect(EffectType effect)
+        {
+            _screenSwitcher.Show(effect);
+        }
+        public void HideScreenEffect(EffectType effect)
+        {
+            _screenSwitcher.Hide(effect);
+        }
+        #endregion
     }
 }

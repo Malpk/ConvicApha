@@ -1,12 +1,10 @@
 using MainMode.Items;
-using MainMode.Effects;
 
-namespace MainMode
+namespace PlayerComponent
 {
     public interface IAddEffects
     {
-        public void AddEffects(MovementEffect floats,float timeActive);
-        public bool AddEffects(ITransport movement, float timeActive);
+        public void AddEffects(MovementEffect effects , float timeActive);
     }
 }
 

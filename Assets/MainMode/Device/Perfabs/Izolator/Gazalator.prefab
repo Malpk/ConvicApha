@@ -216,10 +216,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _damageInfo:
-    _timeEffect: 2
-    _effect: 1
-    _attack: 3
+  _damageInfo: {fileID: 11400000, guid: a59263749fcfaaf4394d6642c31f6e1e, type: 2}
   _triger: {fileID: 7833018310850750276}
   _cloudSprite: {fileID: 8033671765203865900}
 --- !u!1 &8033671763963772011
@@ -817,10 +814,7 @@ MonoBehaviour:
   durationWork: 10
   _activateTime: 5
   _jetHolder: {fileID: 8033671763470768191}
-  attackInfo:
-    _timeEffect: 0.5
-    _effect: 1
-    _attack: 3
+  attackInfo: {fileID: 11400000, guid: a59263749fcfaaf4394d6642c31f6e1e, type: 2}
   _body: {fileID: 8033671763963772009}
   _cloud: {fileID: 6654308569677066379}
 --- !u!58 &8033671764934701581
@@ -928,7 +922,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: aa45168c80cc96041a72504d3ffb3473, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -1,5 +1,5 @@
 using UnityEngine;
-using MainMode.Effects;
+using PlayerComponent;
 
 namespace MainMode
 {
@@ -58,8 +58,6 @@ namespace MainMode
         private void OnTriggerEnter2D(Collider2D collision)
         {
             HitDamage(collision);
-            if (collision.TryGetComponent(out RobotMan man))
-                man.AddEffects(_effect, _attackInfo.TimeEffect);
             if (collision.TryGetComponent(out Rigidbody2D body))
                 body.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
         }

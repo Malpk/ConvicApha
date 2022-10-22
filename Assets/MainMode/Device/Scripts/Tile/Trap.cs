@@ -83,13 +83,6 @@ namespace MainMode
             _collider.enabled = mode;
         }
 
-        protected void SetScreen(Collider2D collision, DamageInfo attack)
-        {
-            if (collision.TryGetComponent<PlayerScreen>(out PlayerScreen screen))
-            {
-                screen.ShowEffect(attackInfo);
-            }
-        }
         private void DelayDelete()
         {
             if (destroyMode && _delete == null)

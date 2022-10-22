@@ -4872,9 +4872,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79dc7863b85aa954eb16c273b1fd3eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeActive: 1
   _speedMovement: 3
   _speedRotation: 3
   _jet: {fileID: 35572160502777342}
+  _rigidbody2D: {fileID: 35572160900783759}
+  _fixedPoint: {fileID: 4932251424888737957}
 --- !u!255 &4932251424888737957
 FixedJoint2D:
   m_ObjectHideFlags: 0
@@ -4890,7 +4893,7 @@ FixedJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: -4.5042458, y: -1.4344496}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!1 &35572161109363276
@@ -4972,6 +4975,6 @@ SpriteRenderer:
   m_Size: {x: 0.40625, y: 0.40625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
