@@ -6,15 +6,15 @@ using MainMode.Items;
 using MainMode.GameInteface;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
+public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
 {
     [SerializeField] private bool _playOnStart = true;
     [Header("General Setting")]
-    [SerializeField] private Controller _controller;
     [SerializeField] private Collider2D _colliderBody;
     [SerializeField] private ShootMarkerView _shootMarker;
     [SerializeField] private PlayerState _state;
     [SerializeField] private PlayerBaseBehaviour _behaviour;
+    [SerializeField] private IBlock _contrallerBlocker;
 
     private HUDInteface _hud;
     private Rigidbody2D _rigidBody;
@@ -41,10 +41,9 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
         _component = GetComponents<IPlayerComponent>();
     }
     [Inject]
-    public void Construct(HUDInteface hud, Controller controller)
+    public void Construct(HUDInteface hud)
     {
         _hud = hud;
-        _controller = controller;
         if (_behaviour)
             _behaviour.Intializate(this, hud);
     }
@@ -66,29 +65,11 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
     #region Intilizate
     private void OnEnable()
     {
-        BindController(_controller);
         _behaviour.DeadAction += DeadMessange;
     }
     private void OnDisable()
     {
-        UnBindController(_controller);
         _behaviour.DeadAction -= DeadMessange;
-    }
-    private void BindController(Controller controller)
-    {
-        controller.InteractiveAction += InteractiveWhithObject;
-        controller.UseItemAction += UseItem;
-        controller.UseArtifactAction += UseArtifact;
-        controller.MovementAction += Move;
-        controller.UseAbillityAction += UseAbillity;
-    }
-    private void UnBindController(Controller controller)
-    {
-        controller.InteractiveAction -= InteractiveWhithObject;
-        controller.UseItemAction -= UseItem;
-        controller.UseArtifactAction -= UseArtifact;
-        controller.MovementAction -= Move;
-        controller.UseAbillityAction -= UseAbillity;
     }
     #endregion
     private void Start()
@@ -115,7 +96,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
                 component.Play();
             }
             _behaviour.Play();
-            _controller.UnBlock();
+            _contrallerBlocker.UnBlock();
         }
     }
 
@@ -125,17 +106,15 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
         {
             IsPlay = false;
             _behaviour.Stop();
-            _controller.Block();
+            _contrallerBlocker.Block();
         }
     }
     public void Block()
     {
-        _controller.MovementAction -= Move;
     }
 
     public void UnBlock()
     {
-        _controller.MovementAction += Move;
     }
 
     public void SetImpactDamage(bool mode)
@@ -181,17 +160,6 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
     {
         _behaviour.AddResist(damage, timeActive);
     }
-
-    public bool SetTransport(ITransport transport)
-    {
-        if (_transport == null)
-        {
-            _transport = transport;
-            _transport.Enter(this ,_rigidBody ,_controller);
-            return true;
-        }
-        return false;
-    }
     #endregion
     #region Interactive and Useble
     public void PickItem(Item itemUse)
@@ -210,7 +178,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
         }
        
     }
-    private void UseItem()
+    public void UseItem()
     {
         if (_inventory.TryGetConsumableItem(out ConsumablesItem item))
         {
@@ -218,7 +186,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
                 _hud.DisplayConsumableItem(null);
         }
     }
-    private void UseArtifact()
+    public void UseArtifact()
     {
         if (_inventory.TryGetArtifact(out Item artifact))
         {
@@ -228,12 +196,12 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
                 _hud.DisplayArtifact(null);
         }
     }
-    private void UseAbillity()
+    public void UseAbillity()
     {
         _behaviour.UseAbillity();
     }
 
-    private void InteractiveWhithObject()
+    public void InteractiveWhithObject()
     {
         if (_interacive != null)
         {
@@ -245,11 +213,11 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist,IBlock
     {
         _rigidBody.MovePosition(position);
     }
-    private void Move(Vector2 direction)
+    public void Walk(Vector2 input)
     {
-        _playerMovement.Move(direction * _state.SpeedMovement * _behaviour.MoveEffect);
-        if (direction != Vector2.zero)
-            _playerMovement.Rotate(direction, _state.SpeedMovement * _behaviour.MoveEffect);
+        if (input == Vector2.zero) return;
+        _rigidBody.AddForce(input * _state.SpeedMovement * _behaviour.MoveEffect, ForceMode2D.Force);
+        _rigidBody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, input), _state.SpeedMovement * _behaviour.MoveEffect * Time.deltaTime));
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
