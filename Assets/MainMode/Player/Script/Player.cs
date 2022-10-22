@@ -14,7 +14,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     [SerializeField] private ShootMarkerView _shootMarker;
     [SerializeField] private PlayerState _state;
     [SerializeField] private PlayerBaseBehaviour _behaviour;
-    [SerializeField] private IBlock _contrallerBlocker;
+    [SerializeField] private PCPlayerController _contrallerBlocker;
 
     private HUDInteface _hud;
     private Rigidbody2D _rigidBody;
