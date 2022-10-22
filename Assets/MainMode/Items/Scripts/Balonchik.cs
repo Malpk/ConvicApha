@@ -27,7 +27,6 @@ namespace MainMode.Items
         private void Actvate()
         {
             _jetAir.gameObject.SetActive(true);
-            user.SetTransport(_jetAir);
         }
     }
 }
