@@ -8,10 +8,10 @@ namespace PlayerComponent
         [Header("Ability Setting")]
         [Min(1)]
         [SerializeField] private float _timeReload = 1f;
+        [SerializeField] protected Player user;
 
         private bool _isPlay = false;
 
-        protected Player user;
 
         public void Play()
         {

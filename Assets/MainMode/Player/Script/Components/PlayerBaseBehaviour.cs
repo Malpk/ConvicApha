@@ -94,7 +94,8 @@ namespace PlayerComponent
         public virtual void AddEffects(MovementEffect effect, float timeActive)
         {
             _playerEffectContainer.Add(effect, timeActive);
-            _hud.ShowScreenEffect(effect.Effect);
+            if (_hud)
+                _hud.ShowScreenEffect(effect.Effect);
             _animator.SetBool("Freez", effect.Effect == EffectType.Freez);
         }
         public virtual bool TakeDamage(int damage, DamageInfo damgeInfo)
@@ -102,7 +103,8 @@ namespace PlayerComponent
             if (!_playerResist.ContainResistAttack(damgeInfo.Attack))
             {
                 _health.SetDamage(damage);
-                _hud.SetHealth(_health.Health);
+                if (_hud)
+                    _hud.SetHealth(_health.Health);
                 _playerDamageEffectContainer.Add(damgeInfo, damgeInfo.TimeEffect);
                 _hud.ShowScreenEffect(damgeInfo.Effect);
                 return true;
@@ -112,7 +114,8 @@ namespace PlayerComponent
         public void Heal(int value)
         {
             _health.Heal(value);
-            _hud.SetHealth(_health.Health);
+            if(_hud)
+                _hud.SetHealth(_health.Health);
         }
         public void UseAbillity()
         {
@@ -130,7 +133,8 @@ namespace PlayerComponent
         }
         private void HideScreen(EffectType effect)
         {
-            _hud.HideScreenEffect(effect);
+            if (_hud)
+                _hud.HideScreenEffect(effect);
             if(effect == EffectType.Freez)
                 _animator.SetBool("Freez", false);
         }

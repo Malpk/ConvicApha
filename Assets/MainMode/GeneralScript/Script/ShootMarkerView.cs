@@ -12,10 +12,10 @@ namespace MainMode.GameInteface
         [SerializeField] private float _minVisableOffset = 0.1f;
         [Header("Reference")]
         [SerializeField] private Transform _markerHolder;
+        [SerializeField] private Camera _camera;
 
 
         private float _previuslyAngle;
-        [SerializeField] private Camera _camera;
         private ShowMarkerState _shoowState;
 
         public float Angel { get; private set; } = 0;
