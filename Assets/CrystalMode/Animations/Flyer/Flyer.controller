@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrulSpeed: 1
-  startChaseDistance: 4
+  startChaseDistance: 3
 --- !u!114 &1511291973128491934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -176,6 +176,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopAttackDistance: 1.5
+  damagevalue: 0
+  AttackInfo:
+    _timeEffect: 0.5
+    _effect: 0
+    _attack: 0
 --- !u!1101 &4888471548145143201
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -268,7 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseSpeed: 1.5
-  stopChaseDistance: 4
+  stopChaseDistance: 3
   startAttackDistance: 1
 --- !u!1101 &8499065264114629631
 AnimatorStateTransition:

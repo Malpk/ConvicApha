@@ -20,7 +20,6 @@ public class Attack : StateMachineBehaviour
     {
         time += Time.deltaTime;
         float distance = Vector2.Distance(animator.transform.position, player.position);
-        Debug.Log(distance);
         if (distance > stopAttackingDistance)
         {
             animator.SetBool("Chase", true);

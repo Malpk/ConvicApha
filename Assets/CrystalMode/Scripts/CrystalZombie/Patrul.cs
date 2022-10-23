@@ -23,7 +23,7 @@ public class Patrul : StateMachineBehaviour
         {
             points.Add(VARIABLE.transform);
         }
-        SetDistancion();
+        SetDistance();
     }
 
     
@@ -31,7 +31,7 @@ public class Patrul : StateMachineBehaviour
     {
         if (agent.velocity == Vector3.zero)
         {
-            SetDistancion();
+            SetDistance();
         }
         time += Time.deltaTime;
         float distanceToPoint = Vector2.Distance(animator.transform.position, currentPoint.transform.position);
@@ -52,7 +52,7 @@ public class Patrul : StateMachineBehaviour
         animator.SetBool("Patrul", false);
     }
 
-    private void SetDistancion()
+    private void SetDistance()
     {
         int rand = Random.Range(0, points.Count);
         agent.SetDestination(points[rand].position);
