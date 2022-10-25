@@ -40,7 +40,7 @@ public class Zombie : MonoBehaviour
    public void Kill()
    {
       ZombieSpawner zombieSpawner = GameObject.FindGameObjectWithTag("ZombieSpawner").GetComponent<ZombieSpawner>();
-      zombieSpawner.SpawnEnemyVoid(1, prefab);
+      zombieSpawner.SpawnEnemyVoid(20, prefab);
       Destroy(gameObject);
    }
    
