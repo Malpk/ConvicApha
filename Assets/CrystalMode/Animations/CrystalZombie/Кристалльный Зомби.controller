@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbdfa0ffffec5854a953e10612f90f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrulSpeed: 1.5
+  patrulSpeed: 1
 --- !u!1101 &-1902140625413782100
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -361,9 +361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8372171fe01ee64c8f79f3158a3a65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 2.5
+  chaseSpeed: 2
   startAttackDistance: 1
-  hitCoolDown: 0
 --- !u!1102 &5192384526313653461
 AnimatorState:
   serializedVersion: 6

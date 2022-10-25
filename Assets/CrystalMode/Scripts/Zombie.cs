@@ -9,12 +9,16 @@ using UnityEngine.Tilemaps;
 public class Zombie : MonoBehaviour
 {
    private NavMeshAgent agent;
+   public GameObject prefab;
 
    private void Start()
    {
-      agent = gameObject.GetComponent<NavMeshAgent>();
-      agent.updateRotation = false;
-      agent.updateUpAxis = false;
+      if (gameObject.GetComponent<NavMeshAgent>())
+      {
+         agent = gameObject.GetComponent<NavMeshAgent>();
+         agent.updateRotation = false;
+         agent.updateUpAxis = false;
+      }
    }
 
    private void Update()
@@ -24,13 +28,20 @@ public class Zombie : MonoBehaviour
    
    private void RotateToDirection()
    {
-      if (agent.velocity == new Vector3(0,0,0))
+      if (agent == null || agent.velocity == new Vector3(0,0,0) )
       {
          return;
       }
       Vector2 velocity = agent.velocity;
       float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg + 90;
       transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+   }
+
+   public void Kill()
+   {
+      ZombieSpawner zombieSpawner = GameObject.FindGameObjectWithTag("ZombieSpawner").GetComponent<ZombieSpawner>();
+      zombieSpawner.SpawnEnemyVoid(1, prefab);
+      Destroy(gameObject);
    }
    
 }

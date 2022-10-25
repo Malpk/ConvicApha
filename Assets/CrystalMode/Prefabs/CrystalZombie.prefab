@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7741540141519865019}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: bone_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7741540141945667246}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: bone_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7741540142119520005}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,9 +104,10 @@ GameObject:
   - component: {fileID: 7741540142201302107}
   - component: {fileID: 7741540142201302096}
   - component: {fileID: 7741540142201302111}
-  m_Layer: 2
+  - component: {fileID: -8915646781615203884}
+  m_Layer: 0
   m_Name: CrystalZombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9adeacecf2f2cf74986fffb9bcadaa2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 7741540142201302106}
 --- !u!195 &7741540142201302111
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -258,6 +260,22 @@ NavMeshAgent:
   m_BaseOffset: 0.13885
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
+--- !u!58 &-8915646781615203884
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741540142201302106}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.3
 --- !u!1 &7741540142850550908
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7741540142850550909}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: bone_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +316,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7741540142876835537}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: bone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7741540143514102234}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: bone_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}

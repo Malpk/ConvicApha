@@ -22,7 +22,7 @@ public class CrystalModeInventory : MonoBehaviour
         navMeshSurface2d = GameObject.FindWithTag("NavMesh").GetComponent<NavMeshSurface2d>();
         navMeshSurface2d.BuildNavMesh();
         
-        AddDustToInventory(3);
+        AddDustToInventory(startDustCount);
         
     }
     public void AddDustToInventory(int count)
@@ -31,6 +31,5 @@ public class CrystalModeInventory : MonoBehaviour
         {
             _inventory.AddConsumablesItem(_crystalDust);
         }
-        _inventoryView.Display(crystalDustSprite, startDustCount);
     }
 }

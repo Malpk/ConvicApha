@@ -26,12 +26,7 @@ public class CrystalPlate : MonoBehaviour
             dust.transform.position = transform.position;
         }
     }
-
-    void Update()
-    {
-        timeSinceActivate += Time.deltaTime;
-    }
-
+    
     private void ActivatePlate(int count)
     {
         crystalModeInventory.AddDustToInventory(count);
