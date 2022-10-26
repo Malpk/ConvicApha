@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public sealed class Term : SmartItem,IPause
+    public sealed class Term : SmartItem
     {
         [Header("Reference")]
         [SerializeField] private Fire _termFire;
@@ -13,10 +13,8 @@ namespace Underworld
 
         private bool _isDamageMode;
 
-        private bool _isPause = false;
         private bool _isActive = false;
 
-        private Coroutine _taskDeactivate;
 
         private IDamage _target;
         private DeviceStateWork _previus;
@@ -30,7 +28,6 @@ namespace Underworld
         {
             HideTerm();
         }
-
         private void OnEnable()
         {
             ShowItemAction += ShowTerm;
@@ -68,31 +65,13 @@ namespace Underworld
 
         public void Deactivate(bool waitAnimation = true)
         {
-#if UNITY_EDITOR
-            if (!_isActive)
-                throw new System.Exception("Term is already Deactivation");
-#endif
-            _isActive = false;
-            StartCoroutine(StartDeactivate(waitAnimation));
+            if (_isActive)
+            {
+                _isActive = false;
+                StartCoroutine(StartDeactivate(waitAnimation));
+            }
         }
 
-        public void Pause()
-        {
-#if UNITY_EDITOR
-            if (State == DeviceStateWork.Pause)
-                throw new System.Exception("Term is already pause");
-#endif
-            _previus = State;
-            State = DeviceStateWork.Pause;
-        }
-        public void UnPause()
-        {
-#if UNITY_EDITOR
-            if (State != DeviceStateWork.Pause)
-                throw new System.Exception("Term is not on pause");
-#endif
-            State = _previus;
-        }
         public IEnumerator HideByDeactivation()
         {
 #if UNITY_EDITOR

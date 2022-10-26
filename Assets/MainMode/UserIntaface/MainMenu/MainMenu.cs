@@ -22,7 +22,6 @@ public sealed class MainMenu : UserInterface
     private Player _player;
     private Animator _animator;
     private HUDInteface _hud;
-    private InterfaceSwitcher _switcher;
 
     private bool _isRun = false;
 
@@ -48,9 +47,8 @@ public sealed class MainMenu : UserInterface
         HideAction -= () => _animator.SetBool("ShiftPanels", true); 
     }
     [Inject]
-    public void Construct(Player player, InterfaceSwitcher switcher, HUDInteface hud)
+    public void Construct(Player player, HUDInteface hud)
     {
-        _switcher = switcher;
         _player = player;
         _hud = hud;
     }
@@ -65,7 +63,6 @@ public sealed class MainMenu : UserInterface
             _player.SetBehaviour(GetPlayerType().Create<PlayerBaseBehaviour>());
             _backGround.enabled = false;
             Hide();
-            _switcher.SetShow(_hud);
             if (PlayGameAction != null)
                 PlayGameAction();
       

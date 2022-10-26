@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using Zenject;
 
 namespace Underworld
 {
@@ -18,7 +18,8 @@ namespace Underworld
         public bool IsReady { get; private set; } = true;
         public bool IsPause { get; private set; } = false;
 
-        public void Intializate(Player player)
+        [Inject]
+        public void Construct(Player player)
         {
             _player = player;
         }

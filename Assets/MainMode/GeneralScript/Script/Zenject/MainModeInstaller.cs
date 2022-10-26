@@ -10,17 +10,14 @@ namespace MainMode
         [SerializeField] private MainMenu _mainMenu;
         [SerializeField] private DeadMenu _deadMenu;
         [SerializeField] private MapSpawner _mapSpawner;
-        [SerializeField] private InterfaceSwitcher _swithcer;
         [SerializeField] private EviilBotSpawner _eviilBotSpawner;
 
         public override void InstallBindings()
         {
-            base.InstallBindings();
             Container.Bind<MapGrid>().FromInstance(_mapgrid).AsSingle();
             Container.Bind<MainMenu>().FromInstance(_mainMenu).AsSingle();
             Container.Bind<DeadMenu>().FromInstance(_deadMenu).AsSingle();
             Container.Bind<MapSpawner>().FromInstance(_mapSpawner).AsSingle();
-            Container.Bind<InterfaceSwitcher>().FromInstance(_swithcer).AsSingle();
             Container.Bind<EviilBotSpawner>().FromInstance(_eviilBotSpawner).AsSingle();
         }
     }

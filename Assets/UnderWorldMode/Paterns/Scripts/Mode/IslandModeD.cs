@@ -232,23 +232,5 @@ namespace Underworld
             return bounds;
         }
         #endregion
-        #region Pause
-        public override void Pause()
-        {
-            base.Pause();
-            foreach (var term in _activeTils)
-            {
-                term.Pause();
-            }
-        }
-        public override void UnPause()
-        {
-            base.UnPause();
-            foreach (var term in _activeTils)
-            {
-                term.UnPause();
-            }
-        }
-        #endregion
     }
 }

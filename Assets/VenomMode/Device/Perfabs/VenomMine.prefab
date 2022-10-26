@@ -181,11 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3007f58dd4793e84f811ad0f64af3710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showOnStart: 0
   _trigerDistance: 0.7
-  _attackInfo:
-    _timeEffect: 0.5
-    _effect: 0
-    _attack: 0
+  _attackInfo: {fileID: 11400000, guid: a59263749fcfaaf4394d6642c31f6e1e, type: 2}
   _explosion: {fileID: 189862808861378626}
   _animator: {fileID: 6408798044452368223}
   _bodySprite: {fileID: 2072596686029436452}

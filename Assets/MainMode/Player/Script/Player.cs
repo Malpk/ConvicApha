@@ -14,13 +14,12 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     [SerializeField] private ShootMarkerView _shootMarker;
     [SerializeField] private PlayerState _state;
     [SerializeField] private PlayerBaseBehaviour _behaviour;
-    [SerializeField] private IBlock _contrallerBlocker;
+    [SerializeField] private PCPlayerController _contrallerBlocker;
 
     private HUDInteface _hud;
     private Rigidbody2D _rigidBody;
     private PlayerMovement _playerMovement = new PlayerMovement();
     private IPlayerComponent[] _component;
-    private ITransport _transport;
 
     private Vector3 _startPosition;
     private PlayerInventory _inventory = new PlayerInventory();
@@ -51,12 +50,14 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
 
     public void SetBehaviour(PlayerBaseBehaviour behaviour)
     {
-        if (_behaviour)
+        if (_behaviour != behaviour && _behaviour)
         {
+            _behaviour.DeadAction -= DeadMessange;
             Destroy(_behaviour.gameObject);
         }
         _behaviour = behaviour;
         _behaviour.Intializate(this, _hud);
+        _behaviour.DeadAction += DeadMessange;
         _behaviour.transform.parent = transform;
         _behaviour.transform.localPosition = Vector3.zero;
         _behaviour.transform.localRotation = Quaternion.Euler(Vector3.zero);;
