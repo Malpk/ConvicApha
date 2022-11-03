@@ -1,11 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class JumperAttack : StateMachineBehaviour
 {
+    [SerializeField] private float attackReloadTime;
+    [SerializeField] private int damageValue;
+    [SerializeField] private DamageInfo attackInfo;
+    [SerializeField] private float aimStrength;
+    [SerializeField] private float attackSpeed;
+
     private bool wasDealDamage;
     private Transform player;
     private Vector2 oldPosPlayer;
@@ -14,11 +17,7 @@ public class JumperAttack : StateMachineBehaviour
     private NavMeshAgent agent;
     private float time;
     private Vector2 dirToPlayer;
-    [SerializeField] private float attackReloadTime;
-    [SerializeField] private int damageValue;
-    [SerializeField] private AttackInfo attackInfo;
-    [SerializeField] private float aimStrength;
-    [SerializeField] private float attackSpeed;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         dirToPlayer = oldPosPlayer - (Vector2)animator.transform.position;

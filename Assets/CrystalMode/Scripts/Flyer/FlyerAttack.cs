@@ -8,7 +8,7 @@ public class FlyerAttack : StateMachineBehaviour
 
     [SerializeField] private float stopAttackDistance;
     [SerializeField] private int damagevalue;
-    [SerializeField] private AttackInfo AttackInfo;
+    [SerializeField] private DamageInfo AttackInfo;
     private float timeSinceAttack;
     private float attackCoolDown = 1.5f;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

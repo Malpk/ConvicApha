@@ -17,7 +17,21 @@ namespace MainMode.Items
         private NavMeshSurface2d agentSurface;
         private Player _player;
 
-        public override void Use()
+        public override string Name => "Кристальная пыль";
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            UseAction += UseDust;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            UseAction -= UseDust;
+        }
+
+        private void UseDust()
         {
             FindGameObjAtScene();
             

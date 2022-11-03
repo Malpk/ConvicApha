@@ -43,7 +43,7 @@ public class ZombieIdle : StateMachineBehaviour
         Debug.DrawRay(animator.transform.position + directionToPlayer.normalized, directionToPlayer, Color.yellow);
         if (hit2D.collider != null)
         {
-            return hit2D.collider.gameObject.CompareTag("Player") || hit2D.collider.GetComponent<Jeff>(); 
+            return hit2D.collider.gameObject.CompareTag("Player") || hit2D.collider.GetComponent<Player>(); 
         }
         return false;
     }

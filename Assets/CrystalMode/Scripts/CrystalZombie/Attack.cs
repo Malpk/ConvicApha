@@ -3,7 +3,7 @@ using UnityEngine;
 public class Attack : StateMachineBehaviour
 {
     [SerializeField] private int attackValue;
-    [SerializeField] private AttackInfo attackInfo;
+    [SerializeField] private DamageInfo attackInfo;
     [SerializeField] private float attackCoolDown;
     [SerializeField] private float stopAttackingDistance;
     private Transform player;

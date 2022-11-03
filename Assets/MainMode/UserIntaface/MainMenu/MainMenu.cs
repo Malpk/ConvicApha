@@ -68,7 +68,8 @@ public sealed class MainMenu : UserInterface
             Hide();
             if (PlayGameAction != null)
                 PlayGameAction();
-            _ending.SetUseItems(artifact.Name , consumable.Name, _player.Name);
+            if(_ending)
+                _ending.SetUseItems(artifact.Name , consumable.Name, _player.Name);
         }
     }
 
