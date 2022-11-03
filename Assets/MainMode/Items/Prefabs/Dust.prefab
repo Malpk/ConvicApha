@@ -40,7 +40,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057335158860173946}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -3105452852561186640, guid: 0be3addbc5874e149a91272734af896b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67fda5d8ab8110241afc12c3090f5164, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,18 +96,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83250dc3a8e3da49a5fd73b69d73759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 1
-  _isInfinity: 0
-  _hideOnAwake: 1
-  _typeUse: 0
-  ItemSprite: {fileID: 4858452443649745831, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
+  ItemSprite: {fileID: 21300000, guid: 67fda5d8ab8110241afc12c3090f5164, type: 3}
   _spriteBody: {fileID: 2057335158860173925}
-  resistDuration: 5
+  resistDuration: 0
   attackResist:
     _timeEffect: 0.5
     _effect: 0
     _attack: 0
   _wallCrystalPrefab: {fileID: 2780599325777319706, guid: 779647e867d05494ab6c09a421f799ad, type: 3}
+  dustAnim: {fileID: 1183736774346417609, guid: 0c85a4ccdef41a942ad501503d0b0c54, type: 3}
+  wallBreakParticle: {fileID: 4794832473774059272, guid: c702db3cf97907c4a8e11de235e34e74, type: 3}
+  blockPutParticle: {fileID: 4286512817860444515, guid: 1b93f5c8e6249754586dbea8c57ca29c, type: 3}
 --- !u!58 &2057335158860173926
 CircleCollider2D:
   m_ObjectHideFlags: 0

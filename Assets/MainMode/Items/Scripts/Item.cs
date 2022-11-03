@@ -1,84 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode.Items
 {   
     [RequireComponent(typeof(Collider2D))]
-    public abstract class Item : SmartItem, IPickable, IUseable
+    public abstract class Item : MonoBehaviour, IPickable, IUseable
     {
-        [Header("Setting")]
-        [Min(1)]
-        [SerializeField] private int _count = 1;
-        [SerializeField] private bool _isInfinity;
-        [SerializeField] private bool _showOnStart;
-        [SerializeField] private ItemUseType _typeUse;
-        [Header("Reference")]
         [SerializeField] protected Sprite ItemSprite;
         [SerializeField] protected SpriteRenderer _spriteBody;
-        
-        protected Player user;
+
         private Collider2D _collider;
 
-        protected System.Action UseAction;
-        protected System.Action ResetAction;
-
         public bool Active { get; private set; }
-        public bool IsInfinity => _isInfinity;
-        public abstract string Name { get; }
-        public Sprite Sprite => ItemSprite;
-        public ItemUseType UseType => _typeUse;
 
-        public int Count { get; private set; }
+        protected Player _target;
+        public Sprite Sprite => ItemSprite;
 
         protected virtual void Awake()
         {
-            _collider = GetComponent<Collider2D>(); 
+            _collider = GetComponent<Collider2D>();
+ 
             _collider.isTrigger = true;
-            Count = _count;
-            SetMode(false);
-        }
-        protected virtual void OnEnable()
-        {
-            ShowItemAction +=() => SetMode(true);
-            HideItemAction += () => SetMode(false);
-        }
-        protected virtual void OnDisable()
-        {
-            ShowItemAction -= () => SetMode(true);
-            HideItemAction -= () => SetMode(false);
-        }
-        private void Start()
-        {
-            if (_showOnStart)
-                ShowItem();
+            SetMode(true);
         }
         public void Pick(Player player)
         {
-            user = player;
-            if (IsShow)
-                HideItem();
+            _target = player;
+            SetMode(false);
         }
-        public bool Use()
+
+        public abstract void Use();
+
+
+        public void SetMode(bool mode)
         {
-            if (Count > 0)
-            {
-                if(!IsInfinity)
-                    Count--;
-                if (UseAction != null)
-                    UseAction();
-            }
-            return Count > 0;
-        }
-        public void Reset()
-        {
-            Count = _count;
-            if (ResetAction != null)
-                ResetAction();
-        }
-        private void SetMode(bool mode)
-        {
-            Active = mode;
+            _collider = gameObject.GetComponent<Collider2D>();
+            _spriteBody = gameObject.GetComponent<SpriteRenderer>();
             _spriteBody.enabled = mode;
             _collider.enabled = mode;
+            Active = mode;
         }
     }
 }
