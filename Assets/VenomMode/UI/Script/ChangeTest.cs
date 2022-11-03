@@ -21,6 +21,7 @@ namespace MainMode.Mode1921
         [SerializeField] private Triger _triger;
         [SerializeField] private Canvas _canvas;
         [SerializeField] private TextMeshProUGUI _messnga;
+        [SerializeField] private VenomGameSwitceher _gameSwithcer;
 
         private Coroutine _runGame;
 
@@ -46,14 +47,6 @@ namespace MainMode.Mode1921
         {
             if (_runGame == null)
             {
-                if (swithchInteface != null)
-                {
-                    swithchInteface.SetShow(this);
-                }
-                else
-                {
-                    Show();
-                }
                 SetMessange(_startMessnage, Color.white, _fontMessangeStart);
                 _runGame = StartCoroutine(ChangeTestUpdate(oxyGen,countTest));
             }
@@ -62,6 +55,7 @@ namespace MainMode.Mode1921
         {
             var hotKey = KeyCode.Space;
             int complite = 0;
+            _gameSwithcer.ShowRepairTest();
             for (complite = 0; complite < countTest && oxyGen.CurretAirSupply > 0; complite++)
             {
                 yield return new WaitUntil(() => Input.GetKeyDown(hotKey));
@@ -79,12 +73,8 @@ namespace MainMode.Mode1921
                     yield return null;
                 }
             }
-            if (swithchInteface != null)
-                swithchInteface.SetHide();
-            else
-                Hide();
-            if (CompliteGame != null)
-                CompliteGame((complite + 1));
+            CompliteGame?.Invoke(complite + 1);
+            _gameSwithcer.HideRepairTest();
             _runGame = null;
         }
         private void ReadMessange(MessangeRepairTest messange, OxyGenSet oxyGen)

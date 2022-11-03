@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class RayPoint : MonoBehaviour, IPause
+    public class RayPoint : MonoBehaviour
     {
         private RayPoint _center;
         private List<Term> _terms = new List<Term>();
@@ -59,20 +59,6 @@ namespace Underworld
                 }
             }
             return terms;
-        }
-        public void Pause()
-        {
-            foreach (var term in _terms)
-            {
-                term.Pause();
-            }
-        }
-        public void UnPause()
-        {
-            foreach (var term in _terms)
-            {
-                term.UnPause();
-            }
         }
         #endregion
 

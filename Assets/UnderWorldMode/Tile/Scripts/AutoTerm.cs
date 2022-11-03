@@ -56,13 +56,11 @@ namespace Underworld
         public void Pause()
         {
             _isPause = true;
-            _term.Pause();
         }
 
         public void UnPause()
         {
             _isPause = false;
-            _term.UnPause(); ;
         }
 
         private IEnumerator AutoMode()

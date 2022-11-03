@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public sealed class UnderWorldGameBuilder : MonoBehaviour,IPause
+    public sealed class UnderWorldGameBuilder : MonoBehaviour
     {
         [Header("General Mode")]
         [SerializeField] private bool _playOnStart;
@@ -19,10 +19,6 @@ namespace Underworld
         public bool IsPlay { get; private set; } = false;
         public bool IsPause { get; private set; } = false;
 
-        public void Intilizate(Player player)
-        {
-            _switchPatern.Intializate(player);
-        }
 
         private void Start()
         {
@@ -42,23 +38,11 @@ namespace Underworld
         {
             if (IsPlay)
             {
-                UnPause();
-                IsPause = false;
+                IsPlay = false;
                 _switchPatern.Deactivate();
             }
         }
 
-        public void Pause()
-        {
-            IsPause = true;
-            _switchPatern.Pause();
-        }
-
-        public void UnPause()
-        {
-            IsPause = false;
-            _switchPatern.UnPause();
-        }
         #endregion
 
         private IEnumerator Build()

@@ -1,42 +1,67 @@
+using MainMode.GameInteface;
 using UnityEngine;
-using Zenject;
+
 
 namespace MainMode
 {
     public abstract class GameSwitcher : MonoBehaviour
     {
-        private Player _player;
-        private DeadMenu _deadMenu;
-        private MainMenu _mainMenu;
+        [SerializeField] private Player _player;
+        [SerializeField] private DeadMenu _deadMenu;
+        [SerializeField] private MainMenu _mainMenu;
 
-        [Inject]
-        public void ConstructGameSwitcher(Player player, DeadMenu deadMenu, MainMenu mainMenu)
-        {
-            _player = player;
-            _deadMenu = deadMenu;
-            _mainMenu = mainMenu;
-        }
+        [SerializeField] protected HUDInteface hud;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _player.DeadAction += Stop;
             _deadMenu.RestartAction += Play;
             _mainMenu.PlayGameAction += Play;
+            _player.DeadAction += ShowDeadMenu;
+            _deadMenu.RestartAction += ShowHud;
+            _mainMenu.PlayGameAction += ShowHud;
+            _deadMenu.BackMainMenuAction += BackMainMenu;
         }
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            _player.DeadAction -= Play;
+            _player.DeadAction -= Stop;
             _deadMenu.RestartAction -= Play;
             _mainMenu.PlayGameAction -= Play;
+            _player.DeadAction -= ShowDeadMenu;
+            _deadMenu.RestartAction -= ShowHud;
+            _mainMenu.PlayGameAction -= ShowHud;
+            _deadMenu.BackMainMenuAction -= BackMainMenu;
         }
 
-        private void Play()
+        protected void Play()
         {
             _player.Play();
+            PlayMessange();
         }
 
-        protected abstract void PlayMessange();
-        protected abstract void Stop();
+        protected void Stop()
+        {
+            _player.Stop();
+            StopMessange();
+        }
+        private void ShowHud()
+        {
+            _mainMenu.Hide();
+            _deadMenu.Hide();
+            hud.Show();
+        }
 
+        private void ShowDeadMenu()
+        {
+            _deadMenu.Show();
+            hud.Hide();
+        }
+        protected virtual void BackMainMenu()
+        {
+            _deadMenu.Hide();
+            _mainMenu.Show();
+        }
+        protected abstract void PlayMessange();
+        protected abstract void StopMessange();
     }
 }

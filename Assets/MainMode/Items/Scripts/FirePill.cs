@@ -7,6 +7,8 @@ namespace MainMode.Items
         [SerializeField] private ItemEffect _itemEffect;
         [SerializeField] private GameObject _fireShield;
 
+        public override string Name => "Огнезин";
+
         protected override void Awake()
         {
             base.Awake();

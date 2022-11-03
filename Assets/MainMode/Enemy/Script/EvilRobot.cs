@@ -106,10 +106,6 @@ namespace MainMode
             }
         }
 
-        public bool SeedToTransport(ITransport movement, float timeActive)
-        {
-            return false;
-        }
         private void Update()
         {
             if (IsActive)

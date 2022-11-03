@@ -18,26 +18,13 @@ namespace MainMode
 
         private bool _isPlay;
         private bool _isPause;
-        private MainMenu _mainMode;
 
         public bool IsReady { private set; get; }
         
         [Inject]
-        public void Construct(Player target, MapGrid mapGrid, MainMenu mainMode)
+        public void Construct(Player target)
         {
             _target = target;
-            _mapGrid = mapGrid;
-            _mainMode = mainMode;
-        }
-        private void OnEnable()
-        {
-            _mainMode.PlayGameAction += Play;
-            _target.DeadAction += Play;
-        }
-        private void OnDisable()
-        {
-            _mainMode.PlayGameAction -= Play;
-            _target.DeadAction -= Play;
         }
 
         private void Start()

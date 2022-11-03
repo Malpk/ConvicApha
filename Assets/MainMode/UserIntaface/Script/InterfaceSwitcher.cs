@@ -1,32 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace MainMode.GameInteface
 {
     public class InterfaceSwitcher : MonoBehaviour
     {
-        private Player _player;
-        private DeadMenu _deadMenu;
 
         private UserInterface _curretInteface;
         private UserInterface[] _intefaces;
 
         private List<UserInterface> _stack = new List<UserInterface>();
 
-        [Inject]
-        public void Construct(Player player, DeadMenu deadMenu)
-        {
-            _player = player;
-            _deadMenu = deadMenu;
-        }
-
         public void Intializate(UserInterface[] intefaces, UserInterfaceType startInterface)
         {
             _intefaces = intefaces;
             for (int i = 0; i < _intefaces.Length; i++)
             {
-                _intefaces[i].Intializate(this);
                 _intefaces[i].Hide();
             }
             foreach (var element in _intefaces)
@@ -39,16 +28,6 @@ namespace MainMode.GameInteface
             }
         }
 
-        private void OnEnable()
-        {
-            _player.DeadAction += () => SetShow(GetComponentInChildren<DeadMenu>());
-            _deadMenu.RestartAction += () => SetShow(GetComponentInChildren<HUDInteface>());
-        }
-        private void OnDisable()
-        {
-            _player.DeadAction -= () => SetShow(GetComponentInChildren<DeadMenu>());
-            _deadMenu.RestartAction -= () => SetShow(GetComponentInChildren<HUDInteface>());
-        }
 
         public void SetShow(UserInterface inteface)
         {

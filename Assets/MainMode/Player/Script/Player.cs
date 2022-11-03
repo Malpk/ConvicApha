@@ -20,7 +20,6 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     private Rigidbody2D _rigidBody;
     private PlayerMovement _playerMovement = new PlayerMovement();
     private IPlayerComponent[] _component;
-    private ITransport _transport;
 
     private Vector3 _startPosition;
     private PlayerInventory _inventory = new PlayerInventory();
@@ -32,6 +31,8 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     public bool IsPlay { get; private set; } = false;
     public Vector2 Position => transform.position;
     public float MovementEffect => _behaviour.MoveEffect;
+
+    public string Name => _behaviour.Name;
 
     private void Awake()
     {
@@ -51,7 +52,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
 
     public void SetBehaviour(PlayerBaseBehaviour behaviour)
     {
-        if (_behaviour)
+        if (_behaviour != behaviour && _behaviour)
         {
             Destroy(_behaviour.gameObject);
         }
@@ -95,6 +96,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
             {
                 component.Play();
             }
+            _behaviour.gameObject.SetActive(true);
             _behaviour.Play();
             _contrallerBlocker.UnBlock();
         }
@@ -106,6 +108,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
         {
             IsPlay = false;
             _behaviour.Stop();
+            _behaviour.gameObject.SetActive(false);
             _contrallerBlocker.Block();
         }
     }
@@ -127,6 +130,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     {
         if (IsPlay)
         {
+            IsPlay = false;
             Stop();
             _behaviour.Dead();
             _rigidBody.velocity = Vector2.zero;

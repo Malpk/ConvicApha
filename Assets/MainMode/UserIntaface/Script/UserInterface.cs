@@ -7,18 +7,12 @@ namespace MainMode.GameInteface
     [RequireComponent(typeof(Canvas))]
     public abstract class UserInterface : MonoBehaviour
     {
-        protected InterfaceSwitcher swithchInteface;
-     
         public abstract UserInterfaceType Type { get; }
         public bool IsShow { get; private set; }
 
         protected event System.Action HideAction;
         protected event System.Action ShowAction;
 
-        public void Intializate(InterfaceSwitcher swither)
-        {
-            swithchInteface = swither;
-        }
         public void Show()
         {
             IsShow = true;

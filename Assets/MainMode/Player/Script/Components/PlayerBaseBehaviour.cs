@@ -7,6 +7,7 @@ namespace PlayerComponent
 {
     public class PlayerBaseBehaviour : MonoBehaviour
     {
+        [SerializeField] private string _name;
         [SerializeField] private Animator _animator;
         [SerializeField] private PlayerHealth _health;
         [SerializeField] private PlayerResistContainer _playerResist;
@@ -27,6 +28,7 @@ namespace PlayerComponent
 
         public int Health => _health.Health;
         public float MoveEffect => _playerEffectContainer.MoveEffect;
+        public string Name => _name;
         protected bool IsPlay { get; private set; } = false;
 
         private void OnEnable()

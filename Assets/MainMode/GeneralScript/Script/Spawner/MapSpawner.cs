@@ -25,8 +25,6 @@ namespace MainMode
 
         private bool _isPlay = false;
         private MapGrid _mapGrid;
-        private MainMenu _mainMenu;
-        private DeadMenu _deadMenu;
 
         private void Awake()
         {
@@ -34,28 +32,13 @@ namespace MainMode
         }
 
         [Inject]
-        public void Construct(Player player, MainMenu mainMenu, DeadMenu deadMenu)
+        public void Construct(Player player)
         {
             _player = player;
-            _mainMenu = mainMenu;
-            _deadMenu = deadMenu;
         }
 
-        private void OnEnable()
-        {
-            _player.DeadAction += Stop;
-            _deadMenu.RestartAction += Play;
-            _mainMenu.PlayGameAction += Play;
-        }
 
-        private void OnDisable()
-        {
-            _player.DeadAction -= Stop;
-            _deadMenu.RestartAction -= Play;
-            _mainMenu.PlayGameAction -= Play;
-        }
-
-        private void Play()
+        public void Play()
         {
             if (!_isPlay)
             {
@@ -63,7 +46,7 @@ namespace MainMode
                 StartCoroutine(Spawning());
             }
         }
-        private void Stop()
+        public void Stop()
         {
             if (_isPlay)
             {

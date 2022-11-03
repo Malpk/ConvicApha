@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeReload: 3
+  user: {fileID: 0}
   _healValue: 1
 --- !u!1 &7257554728971830200
 GameObject:
@@ -161,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7130df45052db4ab0fd692790b9f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: "\u0414\u0436\u0435\u0444"
   _animator: {fileID: 7257554728971830201}
   _health:
     _health: 5

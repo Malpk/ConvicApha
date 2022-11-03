@@ -7,6 +7,8 @@ namespace MainMode.Items
         [SerializeField] private float _timeDestroy;
         [SerializeField] private MouseExplosionProjectale _projectale;
 
+        public override string Name => "Взрывная мышь";
+
         protected override void OnEnable()
         {
             base.OnEnable();

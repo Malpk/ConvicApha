@@ -12,19 +12,14 @@ namespace Underworld
             base.OnEnable();
             PlayAction += PlayUnderworld;
             StopGameAction += StopUnderworld;
-            playerLoader.PlayerLoadAction += Intializate;
         }
         protected override void OnDisable()
         {
             base.OnDisable();
             PlayAction -= PlayUnderworld;
             StopGameAction -= StopUnderworld;
-            playerLoader.PlayerLoadAction -= Intializate;
         }
-        private void Intializate(Player player)
-        {
-            _builder.Intilizate(player);
-        }
+
         private void PlayUnderworld()
         {
             _builder.Play();

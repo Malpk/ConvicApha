@@ -15,6 +15,7 @@ public sealed class MainMenu : UserInterface
     [SerializeField] private RawImage _backGround;
     [SerializeField] private VideoPlayer _videoPlayer;
     [Header("Player Config")]
+    [SerializeField] private Ending _ending;
     [SerializeField] private ItemScroller _characterScroller;
     [SerializeField] private ItemScroller _artifactItemScroller;
     [SerializeField] private ItemScroller _consumableItemScroller;
@@ -22,7 +23,6 @@ public sealed class MainMenu : UserInterface
     private Player _player;
     private Animator _animator;
     private HUDInteface _hud;
-    private InterfaceSwitcher _switcher;
 
     private bool _isRun = false;
 
@@ -48,9 +48,8 @@ public sealed class MainMenu : UserInterface
         HideAction -= () => _animator.SetBool("ShiftPanels", true); 
     }
     [Inject]
-    public void Construct(Player player, InterfaceSwitcher switcher, HUDInteface hud)
+    public void Construct(Player player, HUDInteface hud)
     {
-        _switcher = switcher;
         _player = player;
         _hud = hud;
     }
@@ -60,15 +59,16 @@ public sealed class MainMenu : UserInterface
         if (!_isRun)
         {
             _isRun = true;
-            _player.PickItem(_consumableItemScroller.GetSelectItem().Create<ConsumablesItem>());
-            _player.PickItem(_artifactItemScroller.GetSelectItem().Create<Item>());
+            var artifact = _artifactItemScroller.GetSelectItem().Create<Item>();
+            var consumable = _consumableItemScroller.GetSelectItem().Create<ConsumablesItem>();
+            _player.PickItem(artifact);
+            _player.PickItem(consumable);
             _player.SetBehaviour(GetPlayerType().Create<PlayerBaseBehaviour>());
             _backGround.enabled = false;
             Hide();
-            _switcher.SetShow(_hud);
             if (PlayGameAction != null)
                 PlayGameAction();
-      
+            _ending.SetUseItems(artifact.Name , consumable.Name, _player.Name);
         }
     }
 

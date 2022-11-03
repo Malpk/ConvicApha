@@ -7,6 +7,8 @@ namespace MainMode.Items
         [SerializeField] private float _timeActive;
         [SerializeField] private AirJet _jetAir;
 
+        public override string Name => "Болончик";
+
         protected override void Awake()
         {
             base.Awake();

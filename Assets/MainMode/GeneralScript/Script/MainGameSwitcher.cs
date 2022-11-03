@@ -1,19 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
+using MainMode.GameInteface;
 
 namespace MainMode
 {
     public class MainGameSwitcher : GameSwitcher
     {
-        protected override void PlayMessange()
+        [SerializeField] private MapSpawner _mapSpawner;
+        [SerializeField] private EviilBotSpawner _botSpawner;
+        [SerializeField] private TimerCountRecord _timer;
+
+        [Inject]
+        public void Construct(MapSpawner mapSpawner, EviilBotSpawner eviilBotSpawner)
         {
-            throw new System.NotImplementedException();
+            _mapSpawner = mapSpawner;
+            _botSpawner = eviilBotSpawner;
         }
 
-        protected override void Stop()
+        protected override void PlayMessange()
         {
-            throw new System.NotImplementedException();
+            _mapSpawner.Play();
+            _botSpawner.Play();
+            _timer.Play();
+        }
+
+        protected override void StopMessange()
+        {
+            _mapSpawner.Stop();
+            _botSpawner.Stop();
+            _timer.Stop();
         }
     }
 }

@@ -32,22 +32,6 @@ namespace Underworld
             _builder = builder;
             terms = _builder.Terms;
         }
-        public override void Pause()
-        {
-            base.Pause();
-            foreach (var term in terms)
-            {
-                term.Pause();
-            }
-        }
-        public override void UnPause()
-        {
-            base.UnPause();
-            foreach (var term in terms)
-            {
-                term.UnPause();
-            }
-        }
         protected void ActivateMap(FireState state)
         {
             foreach (var term in terms)
