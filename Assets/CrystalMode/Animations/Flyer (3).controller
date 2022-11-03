@@ -160,10 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopAttackDistance: 1
   damagevalue: 1
-  AttackInfo:
-    _timeEffect: 0.5
-    _effect: 0
-    _attack: 0
+  AttackInfo: {fileID: 11400000, guid: 7ad453cbb6eb5734a834fed78eb39bad, type: 2}
 --- !u!1101 &2322379713475799493
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

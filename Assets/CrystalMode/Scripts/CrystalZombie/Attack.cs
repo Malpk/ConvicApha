@@ -27,7 +27,6 @@ public class Attack : StateMachineBehaviour
 
         if (time > attackCoolDown)
         {
-            Debug.Log("attacked");
             time = 0;
             player.GetComponent<Player>().TakeDamage(attackValue, attackInfo);
         }

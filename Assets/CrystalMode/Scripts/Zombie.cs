@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using MainMode;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Tilemaps;
 
 public class Zombie : MonoBehaviour
 {

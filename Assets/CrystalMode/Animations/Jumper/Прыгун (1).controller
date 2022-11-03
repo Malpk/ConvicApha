@@ -111,10 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackValue: 0
-  attackInfo:
-    _timeEffect: 0.5
-    _effect: 0
-    _attack: 0
+  attackInfo: {fileID: 0}
   attackCoolDown: 0
   stopAttackingDistance: 0
 --- !u!1101 &-1900782870976922644
@@ -411,10 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackReloadTime: 2
   damageValue: 2
-  attackInfo:
-    _timeEffect: 0.5
-    _effect: 0
-    _attack: 0
+  attackInfo: {fileID: 11400000, guid: 7ad453cbb6eb5734a834fed78eb39bad, type: 2}
   aimStrength: 4
   attackSpeed: 6
 --- !u!114 &4854301260756845867
