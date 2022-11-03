@@ -15,6 +15,7 @@ public sealed class MainMenu : UserInterface
     [SerializeField] private RawImage _backGround;
     [SerializeField] private VideoPlayer _videoPlayer;
     [Header("Player Config")]
+    [SerializeField] private Ending _ending;
     [SerializeField] private ItemScroller _characterScroller;
     [SerializeField] private ItemScroller _artifactItemScroller;
     [SerializeField] private ItemScroller _consumableItemScroller;
@@ -58,14 +59,16 @@ public sealed class MainMenu : UserInterface
         if (!_isRun)
         {
             _isRun = true;
-            _player.PickItem(_consumableItemScroller.GetSelectItem().Create<ConsumablesItem>());
-            _player.PickItem(_artifactItemScroller.GetSelectItem().Create<Item>());
+            var artifact = _artifactItemScroller.GetSelectItem().Create<Item>();
+            var consumable = _consumableItemScroller.GetSelectItem().Create<ConsumablesItem>();
+            _player.PickItem(artifact);
+            _player.PickItem(consumable);
             _player.SetBehaviour(GetPlayerType().Create<PlayerBaseBehaviour>());
             _backGround.enabled = false;
             Hide();
             if (PlayGameAction != null)
                 PlayGameAction();
-      
+            _ending.SetUseItems(artifact.Name , consumable.Name, _player.Name);
         }
     }
 

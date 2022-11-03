@@ -78,8 +78,6 @@ namespace Underworld
                 yield return WaitTime(_delay);
                 progress += _delay / workDuration;
             }
-            ClearPool(_poolDeactive);
-            yield return ClearActivePool();
             _startMode = null;
             _builder.ClearMap();
             State = ModeState.Stop;
@@ -168,22 +166,6 @@ namespace Underworld
                 var term = pool[0];
                 pool.Remove(term);
                 Destroy(term.gameObject);
-            }
-        }
-        public override void Pause()
-        {
-            base.Pause();
-            foreach (var term in _poolActive)
-            {
-                term.Pause();
-            }
-        }
-        public override void UnPause()
-        {
-            base.UnPause();
-            foreach (var term in _poolActive)
-            {
-                term.UnPause();
             }
         }
     }

@@ -131,13 +131,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 2016297314}
     m_Modifications:
     - target: {fileID: 976551805, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: m_text
+      value: "\u0440\u0435\u043A\u043E\u0440\u0434 00:00"
+      objectReference: {fileID: 0}
+    - target: {fileID: 976551805, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+      objectReference: {fileID: 11400000, guid: e6e494c292e915043a94f8e8c944ebfd, type: 2}
     - target: {fileID: 976551805, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+      objectReference: {fileID: 1024374449287795489, guid: e6e494c292e915043a94f8e8c944ebfd, type: 2}
     - target: {fileID: 3423585140850362371, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_Name
       value: MainMenuUI

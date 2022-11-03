@@ -9,6 +9,8 @@ namespace MainMode.Items
 
         private CrystalSheild crystalSheild;
 
+        public override string Name => "Кристальная пыль";
+
         protected override void OnEnable()
         {
             base.OnEnable();

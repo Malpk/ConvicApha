@@ -23,6 +23,7 @@ namespace MainMode.Items
 
         public bool Active { get; private set; }
         public bool IsInfinity => _isInfinity;
+        public abstract string Name { get; }
         public Sprite Sprite => ItemSprite;
         public ItemUseType UseType => _typeUse;
 

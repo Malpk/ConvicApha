@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Underworld
 {
-    public class SwitchPatern : MonoBehaviour, IPause
+    public class SwitchPatern : MonoBehaviour
     {
         [SerializeField] private bool _playOnStart;
         [SerializeField] private ModeType _chooseMode;
@@ -41,20 +41,12 @@ namespace Underworld
 
         public void Deactivate()
         {
+            foreach (var term in _builder.Terms)
+            {
+                term.Deactivate();
+                term.HideItem();
+            }
             _curretMode.Deactivate();
-        }
-        public void Pause()
-        {
-            IsPause = true;
-            if (_curretMode)
-                _curretMode.Pause();
-        }
-
-        public void UnPause()
-        {
-            IsPause = false;
-            if (_curretMode)
-                _curretMode.UnPause();
         }
         private GeneralMode GetPatern(ModeType type)
         {

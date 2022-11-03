@@ -10,6 +10,8 @@ namespace MainMode.Mode1921
 
         public int FiltrationTime => _filtrationTime;
 
+        public override string Name => "Фильтр";
+
         protected override void OnEnable()
         {
             base.OnEnable();

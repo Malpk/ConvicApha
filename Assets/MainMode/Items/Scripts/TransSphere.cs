@@ -8,6 +8,8 @@ namespace MainMode.Items
         [SerializeField] private int _unitDistance;
         [SerializeField] private TransSpherePoint _point;
 
+        public override string Name => "Транссфера";
+
         protected override void OnEnable()
         {
             base.OnEnable();

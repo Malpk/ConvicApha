@@ -32,6 +32,8 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     public Vector2 Position => transform.position;
     public float MovementEffect => _behaviour.MoveEffect;
 
+    public string Name => _behaviour.Name;
+
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -52,12 +54,10 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     {
         if (_behaviour != behaviour && _behaviour)
         {
-            _behaviour.DeadAction -= DeadMessange;
             Destroy(_behaviour.gameObject);
         }
         _behaviour = behaviour;
         _behaviour.Intializate(this, _hud);
-        _behaviour.DeadAction += DeadMessange;
         _behaviour.transform.parent = transform;
         _behaviour.transform.localPosition = Vector3.zero;
         _behaviour.transform.localRotation = Quaternion.Euler(Vector3.zero);;
@@ -96,6 +96,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
             {
                 component.Play();
             }
+            _behaviour.gameObject.SetActive(true);
             _behaviour.Play();
             _contrallerBlocker.UnBlock();
         }
@@ -107,6 +108,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
         {
             IsPlay = false;
             _behaviour.Stop();
+            _behaviour.gameObject.SetActive(false);
             _contrallerBlocker.Block();
         }
     }
@@ -128,6 +130,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     {
         if (IsPlay)
         {
+            IsPlay = false;
             Stop();
             _behaviour.Dead();
             _rigidBody.velocity = Vector2.zero;

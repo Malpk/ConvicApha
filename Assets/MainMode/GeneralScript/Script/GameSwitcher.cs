@@ -1,6 +1,6 @@
 using MainMode.GameInteface;
 using UnityEngine;
-using Zenject;
+
 
 namespace MainMode
 {
@@ -12,45 +12,56 @@ namespace MainMode
 
         [SerializeField] protected HUDInteface hud;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _player.DeadAction += Stop;
             _deadMenu.RestartAction += Play;
             _mainMenu.PlayGameAction += Play;
+            _player.DeadAction += ShowDeadMenu;
+            _deadMenu.RestartAction += ShowHud;
+            _mainMenu.PlayGameAction += ShowHud;
             _deadMenu.BackMainMenuAction += BackMainMenu;
         }
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            _player.DeadAction -= Play;
+            _player.DeadAction -= Stop;
             _deadMenu.RestartAction -= Play;
             _mainMenu.PlayGameAction -= Play;
+            _player.DeadAction -= ShowDeadMenu;
+            _deadMenu.RestartAction -= ShowHud;
+            _mainMenu.PlayGameAction -= ShowHud;
             _deadMenu.BackMainMenuAction -= BackMainMenu;
         }
 
-        private void Play()
+        protected void Play()
         {
             _player.Play();
-            _mainMenu.Hide();
-            _deadMenu.Hide();
-            hud.Show();
             PlayMessange();
         }
 
-        private void Stop()
+        protected void Stop()
         {
             _player.Stop();
-            _deadMenu.Show();
-            hud.Hide();
             StopMessange();
         }
+        private void ShowHud()
+        {
+            _mainMenu.Hide();
+            _deadMenu.Hide();
+            hud.Show();
+        }
 
-        private void BackMainMenu()
+        private void ShowDeadMenu()
+        {
+            _deadMenu.Show();
+            hud.Hide();
+        }
+        protected virtual void BackMainMenu()
         {
             _deadMenu.Hide();
             _mainMenu.Show();
         }
         protected abstract void PlayMessange();
         protected abstract void StopMessange();
-
     }
 }

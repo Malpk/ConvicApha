@@ -10,6 +10,9 @@ namespace MainMode.Items
         [SerializeField] private float _timeActive;
         [Header("Reference")]
         [SerializeField] private MovementEffect _itemEffect;
+
+        public override string Name => "Шоколадка";
+
         protected override void OnEnable()
         {
             base.OnEnable();
