@@ -6,6 +6,8 @@ public class Zombie : MonoBehaviour
    private NavMeshAgent agent;
    public GameObject prefab;
 
+   [SerializeField] private float rotationSmoothness;
+
    private void Start()
    {
       if (gameObject.GetComponent<NavMeshAgent>())
@@ -23,13 +25,14 @@ public class Zombie : MonoBehaviour
    
    private void RotateToDirection()
    {
-      if (agent == null || agent.velocity == new Vector3(0,0,0) )
+      if (agent == null || agent.velocity == Vector3.zero )
       {
          return;
       }
       Vector2 velocity = agent.velocity;
       float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg + 90;
-      transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+      Quaternion smoothRot = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * rotationSmoothness);
+      transform.rotation = smoothRot;
    }
 
    public void Kill()
