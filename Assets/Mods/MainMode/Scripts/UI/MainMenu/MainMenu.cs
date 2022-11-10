@@ -7,6 +7,7 @@ using Zenject;
 using PlayerComponent;
 using MainMode.Items;
 using System;
+using TMPro;
 
 public sealed class MainMenu : UserInterface
 {
@@ -19,6 +20,8 @@ public sealed class MainMenu : UserInterface
     [SerializeField] private ItemScroller _characterScroller;
     [SerializeField] private ItemScroller _artifactItemScroller;
     [SerializeField] private ItemScroller _consumableItemScroller;
+    [SerializeField] private TextMeshProUGUI _name;
+    [SerializeField] private TextMeshProUGUI _desctiption;
 
     private Player _player;
     private Animator _animator;
@@ -33,23 +36,29 @@ public sealed class MainMenu : UserInterface
         _animator = GetComponent<Animator>();
         ShowEvent();
     }
-
-    private void OnEnable()
-    {
-        ShowAction += ShowEvent;
-        HideAction += () => _animator.SetBool("ShiftPanels", true);
-    }
-
-    private void OnDisable()
-    {
-        ShowAction -= ShowEvent;
-        HideAction -= () => _animator.SetBool("ShiftPanels", true); 
-    }
     [Inject]
     public void Construct(Player player, HUDInteface hud)
     {
         _player = player;
         _hud = hud;
+    }
+
+    private void OnEnable()
+    {
+        ShowAction += ShowEvent;
+        HideAction += () => _animator.SetBool("ShiftPanels", true);
+        _characterScroller.OnSelectItem += SetDescription;
+        _artifactItemScroller.OnSelectItem += SetDescription;
+        _consumableItemScroller.OnSelectItem += SetDescription;
+    }
+
+    private void OnDisable()
+    {
+        ShowAction -= ShowEvent;
+        HideAction -= () => _animator.SetBool("ShiftPanels", true);
+        _characterScroller.OnSelectItem -= SetDescription;
+        _artifactItemScroller.OnSelectItem -= SetDescription;
+        _consumableItemScroller.OnSelectItem -= SetDescription;
     }
 
     public void CreateNewConfig()
@@ -92,5 +101,11 @@ public sealed class MainMenu : UserInterface
         _canvas.enabled = false;
         _backGround.enabled = false;
         _videoPlayer.Stop();
+    }
+
+    private void SetDescription(string description, string name)
+    {
+        _desctiption.text = description;
+        _name.text = name;
     }
 }

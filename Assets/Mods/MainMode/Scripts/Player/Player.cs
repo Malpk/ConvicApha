@@ -138,11 +138,14 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     }
     public void TakeDamage(int damage, DamageInfo damgeInfo)
     {
-        if (_behaviour.TakeDamage(damage, damgeInfo))
+        if (IsPlay)
         {
-            _hud.SetHealth(_behaviour.Health);
-            if (_behaviour.Health == 0)
-                Explosion();
+            if (_behaviour.TakeDamage(damage, damgeInfo))
+            {
+                _hud.SetHealth(_behaviour.Health);
+                if (_behaviour.Health == 0)
+                    Explosion();
+            }
         }
     }
     public void Heal(int value)

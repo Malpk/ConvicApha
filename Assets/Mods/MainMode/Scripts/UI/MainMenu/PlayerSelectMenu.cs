@@ -24,7 +24,7 @@ namespace MainMode.GameInteface
 
         private PlayerInfo GetPlayerConfig()
         {
-            if (_selecter.GetCenterPoint().Item is PlayerInfo config)
+            if (_selecter.GetCenterPoint().Content is PlayerInfo config)
                 return config;
             return null;
         }

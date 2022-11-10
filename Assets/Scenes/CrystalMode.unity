@@ -19344,6 +19344,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1547220773}
     m_Modifications:
+    - target: {fileID: 3423585139840456465, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: m_fontSize
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423585139840456465, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 3423585140850362371, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_Name
       value: MainMenuUI
@@ -19444,6 +19452,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -3.23
       objectReference: {fileID: 0}
+    - target: {fileID: 6404714896275012096, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _ending
+      value: 
+      objectReference: {fileID: 786915980}
     - target: {fileID: 7054730912332841670, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: _scrollItems.Array.size
       value: 4
@@ -19666,7 +19678,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad66fb267584114c95eefc603e453a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 29e511454cfdede4ebe17724e2c490fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &841884490
@@ -29114,6 +29126,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6293894173706926812, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7020256287229499062, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
       propertyPath: m_Name
       value: Character

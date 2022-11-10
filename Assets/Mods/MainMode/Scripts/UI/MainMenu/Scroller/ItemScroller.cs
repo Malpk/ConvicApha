@@ -18,6 +18,8 @@ namespace MainMode.GameInteface
         private ScrollPoint[] _points;
         private Coroutine _curretCommand;
 
+        public System.Action<string,string> OnSelectItem;
+
         private void Awake()
         {
             _points = _scrollPointHolder.GetComponentsInChildren<ScrollPoint>();
@@ -30,6 +32,21 @@ namespace MainMode.GameInteface
                 }
             }
         }
+        private void OnEnable()
+        {
+            foreach (var point in _points)
+            {
+                point.OnSelectItem += (string text, string name) => OnSelectItem?.Invoke(text, name);
+            }
+        }
+        private void OnDisable()
+        {
+            foreach (var point in _points)
+            {
+                point.OnSelectItem -= (string text, string name) => OnSelectItem?.Invoke(text, name);
+            }
+        }
+
         public ScrollItem GetSelectItem()
         {
             var point = _points[0];
@@ -38,7 +55,7 @@ namespace MainMode.GameInteface
                 if (Mathf.Abs(point.Position.x) > Mathf.Abs(_points[i].Position.x))
                     point = _points[i];
             }
-            return point.Item;
+            return point.Content;
         }
         public void MoveRight()
         {
