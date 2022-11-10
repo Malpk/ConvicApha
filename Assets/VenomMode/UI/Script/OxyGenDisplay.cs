@@ -6,12 +6,10 @@ using UnityEngine.UI;
 
 namespace MainMode.Mode1921
 {
-    public class OxyGenDisplay : Receiver
+    public class OxyGenDisplay : MonoBehaviour
     {
         [Header("Requred Reference")]
         [SerializeField] private Image _fieldImage;
-
-        public override TypeDisplay DisplayType => TypeDisplay.OxyGenUI;
 
         public void UpdateField(float value)
         {

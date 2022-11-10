@@ -26,7 +26,6 @@ namespace MainMode.Mode1921
         private Coroutine _runGame;
 
         public bool IsRepairShield => _runGame != null;
-        public override UserInterfaceType Type => UserInterfaceType.Other;
 
         public delegate void Action(int countComplite);
         public event Action CompliteGame;

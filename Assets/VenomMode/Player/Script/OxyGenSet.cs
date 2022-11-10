@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MainMode.Mode1921
 {
     [RequireComponent(typeof(Player))]
-    public class OxyGenSet : MonoBehaviour, IPlayerComponent, IBlock, ISender
+    public class OxyGenSet : MonoBehaviour, IPlayerComponent, IBlock
     {
         [Header("Time Setting")]
         [Min(3)]
@@ -29,8 +29,6 @@ namespace MainMode.Mode1921
         private Coroutine _corotine;
 
         public float CurretAirSupply => _curretAirSupply;
-
-        public TypeDisplay TypeDisplay => TypeDisplay.OxyGenUI;
 
         private void Awake()
         {
@@ -107,15 +105,6 @@ namespace MainMode.Mode1921
         public void UnBlock()
         {
             _isBlock = false;
-        }
-
-        public bool AddReceiver(Receiver receiver)
-        {
-            if (_display != null)
-                return false;
-            if (receiver is OxyGenDisplay display)
-                _display = display;
-            return _display;
         }
     }
 }

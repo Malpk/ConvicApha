@@ -6,11 +6,9 @@ using UnityEngine.UI;
 
 namespace MainMode.Mode1921
 {
-    public class ToolDisplay : Receiver
+    public class ToolDisplay : MonoBehaviour
     {
         [SerializeField] private ToolCell[] _toolsDislplay;
-
-        public override TypeDisplay DisplayType => TypeDisplay.ToolSetUI;
 
         public void Restart()
         {

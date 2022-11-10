@@ -9,7 +9,6 @@ namespace MainMode.Mode1921
     public class EndMenu : UserInterface
     {
         [SerializeField] private TextMeshProUGUI _lable;
-        public override UserInterfaceType Type => UserInterfaceType.EndMenu;
 
         public delegate void Command();
         public event Command Restart;

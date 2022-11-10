@@ -1,27 +1,16 @@
-using MainMode.GameInteface;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode.Mode1921
 {
-    public class ToolSet : MonoBehaviour,ISender
+    public class ToolSet : MonoBehaviour
     {
         [SerializeField] private ToolDisplay _toolDisplay;
 
         private List<ToolRepairs> _tools = new List<ToolRepairs>();
 
         public bool IsAccessTools => _tools.Count > 0;
-        public TypeDisplay TypeDisplay => TypeDisplay.ToolSetUI;
 
-        public bool AddReceiver(Receiver receiver)
-        {
-            if (_toolDisplay != null)
-                return false;
-            if (receiver is ToolDisplay display)
-                _toolDisplay = display;
-            return _toolDisplay;
-        }
         public void UseTool()
         {
             if (_tools.Count > 0)
