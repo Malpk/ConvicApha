@@ -20,10 +20,14 @@ namespace PlayerComponent
         }
         private void Update()
         {
-            if (Input.GetKey(_intractive)) _controlledPlayer.InteractiveWhithObject();
-            if (Input.GetKey(_useItem)) _controlledPlayer.UseItem();
-            if (Input.GetKey(_useAbility)) _controlledPlayer.UseAbillity();
-            if (Input.GetKey(_useArtifact)) _controlledPlayer.UseArtifact();
+            if (Input.GetKeyDown(_intractive))
+                _controlledPlayer.InteractiveWhithObject();
+            if (Input.GetKeyDown(_useItem)) 
+                _controlledPlayer.UseItem();
+            if (Input.GetKeyDown(_useAbility)) 
+                _controlledPlayer.UseAbillity();
+            if (Input.GetKeyDown(_useArtifact)) 
+                _controlledPlayer.UseArtifact();
         }
         private void FixedUpdate()
         {

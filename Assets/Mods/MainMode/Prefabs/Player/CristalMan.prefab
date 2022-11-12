@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6875225066552115991}
   - component: {fileID: 3466869167926696637}
   - component: {fileID: 5141724583961316163}
+  - component: {fileID: 6592750525153685489}
   m_Layer: 8
   m_Name: CristalMan
   m_TagString: Player
@@ -85,11 +86,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 1
-  _controller: {fileID: 0}
   _colliderBody: {fileID: 3466869167926696637}
   _shootMarker: {fileID: 1723717133399928897}
   _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   _behaviour: {fileID: 3676505154887046409}
+  _contrallerBlocker: {fileID: 6592750525153685489}
+--- !u!114 &6592750525153685489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5305993950431923028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _intractive: 32
+  _useItem: 101
+  _useAbility: 114
+  _useArtifact: 113
 --- !u!1001 &2847087725150121755
 PrefabInstance:
   m_ObjectHideFlags: 0

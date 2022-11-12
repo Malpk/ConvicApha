@@ -16,7 +16,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     [SerializeField] private PlayerBaseBehaviour _behaviour;
     [SerializeField] private PCPlayerController _contrallerBlocker;
 
-    private HUDInteface _hud;
+    private HUDUI _hud;
     private Rigidbody2D _rigidBody;
     private PlayerMovement _playerMovement = new PlayerMovement();
     private IPlayerComponent[] _component;
@@ -42,7 +42,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
         _component = GetComponents<IPlayerComponent>();
     }
     [Inject]
-    public void Construct(HUDInteface hud)
+    public void Construct(HUDUI hud)
     {
         _hud = hud;
         if (_behaviour)

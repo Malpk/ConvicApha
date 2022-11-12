@@ -3,11 +3,12 @@ using MainMode.Items;
 
 namespace MainMode.GameInteface
 {
-    public class HUDInteface : UserInterface
+    public class HUDUI : UserInterface
     {
         [SerializeField] private Canvas _canvas;
         [SerializeField] private HealthUI _healthUI;
         [SerializeField] private InventroryUI _inventoryUI;
+        [SerializeField] private AbillityEffectCell _abilityCell;
         [SerializeField] private SwitchScreenEffectUI _screenSwitcher;
 
         private void OnEnable()
@@ -68,5 +69,17 @@ namespace MainMode.GameInteface
             _screenSwitcher.Hide(effect);
         }
         #endregion
+        public void SetAbilityIcon(Sprite sprite, bool handAbillity = true)
+        {
+            _abilityCell.Intializate(sprite, handAbillity);
+        }
+        public void DisplayStateAbillity(bool mode)
+        {
+            _abilityCell.SetState(mode);
+        }
+        public void UpdateAbillityKdTimer(int second)
+        {
+            _abilityCell.UpdateTime(second);
+        }
     }
 }

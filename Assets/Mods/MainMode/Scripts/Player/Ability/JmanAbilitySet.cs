@@ -1,3 +1,4 @@
+using MainMode.GameInteface;
 using System.Collections;
 using UnityEngine;
 
@@ -11,14 +12,17 @@ namespace PlayerComponent
         [Min(1)]
         [SerializeField] private float _distance = 1;
         [Min(1)]
-        [SerializeField] private float _timeReload = 1;
+        [SerializeField] private int _timeReload = 1;
         [SerializeField] private float _timeActiveDebaf;
         [SerializeField] private LayerMask _wallLayer;
+        [SerializeField] private Sprite _abillityIcon;
         [SerializeField] private MovementEffect _debaf;
 
-        private bool _isReload;
-
-        public override bool IsReload => _isReload;
+        public override void SetHud(HUDUI hud)
+        {
+            base.SetHud(hud);
+            hud.SetAbilityIcon(_abillityIcon);
+        }
 
         protected override void UseAbility()
         {
@@ -32,11 +36,19 @@ namespace PlayerComponent
         }
         private IEnumerator Jerk(float distance, float duration)
         {
-            _isReload = true;
+            SetReloadState(true);
+            hud.DisplayStateAbillity(false);
             yield return JerkUpdate(user.transform.position, user.transform.up * distance, duration);
             user.AddEffects(_debaf, _timeActiveDebaf);
-            yield return new WaitForSeconds(_timeReload);
-            _isReload = false;
+            var progress = _timeReload;
+            while (progress != 0)
+            {
+                hud.UpdateAbillityKdTimer(progress);
+                yield return new WaitForSeconds(1f);
+                progress--;
+            }
+            SetReloadState(false);
+            hud.DisplayStateAbillity(true);
         }
 
         private IEnumerator JerkUpdate(Vector2 start, Vector2 move, float duration)

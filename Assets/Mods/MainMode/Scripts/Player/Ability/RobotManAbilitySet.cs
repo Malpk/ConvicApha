@@ -1,34 +1,39 @@
 using System.Collections;
 using UnityEngine;
 using MainMode;
+using MainMode.GameInteface;
 
 namespace PlayerComponent
 {
     public class RobotManAbilitySet : PlayerAbillityUseSet
     {
-        [SerializeField] private float _timeReload;
+        [SerializeField] private int _timeReload;
         [SerializeField] private float _radiusAttack;
         [SerializeField] private float _distanceAttack;
         [SerializeField] private Animator _amimator;
         [SerializeField] private LayerMask _deviceLayer;
         [Header("Damage")]
         [SerializeField] private int _damage;
+        [SerializeField] private Sprite _abillityIcon;
         [SerializeField] private Transform _hitLight;
         [SerializeField] private DamageInfo _damageInfo;
 
-        private bool _isReload;
         private Transform _parent;
-
-        public override bool IsReload => _isReload;
 
         private void Awake()
         {
             _parent = transform.parent;
         }
 
+        public override void SetHud(HUDUI hud)
+        {
+            base.SetHud(hud);
+            hud.SetAbilityIcon(_abillityIcon);
+        }
+
         protected override void UseAbility()
         {
-            _isReload = true;
+            SetReloadState(true);
             _hitLight.parent = null;
             _amimator.SetTrigger("Hit");
             user.TakeDamage(_damage, _damageInfo);
@@ -62,8 +67,14 @@ namespace PlayerComponent
         }
         private IEnumerator Reload()
         {
-            yield return new WaitForSeconds(_timeReload);
-            _isReload = false;
+            int progress = _timeReload;
+            while (progress > 0)
+            {
+                hud.UpdateAbillityKdTimer(progress);
+                yield return new WaitForSeconds(1f);
+                progress--;
+            }
+            SetReloadState(false);
         }
     }
 }

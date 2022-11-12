@@ -17,8 +17,9 @@ namespace PlayerComponent
         protected Player player;
         protected List<IPlayerTask> tasks = new List<IPlayerTask>();
 
-        private HUDInteface _hud;
-        [SerializeField] private PlayerContainer<DamageInfo> _playerDamageEffectContainer = new PlayerContainer<DamageInfo>();
+        private HUDUI _hud;
+
+        private PlayerContainer<DamageInfo> _playerDamageEffectContainer = new PlayerContainer<DamageInfo>();
         private MovementEffectContainer _playerEffectContainer = new MovementEffectContainer();
 
         public event Action DeadAction;
@@ -50,15 +51,21 @@ namespace PlayerComponent
             tasks.Add(_playerDamageEffectContainer);
         }
 
-        public void Intializate(Player player, HUDInteface hud)
+        public void Intializate(Player player, HUDUI hud)
         {
             this.player = player;
             _hud = hud;
             _hud.SetHealthPoint(_health.FullHealth);
             if (_playerAbillitySet)
+            {
+                _playerAbillitySet.SetHud(_hud);
                 _playerAbillitySet.SetUser(player);
+            }
             if (_playerAbillityPassiveSet)
+            {
+                _playerAbillityPassiveSet.SetHud(_hud);
                 _playerAbillityPassiveSet.SetUser(player);
+            }
         }
 
         public void Play()

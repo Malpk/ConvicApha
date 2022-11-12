@@ -25,7 +25,7 @@ public sealed class MainMenu : UserInterface
 
     private Player _player;
     private Animator _animator;
-    private HUDInteface _hud;
+    private HUDUI _hud;
 
     private bool _isRun = false;
 
@@ -37,7 +37,7 @@ public sealed class MainMenu : UserInterface
         ShowEvent();
     }
     [Inject]
-    public void Construct(Player player, HUDInteface hud)
+    public void Construct(Player player, HUDUI hud)
     {
         _player = player;
         _hud = hud;
@@ -70,7 +70,8 @@ public sealed class MainMenu : UserInterface
             var consumable = _consumableItemScroller.GetSelectItem().Create<ConsumablesItem>();
             _player.PickItem(artifact);
             _player.PickItem(consumable);
-            _player.SetBehaviour(GetPlayerType().Create<PlayerBaseBehaviour>());
+            var playerConfig = GetPlayerType();
+            _player.SetBehaviour(playerConfig.Create<PlayerBaseBehaviour>());
             _backGround.enabled = false;
             Hide();
             if (PlayGameAction != null)
