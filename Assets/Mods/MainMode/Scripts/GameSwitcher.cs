@@ -10,7 +10,7 @@ namespace MainMode
         [SerializeField] private DeadMenu _deadMenu;
         [SerializeField] private MainMenu _mainMenu;
 
-        [SerializeField] protected HUDInteface hud;
+        [SerializeField] protected HUDUI hud;
 
         protected virtual void OnEnable()
         {

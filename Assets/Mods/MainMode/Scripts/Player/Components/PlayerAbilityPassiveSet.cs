@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using MainMode.GameInteface;
 
 namespace PlayerComponent
 {
@@ -7,11 +8,19 @@ namespace PlayerComponent
     {
         [Header("Ability Setting")]
         [Min(1)]
-        [SerializeField] private float _timeReload = 1f;
+        [SerializeField] private int _timeReload = 1;
         [SerializeField] protected Player user;
+        [SerializeField] protected Sprite _abillityIcon;
 
         private bool _isPlay = false;
 
+        protected HUDUI hud;
+
+        public void SetHud(HUDUI hud)
+        {
+            this.hud = hud;
+            hud.SetAbilityIcon(_abillityIcon, false);
+        }
 
         public void Play()
         {
@@ -37,11 +46,15 @@ namespace PlayerComponent
         {
             while (_isPlay)
             {
-                var progress = 0f;
-                while (progress<=1f && _isPlay)
+                hud.DisplayStateAbillity(true);
+                yield return new WaitForSeconds(0.2f);
+                hud.DisplayStateAbillity(false);
+                int progress = _timeReload;
+                while (progress > 0 && _isPlay)
                 {
-                    progress += Time.deltaTime/ _timeReload;
-                    yield return null;
+                    hud.UpdateAbillityKdTimer(progress);
+                    yield return new WaitForSeconds(1f);
+                    progress--;
                 }
                 UseAbility();
             }
