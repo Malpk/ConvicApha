@@ -25,7 +25,7 @@ namespace Underworld
                 _vises.Add(vise);
             }
         }
-        public override void Intializate(PaternConfig config)
+        public override void SetConfig(PaternConfig config)
         {
             if (config is ViseModeConfig viseModeConfig)
             {
@@ -50,7 +50,7 @@ namespace Underworld
                 return new ViseState[] { _mode };
             }
         }
-        public override bool Activate()
+        public override bool Play()
         {
             if (!_isActivate)
             {

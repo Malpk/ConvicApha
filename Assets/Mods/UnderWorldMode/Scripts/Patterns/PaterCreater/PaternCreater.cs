@@ -25,7 +25,7 @@ namespace Underworld
         {
             deactiveColor = _iversionMode ? Color.black : Color.white;
         }
-        public override void Intializate(PaternConfig config)
+        public override void SetConfig(PaternConfig config)
         {
             if (config is PaternCreaterConfig paternCreaterConfig)
             {
@@ -38,7 +38,7 @@ namespace Underworld
                 throw new System.NullReferenceException("PaternCreaterConfig is null");
             }
         }
-        public override bool Activate()
+        public override bool Play()
         {
             if (_runMode == null)
             {
@@ -54,7 +54,7 @@ namespace Underworld
             var firstFrame = GetFrame(_spriteAtlas, Vector2Int.zero).ToList();
             foreach (var term in firstFrame)
             {
-                term.ShowItem();
+                term.Show();
             }
             yield return WaitTime(_warningTime);
             ActivateTerms(firstFrame);
@@ -91,7 +91,7 @@ namespace Underworld
             foreach (var term in terms)
             {
                 if(!term.IsShow)
-                    term.ShowItem();
+                    term.Show();
                 term.Activate(FireState.Start);
             }
         }
@@ -100,7 +100,6 @@ namespace Underworld
             foreach (var term in terms)
             {
                 term.Deactivate();
-                term.StartCoroutine(term.HideByDeactivation());
             }
         }
         private List<Term> GetPreviusTils(List<Term> curretFrame, List<Term> previousFrame)
@@ -120,7 +119,7 @@ namespace Underworld
             var list = new List<Term>();
             for (int i = 0; i < frame.Count; i++)
             {
-                if (!frame[i].IsDamageMode)
+                if (!frame[i].IsActive)
                 {
                     list.Add(frame[i]);
                 }

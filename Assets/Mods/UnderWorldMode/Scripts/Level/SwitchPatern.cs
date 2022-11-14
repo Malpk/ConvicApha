@@ -35,7 +35,7 @@ namespace Underworld
             IsReady = false;
             _curretMode = GetPatern(mode);
             _curretMode.Intializate(_builder, _player);
-            _curretMode.Activate();
+            _curretMode.Play();
             StartCoroutine(WaitComplitePatern(_curretMode));
         }
 
@@ -44,7 +44,7 @@ namespace Underworld
             foreach (var term in _builder.Terms)
             {
                 term.Deactivate();
-                term.HideItem();
+                term.Hide();
             }
             _curretMode.Deactivate();
         }

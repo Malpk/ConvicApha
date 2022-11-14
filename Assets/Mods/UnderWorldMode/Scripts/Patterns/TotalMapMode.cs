@@ -11,19 +11,22 @@ namespace Underworld
         [SerializeField] private MapBuilder _builder;
 
         protected Term[,] terms;
+        protected PatternStateSwithcer switcher = new PatternStateSwithcer();
+        protected TotalMapCompliteState compliteState;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (_builder)
             {
                 terms = _builder.Terms;
+                compliteState = new TotalMapCompliteState(terms, 0.2f);
             }
         }
 
         protected virtual void Start()
         {
             if (playOnStart)
-                Activate();
+                Play();
         }
 
         public override void Intializate(MapBuilder builder, Player player)
@@ -31,13 +34,10 @@ namespace Underworld
             this.player = player;
             _builder = builder;
             terms = _builder.Terms;
-        }
-        protected void ActivateMap(FireState state)
-        {
-            foreach (var term in terms)
-            {
-                term.Activate(state);
-            }
+            if (compliteState != null)
+                switcher.Remove(compliteState);
+            compliteState = new TotalMapCompliteState(terms, 0.2f);
+            switcher.AddState(compliteState);
         }
         #region Deactive Term
         protected IEnumerator WaitDeactivateMap()
@@ -69,7 +69,7 @@ namespace Underworld
             {
                 if (term.IsShow)
                 {
-                    term.HideItem();
+                    term.Hide();
                     list.Add(term);
                 }
             }
@@ -82,7 +82,7 @@ namespace Underworld
             var list = new List<Term>();
             for (int i = 0; i < activeTerms.Count; i++)
             {
-                if (activeTerms[i].IsDamageMode)
+                if (activeTerms[i].IsActive)
                 {
                     list.Add(activeTerms[i]);
                 }
@@ -108,7 +108,7 @@ namespace Underworld
                 }
                 else
                 {
-                    activeTerms[i].HideItem();
+                    activeTerms[i].Hide();
                 }
             }
             return list;

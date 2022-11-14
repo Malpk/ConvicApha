@@ -92,9 +92,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4cf2c0eba74f94c9c451043b023039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playOnStart: 0
+  workDuration: 0
+  player: {fileID: 0}
+  _builder: {fileID: 0}
   _countMove: 3
   _speedMovement: 4.5
   _scaleDuration: 4
-  _delay: 2
+  _delayMove: 0.2
   _minSize: {x: 6, y: 6}
-  _maxOffset: {x: 10, y: 10, z: 0}
+  _maxOffset: {x: 10, y: 10}

@@ -18,7 +18,7 @@ namespace Underworld
         private Coroutine _runMode;
         private int[] _direction = new int[] { -1, 1 };
 
-        public override void Intializate(PaternConfig config)
+        public override void SetConfig(PaternConfig config)
         {
             if (config is RunOrDeadConfig runOrDeadConfig)
             {
@@ -32,7 +32,7 @@ namespace Underworld
             }
         }
 
-        public override bool Activate()
+        public override bool Play()
         {
             if (_runMode == null)
             {
@@ -48,7 +48,7 @@ namespace Underworld
             var mapActive = GetActiveTerms(_deactiveTerms);
             foreach (var term in mapActive)
             {
-                term.ShowItem();
+                term.Show();
             }
             var speed = _speedRotation * ChooseDirection();
             yield return WaitTime(_warningTime);
@@ -110,7 +110,7 @@ namespace Underworld
                     if(term.IsActive)
                         term.Deactivate(false);
                     if(term.IsShow)
-                        term.HideItem();
+                        term.Hide();
                 }
             }
         }
@@ -122,7 +122,7 @@ namespace Underworld
                 if (_isActive)
                 {
                     if(!term.IsShow)
-                        term.ShowItem();
+                        term.Show();
                     term.Activate(FireState.Stay);
                 }
             }

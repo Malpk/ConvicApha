@@ -26,7 +26,7 @@ namespace Underworld
             foreach (var term in _terms)
             {
                 if (!term.IsShow)
-                    term.ShowItem();
+                    term.Show();
             }
         }
         public void Activate()
@@ -37,7 +37,7 @@ namespace Underworld
                 ClearFromCenterPoints();
                 for (int i = 0; i < _terms.Count; i++)
                 {
-                    if (!_terms[i].IsDamageMode)
+                    if (!_terms[i].IsActive)
                         _terms[i].Activate(FireState.Start);
                 }
             }
@@ -53,7 +53,7 @@ namespace Underworld
                     if (_terms[i].IsShow)
                     {
                         _terms[i].Deactivate(false);
-                        _terms[i].HideItem();
+                        _terms[i].Hide();
                         terms.Add(_terms[i]);
                     }
                 }
@@ -93,10 +93,10 @@ namespace Underworld
         private void ActivateTerm(Term term)
         {
             _terms.Add(term);
-            if (IsActive && !term.IsDamageMode)
+            if (IsActive && !term.IsActive)
             {
                 if(!term.IsShow)
-                    term.ShowItem();
+                    term.Show();
                 if (!term.IsActive)
                     term.Activate(FireState.Start);
             }
@@ -108,7 +108,6 @@ namespace Underworld
             {
                 if(term.IsActive)
                     term.Deactivate();
-                StartCoroutine(term.HideByDeactivation());
             }
         }
         private void ClearFromCenterPoints()

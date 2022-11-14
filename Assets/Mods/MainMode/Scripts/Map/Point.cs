@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Point
 {
-    private SmartItem _item;
+    private GameObject _item;
 
-    public bool IsBusy => _item ? _item.IsShow : false;
+    public bool IsBusy => _item? _item.activeSelf : false;
     public Vector2 Position { get; private set; }
 
     public Point(Vector2 position)
@@ -14,17 +12,17 @@ public class Point
         Position = position;
     }
 
-    public void SetItem(SmartItem item)
+    public void SetItem<T>(T item) where T : MonoBehaviour
     {
         if (!IsBusy)
         {
-            item.SetPosition(Position);
-            _item = item;
+            item.transform.position = Position;
+            _item = item.gameObject;
         }
     }
-    public void Delete()
+    public void Delete(bool destroy = false)
     {
-        if(_item)
+        if(_item && destroy)
             MonoBehaviour.Destroy(_item.gameObject);
         _item = null;
     }

@@ -27,7 +27,7 @@ namespace Underworld
                 holder.CreatePoints();
             }
         }
-        public override void Intializate(PaternConfig config)
+        public override void SetConfig(PaternConfig config)
         {
             if (config is TridentModeConfig tridentModeConfig)
             {
@@ -45,11 +45,11 @@ namespace Underworld
         private void Start()
         {
             if (playOnStart)
-                Activate();
+                Play();
         }
         #endregion
         #region Work
-        public override bool Activate()
+        public override bool Play()
         {
 #if UNITY_EDITOR
             if (IsActive)
