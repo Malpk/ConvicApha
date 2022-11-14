@@ -74,7 +74,7 @@ namespace Underworld
                 for (int i = 0; i < _terms.Count; i++)
                 {
                     if (!_terms[i].IsShow)
-                        _terms[i].ShowItem();
+                        _terms[i].Show();
                 }
             }
             else
@@ -111,7 +111,6 @@ namespace Underworld
                 if (term.IsActive)
                 {
                     term.Deactivate();
-                    term.StartCoroutine(term.HideByDeactivation());
                 }
             }
             yield return Traking();

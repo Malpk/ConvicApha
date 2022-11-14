@@ -1,62 +1,43 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Underworld
 {
-    public sealed class Term : SmartItem
+    public sealed class Term : MonoBehaviour
     {
         [Header("Reference")]
         [SerializeField] private Fire _termFire;
         [SerializeField] private Animator _termAnimator;
-        [SerializeField] private SpriteRenderer _termSprite;
+        [SerializeField] private GameObject _termBody;
 
-        private bool _isDamageMode;
-
-        private bool _isActive = false;
-
-
+        private bool _isActive;
         private IDamage _target;
-        private DeviceStateWork _previus;
 
+        public bool IsShow => _termBody.activeSelf;
         public bool IsActive => _isActive;
-        public bool IsDamageMode => _isDamageMode;
-
-        private DeviceStateWork State { get; set; }
 
         private void Awake()
         {
-            HideTerm();
+            enabled = false;
+            Hide();
         }
+
         private void OnEnable()
         {
-            ShowItemAction += ShowTerm;
-            HideItemAction += HideTerm;
+            _termFire.OnDeactivateFire += () => SetMode(false);
         }
         private void OnDisable()
         {
-            ShowItemAction -= ShowTerm;
-            HideItemAction -= HideTerm;
+            _termFire.OnDeactivateFire -= () => SetMode(false);
         }
-        #region Object Display 
-        private void ShowTerm()
-        {
-            DisplayTerm(true);
-        }
-        private void HideTerm()
-        {
-            DisplayTerm(false);
-        }
-        #endregion
-        #region Object Work
 
         public void Activate(FireState firestate = FireState.Start)
         {
             if (!_isActive)
             {
+                enabled = true;
                 _isActive = true;
                 SetMode(true);
-                State = DeviceStateWork.Play;
                 _termFire.Activate(firestate);
                 if (_target != null)
                     _target.Explosion();
@@ -65,54 +46,27 @@ namespace Underworld
 
         public void Deactivate(bool waitAnimation = true)
         {
-            if (_isActive)
-            {
-                _isActive = false;
-                StartCoroutine(StartDeactivate(waitAnimation));
-            }
+            if (waitAnimation)
+                _termFire.DeactivateWaitAnimation();
+            else
+                _termFire.DeactiveEvent();
         }
-
-        public IEnumerator HideByDeactivation()
+        public void Show()
+        {
+            _termBody.SetActive(true);
+        }
+        public void Hide()
         {
 #if UNITY_EDITOR
             if (_isActive)
-                throw new System.Exception("The term is not currently in the process of deactivation");
+                throw new System.NullReferenceException("попытка спрятать активный объект");
 #endif
-            yield return new WaitWhile(() => _isDamageMode && !_isActive);
-            if (!_isActive)
-            {
-                if(IsShow)
-                    HideItem();
-            }
-        }
-
-        #endregion
-        private IEnumerator StartDeactivate(bool waitAnimation)
-        {
-            if (waitAnimation)
-            {
-                _termFire.DeactivateWaitAnimation();
-                yield return new WaitWhile(() => _termFire.CurretState != FireState.End && !_isActive);
-            }
-            else
-            {
-                _termFire.DeactiveEvent();
-            }
-            if (!_isActive)
-            {
-                SetMode(false);
-                State = DeviceStateWork.Stop;
-            }
-        }
-
-        private void DisplayTerm(bool mode)
-        {
-            _termSprite.enabled = mode;
+            _termBody.SetActive(false);
         }
 
         private void SetMode(bool mode)
         {
-            _isDamageMode = mode;
+            _isActive = mode;
             _termAnimator.SetBool("Activate", mode);
         }
 
@@ -121,7 +75,7 @@ namespace Underworld
             if (collision.TryGetComponent(out IDamage target))
             {
                 _target = target;
-                if (_isDamageMode)
+                if (_isActive)
                     _target.Explosion();
             }
         }
@@ -135,3 +89,4 @@ namespace Underworld
 
     }
 }
+

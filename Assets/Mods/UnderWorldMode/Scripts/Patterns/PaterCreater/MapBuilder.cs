@@ -41,6 +41,21 @@ namespace Underworld
                 point.Delete();
             }
         }
+        public bool GetPoint(Player target, float spawnDistance, out Point point)
+        {
+            point = null;
+            var freePoints = new List<Point>();
+            foreach (var map in Points)
+            {
+                if (!map.IsBusy && Vector2.Distance(map.Position, target.Position) <= spawnDistance)
+                {
+                    freePoints.Add(map);
+                }
+            }
+            if (freePoints.Count > 0)
+                point = freePoints[Random.Range(0, freePoints.Count)];
+            return freePoints.Count > 0;
+        }
         private Term[,] CreateMatrixMap()
         {
             var holder = new GameObject("Terms").transform;

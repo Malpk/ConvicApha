@@ -28,7 +28,7 @@ namespace Underworld
             Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down
         };
 
-        public override void Intializate(PaternConfig config)
+        public override void SetConfig(PaternConfig config)
         {
             if (config is IslandModeConfig islandModeConfig) 
             {
@@ -54,10 +54,10 @@ namespace Underworld
             if (_mapBuilder)
                 Intializate(_mapBuilder, null);
             if (playOnStart)
-                Activate();
+                Play();
         }
 
-        public override bool Activate()
+        public override bool Play()
         {
             if (_runMode == null)
             {
@@ -92,10 +92,9 @@ namespace Underworld
             foreach (var term in activateMap)
             {
                 term.Deactivate();
-                term.StartCoroutine(term.HideByDeactivation());
             }
             var endTile = activateMap[activateMap.Count - 1];
-            yield return new WaitWhile(() => endTile.IsDamageMode);
+            yield return new WaitWhile(() => endTile.IsActive);
         }
         #endregion
         #region Get Seeds
@@ -177,7 +176,7 @@ namespace Underworld
             var mapActive = GetMapActive(_mapBuilder.Terms, islands).ToList();
             for (int i = 0; i < mapActive.Count; i++)
             {
-                mapActive[i].ShowItem();
+                mapActive[i].Show();
             }
             return mapActive;
         }

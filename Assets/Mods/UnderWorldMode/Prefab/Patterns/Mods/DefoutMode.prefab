@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 792147722769356494}
   - component: {fileID: 792147722769356493}
   m_Layer: 0
-  m_Name: BaseMode
+  m_Name: DefoutMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,12 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26dcf83671a5cfe4e873f2ae7ffab5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playOnStart: 0
+  workDuration: 0
   _spawnDistance: 5
+  _delay: 0.3
+  _termPerfab: {fileID: 0}
   _player: {fileID: 0}
-  _delay: 0.066
-  _timeFireActive: 1
-  _workDuration: 10
-  _unitSize: {x: 1.6, y: 1.6}
+  _builder: {fileID: 0}
 --- !u!114 &792147722769356493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,16 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7021650a37e87a849865e823de3cae84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedMovement: 40
-  _moveDistance: 40
-  _horizontalMode: 1
-  _verticalMode: 0
-  _shootDelay: 0.05
-  _groupShootDelay: 0.6
-  _warningTime: 1
-  _workDuration: 10
-  _countTridentInGroup: 2
-  _radius: 4
-  _unitSize: {x: 1.6, y: 1.6}
-  _marker: {fileID: 7905483864581599279, guid: 55cf426f2c2d4ca49b9608bf95ae0299, type: 3}
-  _trident: {fileID: 471845234174259781, guid: 14b89b9194e4f1944905d9071bd86414, type: 3}
+  playOnStart: 0
+  workDuration: 0
+  _countPointsInHolder: 0
+  _config: {fileID: 0}

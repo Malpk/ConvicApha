@@ -31,7 +31,7 @@ namespace Underworld
             _rays = CreateRay(_countRay);
             _rays.Add(_center);
         }
-        public override void Intializate(PaternConfig config)
+        public override void SetConfig(PaternConfig config)
         {
             if (config is SunModeConfig sunModeConfig)
             {
@@ -46,7 +46,7 @@ namespace Underworld
                 throw new System.NullReferenceException("SunModeConfig is null");
             }
         }
-        public override bool Activate()
+        public override bool Play()
         {
             if (_runMode == null)
             {
