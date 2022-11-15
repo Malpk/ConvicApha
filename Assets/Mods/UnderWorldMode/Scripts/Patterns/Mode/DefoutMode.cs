@@ -25,7 +25,6 @@ namespace Underworld
         private void Awake()
         {
             _pool = new PoolTerm(_termPerfab);
-            var switcher = new PatternStateSwithcer();
             _spawnState = new DeffoutSpawnState(switcher);
             switcher.AddState(_spawnState);
             switcher.AddState(new DefoutCompliteState(_pool, 0.2f));

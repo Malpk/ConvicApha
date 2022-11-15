@@ -9,6 +9,8 @@ namespace Underworld
 
         private float _progress = 0f;
 
+        public System.Action OnComplite;
+
         public PatternIdleState(IStateSwitcher switcher, float duration)
         {
             this.duration = duration;
@@ -28,6 +30,7 @@ namespace Underworld
         }
         public bool SwitchState(out IPatternState nextState)
         {
+            OnComplite?.Invoke();
             return switcher.SwitchState<T>(out nextState);
         }
     }

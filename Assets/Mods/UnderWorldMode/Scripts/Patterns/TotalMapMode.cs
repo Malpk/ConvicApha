@@ -11,7 +11,6 @@ namespace Underworld
         [SerializeField] private MapBuilder _builder;
 
         protected Term[,] terms;
-        protected PatternStateSwithcer switcher = new PatternStateSwithcer();
         protected TotalMapCompliteState compliteState;
 
         protected virtual void Awake()
