@@ -27,8 +27,11 @@ namespace Underworld
             _termActive = new List<Term>();
             foreach (var term in terms)
             {
-                term.Deactivate();
-                _termActive.Add(term);
+                if (term.IsActive)
+                {
+                    term.Deactivate();
+                    _termActive.Add(term);
+                }
             }
         }
 

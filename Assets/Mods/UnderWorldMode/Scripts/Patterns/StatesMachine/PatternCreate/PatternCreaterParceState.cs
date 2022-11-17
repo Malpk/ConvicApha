@@ -41,8 +41,12 @@ namespace Underworld
                     XOffset = 0;
                     YOffset++;
                 }
-                OnUpdateFrame?.Invoke(new Vector2Int(XOffset, YOffset));
-                XOffset++;
+                if (YOffset < countOffset.y)
+                {
+                    OnUpdateFrame?.Invoke(new Vector2Int(XOffset, YOffset));
+                    XOffset++;
+                    _progress = 0;
+                }
             }
             return YOffset < countOffset.y;
         }

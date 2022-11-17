@@ -48,7 +48,7 @@ MonoBehaviour:
   _playOnStart: 0
   _chooseMode: 1
   _player: {fileID: 0}
-  _builder: {fileID: 0}
+  _builder: {fileID: 4741605475358712007}
   _configs:
   - {fileID: 11400000, guid: 328abbfbe9a5ff3489af7cc706406a23, type: 2}
   - {fileID: 11400000, guid: 095fd0a0be4a801479b96993ee94127b, type: 2}
@@ -71,7 +71,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  _useDefoutSetting: 0
   _switchDelay: 2
   _switchPatern: {fileID: 336707111408024137}
   _paternsSequnce:
@@ -90,6 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad0e5bffddb3ef42811ce5306276c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playOnAwake: 0
   mapSize: 20
   unitSize: {x: 1, y: 1}
+  _perfab: {fileID: 2755220189578518561, guid: 513635374147d0b4f90e0345108879ea, type: 3}

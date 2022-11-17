@@ -26,9 +26,8 @@ namespace Underworld
 
         public bool IsPlay => enabled;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             enabled = false;
             _collider = GetComponent<BoxCollider2D>();
             _collider.enabled = false;

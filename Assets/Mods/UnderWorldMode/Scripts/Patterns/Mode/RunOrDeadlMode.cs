@@ -15,6 +15,7 @@ namespace Underworld
         private List<Term> _deactiveTerms = new List<Term>();
 
         private bool _isActive = false;
+        private IPatternState _curretState;
         private Coroutine _runMode;
         private int[] _direction = new int[] { -1, 1 };
 
@@ -41,6 +42,10 @@ namespace Underworld
                 return true;
             }
             return false;
+        }
+        private void Update()
+        {
+            
         }
         private IEnumerator StartMode()
         {

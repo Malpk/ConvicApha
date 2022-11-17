@@ -15,21 +15,18 @@ namespace Underworld
 
         private float _errorColorDefaout;
         private Color deactiveColor;
-        private Vector2Int _deactive;
         private IPatternState _curretState;
         private List<Term> _frame;
         private PatternIdleState<PatternCreaterParceState> _warningState;
         private PatternCreaterParceState _parceState;
         public bool IsActive { get; private set; } = false;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             var countOffset = GetCountOffset();
             _warningState = new PatternIdleState<PatternCreaterParceState>(switcher, _warningTime);
             _parceState = new PatternCreaterParceState(switcher, workDuration / countOffset.x, countOffset);
             switcher.AddState(_warningState);
-            switcher.AddState(new TotalMapCompliteState(terms, 0.2f));
             switcher.AddState(_parceState);
             deactiveColor = _iversionMode ? Color.black : Color.white;
             enabled = false;
@@ -81,7 +78,7 @@ namespace Underworld
             if (!enabled)
             {
                 enabled = true;
-                _frame = GetFrame(_spriteAtlas, Vector2Int.zero).ToList();
+                _frame = GetFrame(_spriteAtlas, new Vector2Int(_unitySprite.x, 0)).ToList();
                 _curretState = _warningState;
                 foreach (var term in _frame)
                 {
@@ -99,8 +96,8 @@ namespace Underworld
         {
             var curretPosition = new Vector2Int(position.x * _unitySprite.y, position.y * _unitySprite.y);
             var curretFrame = GetFrame(_spriteAtlas, curretPosition).ToList();
-            DectivateTerms(GetPreviusTils(curretFrame, _frame));
-            _frame = GetCurretTiles(curretFrame);
+            DectivateTerms(curretFrame, _frame);
+            _frame = curretFrame;
             ActivateTerms();
         }
         private void ActivateTerms()
@@ -112,46 +109,26 @@ namespace Underworld
                 term.Activate(FireState.Start);
             }
         }
-        private void DectivateTerms(List<Term> terms)
+        private void DectivateTerms(List<Term> curretFrame, List<Term> previousFrame)
         {
-            foreach (var term in terms)
-            {
-                term.Deactivate();
-            }
-        }
-        private List<Term> GetPreviusTils(List<Term> curretFrame, List<Term> previousFrame)
-        {
-            var list = new List<Term>();
             for (int i = 0; i < previousFrame.Count; i++)
             {
                 if (!curretFrame.Contains(previousFrame[i]))
                 {
-                    list.Add(previousFrame[i]);
+                    previousFrame[i].Deactivate(false);
+                    previousFrame[i].Hide();
                 }
             }
-            return list;
-        }
-        private List<Term> GetCurretTiles(List<Term> frame)
-        {
-            var list = new List<Term>();
-            for (int i = 0; i < frame.Count; i++)
-            {
-                if (!frame[i].IsActive)
-                {
-                    list.Add(frame[i]);
-                }
-            }
-            return list;
         }
         #region Pacing Sprite
         private IEnumerable<Term> GetFrame(Texture2D texture, Vector2Int startPosition)
         {
-            for (int i = 0; i < _unitySprite.y; i++)
+            for (int i = 0; i < _unitySprite.x; i++)
             {
-                var indexI = startPosition.y + i;
-                for (int j = 0; j < _unitySprite.x; j++)
+                var indexI = startPosition.x + i;
+                for (int j = 0; j < _unitySprite.y; j++)
                 {
-                    var inkecJ = startPosition.x + j;
+                    var inkecJ = startPosition.y + j;
                     var color = texture.GetPixel(indexI, inkecJ);
                     if (DefineState(color, new Vector2Int(i, j), out Term term))
                     {

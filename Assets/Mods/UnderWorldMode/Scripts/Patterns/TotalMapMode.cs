@@ -13,17 +13,14 @@ namespace Underworld
         protected Term[,] terms;
         protected TotalMapCompliteState compliteState;
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             if (_builder)
             {
                 terms = _builder.Terms;
                 compliteState = new TotalMapCompliteState(terms, 0.2f);
+                switcher.AddState(compliteState);
             }
-        }
-
-        protected virtual void Start()
-        {
             if (playOnStart)
                 Play();
         }
