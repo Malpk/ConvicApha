@@ -1,13 +1,14 @@
 using System;
+using MainMode;
+using Underworld;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
-{ 
-    [SerializeField] private MainMenu mainMenu;
+{
+    [SerializeField] private MapSpawner mapSpawnerMain;
     [SerializeField] private Camera camera;
-    [SerializeField] private Image backGround;
-    [SerializeField] private Sprite defaultBgSprite;
+    [SerializeField] private UnderWorldGameBuilder underWorldGameBuilder;
     [SerializeField] private int translationSpeed;
     private Banner banner;
     private bool bannerChoosed;
@@ -15,8 +16,9 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        underWorldGameBuilder.Play();
         startPos = camera.transform.position;
-        mainMenu.CreateNewConfig();
+        mapSpawnerMain.Play();
     }
 
     private void Update()
@@ -28,19 +30,19 @@ public class MenuController : MonoBehaviour
             if (!bannerChoosed)
             {
                 bannerChoosed = true;
-                backGround.gameObject.SetActive(false);
                 banner = raycastHit2D.transform.gameObject.GetComponent<Banner>();
                 camera.transform.position = banner.ownSceneStartPos;
             }
-            Translate();
         }
         else
         {
-            camera.transform.position = startPos;
-            bannerChoosed = false;
-            backGround.gameObject.SetActive(true);
-            backGround.sprite = defaultBgSprite;
+            if (Math.Abs(camera.transform.position.y - startPos.y) > 0.1f)
+            {
+                camera.transform.position = startPos;
+                bannerChoosed = false;
+            }
         }
+        Translate();
     }
 
     private void Translate()
