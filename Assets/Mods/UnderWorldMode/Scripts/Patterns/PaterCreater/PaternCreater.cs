@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Underworld
 {
@@ -17,13 +15,24 @@ namespace Underworld
 
         private float _errorColorDefaout;
         private Color deactiveColor;
-        private Coroutine _runMode = null;
-
+        private Vector2Int _deactive;
+        private IPatternState _curretState;
+        private List<Term> _frame;
+        private PatternIdleState<PatternCreaterParceState> _warningState;
+        private PatternCreaterParceState _parceState;
         public bool IsActive { get; private set; } = false;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            var countOffset = GetCountOffset();
+            _warningState = new PatternIdleState<PatternCreaterParceState>(switcher, _warningTime);
+            _parceState = new PatternCreaterParceState(switcher, workDuration / countOffset.x, countOffset);
+            switcher.AddState(_warningState);
+            switcher.AddState(new TotalMapCompliteState(terms, 0.2f));
+            switcher.AddState(_parceState);
             deactiveColor = _iversionMode ? Color.black : Color.white;
+            enabled = false;
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -38,57 +47,65 @@ namespace Underworld
                 throw new System.NullReferenceException("PaternCreaterConfig is null");
             }
         }
+        private void OnEnable()
+        {
+            _warningState.OnComplite += () => ActivateTerms();
+            _parceState.OnUpdateFrame += UpdateFrame;
+        }
+        private void OnDisable()
+        {
+            _warningState.OnComplite -= () => ActivateTerms();
+            _parceState.OnUpdateFrame -= UpdateFrame;
+        }
+        private void Update()
+        {
+            if (_curretState.IsComplite)
+            {
+                if (_curretState.SwitchState(out IPatternState nextState))
+                {
+                    _curretState = nextState;
+                    _curretState.Start();
+                }
+                else
+                {
+                    Stop();
+                }
+            }
+            else
+            {
+                _curretState.Update();
+            }
+        }
         public override bool Play()
         {
-            if (_runMode == null)
+            if (!enabled)
             {
-                State = ModeState.Play;
-                _runMode = StartCoroutine(StartMode());
+                enabled = true;
+                _frame = GetFrame(_spriteAtlas, Vector2Int.zero).ToList();
+                _curretState = _warningState;
+                foreach (var term in _frame)
+                {
+                    term.Show();
+                }
                 return true;
             }
             return false;
         }
-        private IEnumerator StartMode()
+        public void Stop()
         {
-            State = ModeState.Play;
-            var firstFrame = GetFrame(_spriteAtlas, Vector2Int.zero).ToList();
-            foreach (var term in firstFrame)
-            {
-                term.Show();
-            }
-            yield return WaitTime(_warningTime);
-            ActivateTerms(firstFrame);
-            yield return ReadAnimation(firstFrame);
-            State = ModeState.Stop;
-            _runMode = null;
+            enabled = false;
         }
-        private IEnumerator ReadAnimation(List<Term> previousFrame)
+        private void UpdateFrame(Vector2Int position)
         {
-            var countOffset = GetCountOffset();
-            var delay = (workDuration / countOffset.x);
-            for (int i = 0; i < countOffset.y; i++)
-            {
-                for (int j = 0; j < countOffset.x && State != ModeState.Stop; j++)
-                {
-                    var curretPosition = new Vector2Int(i * _unitySprite.y, j * _unitySprite.y);
-                    var curretFrame = GetFrame(_spriteAtlas, curretPosition).ToList();
-                    var getDeactivateTermTask = Task.Run(() => GetPreviusTils(curretFrame, previousFrame));
-                    var getActivateTermTask = Task.Run(() => GetCurretTiles(curretFrame));
-                    yield return WaitTime(delay);
-                    yield return new WaitWhile(() => !(getDeactivateTermTask.IsCompleted && getActivateTermTask.IsCompleted));
-                    ActivateTerms(getActivateTermTask.Result);
-                    yield return delay;
-                    DectivateTerms(getDeactivateTermTask.Result);
-                    previousFrame = curretFrame;
-                }
-            }
-            yield return WaitTime(1f);
-            yield return WaitHideMap();
-            State = ModeState.Stop;
+            var curretPosition = new Vector2Int(position.x * _unitySprite.y, position.y * _unitySprite.y);
+            var curretFrame = GetFrame(_spriteAtlas, curretPosition).ToList();
+            DectivateTerms(GetPreviusTils(curretFrame, _frame));
+            _frame = GetCurretTiles(curretFrame);
+            ActivateTerms();
         }
-        private void ActivateTerms(List<Term> terms)
+        private void ActivateTerms()
         {
-            foreach (var term in terms)
+            foreach (var term in _frame)
             {
                 if(!term.IsShow)
                     term.Show();

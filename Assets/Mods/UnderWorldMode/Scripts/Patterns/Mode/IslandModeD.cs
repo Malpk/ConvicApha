@@ -19,8 +19,10 @@ namespace Underworld
         [SerializeField] private MapBuilder _mapBuilder;
 
         private int _mapSize;
-        private Coroutine _runMode = null;
+        private IPatternState _curretState;
         private List<Term> _activeTils = new List<Term>();
+        private TotalMapCompliteState _compliteState;
+        private PatternIdleState<PatternIdleState<TotalMapCompliteState>> _warningState;
         private Vector2Int[] _bounds;
 
         private readonly Vector2Int[] offset = new Vector2Int[]
@@ -28,6 +30,18 @@ namespace Underworld
             Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down
         };
 
+        private void Awake()
+        {
+            enabled = false;
+            _warningState = new PatternIdleState<PatternIdleState<TotalMapCompliteState>>(switcher, _warningTime);
+            switcher.AddState(_warningState);
+            switcher.AddState(new PatternIdleState<TotalMapCompliteState>(switcher, workDuration));
+            if (_mapBuilder != null)
+            {
+                _compliteState = new TotalMapCompliteState(_mapBuilder.Terms, 0.2f);
+                switcher.AddState(_compliteState);
+            }
+        }
         public override void SetConfig(PaternConfig config)
         {
             if (config is IslandModeConfig islandModeConfig) 
@@ -48,6 +62,18 @@ namespace Underworld
             _mapBuilder = builder;
             _mapSize = builder.Terms.GetLength(0);
             _bounds = SetBounds(_mapSize);
+            if (_compliteState != null)
+                switcher.Remove(_compliteState);
+            _compliteState = new TotalMapCompliteState(_mapBuilder.Terms, 0.2f);
+            switcher.AddState(_compliteState);
+        }
+        private void OnEnable()
+        {
+            _warningState.OnComplite += ActivateTerms;
+        }
+        private void OnDisable()
+        {
+            _warningState.OnComplite -= ActivateTerms;
         }
         private void Start()
         {
@@ -57,44 +83,52 @@ namespace Underworld
                 Play();
         }
 
+        private void Update()
+        {
+            if (_curretState.IsComplite)
+            {
+                if (_curretState.SwitchState(out IPatternState nextState))
+                {
+                    _curretState = nextState;
+                    _curretState.Start();
+                }
+                else
+                {
+                    Stop();
+                }
+            }
+            else
+            {
+                _curretState.Update();
+            }
+        }
+
         public override bool Play()
         {
-            if (_runMode == null)
+            if (!enabled)
             {
+                enabled = true;
                 State = ModeState.Play;
-                _runMode = StartCoroutine(RunMode());
+                _activeTils = CreateMap();
+                _curretState = _warningState;
+                _curretState.Start();
                 return true;
             }
             return false;
         }
 
-        #region Work Mode
-        private IEnumerator RunMode()
+        public void Stop()
         {
-            _activeTils = CreateMap();
-            yield return WaitTime(_warningTime);
-            MapActivate();
-            yield return WaitTime(workDuration);
-            yield return MapDeactivate(_activeTils);
-            State = ModeState.Stop;
-            _runMode = null;
+            enabled = false;
         }
-
-        private void MapActivate()
+        #region Work Mode
+ 
+        private void ActivateTerms()
         {
             foreach (var tile in _activeTils)
             {
                 tile.Activate(FireState.Start);
             }
-        }
-        private IEnumerator MapDeactivate(List<Term> activateMap)
-        {
-            foreach (var term in activateMap)
-            {
-                term.Deactivate();
-            }
-            var endTile = activateMap[activateMap.Count - 1];
-            yield return new WaitWhile(() => endTile.IsActive);
         }
         #endregion
         #region Get Seeds
