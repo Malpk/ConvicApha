@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour
             {
                 bannerChoosed = true;
                 banner = raycastHit2D.transform.gameObject.GetComponent<Banner>();
-                camera.transform.position = banner.ownSceneStartPos;
+                camera.transform.position = banner.BackGroundPosition;
             }
         }
         else

@@ -62,7 +62,7 @@ namespace Underworld
             holder.transform.parent = transform;
             var terms = new Term[mapSize, mapSize];
             var sideSize = mapSize % 2 == 0 ? mapSize : mapSize - 1;
-            var start = new Vector2(unitSize.x / 2 - unitSize.x * sideSize / 2,
+            var start = (Vector2)transform.position + new Vector2(unitSize.x / 2 - unitSize.x * sideSize / 2,
                 -unitSize.y / 2 + unitSize.y * sideSize / 2);
             for (int i = 0; i < sideSize; i++)
             {
