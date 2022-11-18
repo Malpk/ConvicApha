@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class DefoutCompliteState : IPatternState
+    public class DefoutCompliteState : BasePatternState
     {
         private readonly float delay;
         private readonly PoolTerm pool;
@@ -18,15 +18,15 @@ namespace Underworld
             this.pool = pool;
         }
 
-        public bool IsComplite => _terms.Count == 0;
+        public override bool IsComplite => _terms.Count == 0;
 
-        public void Start()
+        public override void Start()
         {
             _progres = 0f;
             _terms.AddRange(pool.Active);
         }
 
-        public bool Update()
+        public override bool Update()
         {
             _progres += Time.deltaTime / delay;
             if (_progres >= 1f)
@@ -48,11 +48,5 @@ namespace Underworld
             }
             return list;
         }
-        public bool SwitchState(out IPatternState nextState)
-        {
-            nextState = default(IPatternState);
-            return false;
-        }
-
     }
 }

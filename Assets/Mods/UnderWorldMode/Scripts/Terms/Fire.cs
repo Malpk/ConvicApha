@@ -27,16 +27,20 @@ namespace Underworld
             _animator.SetInteger("State", GetState(state));
             return true;
         }
-        public void DeactiveEvent()
+        public void Deactivete()
         {
             _body.enabled = false;
             CurretState = FireState.End;
-            OnDeactivateFire?.Invoke();
             _animator.SetInteger("State", 0);
         }
         public void DeactivateWaitAnimation()
         {
             _animator.SetInteger("State", GetState(FireState.End));
+        }
+        private void DeactiveEvent()
+        {
+            Deactivete();
+            OnDeactivateFire?.Invoke();
         }
         private int GetState(FireState state)
         {

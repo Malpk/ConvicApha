@@ -10,8 +10,6 @@ namespace Underworld
         [SerializeField] protected bool playOnStart;
         [Min(0)]
         [SerializeField] protected float workDuration;
-
-        protected PatternStateSwithcer switcher = new PatternStateSwithcer();
         
         protected event Action DeactivateAction;
 

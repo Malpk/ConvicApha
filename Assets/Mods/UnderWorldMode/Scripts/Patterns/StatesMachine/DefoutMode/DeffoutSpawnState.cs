@@ -2,24 +2,17 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class DeffoutSpawnState : IPatternState
+    public class DeffoutSpawnState : BasePatternState
     {
-        private readonly IStateSwitcher switcher;
-
         private float _spawnDelay;
         private float _duration;
 
         private float _progress = 0f;
         private float _delay = 0f;
 
-        public DeffoutSpawnState(IStateSwitcher switcher)
-        {
-            this.switcher = switcher;
-        }
-
         public System.Action OnSpawn;
 
-        public bool IsComplite => _progress >= 1f;
+        public override bool IsComplite => _progress >= 1f;
 
         public void Intializate(float spawnDelay, float duration)
         {
@@ -27,13 +20,13 @@ namespace Underworld
             _duration = duration >= 1 ? duration : 1;
         }
 
-        public void Start()
+        public override void Start()
         {
             _progress = 0;
             _delay = 0;
         }
 
-        public bool Update()
+        public override bool Update()
         {
             _delay += Time.deltaTime / _spawnDelay;
             if (_delay > 1f)
@@ -43,11 +36,6 @@ namespace Underworld
             }
             _progress += Time.deltaTime / _duration;
             return !IsComplite;
-        }
-
-        public bool SwitchState(out IPatternState nextState)
-        {
-            return switcher.SwitchState<DefoutCompliteState>(out nextState);
         }
     }
 }

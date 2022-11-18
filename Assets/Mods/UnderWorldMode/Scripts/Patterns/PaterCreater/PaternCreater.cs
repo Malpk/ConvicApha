@@ -15,19 +15,19 @@ namespace Underworld
 
         private float _errorColorDefaout;
         private Color deactiveColor;
-        private IPatternState _curretState;
+        private BasePatternState _curretState;
         private List<Term> _frame;
-        private PatternIdleState<PatternCreaterParceState> _warningState;
+        private PatternIdleState _warningState;
         private PatternCreaterParceState _parceState;
         public bool IsActive { get; private set; } = false;
 
         private void Awake()
         {
             var countOffset = GetCountOffset();
-            _warningState = new PatternIdleState<PatternCreaterParceState>(switcher, _warningTime);
-            _parceState = new PatternCreaterParceState(switcher, workDuration / countOffset.x, countOffset);
-            switcher.AddState(_warningState);
-            switcher.AddState(_parceState);
+            _warningState = new PatternIdleState(_warningTime);
+            _parceState = new PatternCreaterParceState(workDuration / countOffset.x, countOffset);
+            _warningState.SetNextState(_parceState);
+            _parceState.SetNextState(compliteState);
             deactiveColor = _iversionMode ? Color.black : Color.white;
             enabled = false;
         }
@@ -58,7 +58,7 @@ namespace Underworld
         {
             if (_curretState.IsComplite)
             {
-                if (_curretState.SwitchState(out IPatternState nextState))
+                if (_curretState.GetNextState(out BasePatternState nextState))
                 {
                     _curretState = nextState;
                     _curretState.Start();

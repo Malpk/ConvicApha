@@ -18,16 +18,15 @@ namespace Underworld
         private PoolTerm _pool;
         private DeffoutSpawnState _spawnState;
 
-        private IPatternState _curretState;
+        private BasePatternState _curretState;
 
         public bool IsActive => enabled;
 
         private void Awake()
         {
             _pool = new PoolTerm(_termPerfab);
-            _spawnState = new DeffoutSpawnState(switcher);
-            switcher.AddState(_spawnState);
-            switcher.AddState(new DefoutCompliteState(_pool, 0.2f));
+            _spawnState = new DeffoutSpawnState();
+            var defout = new DefoutCompliteState(_pool, 0.2f);
             _spawnState.Intializate(_delay, workDuration);
             enabled = false;
         }
@@ -82,7 +81,7 @@ namespace Underworld
         {
             if (!_curretState.Update())
             {
-                if (_curretState.SwitchState(out IPatternState nextState))
+                if (_curretState.GetNextState(out BasePatternState nextState))
                 {
                     _curretState = nextState;
                 }

@@ -22,14 +22,18 @@ namespace Underworld
         [SerializeField] private RayPoint _rayPerfab;
         [SerializeField] private Transform _rayHolder;
 
-        private int[] _direction = new int[] { 1, -1 };
-        private Coroutine _runMode;
         private List<RayPoint> _rays = new List<RayPoint>();
+
+        private BasePatternState _curretState;
+        private PatternIdleState _startState;
+        private PatternIdleState _warningState;
 
         protected void Awake()
         {
             _rays = CreateRay(_countRay);
             _rays.Add(_center);
+            _startState = new PatternIdleState(0.5f);
+            _warningState = new PatternIdleState(_warningTime);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -46,61 +50,60 @@ namespace Underworld
                 throw new System.NullReferenceException("SunModeConfig is null");
             }
         }
+        private void OnEnable()
+        {
+            _startState.OnComplite += ShowTerms;
+            _warningState.OnComplite += ActivateTerms;
+        }
+        private void OnDisable()
+        {
+            _startState.OnComplite -= ShowTerms;
+            _warningState.OnComplite -= ActivateTerms;
+        }
         public override bool Play()
         {
-            if (_runMode == null)
+            _curretState = _startState;
+            return true;
+        }
+        public void Stop()
+        {
+
+        }
+        private void Update()
+        {
+            if (_curretState.IsComplite)
             {
-                State = ModeState.Play;
-                _runMode = StartCoroutine(Rotate(_rays));
-                return false;
+                if (_curretState.GetNextState(out BasePatternState nextState))
+                {
+                    _curretState = nextState;
+                    _curretState.Start();
+                }
+                else
+                {
+                    Stop();
+                }
             }
-            return false;
+            else
+            {
+                _curretState.Update();
+            }
         }
         #region Work Mode
-        private IEnumerator Rotate(List<RayPoint> rays)
+        private void ShowTerms()
         {
-            yield return null;
-            State = ModeState.Play;
             _center.ShowRay();
-            foreach (var ray in rays)
+            foreach (var ray in _rays)
             {
                 ray.ShowRay();
             }
-            yield return WaitTime(_warningTime);
+        }
+        private void ActivateTerms()
+        {
             _center.Activate();
-            foreach (var ray in rays)
+            foreach (var ray in _rays)
             {
                 ray.Activate();
             }
-            var progress = 0f;
-            while (progress < 1f)
-            {
-                yield return new WaitWhile(() => State == ModeState.Pause);
-                var curretOffset = 0f;
-                var offset = _offset * GetDirection();
-                while (curretOffset != offset)
-                {
-                    yield return new WaitWhile(() => State == ModeState.Pause);
-                    curretOffset = RotateRays(curretOffset, offset);
-                    progress += Time.deltaTime / workDuration;
-                    yield return null;
-                }
-                yield return new WaitForSeconds(_delay);
-                progress += _delay / workDuration;
-            }
-            var list = new List<Term>();
-            foreach (var ray in _rays)
-            {
-                list.AddRange(ray.Deactivate());
-            }
-            yield return TrakingDeactiveTerms(list);
-            State = ModeState.Stop;
-            _runMode = null;
-        }
-        private int GetDirection()
-        {
-            var index = Random.Range(0, _direction.Length);
-            return _direction[index];
         }
         private float RotateRays(float previsious,float ofsset)
         {

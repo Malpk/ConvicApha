@@ -4,9 +4,9 @@ namespace Underworld
 {
     public class PatternStateSwithcer : IStateSwitcher
     {
-        private List<IPatternState> _states = new List<IPatternState>();
+        private List<BasePatternState> _states = new List<BasePatternState>();
 
-        public bool AddState(IPatternState state)
+        public bool AddState(BasePatternState state)
         {
             if (!_states.Contains(state))
             {
@@ -15,11 +15,11 @@ namespace Underworld
             }
             return false;
         }
-        public bool Remove(IPatternState state)
+        public bool Remove(BasePatternState state)
         {
             return _states.Remove(state);
         }
-        public bool SwitchState<T>(out IPatternState result) where T : IPatternState
+        public bool SwitchState<T>(out BasePatternState result) where T : BasePatternState
         {
             foreach (var state in _states)
             {

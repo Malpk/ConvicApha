@@ -19,7 +19,6 @@ namespace Underworld
             {
                 terms = _builder.Terms;
                 compliteState = new TotalMapCompliteState(terms, 0.2f);
-                switcher.AddState(compliteState);
             }
             if (playOnStart)
                 Play();
@@ -30,10 +29,7 @@ namespace Underworld
             this.player = player;
             _builder = builder;
             terms = _builder.Terms;
-            if (compliteState != null)
-                switcher.Remove(compliteState);
             compliteState = new TotalMapCompliteState(terms, 0.2f);
-            switcher.AddState(compliteState);
         }
         #region Deactive Term
         protected IEnumerator WaitDeactivateMap()

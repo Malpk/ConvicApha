@@ -18,7 +18,6 @@ namespace Underworld
 
         private void Awake()
         {
-            enabled = false;
             Hide();
         }
 
@@ -33,9 +32,12 @@ namespace Underworld
 
         public void Activate(FireState firestate = FireState.Start)
         {
+#if UNITY_EDITOR
+            if (!IsShow)
+                throw new System.Exception("you con't activate hide term");
+#endif
             if (!_isActive)
             {
-                enabled = true;
                 _isActive = true;
                 SetMode(true);
                 _termFire.Activate(firestate);
@@ -47,9 +49,14 @@ namespace Underworld
         public void Deactivate(bool waitAnimation = true)
         {
             if (waitAnimation)
+            {
                 _termFire.DeactivateWaitAnimation();
+            }
             else
-                _termFire.DeactiveEvent();
+            {
+                SetMode(false);
+                _termFire.Deactivete();
+            }
         }
         public void Show()
         {
