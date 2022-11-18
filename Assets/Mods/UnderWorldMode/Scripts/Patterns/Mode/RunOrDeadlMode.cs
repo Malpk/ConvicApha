@@ -68,6 +68,7 @@ namespace Underworld
         }
         protected override void StopMode()
         {
+            _curretState = null;
         }
         private void Update()
         {
@@ -144,9 +145,12 @@ namespace Underworld
         {
             if (collision.TryGetComponent(out Term term))
             {
-                _deactiveTerms.Remove(term);
-                term.Show();
-                term.Activate(FireState.Stay);
+                if (IsPlay)
+                {
+                    _deactiveTerms.Remove(term);
+                    term.Show();
+                    term.Activate(FireState.Stay);
+                }
             }
         }
     }

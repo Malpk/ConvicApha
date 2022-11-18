@@ -43,12 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d289e8329bfa9c546a6ec97c8b5d74f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 0
   playOnStart: 0
   workDuration: 10
   player: {fileID: 0}
-  _builder: {fileID: 0}
-  _handTermPerfab: {fileID: 2755220189578518561, guid: 513635374147d0b4f90e0345108879ea, type: 3}
-  _activeTime: {x: 0, y: 0}
-  _warningTime: {x: 0.15, y: 0.35}
+  _mapBuilder: {fileID: 0}
+  _activeTime: {x: 0.5, y: 1}
+  _warningTime: {x: 0.75, y: 1}
   _mode: 0

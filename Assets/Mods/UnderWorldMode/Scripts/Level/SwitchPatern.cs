@@ -43,7 +43,7 @@ namespace Underworld
         {
             foreach (var term in _builder.Terms)
             {
-                term.Deactivate();
+                term.Deactivate(false);
                 term.Hide();
             }
             _curretMode.Stop();

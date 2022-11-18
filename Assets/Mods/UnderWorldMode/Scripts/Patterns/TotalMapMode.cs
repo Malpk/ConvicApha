@@ -11,8 +11,9 @@ namespace Underworld
 
         protected Term[,] terms;
         protected TotalMapCompliteState compliteState = new TotalMapCompliteState(0.2f);
-
+        
         private List<Term> _activeTerms = new List<Term>();
+
         protected virtual void Awake()
         {
             if (_mapBuilder)
@@ -87,7 +88,6 @@ namespace Underworld
                 else
                 {
                     terms[i].Hide();
-      
                 }
             }
             return list;

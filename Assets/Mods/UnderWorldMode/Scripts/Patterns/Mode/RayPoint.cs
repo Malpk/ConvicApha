@@ -42,22 +42,9 @@ namespace Underworld
                 }
             }
         }
-        public List<Term> Deactivate()
+        public void Deactivate()
         {
-            var terms = new List<Term>();
-            if (IsActive)
-            {
-                IsActive = false;
-                for (int i = 0; i < _terms.Count; i++)
-                {
-                    if (_terms[i].IsShow)
-                    {
-                        _terms[i].Deactivate();
-                        terms.Add(_terms[i]);
-                    }
-                }
-            }
-            return terms;
+            IsActive = false;
         }
         #endregion
 

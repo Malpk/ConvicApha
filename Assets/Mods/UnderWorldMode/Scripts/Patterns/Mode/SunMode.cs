@@ -90,6 +90,7 @@ namespace Underworld
         protected override void StopMode()
         {
             enabled = false;
+            DeactivateRays();
         }
         private void Update()
         {

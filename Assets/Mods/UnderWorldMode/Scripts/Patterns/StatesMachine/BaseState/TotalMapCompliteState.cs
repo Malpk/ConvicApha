@@ -8,7 +8,7 @@ namespace Underworld
         private readonly float cheakDelay;
 
         private bool _isConplite;
-        private float progress = 0f;
+        private float _progress = 0f;
 
         public System.Func<bool> OnCheakComplite;
 
@@ -21,15 +21,16 @@ namespace Underworld
 
         public override void Start()
         {
-            progress = 0f;
+            _isConplite = false;
+            _progress = 0f;
         }
 
         public override bool Update()
         {
-            progress += Time.deltaTime / cheakDelay;
-            if (progress >= 1)
+            _progress += Time.deltaTime / cheakDelay;
+            if (_progress >= 1)
             {
-                progress = 0f;
+                _progress = 0f;
                 _isConplite = OnCheakComplite!= null ? OnCheakComplite.Invoke() : true;
             }
             return !_isConplite; 

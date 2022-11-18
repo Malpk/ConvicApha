@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,6 +39,20 @@ namespace Underworld
         public override void Intializate(MapBuilder builder, Player player = null)
         {
         }
+        private void OnEnable()
+        {
+            foreach (var holder in _holders)
+            {
+                holder.OnComplite += Compliting;
+            }
+        }
+        private void OnDisable()
+        {
+            foreach (var holder in _holders)
+            {
+                holder.OnComplite -= Compliting;
+            }
+        }
         private void Start()
         {
             if (playOnStart)
@@ -49,35 +62,27 @@ namespace Underworld
         #region Work
         protected override void PlayMode()
         {
+            enabled = true;
             var activeList = new List<TridentHolder>();
             foreach (var holder in _holders)
             {
                 holder.Activate(workDuration);
                 activeList.Add(holder);
             }
-            //_waitComplite = StartCoroutine(WaitComplite(activeList));
         }
 
         protected override void StopMode()
         {
-            throw new System.NotImplementedException();
         }
-        //private IEnumerator WaitComplite(List<TridentHolder> active)
-        //{
-        //    while (active.Count > 0)
-        //    {
-        //        yield return WaitTime(0.2f);
-        //        var list = new List<TridentHolder>();
-        //        for (int i = 0; i < active.Count; i++)
-        //        {
-        //            if (active[i].IsActive)
-        //                list.Add(active[i]);
-        //        }
-        //        active.Clear();
-        //        active = list;
-        //    }
-        //    _waitComplite = null;
-        //}
+        private void Compliting()
+        {
+            foreach (var holder in _holders)
+            {
+                if (holder.IsActive)
+                    return;
+            }
+            Stop();
+        }
         #endregion
     }
 }
