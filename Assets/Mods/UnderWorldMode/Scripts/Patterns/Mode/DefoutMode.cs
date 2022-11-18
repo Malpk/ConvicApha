@@ -26,8 +26,8 @@ namespace Underworld
         {
             _pool = new PoolTerm(_termPerfab);
             _spawnState = new DeffoutSpawnState();
-            var defout = new DefoutCompliteState(_pool, 0.2f);
             _spawnState.Intializate(_delay, workDuration);
+            _spawnState.SetNextState(new DefoutCompliteState(_pool, 0.2f));
             enabled = false;
         }
         private void OnEnable()
@@ -84,6 +84,7 @@ namespace Underworld
                 if (_curretState.GetNextState(out BasePatternState nextState))
                 {
                     _curretState = nextState;
+                    _curretState.Start();
                 }
                 else
                 {

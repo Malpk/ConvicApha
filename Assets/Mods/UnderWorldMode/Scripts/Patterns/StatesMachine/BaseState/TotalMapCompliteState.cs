@@ -6,33 +6,22 @@ namespace Underworld
     public class TotalMapCompliteState : BasePatternState
     {
         private readonly float cheakDelay;
-        private readonly Term[,] terms;
 
+        private bool _isConplite;
         private float progress = 0f;
-        private List<Term> _termActive;
 
-        public System.Action OnComplite;
+        public System.Func<bool> OnCheakComplite;
 
-        public TotalMapCompliteState(Term[,] terms, float cheakDelay)
+        public TotalMapCompliteState(float cheakDelay)
         {
-            this.terms = terms;
             this.cheakDelay = cheakDelay;
         }
 
-        public override bool IsComplite => _termActive.Count == 0;
+        public override bool IsComplite => _isConplite;
 
         public override void Start()
         {
             progress = 0f;
-            _termActive = new List<Term>();
-            foreach (var term in terms)
-            {
-                if (term.IsActive)
-                {
-                    term.Deactivate();
-                    _termActive.Add(term);
-                }
-            }
         }
 
         public override bool Update()
@@ -41,25 +30,9 @@ namespace Underworld
             if (progress >= 1)
             {
                 progress = 0f;
-                _termActive = GetActiveTerm(_termActive);
+                _isConplite = OnCheakComplite!= null ? OnCheakComplite.Invoke() : true;
             }
-            return _termActive.Count > 0; 
-        }
-        private List<Term> GetActiveTerm(List<Term> terms)
-        {
-            var list = new List<Term>();
-            for (int i = 0; i < terms.Count; i++)
-            {
-                if (terms[i].IsActive)
-                {
-                    list.Add(terms[i]);
-                }
-                else
-                {
-                    terms[i].Hide();
-                }
-            }
-            return list;
+            return !_isConplite; 
         }
     }
 }

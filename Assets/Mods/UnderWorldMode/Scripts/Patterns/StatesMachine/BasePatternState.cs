@@ -4,7 +4,11 @@ namespace Underworld
     {
         private BasePatternState _nexSstate;
 
+        
+        public System.Action OnComplite;
+        
         public abstract bool IsComplite { get; }
+      
 
         public void SetNextState(BasePatternState nextState)
         {
@@ -17,6 +21,8 @@ namespace Underworld
         public bool GetNextState(out BasePatternState nextState)
         {
             nextState = _nexSstate;
+            OnComplite?.Invoke();
+
             return nextState != null;
         }
     }

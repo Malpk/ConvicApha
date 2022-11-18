@@ -81,7 +81,7 @@ namespace Underworld
                 _swithcStack.Add(vise);
                 yield return TrakingFromDelete(vise);
             }
-            yield return WaitHideMap();
+            //yield return WaitHideMap();
             _countViseActive--;
             _isActivate = _countViseActive > 0;
             State = ModeState.Stop;
@@ -147,7 +147,7 @@ namespace Underworld
             {
                 term.Deactivate(true);
             }
-            yield return TrakingDeactiveTerms(terms);
+            //yield return TrakingDeactiveTerms(terms);
             yield return null;
             _isOrderActivate = true;
         }

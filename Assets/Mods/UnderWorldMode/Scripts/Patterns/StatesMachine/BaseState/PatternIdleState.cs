@@ -8,8 +8,6 @@ namespace Underworld
 
         private float _progress = 0f;
 
-        public System.Action OnComplite;
-
         public PatternIdleState(float duration)
         {
             this.duration = duration;

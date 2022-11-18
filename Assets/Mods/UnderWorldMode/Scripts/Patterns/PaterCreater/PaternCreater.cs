@@ -19,10 +19,12 @@ namespace Underworld
         private List<Term> _frame;
         private PatternIdleState _warningState;
         private PatternCreaterParceState _parceState;
+
         public bool IsActive { get; private set; } = false;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             var countOffset = GetCountOffset();
             _warningState = new PatternIdleState(_warningTime);
             _parceState = new PatternCreaterParceState(workDuration / countOffset.x, countOffset);
@@ -44,15 +46,19 @@ namespace Underworld
                 throw new System.NullReferenceException("PaternCreaterConfig is null");
             }
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
-            _warningState.OnComplite += () => ActivateTerms();
+            base.OnEnable();
+            _warningState.OnComplite += () => ActivateTerms(_frame);
             _parceState.OnUpdateFrame += UpdateFrame;
+            _parceState.OnComplite += DeactivateTerms;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
-            _warningState.OnComplite -= () => ActivateTerms();
+            base.OnDisable();
+            _warningState.OnComplite -= () => ActivateTerms(_frame);
             _parceState.OnUpdateFrame -= UpdateFrame;
+            _parceState.OnComplite -= DeactivateTerms;
         }
         private void Update()
         {
@@ -98,16 +104,7 @@ namespace Underworld
             var curretFrame = GetFrame(_spriteAtlas, curretPosition).ToList();
             DectivateTerms(curretFrame, _frame);
             _frame = curretFrame;
-            ActivateTerms();
-        }
-        private void ActivateTerms()
-        {
-            foreach (var term in _frame)
-            {
-                if(!term.IsShow)
-                    term.Show();
-                term.Activate(FireState.Start);
-            }
+            ActivateTerms(_frame);
         }
         private void DectivateTerms(List<Term> curretFrame, List<Term> previousFrame)
         {

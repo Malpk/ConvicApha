@@ -18,6 +18,7 @@ namespace Underworld
         [SerializeField] private Vector2 _maxOffset;
 
         private PatternLinerInterplate _scaleState;
+        private BoxModeMoveState _moveState;
 
         private Vector2 _target;
         private Vector2 _startSize;
@@ -26,23 +27,24 @@ namespace Underworld
 
         public bool IsPlay => enabled;
 
-        private void Awake()
+        protected override void Awake()
         {
-            enabled = false;
+            base.Awake();
             _collider = GetComponent<BoxCollider2D>();
             _collider.enabled = false;
             _startSize = _collider.size;
             _maxOffset -= Vector2.one * _minSize / 2;
             IntializateStateMachine();
+            enabled = false;
         }
         private void IntializateStateMachine()
         {
             _scaleState = new PatternLinerInterplate(_scaleDuration);
             var idle = new PatternIdleState(_delayMove);
-            var moveState = new BoxModeMoveState(transform, _maxOffset, _countMove, _speedMovement);
+            _moveState = new BoxModeMoveState(transform, _maxOffset, _countMove, _speedMovement);
             _scaleState.SetNextState(idle);
-            idle.SetNextState(moveState);
-            moveState.SetNextState(compliteState);
+            idle.SetNextState(_moveState);
+            _moveState.SetNextState(compliteState);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -58,15 +60,17 @@ namespace Underworld
                 throw new System.NullReferenceException("BoxModeConfig is null");
             }
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
-            if (_scaleState != null)
-                _scaleState.OnUpdate += ScaleBox;
+            base.OnEnable();
+            _scaleState.OnUpdate += ScaleBox;
+            _moveState.OnComplite += DeactivateTerms;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
-            if(_scaleState != null)
-                _scaleState.OnUpdate -= ScaleBox;
+            base.OnDisable();
+            _scaleState.OnUpdate -= ScaleBox;
+            _moveState.OnComplite -= DeactivateTerms;
         }
 
         public override bool Play()

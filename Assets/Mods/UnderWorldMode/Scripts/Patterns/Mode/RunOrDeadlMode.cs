@@ -20,15 +20,15 @@ namespace Underworld
         private RotationPaternState _rotateState;
         private Coroutine _runMode;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _startState = new PatternIdleState(0.5f);
             _rotateState = new RotationPaternState(_speedRotation, workDuration);
             _warningState = new PatternIdleState(_warningTime);
             _startState.SetNextState(_warningState);
             _rotateState.SetNextState(compliteState);
             _warningState.SetNextState(_rotateState);
-            _rotateState.SetNextState(compliteState);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -43,36 +43,39 @@ namespace Underworld
                 throw new System.NullReferenceException("RunOrDeadConfig is null");
             }
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             _startState.OnComplite += ShowMap;
             _rotateState.OnUpdate += SetAngle;
-            _warningState.OnComplite += ActivateMap;
+            _rotateState.OnComplite += DeactivateTerms;
+            _warningState.OnComplite += () => ActivateTerms(_activateTerms);
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             _startState.OnComplite -= ShowMap;
             _rotateState.OnUpdate -= SetAngle;
-            _warningState.OnComplite -= ActivateMap;
+            _rotateState.OnComplite -= DeactivateTerms;
+            _warningState.OnComplite -= () => ActivateTerms(_activateTerms);
         }
         public override bool Play()
         {
-            if (_runMode == null)
-            {
-                State = ModeState.Play;
-                _curretState = _startState;
-                _isPlay = true;
-                return true;
-            }
-            return false;
+            State = ModeState.Play;
+            _curretState = _startState;
+            transform.rotation *= Quaternion.Euler(Vector3.forward *
+                 DefineStartAngel(player.transform.position) * Time.deltaTime);
+            _isPlay = true;
+            return _isPlay;
         }
         public void Stop()
         {
             _isPlay = false;
+            State = ModeState.Stop;
         }
         private void Update()
         {
-            if (_curretState != default(BasePatternState))
+            if (_curretState != null)
                 UpdateState();
         }
 
@@ -87,7 +90,7 @@ namespace Underworld
                 }
                 else
                 {
-                    _curretState = default(BasePatternState);
+                    Stop();
                 }
             }
             else
@@ -106,15 +109,6 @@ namespace Underworld
             {
                 term.Show();
             }
-        }
-        private void ActivateMap()
-        {
-            foreach (var term in _activateTerms)
-            {
-                term.Activate(FireState.Stay);
-            }
-            transform.rotation *= Quaternion.Euler(Vector3.forward *
-                DefineStartAngel(player.transform.position) * Time.deltaTime);
         }
         private float DefineStartAngel(Vector2 player)
         {
