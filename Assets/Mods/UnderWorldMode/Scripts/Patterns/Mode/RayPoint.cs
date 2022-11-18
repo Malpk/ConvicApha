@@ -52,8 +52,7 @@ namespace Underworld
                 {
                     if (_terms[i].IsShow)
                     {
-                        _terms[i].Deactivate(false);
-                        _terms[i].Hide();
+                        _terms[i].Deactivate();
                         terms.Add(_terms[i]);
                     }
                 }
@@ -93,12 +92,10 @@ namespace Underworld
         private void ActivateTerm(Term term)
         {
             _terms.Add(term);
-            if (IsActive && !term.IsActive)
+            if (IsActive)
             {
-                if(!term.IsShow)
-                    term.Show();
-                if (!term.IsActive)
-                    term.Activate(FireState.Start);
+                term.Show();
+                term.Activate(FireState.Start);
             }
         }
         private void DeactivateTerm(Term term)
@@ -106,8 +103,8 @@ namespace Underworld
             _terms.Remove(term);
             if (IsActive)
             {
-                if(term.IsActive)
-                    term.Deactivate();
+                term.Deactivate(false);
+                term.Hide();
             }
         }
         private void ClearFromCenterPoints()

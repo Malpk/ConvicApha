@@ -10,15 +10,14 @@ namespace Underworld
         [Min(0)]
         [SerializeField] private float _warningTime;
 
-        private bool _isPlay = false;
         private List<Term> _activateTerms = new List<Term>();
         private List<Term> _deactiveTerms = new List<Term>();
 
         private BasePatternState _curretState = null;
         private PatternIdleState _startState;
         private PatternIdleState _warningState;
+        private PatternIdleState _endState;
         private RotationPaternState _rotateState;
-        private Coroutine _runMode;
 
         protected override void Awake()
         {
@@ -26,9 +25,11 @@ namespace Underworld
             _startState = new PatternIdleState(0.5f);
             _rotateState = new RotationPaternState(_speedRotation, workDuration);
             _warningState = new PatternIdleState(_warningTime);
+            _endState = new PatternIdleState(1);
             _startState.SetNextState(_warningState);
-            _rotateState.SetNextState(compliteState);
+            _rotateState.SetNextState(_endState);
             _warningState.SetNextState(_rotateState);
+            _endState.SetNextState(compliteState);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -48,7 +49,7 @@ namespace Underworld
             base.OnEnable();
             _startState.OnComplite += ShowMap;
             _rotateState.OnUpdate += SetAngle;
-            _rotateState.OnComplite += DeactivateTerms;
+            _endState.OnComplite += DeactivateTerms;
             _warningState.OnComplite += () => ActivateTerms(_activateTerms);
         }
         protected override void OnDisable()
@@ -56,22 +57,17 @@ namespace Underworld
             base.OnDisable();
             _startState.OnComplite -= ShowMap;
             _rotateState.OnUpdate -= SetAngle;
-            _rotateState.OnComplite -= DeactivateTerms;
+            _endState.OnComplite -= DeactivateTerms;
             _warningState.OnComplite -= () => ActivateTerms(_activateTerms);
         }
-        public override bool Play()
+        protected override void PlayMode()
         {
-            State = ModeState.Play;
             _curretState = _startState;
             transform.rotation *= Quaternion.Euler(Vector3.forward *
                  DefineStartAngel(player.transform.position) * Time.deltaTime);
-            _isPlay = true;
-            return _isPlay;
         }
-        public void Stop()
+        protected override void StopMode()
         {
-            _isPlay = false;
-            State = ModeState.Stop;
         }
         private void Update()
         {
@@ -135,7 +131,7 @@ namespace Underworld
             if (collision.TryGetComponent(out Term term))
             {
                 _deactiveTerms.Add(term);
-                if (_isPlay)
+                if (IsPlay)
                 {
                     if (term.IsActive)
                         term.Deactivate(false);

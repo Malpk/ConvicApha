@@ -79,7 +79,7 @@ namespace Underworld
                 _curretState.Update();
             }
         }
-        public override bool Play()
+        protected override void PlayMode()
         {
             if (!enabled)
             {
@@ -90,11 +90,9 @@ namespace Underworld
                 {
                     term.Show();
                 }
-                return true;
             }
-            return false;
         }
-        public void Stop()
+        protected override void StopMode()
         {
             enabled = false;
         }

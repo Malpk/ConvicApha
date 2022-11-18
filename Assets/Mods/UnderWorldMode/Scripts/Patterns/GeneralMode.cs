@@ -12,30 +12,23 @@ namespace Underworld
         [Min(0)]
         [SerializeField] protected float workDuration;
 
-        protected event Action DeactivateAction;
-
-        public ModeState State { get; protected set; } = ModeState.Stop;
+        public bool IsPlay { get; private set; }
 
         public abstract void SetConfig(PaternConfig config);
         public abstract void Intializate(MapBuilder builder, Player player);
-        public abstract bool Play();
-
-
-        public void Deactivate()
+        public void Play()
         {
-            State = ModeState.Stop;
-            if (DeactivateAction != null)
-                DeactivateAction();
+            IsPlay = true;
+            PlayMode();
         }
-        protected IEnumerator WaitTime(float duration)
+
+        public void Stop()
         {
-            var progress = 0f;
-            while (progress <= 1f)
-            {
-                yield return new WaitWhile(() => State == ModeState.Pause);
-                yield return null;
-                progress += Time.deltaTime / duration;
-            }
+            IsPlay = false;
+            StopMode();
         }
+
+        protected abstract void PlayMode();
+        protected abstract void StopMode();
     }
 }

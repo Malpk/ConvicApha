@@ -20,10 +20,15 @@ namespace Underworld
 
         public bool GetNextState(out BasePatternState nextState)
         {
-            nextState = _nexSstate;
-            OnComplite?.Invoke();
-
-            return nextState != null;
+            if (_nexSstate != null)
+            {
+                nextState = _nexSstate;
+                nextState.Start();
+                OnComplite?.Invoke();
+                return true;
+            }
+            nextState = null;
+            return false;
         }
     }
 }

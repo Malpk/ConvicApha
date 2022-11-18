@@ -50,50 +50,46 @@ namespace Underworld
                 return new ViseState[] { _mode };
             }
         }
-        public override bool Play()
+        protected override void PlayMode()
         {
             if (!_isActivate)
             {
                 _isActivate = true;
                 foreach (var vise in _vises)
                 {
-                    StartCoroutine(MoveVise(vise));
+                    //StartCoroutine(MoveVise(vise));
                 }
                 StartCoroutine(CelearVise());
-                return true;
             }
-            return false;
         }
-        private IEnumerator MoveVise(ViseV2 vise)
-        {
-            State = ModeState.Play;
-            _countViseActive++;
-            vise.Intializate(terms);
-            var timeWarning = Random.Range(_warningTime.x, _warningTime.y);
-            var timeActive = Random.Range(_activeTime.x, _activeTime.y);
-            while (vise.Next())
-            {
-                vise.Show();
-                yield return WaitTime(timeWarning);
-                yield return new WaitWhile(() => !_isOrderActivate);
-                vise.Activate();
-                yield return WaitTime(timeActive);
-                _swithcStack.Add(vise);
-                yield return TrakingFromDelete(vise);
-            }
-            //yield return WaitHideMap();
-            _countViseActive--;
-            _isActivate = _countViseActive > 0;
-            State = ModeState.Stop;
-        }
+        //private IEnumerator MoveVise(ViseV2 vise)
+        //{
+        //    _countViseActive++;
+        //    vise.Intializate(terms);
+        //    var timeWarning = Random.Range(_warningTime.x, _warningTime.y);
+        //    var timeActive = Random.Range(_activeTime.x, _activeTime.y);
+        //    while (vise.Next())
+        //    {
+        //        vise.Show();
+        //        yield return WaitTime(timeWarning);
+        //        yield return new WaitWhile(() => !_isOrderActivate);
+        //        vise.Activate();
+        //        yield return WaitTime(timeActive);
+        //        _swithcStack.Add(vise);
+        //        yield return TrakingFromDelete(vise);
+        //    }
+        //    yield return WaitHideMap();
+        //    _countViseActive--;
+        //    _isActivate = _countViseActive > 0;
+        //}
         #region Delete
-        private IEnumerator TrakingFromDelete(ViseV2 vise)
-        {
-            while (_swithcStack.Contains(vise))
-            {
-                yield return WaitTime(0.2f);
-            }
-        }
+        //private IEnumerator TrakingFromDelete(ViseV2 vise)
+        //{
+        //    while (_swithcStack.Contains(vise))
+        //    {
+        //        yield return WaitTime(0.2f);
+        //    }
+        //}
         private IEnumerator CelearVise()
         {
             while (_isActivate)
@@ -150,6 +146,11 @@ namespace Underworld
             //yield return TrakingDeactiveTerms(terms);
             yield return null;
             _isOrderActivate = true;
+        }
+
+        protected override void StopMode()
+        {
+            throw new System.NotImplementedException();
         }
     }
     public enum ViseState

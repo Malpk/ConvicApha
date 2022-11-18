@@ -65,21 +65,14 @@ namespace Underworld
             _warningState.OnComplite -= () => ActivateTerms(_activeTils);
             _activeState.OnComplite -= DeactivateTerms;
         }
-                public override bool Play()
+        protected override void PlayMode()
         {
-            if (!enabled)
-            {
-                enabled = true;
-                State = ModeState.Play;
-                _activeTils = CreateMap();
-                _curretState = _warningState;
-                _curretState.Start();
-                return true;
-            }
-            return false;
+            enabled = true;
+            _activeTils = CreateMap();
+            _curretState = _warningState;
+            _curretState.Start();
         }
-
-        public void Stop()
+        protected override void StopMode()
         {
             enabled = false;
         }

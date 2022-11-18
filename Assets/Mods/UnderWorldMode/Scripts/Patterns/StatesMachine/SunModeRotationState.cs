@@ -1,53 +1,83 @@
+using UnityEngine;
+
 namespace Underworld
 {
     public class SunModeRotationState : BasePatternState
     {
         private readonly int countRotation;
-        private readonly PatternLinerInterplate rotateDuration;
-        private readonly PatternIdleState delayState;
+        private readonly float delay;
+        private readonly float durationRotation;
 
         private int _count = 0;
-        private BasePatternState _curretState;
+        private float _progress = 0f;
+        private float _delayProgress = 0f;
+
+        private System.Func<bool> curretTask;
 
         public SunModeRotationState(int countRotation, float durationRotation, float delay)
         {
+            this.delay = delay;
             this.countRotation = countRotation;
-            rotateDuration = new PatternLinerInterplate(durationRotation);
-            delayState = new PatternIdleState(delay);
-            delayState.SetNextState(rotateDuration);
+            this.durationRotation = durationRotation;
         }
 
+        public System.Action<float> OnUpdate;
+        public System.Action OnReset;
+        
         public override bool IsComplite => _count >= countRotation;
 
         public override void Start()
         {
-            _curretState = delayState;
             _count = 0;
-
+            Reset();
+            curretTask = Delay;
         }
         public override bool Update()
         {
-            if (_curretState.IsComplite)
+            if (!curretTask())
             {
-                Switch();
-            }
-            else
-            {
-                _curretState.Update();
+                if (Switch(out System.Func<bool> task))
+                {
+                    curretTask = task;
+                }
+                else
+                {
+                    _count++;
+                    Reset();
+                    Switch(out curretTask);
+                }
             }
             return _count < countRotation; 
         }
-        private void Switch()
+        private void Reset()
         {
-            if (_curretState.GetNextState(out BasePatternState state))
+            _progress = 0f;
+            _delayProgress = 0f;
+            OnReset?.Invoke();
+        }
+        private bool Delay()
+        {
+            _delayProgress += Time.deltaTime / delay;
+            return _delayProgress < 1f;
+        }
+        private bool RotateRays()
+        {
+            _progress += Time.deltaTime / durationRotation;
+            OnUpdate?.Invoke(_progress);
+            return _progress < 1f;
+        }
+        private bool Switch(out System.Func<bool> task)
+        {
+            task = null;
+            if (_delayProgress < 1f)
             {
-                _curretState = state;
+                task = Delay;
             }
-            else
+            else if (_progress < 1f)
             {
-                _curretState = delayState;
-                _count++;
+                task = RotateRays;
             }
+            return task != null;
         }
     }
 }

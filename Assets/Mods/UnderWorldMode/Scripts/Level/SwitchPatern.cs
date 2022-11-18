@@ -46,7 +46,7 @@ namespace Underworld
                 term.Deactivate();
                 term.Hide();
             }
-            _curretMode.Deactivate();
+            _curretMode.Stop();
         }
         private GeneralMode GetPatern(ModeType type)
         {
@@ -65,7 +65,7 @@ namespace Underworld
         private IEnumerator WaitComplitePatern(GeneralMode patern)
         {
             _curretMode = patern;
-            yield return new WaitWhile(() => patern.State == ModeState.Play);
+            yield return new WaitWhile(() => patern.IsPlay);
             IsReady = true;
         }
     }
