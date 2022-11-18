@@ -3,12 +3,10 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class BoxModeMoveState : IPatternState
+    public class BoxModeMoveState : BasePatternState
     {
         private readonly int count;
         private readonly float speed;
-        private readonly Transform boxHolder;
-        private readonly IStateSwitcher switcher;
         private readonly Vector2 maxOffset;
         private readonly Vector3[] _directions = new Vector3[]
         {
@@ -16,6 +14,7 @@ namespace Underworld
             Vector3.down, Vector3.one, -Vector3.one,
             new Vector3(1,-1), new Vector3(-1,1)
         };
+        private readonly Transform boxHolder;
 
         private float _duration;
 
@@ -24,23 +23,22 @@ namespace Underworld
         private Vector2 _target = Vector2.zero;
         private Vector2 _startPosition;
 
-        public BoxModeMoveState(IStateSwitcher switcher,Transform boxHolder, Vector2 maxOffset, int countMove, float speed)
+        public BoxModeMoveState(Transform boxHolder, Vector2 maxOffset, int countMove, float speed)
         {
             count = countMove;
             this.speed = speed;
-            this.switcher = switcher;
             this.boxHolder = boxHolder;
             this.maxOffset = maxOffset;
         }
 
-        public bool IsComplite => _curretCount >= count;
+        public override bool IsComplite => _curretCount >= count;
 
-        public void Start()
+        public override void Start()
         {
             _curretCount = 0;
             ResetProgress();
         }
-        public bool Update()
+        public override bool Update()
         {
             _progress = Mathf.Clamp01(_progress + Time.deltaTime / _duration);
             boxHolder.position = Vector2.Lerp(_startPosition, _target, _progress);
@@ -52,10 +50,6 @@ namespace Underworld
             return _curretCount < count;
         }
 
-        public bool SwitchState(out IPatternState nextState)
-        {
-            return switcher.SwitchState<TotalMapCompliteState>(out nextState);
-        }
         private void ResetProgress()
         {
             _progress = 0f;
@@ -68,7 +62,7 @@ namespace Underworld
             var distance = Vector3.Distance(target, boxHolder.position);
             return Mathf.Abs(distance / speed);
         }
-        public Vector3 GetTargetPosition(Vector2 maxOffset)
+        private Vector3 GetTargetPosition(Vector2 maxOffset)
         {
             _target = GetDirection(_target);
             return Vector3.right * _target.x * maxOffset.x +

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -19,10 +18,11 @@ namespace Underworld
         [SerializeField] private MapBuilder _mapBuilder;
 
         private int _mapSize;
-        private IPatternState _curretState;
+        private BasePatternState _curretState;
         private List<Term> _activeTils = new List<Term>();
         private TotalMapCompliteState _compliteState;
-        private PatternIdleState<PatternIdleState<TotalMapCompliteState>> _warningState;
+        private PatternIdleState _warningState;
+        private PatternIdleState _activeState;
         private Vector2Int[] _bounds;
 
         private readonly Vector2Int[] offset = new Vector2Int[]
@@ -33,14 +33,10 @@ namespace Underworld
         private void Awake()
         {
             enabled = false;
-            _warningState = new PatternIdleState<PatternIdleState<TotalMapCompliteState>>(switcher, _warningTime);
-            switcher.AddState(_warningState);
-            switcher.AddState(new PatternIdleState<TotalMapCompliteState>(switcher, workDuration));
-            if (_mapBuilder != null)
-            {
-                _compliteState = new TotalMapCompliteState(_mapBuilder.Terms, 0.2f);
-                switcher.AddState(_compliteState);
-            }
+            _warningState = new PatternIdleState(_warningTime);
+            _activeState = new PatternIdleState(workDuration);
+            _warningState.SetNextState(_activeState);
+            SetCompliteState(_mapBuilder);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -62,10 +58,15 @@ namespace Underworld
             _mapBuilder = builder;
             _mapSize = builder.Terms.GetLength(0);
             _bounds = SetBounds(_mapSize);
-            if (_compliteState != null)
-                switcher.Remove(_compliteState);
-            _compliteState = new TotalMapCompliteState(_mapBuilder.Terms, 0.2f);
-            switcher.AddState(_compliteState);
+            SetCompliteState(builder);
+        }
+        private void SetCompliteState(MapBuilder builder)
+        {
+            if (_mapBuilder != null)
+            {
+                _compliteState = new TotalMapCompliteState(_mapBuilder.Terms, 0.2f);
+                _activeState.SetNextState(_compliteState);
+            }
         }
         private void OnEnable()
         {
@@ -87,7 +88,7 @@ namespace Underworld
         {
             if (_curretState.IsComplite)
             {
-                if (_curretState.SwitchState(out IPatternState nextState))
+                if (_curretState.GetNextState(out BasePatternState nextState))
                 {
                     _curretState = nextState;
                     _curretState.Start();

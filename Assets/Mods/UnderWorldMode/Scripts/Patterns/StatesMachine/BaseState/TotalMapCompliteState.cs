@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class TotalMapCompliteState : IPatternState
+    public class TotalMapCompliteState : BasePatternState
     {
         private readonly float cheakDelay;
         private readonly Term[,] terms;
@@ -19,9 +19,9 @@ namespace Underworld
             this.cheakDelay = cheakDelay;
         }
 
-        public bool IsComplite => _termActive.Count == 0;
+        public override bool IsComplite => _termActive.Count == 0;
 
-        public void Start()
+        public override void Start()
         {
             progress = 0f;
             _termActive = new List<Term>();
@@ -35,7 +35,7 @@ namespace Underworld
             }
         }
 
-        public bool Update()
+        public override bool Update()
         {
             progress += Time.deltaTime / cheakDelay;
             if (progress >= 1)
@@ -45,12 +45,6 @@ namespace Underworld
             }
             return _termActive.Count > 0; 
         }
-        public bool SwitchState(out IPatternState nextState)
-        {
-            nextState = default(IPatternState);
-            return false;
-        }
-
         private List<Term> GetActiveTerm(List<Term> terms)
         {
             var list = new List<Term>();

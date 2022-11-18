@@ -17,11 +17,11 @@ namespace Underworld
         [SerializeField] private Vector2 _minSize;
         [SerializeField] private Vector2 _maxOffset;
 
-        private PatternLinerInterplate<PatternIdleState<BoxModeMoveState>> _scaleState;
+        private PatternLinerInterplate _scaleState;
 
         private Vector2 _target;
         private Vector2 _startSize;
-        private IPatternState _curretState;
+        private BasePatternState _curretState;
         private BoxCollider2D _collider;
 
         public bool IsPlay => enabled;
@@ -37,10 +37,12 @@ namespace Underworld
         }
         private void IntializateStateMachine()
         {
-            _scaleState = new PatternLinerInterplate<PatternIdleState<BoxModeMoveState>>(switcher, _scaleDuration);
-            switcher.AddState(_scaleState);
-            switcher.AddState(new PatternIdleState<BoxModeMoveState>(switcher, _delayMove));
-            switcher.AddState(new BoxModeMoveState(switcher, transform, _maxOffset, _countMove, _speedMovement));
+            _scaleState = new PatternLinerInterplate(_scaleDuration);
+            var idle = new PatternIdleState(_delayMove);
+            var moveState = new BoxModeMoveState(transform, _maxOffset, _countMove, _speedMovement);
+            _scaleState.SetNextState(idle);
+            idle.SetNextState(moveState);
+            moveState.SetNextState(compliteState);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -87,7 +89,7 @@ namespace Underworld
         {
             if (_curretState.IsComplite)
             {
-                if (_curretState.SwitchState(out IPatternState nextState))
+                if (_curretState.GetNextState(out BasePatternState nextState))
                 {
                     _curretState = nextState;
                     _curretState.Start();
