@@ -1,52 +1,34 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System;
 
 namespace Underworld
 {
-    public abstract class GeneralMode : MonoBehaviour, IPause
+    public abstract class GeneralMode : MonoBehaviour
     {
         [Header("General Setting")]
         [SerializeField] protected bool playOnStart;
         [Min(0)]
         [SerializeField] protected float workDuration;
 
-        protected PatternStateSwithcer switcher = new PatternStateSwithcer();
-        
-        protected event Action DeactivateAction;
-
-        private ModeState _previus;
-
-        public ModeState State { get; protected set; } = ModeState.Stop;
+        public bool IsPlay { get; private set; }
 
         public abstract void SetConfig(PaternConfig config);
         public abstract void Intializate(MapBuilder builder, Player player);
-        public abstract bool Play();
+        public void Play()
+        {
+            IsPlay = true;
+            PlayMode();
+        }
 
-        public void Deactivate()
+        public void Stop()
         {
-            State = ModeState.Stop;
-            if (DeactivateAction != null)
-                DeactivateAction();
+            IsPlay = false;
+            StopMode();
         }
-        public virtual void Pause()
-        {
-            _previus = State;
-            State = ModeState.Pause;
-        }
-        public virtual void UnPause()
-        {
-            State = _previus;
-        }
-        protected IEnumerator WaitTime(float duration)
-        {
-            var progress = 0f;
-            while (progress <= 1f)
-            {
-                yield return new WaitWhile(() => State == ModeState.Pause);
-                yield return null;
-                progress += Time.deltaTime / duration;
-            }
-        }
+
+        protected abstract void PlayMode();
+        protected abstract void StopMode();
     }
 }

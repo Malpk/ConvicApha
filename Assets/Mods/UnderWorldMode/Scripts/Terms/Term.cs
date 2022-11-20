@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Underworld
@@ -13,12 +12,11 @@ namespace Underworld
         private bool _isActive;
         private IDamage _target;
 
-        public bool IsShow => _termBody.activeSelf;
+        public bool IsShow { get; private set; } = false;
         public bool IsActive => _isActive;
 
         private void Awake()
         {
-            enabled = false;
             Hide();
         }
 
@@ -33,9 +31,12 @@ namespace Underworld
 
         public void Activate(FireState firestate = FireState.Start)
         {
+#if UNITY_EDITOR
+            if (!IsShow)
+                throw new System.Exception("you con't activate hide term");
+#endif
             if (!_isActive)
             {
-                enabled = true;
                 _isActive = true;
                 SetMode(true);
                 _termFire.Activate(firestate);
@@ -47,12 +48,18 @@ namespace Underworld
         public void Deactivate(bool waitAnimation = true)
         {
             if (waitAnimation)
+            {
                 _termFire.DeactivateWaitAnimation();
+            }
             else
-                _termFire.DeactiveEvent();
+            {
+                SetMode(false);
+                _termFire.Deactivete();
+            }
         }
         public void Show()
         {
+            IsShow = true;
             _termBody.SetActive(true);
         }
         public void Hide()
@@ -61,6 +68,7 @@ namespace Underworld
             if (_isActive)
                 throw new System.NullReferenceException("попытка спрятать активный объект");
 #endif
+            IsShow = false;
             _termBody.SetActive(false);
         }
 

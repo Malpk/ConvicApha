@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class TridentHolder : MonoBehaviour,IPause
+    public class TridentHolder : MonoBehaviour
     {
         [Header("General Setting")]
         [SerializeField] private int _countTridentPoint;
@@ -13,15 +13,20 @@ namespace Underworld
         [Header("Reference")]
         [SerializeField] private TridentPoint _pointPerfabs;
 
-        private bool _isPause = false;
+        private float _timeActive;
+        private float _progress;
+        private float _progressDelay = 0f;
+        private float _progressCheak = 0f;
         private bool _isCreate = false;
-
         private List<TridentPoint> _points = new List<TridentPoint>();
         private List<TridentPoint> _activePoint = new List<TridentPoint>();
 
-        private Coroutine _start;
+        private System.Action _task;
 
-        public bool IsActive => _start != null;
+        public event System.Action OnComplite;
+        
+
+        public bool IsActive => enabled;
 
         #region Intilizate
         public void Intilizate(TridentPointConfig setting ,int countTrindentPoint)
@@ -42,12 +47,11 @@ namespace Underworld
             for (int i = 0; i < _countTridentPoint; i++)
             {
                 var position = startPosition - widthPoint * i;
-                var point = Instantiate(_pointPerfabs.gameObject, 
-                    transform.right * position, transform.rotation).
-                        GetComponent<TridentPoint>();
+                var point = Instantiate(_pointPerfabs.gameObject, transform.right * position, transform.rotation).GetComponent<TridentPoint>();
                 point.transform.parent = transform;
                 point.Intilizate(_config);
                 point.CreateTridents();
+                point.transform.parent = transform;
                 _points.Add(point);
             }
         }
@@ -56,66 +60,69 @@ namespace Underworld
         public void Activate(float timeActive)
         {
 #if UNITY_EDITOR
-            if (IsActive)
-                throw new System.Exception("TridentHolder is already activated");
-            else if(!_isCreate)
+            if(!_isCreate)
                 throw new System.Exception("TridentPoints is not created");
 #endif
-            _start = StartCoroutine(Run(timeActive));
+            _timeActive = timeActive;
+            _progress = 0f;
+            _progressDelay = 0f;
+            _progressCheak = 0f;
+            _task = Shooting;
+            enabled = true;
+        }
+        public void Deactivate()
+        {
+            enabled = false;
+            OnComplite?.Invoke();
+        }
+        private void Update()
+        {
+            _task();
         }
 
-        public void Pause()
+        private void Shooting()
         {
-            _isPause = true;
-            foreach (var point in _points)
+            _progress += Time.deltaTime / _timeActive;
+            _progressDelay += Time.deltaTime / _delayShoot;
+            if (_progressDelay >= 1)
             {
-                point.Pause();
+                _progressDelay = 0f;
+                ShootTrident();
+                if (_progress >= 1f)
+                {
+                    _task = Compliting;
+                }
             }
         }
-
-        public void UnPause()
+        private void Compliting()
         {
-            _isPause = false;
-            foreach (var point in _points)
+            _progressCheak += Time.deltaTime / 0.2f;
+            if (_progressCheak >= 1f)
             {
-                point.UnPause();
+                _progressCheak = 0f;
+                if (CheakComplite())
+                {
+                    Deactivate();
+                }
             }
+        }
+        private bool CheakComplite()
+        {
+            var termp = new List<TridentPoint>();
+            for (int i = 0; i < _activePoint.Count; i++)
+            {
+                if (_activePoint[i].IsActvate)
+                    termp.Add(_activePoint[i]);
+            }
+            _activePoint = termp;
+            return termp.Count == 0;
         }
         #endregion
-        private IEnumerator Run(float timeActive)
+        private void ShootTrident()
         {
-            var progress = 0f;
-            while (progress < 1f)
+            if (GetPoint(out TridentPoint point))
             {
-                yield return new WaitWhile(() => _isPause);
-                if (GetPoint(out TridentPoint point))
-                {
-                    point.Activate();
-                    yield return new WaitForSeconds(_delayShoot);
-                    progress += _delayShoot / timeActive;
-                }
-                else
-                {
-                    progress += Time.deltaTime/ timeActive;
-                    yield return null;
-                }
-            }
-            yield return WaitComplitePoints();
-            _start = null;
-        }
-        private IEnumerator WaitComplitePoints()
-        {
-            while (_activePoint.Count > 0)
-            {
-                yield return new WaitForSeconds(0.2f);
-                var termp = new List<TridentPoint>();
-                for (int i = 0; i < _activePoint.Count; i++)
-                {
-                    if (_activePoint[i].IsActvate)
-                        termp.Add(_activePoint[i]);
-                }
-                _activePoint.Clear();
-                _activePoint = termp;
+                point.Activate();
             }
         }
         private bool GetPoint(out TridentPoint point)

@@ -67,16 +67,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae871756d0c9cb14ebdedcfa0e5d3f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 0
   playOnStart: 0
   workDuration: 10
   player: {fileID: 0}
-  _builder: {fileID: 0}
-  _handTermPerfab: {fileID: 2755220189578518561, guid: 513635374147d0b4f90e0345108879ea, type: 3}
+  _mapBuilder: {fileID: 0}
   _countRay: 6
   _offset: 45
-  _speedOffset: 17
   _warningTime: 2
+  _countOffset: 4
+  _durationOffset: 2
   _delay: 0.5
   _center: {fileID: 1577263819997923298}
   _rayPerfab: {fileID: 8306110263009516396, guid: 3b222d1958422514aa8d103e291d737b, type: 3}

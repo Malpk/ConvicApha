@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,14 +7,11 @@ namespace Underworld
     {
         private readonly ViseState state;
 
-        private int _steep = 0;
+        private int _steep = -1;
         private int _way;
-        private bool _isActive;
-        private bool _isDeleteMode = false;
-        private Term[,] _mapTerms;
-        private List<Term> _terms = new List<Term>();
+        private Term[,] _terms;
 
-
+        private List<Term> _pool = new List<Term>();
         public ViseV2(ViseState state)
         {
             this.state = state;
@@ -24,149 +20,114 @@ namespace Underworld
         private delegate bool GetViseCommand(out List<Term> terms);
         private GetViseCommand GetVise;
 
-        public bool IsDeleteMode => _isDeleteMode;
-        public bool IsActive => _isActive;
         public bool IsComplite => _steep >= _way;
-        public List<Term> TermVises => _terms;
 
         public void Intializate(Term[,] terms)
         {
-            _mapTerms = terms;
+            _terms = terms;
             switch (state)
             {
                 case ViseState.VerticalMode:
-                    _way = _mapTerms.GetLength(1);
+                    _way = _terms.GetLength(1);
                     GetVise = GetVerticalVise;
                     break;
                 case ViseState.HorizontalMode:
-                    _way = _mapTerms.GetLength(0);
+                    _way = _terms.GetLength(0);
                     GetVise = GetHorizontalVise;
                     break;
             }
         }
-
+        public void Reset()
+        {
+            _steep = -1;
+        }
         public bool Next()
         {
-            if (_steep < _way)
-            {
-                if (!_isDeleteMode)
-                {
-                    GetVise(out _terms);
-                    _steep++;
-                    return true;
-                }
-                else
-                {
-                    OutputDeleteExeption();
-                    return false;
-                }
-            }
-            else
-            {
-                _steep = 0;
-                return false;
-            }
+            _steep++;
+            return _steep < _way;
         }
-        public void Show()
+        public void ShowVise()
         {
-            if (!IsDeleteMode)
-            {
-                for (int i = 0; i < _terms.Count; i++)
+            if (GetVise(out _pool))
+            { 
+                foreach (var term in _pool)
                 {
-                    if (!_terms[i].IsShow)
-                        _terms[i].Show();
+                    term.Show();
+                } 
+            }
+        }
+        public void ActivateVise()
+        {
+            foreach (var term in _pool)
+            {
+                term.Activate();
+            }
+        }
+        public void HideVise()
+        {
+            if (GetVise(out _pool))
+            {
+                foreach (var term in _pool)
+                {
+                    term.Deactivate(false);
+                    term.Hide();
                 }
             }
-            else
-            {
-                OutputDeleteExeption();
-            }
         }
-        public void Activate()
-        {
-            if (!IsDeleteMode)
-            {
-                _isActive = true;
-                for (int i = 0; i < _terms.Count; i++)
-                {
-                    if (!_terms[i].IsActive)
-                        _terms[i].Activate(FireState.Start);
-                }
-            }
-            else
-            {
-                OutputDeleteExeption();
-            }
-        }
-        #region Deactive Vise
-        public IEnumerator Deactive(List<Term> dontDeactive = null)
-        {
-            if (dontDeactive != null)
-            {
-                Clear(dontDeactive);
-            }
-            _isDeleteMode = true;
-            foreach (var term in _terms)
-            {
-                if (term.IsActive)
-                {
-                    term.Deactivate();
-                }
-            }
-            yield return Traking();
-            _isDeleteMode = false;
-            _isActive = false;
-        }
-        private IEnumerator Traking()
-        {
-            var activeList = new List<Term>();
-            while (_terms.Count > 0)
-            {
-                yield return new WaitForSeconds(0.2f);
-                for (int i = 0; i < _terms.Count; i++)
-                {
-                    if (_terms[i].IsShow)
-                        activeList.Add(_terms[i]);
-                }
-                _terms.Clear();
-                _terms.AddRange(activeList);
-                activeList.Clear();
-            }
-        }
-        private void Clear(List<Term> dontDeactive)
-        {
-            for (int i = 0; i < dontDeactive.Count; i++)
-            {
-                if (_terms.Contains(dontDeactive[i]))
-                    _terms.Remove(dontDeactive[i]);
-            }
-        }
-        #endregion
         #region Get Vise
         private bool GetVerticalVise(out List<Term> list)
         {
             list = new List<Term>();
-            for (int j = 0; j < _mapTerms.GetLength(0); j++)
+            for (int j = 0; j < _terms.GetLength(0); j++)
             {
-                list.Add(_mapTerms[j, _steep]);
-                list.Add(_mapTerms[j, _way - _steep - 1]);
+                if (CheakOnCrossHorizontal(_steep, j))
+                {
+                    list.Add(_terms[j, _steep]);
+
+                    list.Add(_terms[j, _way - _steep - 1]);
+                }
             }
             return list.Count > 0;
         }
         private bool GetHorizontalVise(out List<Term> list)
         {
             list = new List<Term>();
-            for (int j = 0; j < _mapTerms.GetLength(0); j++)
+            for (int j = 0; j < _terms.GetLength(0); j++)
             {
-                list.Add(_mapTerms[_steep, j]);
-                list.Add(_mapTerms[_way - _steep - 1, j]);
+                var down = _way - _steep - 1;
+                if (CheakOnCrossVertical(_steep, j))
+                {
+                    list.Add(_terms[_steep, j]);
+                    list.Add(_terms[down, j]);
+                }
             }
             return list.Count > 0;
         }
-        #endregion
-        private void OutputDeleteExeption()
+
+        private bool CheakOnCrossVertical(int i, int j)
         {
-            throw new System.Exception("Call during delete");
+            if (i + 2 < _terms.GetLength(0))
+            {
+                return !_terms[i + 2, j].IsShow;
+            }
+            else if (i - 2 > 0)
+            {
+                return !_terms[i - 2, j].IsShow;
+            }
+            return false;
         }
+        private bool CheakOnCrossHorizontal(int i, int j)
+        {
+            if (i + 2 < _terms.GetLength(1))
+            {
+                return !_terms[j, i + 2].IsShow;
+            }
+            else if (i - 2 > 0)
+            {
+                return !_terms[j, i - 2].IsShow;
+            }
+            return false;
+        }
+        #endregion
     }
 }

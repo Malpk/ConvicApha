@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Underworld
 {
@@ -42,6 +39,20 @@ namespace Underworld
         public override void Intializate(MapBuilder builder, Player player = null)
         {
         }
+        private void OnEnable()
+        {
+            foreach (var holder in _holders)
+            {
+                holder.OnComplite += Compliting;
+            }
+        }
+        private void OnDisable()
+        {
+            foreach (var holder in _holders)
+            {
+                holder.OnComplite -= Compliting;
+            }
+        }
         private void Start()
         {
             if (playOnStart)
@@ -49,38 +60,28 @@ namespace Underworld
         }
         #endregion
         #region Work
-        public override bool Play()
+        protected override void PlayMode()
         {
-#if UNITY_EDITOR
-            if (IsActive)
-                throw new System.Exception("Patern is already activated");
-#endif
+            enabled = true;
             var activeList = new List<TridentHolder>();
             foreach (var holder in _holders)
             {
                 holder.Activate(workDuration);
                 activeList.Add(holder);
             }
-            _waitComplite = StartCoroutine(WaitComplite(activeList));
-            return false;
         }
-        private IEnumerator WaitComplite(List<TridentHolder> active)
+
+        protected override void StopMode()
         {
-            State = ModeState.Play;
-            while (active.Count > 0)
+        }
+        private void Compliting()
+        {
+            foreach (var holder in _holders)
             {
-                yield return WaitTime(0.2f);
-                var list = new List<TridentHolder>();
-                for (int i = 0; i < active.Count; i++)
-                {
-                    if (active[i].IsActive)
-                        list.Add(active[i]);
-                }
-                active.Clear();
-                active = list;
+                if (holder.IsActive)
+                    return;
             }
-            State = ModeState.Stop;
-            _waitComplite = null;
+            Stop();
         }
         #endregion
     }
