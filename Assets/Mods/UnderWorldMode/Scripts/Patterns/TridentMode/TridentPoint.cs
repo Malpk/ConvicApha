@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Underworld
 {
-    public class TridentPoint : MonoBehaviour, IPause
+    public class TridentPoint : MonoBehaviour
     {
         [Header("GeneralMode")]
         [SerializeField] private bool _playOnAwake;
@@ -53,23 +53,6 @@ namespace Underworld
                 throw new System.Exception("Tridents is not created");
 #endif
             StartCoroutine(Work());
-        }
-        public void Pause()
-        {
-            _isPause = true;
-            foreach (var trident in _tridents)
-            {
-                trident.Pause();
-            }
-        }
-
-        public void UnPause()
-        {
-            _isPause = false;
-            foreach (var trident in _tridents)
-            {
-                trident.UnPause();
-            }
         }
         private IEnumerator Work()
         {

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Underworld
@@ -20,14 +19,12 @@ namespace Underworld
 
         private BasePatternState _curretState;
 
-        public bool IsActive => enabled;
-
         private void Awake()
         {
             _pool = new PoolTerm(_termPerfab);
             _spawnState = new DeffoutSpawnState();
-            var defout = new DefoutCompliteState(_pool, 0.2f);
             _spawnState.Intializate(_delay, workDuration);
+            _spawnState.SetNextState(new DefoutCompliteState(_pool, 0.2f));
             enabled = false;
         }
         private void OnEnable()
@@ -64,15 +61,13 @@ namespace Underworld
             if (playOnStart)
                 Play();
         }
-        public override bool Play()
+        protected override void PlayMode()
         {
-            State = ModeState.Play;
             _curretState = _spawnState;
             _curretState.Start();
             enabled = true;
-            return true;
         }
-        public void Stop()
+        protected override void StopMode()
         {
             enabled = false;
             _pool.ClearPool();
@@ -84,6 +79,7 @@ namespace Underworld
                 if (_curretState.GetNextState(out BasePatternState nextState))
                 {
                     _curretState = nextState;
+                    _curretState.Start();
                 }
                 else
                 {

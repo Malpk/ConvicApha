@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Underworld
@@ -13,7 +12,7 @@ namespace Underworld
         private bool _isActive;
         private IDamage _target;
 
-        public bool IsShow => _termBody.activeSelf;
+        public bool IsShow { get; private set; } = false;
         public bool IsActive => _isActive;
 
         private void Awake()
@@ -60,6 +59,7 @@ namespace Underworld
         }
         public void Show()
         {
+            IsShow = true;
             _termBody.SetActive(true);
         }
         public void Hide()
@@ -68,6 +68,7 @@ namespace Underworld
             if (_isActive)
                 throw new System.NullReferenceException("попытка спрятать активный объект");
 #endif
+            IsShow = false;
             _termBody.SetActive(false);
         }
 

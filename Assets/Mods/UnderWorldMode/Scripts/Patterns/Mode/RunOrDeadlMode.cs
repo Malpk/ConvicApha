@@ -10,25 +10,26 @@ namespace Underworld
         [Min(0)]
         [SerializeField] private float _warningTime;
 
-        private bool _isPlay = false;
         private List<Term> _activateTerms = new List<Term>();
         private List<Term> _deactiveTerms = new List<Term>();
 
         private BasePatternState _curretState = null;
         private PatternIdleState _startState;
         private PatternIdleState _warningState;
+        private PatternIdleState _endState;
         private RotationPaternState _rotateState;
-        private Coroutine _runMode;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _startState = new PatternIdleState(0.5f);
             _rotateState = new RotationPaternState(_speedRotation, workDuration);
             _warningState = new PatternIdleState(_warningTime);
+            _endState = new PatternIdleState(1);
             _startState.SetNextState(_warningState);
-            _rotateState.SetNextState(compliteState);
+            _rotateState.SetNextState(_endState);
             _warningState.SetNextState(_rotateState);
-            _rotateState.SetNextState(compliteState);
+            _endState.SetNextState(compliteState);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -43,36 +44,35 @@ namespace Underworld
                 throw new System.NullReferenceException("RunOrDeadConfig is null");
             }
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             _startState.OnComplite += ShowMap;
             _rotateState.OnUpdate += SetAngle;
-            _warningState.OnComplite += ActivateMap;
+            _endState.OnComplite += DeactivateTerms;
+            _warningState.OnComplite += () => ActivateTerms(_activateTerms);
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             _startState.OnComplite -= ShowMap;
             _rotateState.OnUpdate -= SetAngle;
-            _warningState.OnComplite -= ActivateMap;
+            _endState.OnComplite -= DeactivateTerms;
+            _warningState.OnComplite -= () => ActivateTerms(_activateTerms);
         }
-        public override bool Play()
+        protected override void PlayMode()
         {
-            if (_runMode == null)
-            {
-                State = ModeState.Play;
-                _curretState = _startState;
-                _isPlay = true;
-                return true;
-            }
-            return false;
+            _curretState = _startState;
+            transform.rotation *= Quaternion.Euler(Vector3.forward *
+                 DefineStartAngel(player.transform.position) * Time.deltaTime);
         }
-        public void Stop()
+        protected override void StopMode()
         {
-            _isPlay = false;
+            _curretState = null;
         }
         private void Update()
         {
-            if (_curretState != default(BasePatternState))
+            if (_curretState != null)
                 UpdateState();
         }
 
@@ -87,7 +87,7 @@ namespace Underworld
                 }
                 else
                 {
-                    _curretState = default(BasePatternState);
+                    Stop();
                 }
             }
             else
@@ -106,15 +106,6 @@ namespace Underworld
             {
                 term.Show();
             }
-        }
-        private void ActivateMap()
-        {
-            foreach (var term in _activateTerms)
-            {
-                term.Activate(FireState.Stay);
-            }
-            transform.rotation *= Quaternion.Euler(Vector3.forward *
-                DefineStartAngel(player.transform.position) * Time.deltaTime);
         }
         private float DefineStartAngel(Vector2 player)
         {
@@ -141,7 +132,7 @@ namespace Underworld
             if (collision.TryGetComponent(out Term term))
             {
                 _deactiveTerms.Add(term);
-                if (_isPlay)
+                if (IsPlay)
                 {
                     if (term.IsActive)
                         term.Deactivate(false);
@@ -154,9 +145,12 @@ namespace Underworld
         {
             if (collision.TryGetComponent(out Term term))
             {
-                _deactiveTerms.Remove(term);
-                term.Show();
-                term.Activate(FireState.Stay);
+                if (IsPlay)
+                {
+                    _deactiveTerms.Remove(term);
+                    term.Show();
+                    term.Activate(FireState.Stay);
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Underworld
 {
-    public class IslandModeD : GeneralMode
+    public class IslandModeD : TotalMapMode
     {
         [Header("Mode Setting")]
         [Min(0)]
@@ -15,12 +15,10 @@ namespace Underworld
         [SerializeField] private int _minSizeIsland;
         [SerializeField] private int _maxSizeIsland;
         [Header("Map Setting")]
-        [SerializeField] private MapBuilder _mapBuilder;
+        [SerializeField] private int _mapSize;
 
-        private int _mapSize;
         private BasePatternState _curretState;
         private List<Term> _activeTils = new List<Term>();
-        private TotalMapCompliteState _compliteState;
         private PatternIdleState _warningState;
         private PatternIdleState _activeState;
         private Vector2Int[] _bounds;
@@ -30,13 +28,15 @@ namespace Underworld
             Vector2Int.right, Vector2Int.left,Vector2Int.up, Vector2Int.down
         };
 
-        private void Awake()
+        protected override void Awake()
         {
-            enabled = false;
+            base.Awake();
             _warningState = new PatternIdleState(_warningTime);
             _activeState = new PatternIdleState(workDuration);
             _warningState.SetNextState(_activeState);
-            SetCompliteState(_mapBuilder);
+            _activeState.SetNextState(compliteState);
+            _bounds = SetBounds(_mapSize);
+            enabled = false;
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -53,37 +53,29 @@ namespace Underworld
                 throw new System.NullReferenceException("IslandModeConfig is null");
             }
         }
-        public override void Intializate(MapBuilder builder, Player player)
+        protected override void OnEnable()
         {
-            _mapBuilder = builder;
-            _mapSize = builder.Terms.GetLength(0);
-            _bounds = SetBounds(_mapSize);
-            SetCompliteState(builder);
+            base.OnEnable();
+            _warningState.OnComplite += () => ActivateTerms(_activeTils);
+            _activeState.OnComplite += DeactivateTerms;
         }
-        private void SetCompliteState(MapBuilder builder)
+        protected override void OnDisable()
         {
-            if (_mapBuilder != null)
-            {
-                _compliteState = new TotalMapCompliteState(_mapBuilder.Terms, 0.2f);
-                _activeState.SetNextState(_compliteState);
-            }
+            base.OnDisable();
+            _warningState.OnComplite -= () => ActivateTerms(_activeTils);
+            _activeState.OnComplite -= DeactivateTerms;
         }
-        private void OnEnable()
+        protected override void PlayMode()
         {
-            _warningState.OnComplite += ActivateTerms;
+            enabled = true;
+            _activeTils = CreateMap();
+            _curretState = _warningState;
+            _curretState.Start();
         }
-        private void OnDisable()
+        protected override void StopMode()
         {
-            _warningState.OnComplite -= ActivateTerms;
+            enabled = false;
         }
-        private void Start()
-        {
-            if (_mapBuilder)
-                Intializate(_mapBuilder, null);
-            if (playOnStart)
-                Play();
-        }
-
         private void Update()
         {
             if (_curretState.IsComplite)
@@ -104,34 +96,7 @@ namespace Underworld
             }
         }
 
-        public override bool Play()
-        {
-            if (!enabled)
-            {
-                enabled = true;
-                State = ModeState.Play;
-                _activeTils = CreateMap();
-                _curretState = _warningState;
-                _curretState.Start();
-                return true;
-            }
-            return false;
-        }
 
-        public void Stop()
-        {
-            enabled = false;
-        }
-        #region Work Mode
- 
-        private void ActivateTerms()
-        {
-            foreach (var tile in _activeTils)
-            {
-                tile.Activate(FireState.Start);
-            }
-        }
-        #endregion
         #region Get Seeds
         private List<Vector2Int> GetSeed(Vector2Int startPoint, Vector2Int[] bounds)
         {
@@ -208,7 +173,7 @@ namespace Underworld
             {
                 islands.AddRange(CreateIsland(seed, _mapSize));
             }
-            var mapActive = GetMapActive(_mapBuilder.Terms, islands).ToList();
+            var mapActive = GetMapActive(terms, islands).ToList();
             for (int i = 0; i < mapActive.Count; i++)
             {
                 mapActive[i].Show();

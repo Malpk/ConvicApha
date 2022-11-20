@@ -18,31 +18,34 @@ namespace Underworld
         [SerializeField] private Vector2 _maxOffset;
 
         private PatternLinerInterplate _scaleState;
+        private BoxModeMoveState _moveState;
+        private PatternIdleState _endState;
 
         private Vector2 _target;
         private Vector2 _startSize;
         private BasePatternState _curretState;
         private BoxCollider2D _collider;
 
-        public bool IsPlay => enabled;
-
-        private void Awake()
+        protected override void Awake()
         {
-            enabled = false;
+            base.Awake();
             _collider = GetComponent<BoxCollider2D>();
             _collider.enabled = false;
             _startSize = _collider.size;
             _maxOffset -= Vector2.one * _minSize / 2;
             IntializateStateMachine();
+            enabled = false;
         }
         private void IntializateStateMachine()
         {
             _scaleState = new PatternLinerInterplate(_scaleDuration);
             var idle = new PatternIdleState(_delayMove);
-            var moveState = new BoxModeMoveState(transform, _maxOffset, _countMove, _speedMovement);
+            _endState = new PatternIdleState(1);
+            _moveState = new BoxModeMoveState(transform, _maxOffset, _countMove, _speedMovement);
             _scaleState.SetNextState(idle);
-            idle.SetNextState(moveState);
-            moveState.SetNextState(compliteState);
+            idle.SetNextState(_moveState);
+            _moveState.SetNextState(_endState);
+            _endState.SetNextState(compliteState);
         }
         public override void SetConfig(PaternConfig config)
         {
@@ -58,18 +61,20 @@ namespace Underworld
                 throw new System.NullReferenceException("BoxModeConfig is null");
             }
         }
-        private void OnEnable()
+        protected override void OnEnable()
         {
-            if (_scaleState != null)
-                _scaleState.OnUpdate += ScaleBox;
+            base.OnEnable();
+            _scaleState.OnUpdate += ScaleBox;
+            _endState.OnComplite += DeactivateTerms;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
-            if(_scaleState != null)
-                _scaleState.OnUpdate -= ScaleBox;
+            base.OnDisable();
+            _scaleState.OnUpdate -= ScaleBox;
+            _endState.OnComplite -= DeactivateTerms;
         }
 
-        public override bool Play()
+        protected override void PlayMode()
         {
             enabled = true;
             _collider.enabled = true;
@@ -78,9 +83,8 @@ namespace Underworld
             _target = GetOffset(_maxOffset);
             _curretState = _scaleState;
             _curretState.Start();
-            return true;
         }
-        public void Stop()
+        protected override void StopMode()
         {
             enabled = false;
             _collider.enabled = false;
