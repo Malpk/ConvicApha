@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode
@@ -8,95 +7,80 @@ namespace MainMode
     {
         [Header("LaserGun setting")]
         [Min(1)]
+        [SerializeField] private int _countShoot = 1;
+        [Range(0.1f, 1f)]
+        [SerializeField] private float _timeShoot = 1f;
+        [Range(0.1f, 1f)]
+        [Min(1)]
         [SerializeField] private float _timeReload = 1f;
-        [Min(1)]
-        [SerializeField] private float _shootDuration = 1f;
-        [Header("Movement setting")]
-        [Min(1)]
-        [SerializeField] private float _speedRotation = 1f;
+        [SerializeField] private float _speedRotation = 0;
         [Header("Reference")]
         [SerializeField] private Laser _laser;
         [SerializeField] private Rigidbody2D _rotateBody;
 
-        private Coroutine _coroutine = null;
+        private int _count;
+        private float _rotate;
+        private float _progress = 0f;
+
+        private System.Action State;
 
         public override TrapType DeviceType => TrapType.LaserGun;
-        protected override void Awake()
+
+        protected void Awake()
         {
-            base.Awake();
             _laser.SetAttack(attackInfo);
         }
-        private void Start()
-        {
-            if (showOnStart)
-                ShowItem();
-        }
+
         protected override void Launch()
         {
-            _coroutine = StartCoroutine(Rotate());
-            StartCoroutine(ShootLaser());
+            _count = 0;
+            _progress = 0f;
+            var directions = new int[] { -1, 1 };
+            _rotate = _speedRotation * directions[Random.Range(0, directions.Length)];
+            State = Reloading;
         }
-        private IEnumerator Rotate()
+        private void FixedUpdate()
         {
-            yield return new WaitWhile(() => !IsShow);
-            var direction = new int[] { -1, 1 };
-            int index = Random.Range(0, direction.Length);
-            float progress = 0f;
-            while (progress < 1f && IsActive)
-            {
-                while (Mathf.Abs(_rotateBody.rotation) <= 360 && IsActive)
-                {
-                    _rotateBody.MoveRotation(_rotateBody.rotation + _speedRotation * direction[index]);
-                    progress += Time.deltaTime / durationWork;
-                    yield return null;
-                }
-                _rotateBody.rotation -= 360 * direction[index];
-            }
-            _coroutine = null;
-            if (IsActive)
-            {
-                Deactivate();
-                yield return ReturnState();
-                if (destroyMode)
-                    HideItem();
-            }
-        }
-        private IEnumerator ReturnState()
-        {
-            while (Mathf.Abs(_rotateBody.rotation) != 0)
-            {
-                _rotateBody.MoveRotation(Mathf.MoveTowards(_rotateBody.rotation, 0, Time.fixedDeltaTime * _speedRotation));
-                yield return new WaitForFixedUpdate();
-            }
-        }
+            State();
 
-        private IEnumerator ShootLaser()
+
+        }
+        private void Reloading()
         {
-            yield return new WaitWhile(() => !IsShow);
-            float progress = 0f;
-            while (progress < 1f && IsActive)
+            _progress += Time.deltaTime / _timeReload;
+            _rotateBody.MoveRotation(_rotateBody.rotation + _rotate * Time.fixedDeltaTime);
+            if (_progress >= 1)
             {
-                float localProgress = 0f;
-                yield return new WaitWhile(() => 
-                {
-                    localProgress += Time.deltaTime/ _timeReload;
-                    return  localProgress < 1f && _coroutine != null;
-                });
-                localProgress = 0f;
-                _laser.SetMode(true);
-                gunAnimator.SetBool("mode", true);
-                yield return new WaitWhile(() =>
-                {
-                    localProgress += Time.deltaTime / _shootDuration;
-                    return localProgress < 1f && IsActive;
-                });
-                _laser.SetMode(false);
-                gunAnimator.SetBool("mode", false);
-                progress += (_timeReload + _shootDuration) / durationWork;
-                yield return null;
+                SwitchState(true);
+                State = Shootiong;
             }
-            _laser.SetMode(false);
-            gunAnimator.SetBool("mode", false);
+        }
+        private void Shootiong()
+        {
+            _progress += Time.deltaTime / _timeShoot;
+            _rotateBody.MoveRotation(_rotateBody.rotation + _rotate * Time.fixedDeltaTime);
+            if (_progress >= 1f)
+            {
+                _count++;
+                SwitchState(false);
+                if (_count < _countShoot)
+                    State = Reloading;
+                else
+                    State = Compliting;
+            }
+        }
+        private void Compliting()
+        {
+            var angle = _rotateBody.rotation + _rotate * Time.fixedDeltaTime;
+            if (1 - Mathf.Cos(angle * Mathf.Deg2Rad) < 0.001f)
+                Deactivate();
+            _rotateBody.MoveRotation(angle);
+        }
+        private void SwitchState(bool mode)
+        {
+            _progress = 0f;
+            _laser.SetMode(mode);
+            gunAnimator.SetBool("mode", mode);
         }
     }
 }

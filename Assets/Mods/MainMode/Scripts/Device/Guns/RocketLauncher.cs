@@ -1,9 +1,8 @@
-using System.Collections;
 using UnityEngine;
 
 namespace MainMode
 {
-    public class RocketLauncher : Gun, ISetTarget
+    public class RocketLauncher : Gun
     {
         [Header("Geneeral Setting")]
         [SerializeField] private float _aimTime = 1f;
@@ -15,119 +14,95 @@ namespace MainMode
         [SerializeField] private ShootPoint _shoot;
         [SerializeField] private Rigidbody2D _rotateBody;
 
+        private float _progress = 0f;
         private Vector3 _lostTargetPosition;
-
-        private Transform target;
-
-        private Coroutine _delete;
-        private Coroutine _coroutine;
+        private Transform _target;
+        private System.Action State;
 
         public override TrapType DeviceType => TrapType.RocketLauncher;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _wave.SetAttack(attackInfo);
             _rocket.SetAttack(attackInfo);
         }
-        protected override void OnEnable()
+        private void OnEnable()
         {
-            base.OnEnable();
             _shoot.FireAction += Fire;
-            ActivateAction += Launch;
-            if (destroyMode)
-                ShowItemAction += DeleteGun;
+            OnActivate += Launch;
         }
-        protected override void OnDisable()
+        private void OnDisable()
         {
-            base.OnDisable();
             _shoot.FireAction -= Fire;
-            ActivateAction -= Launch;
-            if(destroyMode)
-                ShowItemAction -= DeleteGun;
+            OnActivate -= Launch;
         }
+        private void Update()
+        {
+            State();
+        }
+
         protected override void Launch()
         {
-#if UNITY_EDITOR
-            if(!IsActive)
-            throw new System.Exception("you can't launch to gun while he is deactivate");
-#endif
-            if (_coroutine == null)
-            {
-                _coroutine = StartCoroutine(Rotate(target));
-            }
+            _progress = 0f;
+            State = AimingState;
         }
-        public void SetTarget(Transform target)
+        private void AimingState()
         {
-            this.target = target;
-        }
-        private void DeleteGun()
-        {
-            if (_delete == null)
+            _progress += Time.deltaTime / _aimTime;
+            var localPOsition = new Vector2(_target.position.x - transform.position.x, _target.position.y - transform.position.y);
+            var direction = localPOsition.y > 0 ? 1 : -1;
+            _rotateBody.MoveRotation(Quaternion.Lerp(_rotateBody.transform.rotation,
+                Quaternion.Euler(Vector3.forward * (-90 + Vector2.Angle(Vector2.right, localPOsition) *
+                      direction)), Time.deltaTime * _speedRotation));
+            if (_progress >= 1f)
             {
-                _delete = StartCoroutine(Delete());
-            }
-        }
-        private IEnumerator Delete()
-        {
-            var progress = 0f;
-            while (progress < 1f)
-            {
-                progress += Time.deltaTime / durationWork;
-                yield return null;
-            }
-            yield return new WaitWhile(() => IsActive);
-            if (IsShow)
-                HideItem();
-            _delete = null;
-        }
-        private IEnumerator Rotate(Transform target)
-        {
-            float progress = 0f;
-            while (progress < 1f)
-            {
-                var localPOsition = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
-                var direction = localPOsition.y > 0 ? 1 : -1;
-                _rotateBody.MoveRotation(Quaternion.Lerp(_rotateBody.transform.rotation,
-                    Quaternion.Euler(Vector3.forward * (-90 + Vector2.Angle(Vector2.right, localPOsition) *
-                          direction)), Time.deltaTime * _speedRotation));
-                progress += Time.deltaTime / _aimTime;
-                yield return null;
-            }
-            if (IsShow)
-            {
-                _lostTargetPosition = _rotateBody.transform.position + _rotateBody.transform.up * Vector3.Distance(transform.position, target.position);
                 Shoot();
+                _progress = 0f;
+                State = DelayState;
             }
-            yield return new WaitForSeconds(1f);
-            yield return StartCoroutine(ReturnState());
-            Deactivate();
-            _coroutine = null;
         }
-        private IEnumerator ReturnState()
+        private void DelayState()
         {
-            while (Mathf.Abs(_rotateBody.rotation) > 0.01f)
+            _progress += Time.deltaTime;
+            if (_progress >= 1f)
             {
-                _rotateBody.MoveRotation(Mathf.MoveTowards(_rotateBody.rotation, 0, _speedRotation));
-                yield return null;
+                State = ReturnigState;
             }
         }
+        private void ReturnigState()
+        {
+            _rotateBody.MoveRotation(Mathf.MoveTowards(_rotateBody.rotation, 0, _speedRotation));
+            if (Mathf.Abs(_rotateBody.rotation) <= 0.01f)
+            {
+                Deactivate();
+            }
+        }
+
         private void Shoot()
         {
+            _lostTargetPosition = _rotateBody.transform.position + _rotateBody.transform.up * Vector3.Distance(transform.position, _target.position);
             gunAnimator.SetTrigger("Shoot");
         }
         private void Fire()
         {
             if (_wave != null)
                 _wave.Explosion();
-#if UNITY_EDITOR
-            else
-                Debug.LogWarning("_wave = null");
-#endif
             _rocket.transform.position = _spawnProjectelePosition.position;
             _rocket.transform.rotation = Quaternion.Euler(Vector3.forward * _rotateBody.rotation);
             _rocket.SetMode(true);
             _rocket.SetTarget(_lostTargetPosition);
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (!IsActive)
+            {
+                if (collision.TryGetComponent(out Player target))
+                {
+                    _target = target.transform;
+                    Activate();
+                }
+            }
         }
     }
 }

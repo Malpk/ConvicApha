@@ -3,8 +3,10 @@ using PlayerComponent;
 
 namespace MainMode
 {
-    public class TileN7 : Trap
+    public class TileN7 : DeviceV2
     {
+        [Range(0.1f,1f)]
+        [SerializeField] private float _timeEffectActive = 1;
         [SerializeField] private MovementEffect _effect;
         
         public override TrapType DeviceType => TrapType.N7;
@@ -13,7 +15,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out IAddEffects target))
             {
-                target.AddEffects(_effect, attackInfo.TimeEffect);
+                target.AddEffects(_effect, _timeEffectActive);
             }
         }
     }

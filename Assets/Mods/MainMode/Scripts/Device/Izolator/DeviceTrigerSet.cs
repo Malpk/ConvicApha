@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode
@@ -27,23 +26,6 @@ namespace MainMode
             _body.enabled = false;
             _collider = GetComponent<Collider2D>();
             _collider.isTrigger = true;
-            SetMode(false);
-        }
-        private void OnEnable()
-        {
-            _device.CompliteShowAnimation += () => SetMode(true);
-            _device.HideItemAction += () => SetMode(false);
-        }
-
-        private void OnDisable()
-        {
-            _device.CompliteShowAnimation -= () => SetMode(true);
-            _device.HideItemAction -= () => SetMode(false);
-        }
-        public void SetMode(bool mode)
-        {
-            _body.enabled = IsShowTile ? mode : false;
-            _collider.enabled = mode;
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
