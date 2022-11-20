@@ -13,6 +13,7 @@ public class MenuController : MonoBehaviour
     private Banner banner;
     private bool bannerChoosed;
     private Vector3 startPos;
+    private Banner rememberBanner;
 
     private void Start()
     {
@@ -27,12 +28,15 @@ public class MenuController : MonoBehaviour
         RaycastHit2D raycastHit2D = Physics2D.Raycast(mousePos, transform.forward);
         if (raycastHit2D && raycastHit2D.transform.gameObject.GetComponent<Banner>())
         {
-            if (!bannerChoosed)
+            banner = raycastHit2D.transform.gameObject.GetComponent<Banner>();
+            if (!bannerChoosed || rememberBanner != banner)
             {
                 bannerChoosed = true;
-                banner = raycastHit2D.transform.gameObject.GetComponent<Banner>();
                 camera.transform.position = banner.BackGroundPosition - Vector3.forward * 10;
+                
             }
+
+            rememberBanner = banner;
         }
         else
         {
