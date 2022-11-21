@@ -39,7 +39,7 @@ namespace MainMode.Items
         {
             if (collision.TryGetComponent(out IExplosion target))
             {
-                if (target.ReadyExplosion)
+                if (target.IsReadyExplosion)
                 {
                     target.Explosion();
                     SetMode(false);

@@ -1,112 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode
 {
-    [RequireComponent(typeof(Animator))]
-    public abstract class DeviceV2 : SmartItem, IPause,IExplosion
+    public abstract class DeviceV2 : MonoBehaviour
     {
         [Header("Generate")]
-        [SerializeField] protected bool destroyMode;
-        [SerializeField] protected bool showOnStart;
-        [SerializeField] protected float durationWork;
+        [SerializeField] private bool _playOnStart;
 
-        private bool _isExplosion;
-        private Animator _animator;
+        protected event System.Action OnActivate;
+        protected event System.Action OnDeactivate;
 
-        public event System.Action CompliteShowAnimation;
+        public bool IsActive { get; private set; }
 
-        protected event System.Action PauseAction;
-        protected event System.Action UnPauseAction;
-
-
-        public bool IsPause { get; private set; }
-
-        public abstract bool IsActive { get; }
+        public bool IsShow { get; private set; }
+        public virtual bool IsCompliteWork => IsActive;
         public abstract TrapType DeviceType { get; }
 
-        public bool ReadyExplosion => IsShow;
 
-        protected virtual void Awake()
+        private void Start()
         {
-            _animator = GetComponent<Animator>();
+            enabled = false;
+            if (_playOnStart)
+                Activate();
         }
 
-        protected virtual void OnEnable()
+        #region Controllers
+        public void Show()
         {
-            ShowItemAction += ShowDevice;
-            HideItemAction += HideDevice;
+            IsShow = true;
+            gameObject.SetActive(true);
+            if (_playOnStart)
+                Activate();
         }
-        protected virtual void OnDisable()
+        public void Hide()
         {
-            ShowItemAction -= ShowDevice;
-            HideItemAction -= HideDevice;
+            IsShow = false;
+            gameObject.SetActive(false);
         }
-        #region Dispaly Device
-        private void ShowDevice()
-        {
-            UpDevice();
-        }
-        private void HideDevice()
+
+        public void Activate()
         {
 #if UNITY_EDITOR
-            if (IsActive)
-                throw new System.Exception("you can't hide a device that is active");
+            if (!IsShow)
+                throw new System.Exception("you con't a device that deactive");
 #endif
-            DownDevice();
+            IsActive = true;
+            enabled = true;
+            OnActivate?.Invoke();
         }
-        private void DownDevice()
+        public void Deactivate()
         {
-            _animator.SetBool("Show", false);
-        }
-        private void UpDevice()
-        {
-            _animator.SetBool("Show", true);
+            OnDeactivate?.Invoke();
+            IsActive = false;
+            enabled = false;
         }
         #endregion
-        #region Controllers
-        public abstract void Activate();
-        public abstract void Deactivate();
-        public void Pause()
-        {
-            IsPause = true;
-            if (PauseAction != null)
-                PauseAction();
-        }
-
-        public void UnPause()
-        {
-            IsPause = false;
-            if (UnPauseAction != null)
-                UnPauseAction();
-        }
-        public void Explosion()
-        {
-            if (!_isExplosion)
-            {
-                _isExplosion = true;
-                _animator.SetTrigger("Explosion");
-            }
-        }
-        #endregion
-        protected abstract void ShowDeviceAnimationEvent();
-        protected abstract void HideDeviceAnimationEvent();
-
-        private void DestroyDeviceAnimationEvent()
-        {
-            if (IsActive)
-                Deactivate();
-            HideItem();
-            DownDevice();
-            HideDeviceAnimationEvent();
-            _isExplosion = false;
-        }
-        protected void CompliteUpAnimationEvent()
-        {
-            if (CompliteShowAnimation != null)
-                CompliteShowAnimation();
-        }
-
     }
 }

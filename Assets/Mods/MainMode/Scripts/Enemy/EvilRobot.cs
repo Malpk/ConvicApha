@@ -30,7 +30,8 @@ namespace MainMode
         public Dictionary<MovementEffect, int> _debafList = new Dictionary<MovementEffect, int>();
 
         public bool IsActive { get; private set; }
-        public bool ReadyExplosion => _readyExlosion;
+
+        public bool IsReadyExplosion => _readyExlosion;
 
         private void OnEnable()
         {
@@ -165,9 +166,9 @@ namespace MainMode
                 {
                     target.Explosion();
                 }
-                else if (collision.TryGetComponent(out DeviceV2 device))
+                else if (collision.TryGetComponent(out IExplosion device))
                 {
-                    if(device.IsShow)
+                    if(device.IsReadyExplosion)
                         device.Explosion();
                 }
             }

@@ -40,7 +40,7 @@ namespace PlayerComponent
             if (TrakingDevice(out DeviceV2 device))
             {
                 device.Deactivate();
-                device.HideItem();
+                device.Hide();
             }
         }
         private void ReloadAnimationEvent()

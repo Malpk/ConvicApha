@@ -1,69 +1,78 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace MainMode
 {
-    public class Turel : AutoGun
+    public class Turel : Gun
     {
         [Header("Attacks properties")]
-        [SerializeField]
-        protected float _activationTime = 1f;
-        [SerializeField]
-        protected float _firingRateOnSeconds = 1f;
-        [SerializeField]
-        protected Bullet _bulletPrefab;
-        [SerializeField]
-        protected Transform _spawnTransform;
+        [Min(1)]
+        [SerializeField] private int _countShoot = 1;
+        [SerializeField] protected float _shootDelay = 1f;
+        [SerializeField] protected Bullet _bulletPrefab;
+        [SerializeField] protected Transform _spawnTransform;
         [Header("Move properties")]
-        [SerializeField] protected float _rotationAngleOnSeconds;
         [SerializeField] protected Rigidbody2D _rigidbody;
-        [SerializeField] protected Collider2D _colliderBody;
+
+        private int _curretShootCount;
+        private float _progress = 0f;
+        private float _angleSteep;
+        private float _startAngle;
+        private float _rotateSteep;
+        private int[] _directions = new int[] { -1, 1 };
+        private List<Bullet> _pool = new List<Bullet>();
 
         public override TrapType DeviceType => TrapType.Turel;
 
-        private void Start()
+        private void OnValidate()
         {
-            if (showOnStart)
-                ShowItem();
-        }
-        protected override void Launch()
-        {
-            StartCoroutine(Rotate());
-            StartCoroutine(Shoot());
+            _angleSteep = 360 / _countShoot;
         }
 
-        protected IEnumerator Rotate()
+        protected override void Launch()
         {
-            yield return new WaitWhile(() => !IsShow);
-            var progress = 0f;
-            while (progress <= 1f && IsActive)
+            DropProgress();
+            _curretShootCount = 0;
+            _rotateSteep = _angleSteep * _directions[Random.Range(0, _directions.Length)];
+        }
+
+        private void Update()
+        {
+            _progress = Mathf.Clamp01(_progress + Time.deltaTime / _shootDelay);
+            _rigidbody.rotation = _startAngle + _rotateSteep * _progress;
+            if (_progress >= 1)
             {
-                _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _rigidbody.rotation + _rotationAngleOnSeconds, Time.deltaTime);
-                progress += Time.deltaTime / durationWork;
-                yield return null;
-            }
-            if (IsActive)
-            {
-                Deactivate();
-                if (destroyMode)
-                    HideItem();
+                var bullet = CreateProjectale();
+                bullet.transform.position = _spawnTransform.position;
+                bullet.transform.rotation = _spawnTransform.rotation;
+                bullet.Shoot();
+                DropProgress();
+                _curretShootCount++;
+                gunAnimator.SetTrigger("Shoot");
+                if (_countShoot == _curretShootCount)
+                {
+                    Deactivate();
+                }
             }
         }
-        protected IEnumerator Shoot()
+        private void DropProgress()
         {
-            yield return new WaitWhile(() => !IsShow);
-            while (IsActive)
+            _progress = 0f;
+            _startAngle = _rigidbody.rotation;
+        }
+        private Bullet CreateProjectale()
+        {
+            foreach (var poolBullet in _pool)
             {
-                var progress = 0f;
-                while (progress <= 1f && isActiveAndEnabled)
+                if (poolBullet.IsDestroy)
                 {
-                    progress += Time.deltaTime * _firingRateOnSeconds;
-                    yield return null;
+                    return poolBullet;
                 }
-                gunAnimator.SetTrigger("Shoot");
-                var bullet = Instantiate(_bulletPrefab.gameObject, _spawnTransform.position, _spawnTransform.rotation).GetComponent<Bullet>();
-                bullet.SetAttack(attackInfo);
             }
+            var bullet = Instantiate(_bulletPrefab.gameObject, transform.parent).GetComponent<Bullet>();
+            bullet.SetAttack(attackInfo);
+            _pool.Add(bullet);
+            return bullet;
         }
     }
 }

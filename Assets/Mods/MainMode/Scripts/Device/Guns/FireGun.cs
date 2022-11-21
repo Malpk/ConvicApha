@@ -17,33 +17,21 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.FireGun;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _fireParticale.Pause();
             _fire.SetAttack(attackInfo);
         }
-        private void Start()
+        private void OnEnable()
         {
-            if (showOnStart)
-                Activate();
+            OnActivate += ActvateGun;
         }
-
-        protected override void OnEnable()
+        private void OnDisable()
         {
-            base.OnEnable();
-            PauseAction += Play;
-            UnPauseAction += Stop;
+            OnActivate -= ActvateGun;
         }
-        protected override void OnDisable()
+        private void ActvateGun()
         {
-            base.OnDisable();
-            PauseAction -= Play;
-            UnPauseAction -= Stop;
-        }
-        public override void Activate()
-        {
-            base.Activate();
             _fire.SetMode(true);
             StartCoroutine(Rotate());
         }
@@ -57,9 +45,8 @@ namespace MainMode
             _fireGun.rotation = 181;
             while (progress <= 1f && IsActive)
             {
-                progress += Time.deltaTime / durationWork;
+                //progress += Time.deltaTime / timeActive;
                 _fireGun.MoveRotation(_fireGun.rotation + direction * _speedRotation * Time.deltaTime);
-                yield return new WaitWhile(() => IsPause);
                 yield return null;
             }
             yield return ReturnState();
@@ -67,8 +54,6 @@ namespace MainMode
             _fireParticale.Pause();
             _fireParticale.Clear();
             Deactivate();
-            if(destroyMode)
-                HideItem();
         }
         private IEnumerator ReturnState()
         {
@@ -78,17 +63,6 @@ namespace MainMode
                 yield return new WaitForFixedUpdate();
             }
         }
-        private void Stop()
-        {
-            if (_particaleMode)
-                _fireParticale.Play();
-        }
-        private void Play()
-        {
-            _particaleMode = _fireParticale.isPlaying;
-            _fireParticale.Pause();
-        }
-
         protected override void Launch()
         {
             throw new System.NotImplementedException();

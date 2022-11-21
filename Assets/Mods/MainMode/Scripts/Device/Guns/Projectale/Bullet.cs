@@ -15,27 +15,47 @@ namespace MainMode
         [Min(1)]
         [SerializeField] private float _delayDestroy = 1;
         
+        private float _progress = 0f;
         private DamageInfo _attackInfo;
-
         private Rigidbody2D _rigidbody;
-        protected virtual void Start()
+
+        public bool IsDestroy { get; private set; } = false;
+
+        private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+        }
+        private void Update()
+        {
+            _progress += Time.deltaTime / _delayDestroy;
+            if (_progress >= 1f)
+                Delete();
+        }
+        public void Shoot()
+        {
+            _progress = 0f;
+            IsDestroy = false;
+            gameObject.SetActive(true);
             _rigidbody.velocity = _speed * transform.up;
-            Destroy(gameObject,_delayDestroy);
+        }
+        public void Delete()
+        {
+            IsDestroy = true;
+            gameObject.SetActive(false);
+        }
+        public void SetAttack(DamageInfo info)
+        {
+            _attackInfo = info;
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<IDamage>(out IDamage target))
             {
                 target.TakeDamage(_damage, _attackInfo);
-                Destroy(gameObject);
+                Delete();
             }
         }
 
-        public void SetAttack(DamageInfo info)
-        {
-            _attackInfo = info;
-        }
+
     }
 }
