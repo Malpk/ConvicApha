@@ -82,13 +82,13 @@ namespace MainMode
             return freePoints.Count > 0;
         }
 
-        public bool SetItemOnMap(SmartItem smartItem, float distanceFromPlayer = 0, float minDistance = 0, Transform target = null)
+        public bool SetItemOnMap(UpPlatform smartItem, float distanceFromPlayer = 0, float minDistance = 0, Transform target = null)
         {
             if (GetFreePoints(out List<Point> points, distanceFromPlayer, minDistance, target))
             {
                 var index = Random.Range(0, points.Count);
                 if(!smartItem.IsShow)
-                    smartItem.ShowItem();
+                    smartItem.UpDevice();
                 points[index].SetItem(smartItem);
                 return true;
             }

@@ -3,7 +3,7 @@ using PlayerComponent;
 
 namespace MainMode
 {
-    public class TileN7 : DeviceV2
+    public class TileN7 : TileDevice
     {
         [Range(0.1f,1f)]
         [SerializeField] private float _timeEffectActive = 1;

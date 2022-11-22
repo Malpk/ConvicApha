@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class TileTI81 : DeviceV2
+    public class TileTI81 : TileDevice
     {
         [SerializeField] private int _damage;
         [SerializeField] private DamageInfo _damageInfo;

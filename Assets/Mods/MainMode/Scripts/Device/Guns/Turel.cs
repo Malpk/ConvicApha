@@ -24,7 +24,7 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.Turel;
 
-        private void OnValidate()
+        private void Awake()
         {
             _angleSteep = 360 / _countShoot;
         }
@@ -51,7 +51,10 @@ namespace MainMode
                 gunAnimator.SetTrigger("Shoot");
                 if (_countShoot == _curretShootCount)
                 {
-                    Deactivate();
+                    if (target == null)
+                        Deactivate();
+                    else
+                        Activate();
                 }
             }
         }

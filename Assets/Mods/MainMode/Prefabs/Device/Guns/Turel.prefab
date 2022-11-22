@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1942199403927808803}
   - component: {fileID: 1285447719841115209}
   - component: {fileID: 272777404876066745}
+  - component: {fileID: 145651352353621356}
   m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
@@ -78,11 +79,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a14057f13d119044a30ae2cb322685c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnStart: 1
+  _playOnStart: 0
   attackInfo: {fileID: 11400000, guid: 7ad453cbb6eb5734a834fed78eb39bad, type: 2}
   gunAnimator: {fileID: 1942199403927808803}
-  _countShoot: 6
-  _shootDelay: 1
+  _countShoot: 10
+  _shootDelay: 0.3
   _bulletPrefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
   _spawnTransform: {fileID: 7580191188881006170}
   _rigidbody: {fileID: 272777404876066745}
@@ -166,10 +167,10 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21}
+  m_Offset: {x: 0, y: -0.02}
   m_Size: {x: 0.67, y: 1}
   m_Direction: 0
 --- !u!50 &272777404876066745
@@ -193,6 +194,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!58 &145651352353621356
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6436574138668392132}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
 --- !u!1 &7142385478768023678
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +222,7 @@ GameObject:
   - component: {fileID: 8185477693437109602}
   - component: {fileID: 7142385478768023679}
   - component: {fileID: 7142385478768023676}
+  - component: {fileID: 7503553255552411850}
   m_Layer: 10
   m_Name: Turel
   m_TagString: Untagged
@@ -239,8 +257,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed4c20d547fc47c4d93fa2b22e6f885f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showOnStart: 1
-  _playOnStart: 0
+  _showOnStart: 0
+  _playOnStart: 1
+  _destroyMode: 1
+  _workTime: 4
   _upDevice: {fileID: 6823104097201688073}
 --- !u!212 &7142385478768023679
 SpriteRenderer:
@@ -312,3 +332,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &7503553255552411850
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142385478768023678}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5

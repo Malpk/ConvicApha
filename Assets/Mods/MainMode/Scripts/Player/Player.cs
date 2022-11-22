@@ -98,26 +98,23 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
             }
             _behaviour.gameObject.SetActive(true);
             _behaviour.Play();
-            _contrallerBlocker.UnBlock();
+            UnBlock();
         }
     }
 
     public void Stop()
     {
-        if (IsPlay)
-        {
-            IsPlay = false;
-            _behaviour.Stop();
-            _behaviour.gameObject.SetActive(false);
-            _contrallerBlocker.Block();
-        }
+        _behaviour.Stop();
+        _behaviour.gameObject.SetActive(false);
     }
     public void Block()
     {
+        _contrallerBlocker.Block();
     }
 
     public void UnBlock()
     {
+        _contrallerBlocker.UnBlock();
     }
 
     public void SetImpactDamage(bool mode)
@@ -131,7 +128,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
         if (IsPlay)
         {
             IsPlay = false;
-            Stop();
+            Block();
             _behaviour.Dead();
             _rigidBody.velocity = Vector2.zero;
         }

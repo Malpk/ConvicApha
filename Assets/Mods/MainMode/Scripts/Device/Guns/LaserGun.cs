@@ -1,9 +1,8 @@
-using System.Collections;
 using UnityEngine;
 
 namespace MainMode
 {
-    public class LaserGun : AutoGun
+    public class LaserGun : Gun
     {
         [Header("LaserGun setting")]
         [Min(1)]
@@ -42,8 +41,6 @@ namespace MainMode
         private void FixedUpdate()
         {
             State();
-
-
         }
         private void Reloading()
         {
@@ -65,10 +62,13 @@ namespace MainMode
                 SwitchState(false);
                 if (_count < _countShoot)
                     State = Reloading;
-                else
+                else if (target == null)
                     State = Compliting;
+                else
+                    Activate();
             }
         }
+
         private void Compliting()
         {
             var angle = _rotateBody.rotation + _rotate * Time.fixedDeltaTime;
@@ -82,5 +82,6 @@ namespace MainMode
             _laser.SetMode(mode);
             gunAnimator.SetBool("mode", mode);
         }
+
     }
 }

@@ -76,7 +76,7 @@ namespace MainMode
         {
             if (GetPool(out PoolItem pool))
             {
-                if (pool.Create(out SmartItem item))
+                if (pool.Create(out UpPlatform item))
                 {
                     if (_mapGrid.SetItemOnMap(item, _spawnRadius, pool.DistanceFromPlayer, _player.transform))
                     {

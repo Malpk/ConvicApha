@@ -8,7 +8,7 @@ namespace MainMode
         [SerializeField] private bool _playOnStart;
 
         protected event System.Action OnActivate;
-        protected event System.Action OnDeactivate;
+        public event System.Action OnDeactivate;
 
         public bool IsActive { get; private set; }
 

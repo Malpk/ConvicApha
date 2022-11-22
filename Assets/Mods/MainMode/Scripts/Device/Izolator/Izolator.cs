@@ -70,7 +70,8 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out Player player))
             {
-                Activate();
+                if(IsShow)
+                    Activate();
                 _object = player;
             }
         }
@@ -79,7 +80,8 @@ namespace MainMode
             if (collision.TryGetComponent(out Player player))
             {
                 _object = null;
-                Activate();
+                if(IsShow)
+                    Activate();
             }
         }
     }

@@ -17,6 +17,7 @@ namespace MainMode
         private float _progress = 0f;
         private Vector3 _lostTargetPosition;
         private Transform _target;
+
         private System.Action State;
 
         public override TrapType DeviceType => TrapType.RocketLauncher;
@@ -44,6 +45,7 @@ namespace MainMode
         protected override void Launch()
         {
             _progress = 0f;
+            _target = target.transform;
             State = AimingState;
         }
         private void AimingState()
@@ -58,7 +60,10 @@ namespace MainMode
             {
                 Shoot();
                 _progress = 0f;
-                State = DelayState;
+                if (target ? !target.IsPlay : true)
+                    State = DelayState;
+                else
+                    Launch();
             }
         }
         private void DelayState()
@@ -91,18 +96,6 @@ namespace MainMode
             _rocket.transform.rotation = Quaternion.Euler(Vector3.forward * _rotateBody.rotation);
             _rocket.SetMode(true);
             _rocket.SetTarget(_lostTargetPosition);
-        }
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            if (!IsActive)
-            {
-                if (collision.TryGetComponent(out Player target))
-                {
-                    _target = target.transform;
-                    Activate();
-                }
-            }
         }
     }
 }

@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6948868674095590982}
-  - component: {fileID: 6558618085171200453}
   - component: {fileID: 6510367084166169037}
+  - component: {fileID: 6558618085171200453}
   - component: {fileID: 6720820196400303896}
   m_Layer: 10
-  m_Name: Gazalator
+  m_Name: Izolator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,6 +35,27 @@ Transform:
   m_Father: {fileID: 8033671764934702066}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6510367084166169037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70576265285590055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2307a0480f1c9a44ab490698df4c43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _activateTime: 5
+  jets:
+  - {fileID: 1350979367305458448}
+  - {fileID: 5409609338988564409}
+  - {fileID: 8085083605933483612}
+  - {fileID: 5785109390525274377}
+  attackInfo: {fileID: 11400000, guid: a59263749fcfaaf4394d6642c31f6e1e, type: 2}
+  _cloud: {fileID: 3608580258751706963}
 --- !u!212 &6558618085171200453
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -86,27 +107,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6510367084166169037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70576265285590055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2307a0480f1c9a44ab490698df4c43d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _activateTime: 5
-  jets:
-  - {fileID: 1350979367305458448}
-  - {fileID: 5409609338988564409}
-  - {fileID: 8085083605933483612}
-  - {fileID: 5785109390525274377}
-  attackInfo: {fileID: 11400000, guid: a59263749fcfaaf4394d6642c31f6e1e, type: 2}
-  _cloud: {fileID: 3608580258751706963}
 --- !u!58 &6720820196400303896
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -520,8 +520,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed4c20d547fc47c4d93fa2b22e6f885f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showOnStart: 1
+  _showOnStart: 0
   _playOnStart: 0
+  _destroyMode: 1
+  _workTime: 10
   _upDevice: {fileID: 6510367084166169037}
 --- !u!212 &8033671764934702067
 SpriteRenderer:

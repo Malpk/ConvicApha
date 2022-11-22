@@ -6,10 +6,10 @@ namespace MainMode.Mode1921
     public class DeviceSpawner : GeneralSpawner
     {
         [Header("Spawner Setting")]
-        [SerializeField] private SmartItem[] _perfab;
+        [SerializeField] private UpPlatform[] _perfab;
         [SerializeField] private Vector2Int _deviceCount;
 
-        private List<SmartItem> _devices = new List<SmartItem>();
+        private List<UpPlatform> _devices = new List<UpPlatform>();
 
         private void OnEnable()
         {
@@ -55,7 +55,7 @@ namespace MainMode.Mode1921
             for (int i = 0; i < count; i++)
             {
                 var index = Random.Range(0, _perfab.Length);
-                var device = Instantiate(_perfab[index].gameObject).GetComponent<SmartItem>();
+                var device = Instantiate(_perfab[index].gameObject).GetComponent<UpPlatform>();
                 device.transform.parent = transform;
                 mapGrid.SetItemOnMap(device);
                 _devices.Add(device);

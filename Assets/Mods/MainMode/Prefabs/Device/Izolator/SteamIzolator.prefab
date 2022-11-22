@@ -622,8 +622,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed4c20d547fc47c4d93fa2b22e6f885f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showOnStart: 1
+  _showOnStart: 0
   _playOnStart: 0
+  _destroyMode: 1
+  _workTime: 10
   _upDevice: {fileID: 8867456772558298994}
 --- !u!212 &6670340497542324522
 SpriteRenderer:

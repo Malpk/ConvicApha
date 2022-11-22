@@ -34,7 +34,13 @@ namespace PlayerComponent
             _controlledPlayer.Walk(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
         }
 
-        public void Block() => enabled = false;
-        public void UnBlock() => enabled = true;
+        public void Block()
+        {
+            enabled = false; 
+        }
+        public void UnBlock()
+        {
+            enabled = true;
+        }
     }
 }
