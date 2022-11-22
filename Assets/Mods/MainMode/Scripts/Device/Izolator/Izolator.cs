@@ -11,6 +11,7 @@ namespace MainMode
         [SerializeField] protected DamageInfo attackInfo;
 
         private float _progress = 0f;
+        private Player _object;
 
         public override bool IsCompliteWork => IsComplite();
 
@@ -35,7 +36,7 @@ namespace MainMode
         private void Update()
         {
             _progress += Time.deltaTime / _activateTime;
-            if (_progress >= 1f)
+            if (_progress >= 1f && _object == null)
                 Deactivate();
         }
 
@@ -63,6 +64,23 @@ namespace MainMode
                     return false;
             }
             return true;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out Player player))
+            {
+                Activate();
+                _object = player;
+            }
+        }
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out Player player))
+            {
+                _object = null;
+                Activate();
+            }
         }
     }
 }

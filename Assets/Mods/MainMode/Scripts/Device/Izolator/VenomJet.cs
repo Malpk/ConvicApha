@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace MainMode
 {
-    [RequireComponent(typeof(Collider2D))]
     public class VenomJet : JetPoint
     {
         [Header("General Setting")]

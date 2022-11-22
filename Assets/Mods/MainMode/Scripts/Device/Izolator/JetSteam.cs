@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace MainMode
 {
-    [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
     public class JetSteam : JetPoint
     {
         [Header("General Setting")]
