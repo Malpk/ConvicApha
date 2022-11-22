@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5841189883721910124}
+  - component: {fileID: 5598448970217128645}
   - component: {fileID: 5247633123648545621}
   - component: {fileID: 576074628829848998}
-  - component: {fileID: 5598448970217128645}
   m_Layer: 0
   m_Name: EXTRAChoco
   m_TagString: Untagged
@@ -33,6 +33,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5598448970217128645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007518829241595086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27f87d36139d594e82ee745bf818ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 3
+  _isInfinity: 0
+  _showOnStart: 0
+  _typeUse: 1
+  ItemSprite: {fileID: -8853491759857964706, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
+  _spriteBody: {fileID: 5247633123648545621}
+  _timeActive: 3
+  _itemEffect: {fileID: 11400000, guid: f0a0686500ba6a0479765a34912d3331, type: 2}
 --- !u!212 &5247633123648545621
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -110,23 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5676544, y: 0.5718479}
   m_EdgeRadius: 0
---- !u!114 &5598448970217128645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7007518829241595086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27f87d36139d594e82ee745bf818ffa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _count: 3
-  _isInfinity: 0
-  _hideOnAwake: 1
-  _typeUse: 1
-  ItemSprite: {fileID: -8853491759857964706, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
-  _spriteBody: {fileID: 5247633123648545621}
-  _timeActive: 3
-  _itemEffect: {fileID: 11400000, guid: f0a0686500ba6a0479765a34912d3331, type: 2}

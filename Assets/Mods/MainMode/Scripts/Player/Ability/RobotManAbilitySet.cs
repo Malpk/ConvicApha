@@ -7,7 +7,6 @@ namespace PlayerComponent
 {
     public class RobotManAbilitySet : PlayerAbillityUseSet
     {
-        [SerializeField] private int _timeReload;
         [SerializeField] private float _radiusAttack;
         [SerializeField] private float _distanceAttack;
         [SerializeField] private Animator _amimator;
@@ -31,6 +30,10 @@ namespace PlayerComponent
             hud.SetAbilityIcon(_abillityIcon);
         }
 
+        private void Update()
+        {
+            ReloadUpdate();
+        }
         protected override void UseAbility()
         {
             SetReloadState(true);
@@ -40,7 +43,7 @@ namespace PlayerComponent
             if (TrakingDevice(out DeviceV2 device))
             {
                 device.Deactivate();
-                device.Hide();
+                device.CompliteWork();
             }
         }
         private void ReloadAnimationEvent()
@@ -48,7 +51,7 @@ namespace PlayerComponent
             _hitLight.parent = _parent;
             _hitLight.localPosition = Vector3.zero;
             _hitLight.localRotation = Quaternion.Euler(Vector3.zero);
-            StartCoroutine(Reload());
+            enabled = true;
         }
         private bool TrakingDevice(out DeviceV2 device)
         {
@@ -64,17 +67,6 @@ namespace PlayerComponent
             }
             device = hit ? hit.transform.GetComponent<DeviceV2>() : null;
             return device;
-        }
-        private IEnumerator Reload()
-        {
-            int progress = _timeReload;
-            while (progress > 0)
-            {
-                hud.UpdateAbillityKdTimer(progress);
-                yield return new WaitForSeconds(1f);
-                progress--;
-            }
-            SetReloadState(false);
         }
     }
 }

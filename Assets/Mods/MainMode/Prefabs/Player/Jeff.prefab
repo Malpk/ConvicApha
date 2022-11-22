@@ -90,7 +90,7 @@ MonoBehaviour:
   _shootMarker: {fileID: 1737861766602982788}
   _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   _behaviour: {fileID: 7723829232404067957}
-  _contrallerBlocker: {fileID: 698372478}
+  _contraller: {fileID: 698372478}
 --- !u!114 &698372478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +162,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7257554728971830204, guid: bc07cd3d5b47a444f9945f7f490f4cde, type: 3}
+      propertyPath: playerAbillityPassiveSet
+      value: 
+      objectReference: {fileID: 7723829233638690373}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc07cd3d5b47a444f9945f7f490f4cde, type: 3}
 --- !u!4 &7723829232404067954 stripped
@@ -178,6 +182,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c7130df45052db4ab0fd692790b9f6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7723829233638690373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7257554728088091532, guid: bc07cd3d5b47a444f9945f7f490f4cde, type: 3}
+  m_PrefabInstance: {fileID: 1119300987042559433}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a4731d961d0ba41a6a18a2fe5760a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8878272238843395112

@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &502595 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 420355605738906359, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+  m_PrefabInstance: {fileID: 1198618315}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &28149500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,6 +2064,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8f7372e3070c704bbbbe3a887b5652b, type: 3}
+--- !u!114 &640171607 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 420355605738906359, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+  m_PrefabInstance: {fileID: 1396806365}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &664016468
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,6 +2285,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1753353778}
     m_Modifications:
+    - target: {fileID: 420355605738906359, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7020256287229499062, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
       propertyPath: m_Name
       value: Character
@@ -3000,6 +3026,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7066461156846254331, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+      propertyPath: _contraller
+      value: 
+      objectReference: {fileID: 502595}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
 --- !u!1 &1216208926
@@ -10227,6 +10257,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 247699901}
     m_Modifications:
+    - target: {fileID: 420355605738906359, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7020256287229499062, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
       propertyPath: m_Name
       value: Character
@@ -10275,6 +10309,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7066461156846254331, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+      propertyPath: _contraller
+      value: 
+      objectReference: {fileID: 640171607}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
 --- !u!1 &1456405301

@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace PlayerComponent
 {
     public class JBoyAbilitySet : PlayerAbilityPassiveSet
     { 
 
-        protected override void UseAbility()
+        protected override bool UseAbility()
         {
             throw new System.NotImplementedException();
         }

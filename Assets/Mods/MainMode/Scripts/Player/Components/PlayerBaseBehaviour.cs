@@ -11,8 +11,9 @@ namespace PlayerComponent
         [SerializeField] private Animator _animator;
         [SerializeField] private PlayerHealth _health;
         [SerializeField] private PlayerResistContainer _playerResist;
-        [SerializeField] private PlayerAbillityUseSet _playerAbillitySet;
-        [SerializeField] private PlayerAbilityPassiveSet _playerAbillityPassiveSet;
+
+        [SerializeField] protected PlayerAbillityUseSet playerAbillitySet;
+        [SerializeField] protected PlayerAbilityPassiveSet playerAbillityPassiveSet;
 
         protected Player player;
         protected List<IPlayerTask> tasks = new List<IPlayerTask>();
@@ -56,15 +57,15 @@ namespace PlayerComponent
             this.player = player;
             _hud = hud;
             _hud.SetHealthPoint(_health.FullHealth);
-            if (_playerAbillitySet)
+            if (playerAbillitySet)
             {
-                _playerAbillitySet.SetHud(_hud);
-                _playerAbillitySet.SetUser(player);
+                playerAbillitySet.SetHud(_hud);
+                playerAbillitySet.SetUser(player);
             }
-            if (_playerAbillityPassiveSet)
+            if (playerAbillityPassiveSet)
             {
-                _playerAbillityPassiveSet.SetHud(_hud);
-                _playerAbillityPassiveSet.SetUser(player);
+                playerAbillityPassiveSet.SetHud(_hud);
+                playerAbillityPassiveSet.SetUser(player);
             }
         }
 
@@ -73,8 +74,8 @@ namespace PlayerComponent
             IsPlay = true;
             Heal(_health.FullHealth);
             _animator.SetBool("Dead", false);
-            if (_playerAbillityPassiveSet)
-                _playerAbillityPassiveSet.Play();
+            if (playerAbillityPassiveSet)
+                playerAbillityPassiveSet.Activate();
             if (PlayAction != null)
                 PlayAction();
         }
@@ -84,8 +85,8 @@ namespace PlayerComponent
             IsPlay = false;
             _playerResist.Reset();
             _playerEffectContainer.Reset();
-            if (_playerAbillityPassiveSet)
-                _playerAbillityPassiveSet.Stop();
+            if (playerAbillityPassiveSet)
+                playerAbillityPassiveSet.Deactivate();
             if (StopAction != null)
                 StopAction();
         }
@@ -120,16 +121,20 @@ namespace PlayerComponent
             }
             return false;
         }
-        public void Heal(int value)
+        public bool Heal(int value)
         {
-            _health.Heal(value);
-            if(_hud)
-                _hud.SetHealth(_health.Health);
+            if (_health.Heal(value))
+            {
+                if (_hud)
+                    _hud.SetHealth(_health.Health);
+                return true;
+            }
+            return false;
         }
         public void UseAbillity()
         {
-            if (_playerAbillitySet)
-                _playerAbillitySet.Use();
+            if (playerAbillitySet)
+                playerAbillitySet.Use();
         }
         public void AddResist(DamageInfo damage, float timeActive)
         {

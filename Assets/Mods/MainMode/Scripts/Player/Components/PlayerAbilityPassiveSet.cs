@@ -12,52 +12,77 @@ namespace PlayerComponent
         [SerializeField] protected Player user;
         [SerializeField] protected Sprite _abillityIcon;
 
-        private bool _isPlay = false;
+        public bool IsActive { get; private set; } = false;
 
+        protected float progress;
         protected HUDUI hud;
+
+        private System.Action State;
 
         public void SetHud(HUDUI hud)
         {
             this.hud = hud;
             hud.SetAbilityIcon(_abillityIcon, false);
         }
-
-        public void Play()
+        private void Start()
         {
-            if (!_isPlay)
-            {
-                _isPlay = true;
-                StartCoroutine(Use());
-            }
+            hud.DisplayStateAbillity(false);
+            State = ReloadUpdate;
         }
 
-        public void Stop()
+        private void Update()
         {
-            _isPlay = false;
+            State();
+        }
+        private void Dealy()
+        {
+            progress += Time.fixedDeltaTime / 0.1f;
+            if (progress >= 1f)
+            {
+                progress = 0f;
+                hud.DisplayStateAbillity(false);
+                State = ReloadUpdate;
+            }
+        }
+        private void ReloadUpdate()
+        {
+            progress += Time.fixedDeltaTime / _timeReload;
+            hud.UpdateAbillityKdTimer(_timeReload - _timeReload * progress);
+            if (progress >= 1f)
+            {
+                hud.DisplayStateAbillity(true);
+                if (UseAbility())
+                {
+                    State = Dealy;
+                }
+                else
+                {
+                    State = WaitUseAbility;
+                }
+            }
+        }
+        private void WaitUseAbility()
+        {
+            if (UseAbility())
+            {
+                progress = 0f;
+                State = ReloadUpdate;
+            }
+        }
+        public void Activate()
+        {
+            enabled = true;
+        }
+
+        public void Deactivate()
+        {
+            enabled = false;
         }
         public void SetUser(Player player)
         {
             user = player;
         }
 
-        protected abstract void UseAbility();
-
-        private IEnumerator Use()
-        {
-            while (_isPlay)
-            {
-                hud.DisplayStateAbillity(true);
-                yield return new WaitForSeconds(0.2f);
-                hud.DisplayStateAbillity(false);
-                int progress = _timeReload;
-                while (progress > 0 && _isPlay)
-                {
-                    hud.UpdateAbillityKdTimer(progress);
-                    yield return new WaitForSeconds(1f);
-                    progress--;
-                }
-                UseAbility();
-            }
-        }
+        protected abstract bool UseAbility();
     }
 }

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6110772547576663451}
-  - component: {fileID: 6110772547576663450}
-  - component: {fileID: 4561474570997332264}
   - component: {fileID: 6110772547576663444}
   - component: {fileID: 1006243015769520807}
+  - component: {fileID: 6110772547576663450}
+  - component: {fileID: 4561474570997332264}
   m_Layer: 0
   m_Name: FirePill
   m_TagString: Untagged
@@ -34,6 +34,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6110772547576663444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110772547576663447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63212af733adf3342a12ae44f161ae9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 1
+  _isInfinity: 0
+  _showOnStart: 0
+  _typeUse: 1
+  ItemSprite: {fileID: -1865053210850470564, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
+  _spriteBody: {fileID: 6110772547576663450}
+  resistDuration: 5
+  attackResist: {fileID: 0}
+  _itemEffect: {fileID: 1006243015769520807}
+  _fireShield: {fileID: 6580205667365473695, guid: 18a0d4f19475b074191bf01966f31618, type: 3}
+--- !u!114 &1006243015769520807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110772547576663447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998d7133971a2aa4aaef863b3babb48f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 5
 --- !u!212 &6110772547576663450
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101,39 +136,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.16, y: 0.2}
   m_Direction: 0
---- !u!114 &6110772547576663444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6110772547576663447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63212af733adf3342a12ae44f161ae9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hideOnAwake: 1
-  _typeUse: 1
-  ItemSprite: {fileID: -1865053210850470564, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
-  _spriteBody: {fileID: 6110772547576663450}
-  resistDuration: 5
-  attackResist:
-    _timeEffect: 0.5
-    _effect: 5
-    _attack: 1
-  _itemEffect: {fileID: 1006243015769520807}
-  _fireShield: {fileID: 6580205667365473695, guid: 18a0d4f19475b074191bf01966f31618, type: 3}
---- !u!114 &1006243015769520807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6110772547576663447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998d7133971a2aa4aaef863b3babb48f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _duration: 5

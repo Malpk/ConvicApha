@@ -6,7 +6,7 @@ using MainMode.Items;
 using MainMode.GameInteface;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
+public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMovement
 {
     [SerializeField] private bool _playOnStart = true;
     [Header("General Setting")]
@@ -14,13 +14,13 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     [SerializeField] private ShootMarkerView _shootMarker;
     [SerializeField] private PlayerState _state;
     [SerializeField] private PlayerBaseBehaviour _behaviour;
-    [SerializeField] private PCPlayerController _contrallerBlocker;
+    [SerializeField] private PCPlayerController _contraller;
 
     private HUDUI _hud;
     private Rigidbody2D _rigidBody;
     private PlayerMovement _playerMovement = new PlayerMovement();
     private IPlayerComponent[] _component;
-
+    private Transport _seedTransport;
     private Vector3 _startPosition;
     private PlayerInventory _inventory = new PlayerInventory();
 
@@ -29,10 +29,9 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     public event System.Action DeadAction;
 
     public bool IsPlay { get; private set; } = false;
-    public Vector2 Position => transform.position;
     public float MovementEffect => _behaviour.MoveEffect;
-
     public string Name => _behaviour.Name;
+    public Vector2 Position => transform.position;
 
     private void Awake()
     {
@@ -75,6 +74,7 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     #endregion
     private void Start()
     {
+        _contraller.SetMovement(this);
         if (_playOnStart)
         {
             Play();
@@ -109,14 +109,23 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     }
     public void Block()
     {
-        _contrallerBlocker.Block();
+        _contraller.Block();
     }
 
     public void UnBlock()
     {
-        _contrallerBlocker.UnBlock();
+        _contraller.UnBlock();
     }
-
+    public void EnterToTransport(Transport transport)
+    {
+        _seedTransport = transport;
+        transport.Enter(this, _rigidBody, _contraller);
+    }
+    public void ExitToTransport()
+    {
+        _seedTransport = null;
+        transform.parent = null;
+    }
     public void SetImpactDamage(bool mode)
     {
         _colliderBody.enabled = mode;
@@ -145,9 +154,9 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
             }
         }
     }
-    public void Heal(int value)
+    public bool Heal(int value)
     {
-        _behaviour.Heal(value);
+        return _behaviour.Heal(value);
     }
     private void DeadMessange()
     {
@@ -215,11 +224,14 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist
     #endregion
     public void MoveToPosition(Vector2 position)
     {
-        _rigidBody.MovePosition(position);
+        if(!_seedTransport)
+            _rigidBody.MovePosition(position);
+        _seedTransport.transform.position = position;
     }
-    public void Walk(Vector2 input)
+    public void Move(Vector2 input)
     {
-        if (input == Vector2.zero) return;
+        if (input == Vector2.zero) 
+            return;
         _rigidBody.AddForce(input * _state.SpeedMovement * _behaviour.MoveEffect, ForceMode2D.Force);
         _rigidBody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, input), _state.SpeedMovement * _behaviour.MoveEffect * Time.deltaTime));
     }

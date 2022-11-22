@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7186994230276123287}
   - component: {fileID: 8457774964675675642}
   - component: {fileID: 7940611501453791253}
-  - component: {fileID: 163732479387187241}
+  - component: {fileID: 3197224859402868958}
   m_Layer: 8
   m_Name: RoboMan
   m_TagString: Player
@@ -86,12 +86,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 1
-  _controller: {fileID: 163732479387187241}
   _colliderBody: {fileID: 8457774964675675642}
   _shootMarker: {fileID: 5286685794489074338}
   _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   _behaviour: {fileID: 4202255454810491820}
---- !u!114 &163732479387187241
+  _contraller: {fileID: 3197224859402868958}
+--- !u!114 &3197224859402868958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,13 +100,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6071200334360681552}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19dc506c8af734e4ebdfc3acf93749db, type: 3}
+  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemUse: 101
-  _useAbility: 114
-  _artifactUse: 113
   _intractive: 32
+  _useItem: 101
+  _useAbility: 114
+  _useArtifact: 113
 --- !u!1001 &3059563890951224078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,6 +235,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoboManBeahaviour
       objectReference: {fileID: 0}
+    - target: {fileID: 6682235142337294999, guid: f0a6ba3c8a03f094ca315969676b28dc, type: 3}
+      propertyPath: playerAbillitySet
+      value: 
+      objectReference: {fileID: 4202255454508772185}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a6ba3c8a03f094ca315969676b28dc, type: 3}
 --- !u!4 &4202255454810491819 stripped
@@ -251,5 +255,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b382bda8c0931a8429a10f508905089c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4202255454508772185 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6682235142103716450, guid: f0a6ba3c8a03f094ca315969676b28dc, type: 3}
+  m_PrefabInstance: {fileID: 7416716546934323515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a572c6137ffed34bb26ed7eab6dca29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

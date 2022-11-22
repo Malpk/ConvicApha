@@ -1,5 +1,4 @@
 using MainMode.GameInteface;
-using System.Collections;
 using UnityEngine;
 
 namespace PlayerComponent
@@ -7,7 +6,6 @@ namespace PlayerComponent
     public class CristalManAbilitySet : PlayerAbillityUseSet
     {
         [Header("Abillity")]
-        [SerializeField] private int _timeReload;
         [SerializeField] private ReturnPoint _returnPoint;
         [SerializeField] private DamageInfo _returnDamage;
         [SerializeField] private Sprite _teleportIcon;
@@ -18,7 +16,10 @@ namespace PlayerComponent
             base.SetHud(hud);
             hud.SetAbilityIcon(_setCristalPointIcon);
         }
-
+        private void Update()
+        {
+            ReloadUpdate();
+        }
         protected override void UseAbility()
         {
             if (!_returnPoint.IsActive)
@@ -28,27 +29,13 @@ namespace PlayerComponent
             }
             else
             {
-                StartCoroutine(Reload());
-                _returnPoint.Deactive(user);
+                enabled = true;
                 user.TakeDamage(1, _returnDamage);
-                user.transform.position = _returnPoint.Position;
+                user.MoveToPosition(_returnPoint.Position);
+                _returnPoint.Deactive(user);
                 hud.SetAbilityIcon(_setCristalPointIcon);
             }
         }
 
-        private IEnumerator Reload()
-        {
-            SetReloadState(true);
-            hud.DisplayStateAbillity(false);
-            int progress = _timeReload;
-            while (progress > 0)
-            {
-                hud.UpdateAbillityKdTimer(progress);
-                yield return new WaitForSeconds(1f);
-                progress--;
-            }
-            SetReloadState(false);
-            hud.DisplayStateAbillity(true);
-        }
     }
 }

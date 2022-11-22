@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PlayerComponent
@@ -13,10 +11,15 @@ namespace PlayerComponent
         [SerializeField] private KeyCode _useArtifact = KeyCode.Q;
 
         private Player _controlledPlayer;
+        private IMovement _movementSet;
 
         private void Awake()
         {
             _controlledPlayer = GetComponent<Player>();
+        }
+        public void SetMovement(IMovement movementSet)
+        {
+            _movementSet = movementSet;
         }
         private void Update()
         {
@@ -31,7 +34,7 @@ namespace PlayerComponent
         }
         private void FixedUpdate()
         {
-            _controlledPlayer.Walk(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+            _movementSet.Move(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
         }
 
         public void Block()

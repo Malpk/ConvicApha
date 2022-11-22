@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class UpPlatform : MonoBehaviour, IExplosion
+    public class UpPlatform : MonoBehaviour
     {
         [SerializeField] private bool _showOnStart;
         [SerializeField] private bool _playOnStart;
@@ -22,8 +22,14 @@ namespace MainMode
         {
             _upDevice.gameObject.SetActive(false);
             _animator = GetComponent<Animator>();
+            _upDevice.OnExlosion += Explosion;
+            _upDevice.OnCompliteWork += DownDevice;
         }
-
+        private void OnDestroy()
+        {
+            _upDevice.OnExlosion -= Explosion;
+            _upDevice.OnCompliteWork -= DownDevice;
+        }
         private void Start()
         {
             if (_showOnStart)
@@ -49,13 +55,10 @@ namespace MainMode
             _animator.SetBool("Show", false);
         }
 
-        public void Explosion()
+        private void Explosion()
         {
-            if (IsReadyExplosion)
-            {
-                IsReadyExplosion = false;
-                _animator.SetTrigger("Explosion");
-            }
+            _animator.SetTrigger("Explosion");
+            DownDevice();
         }
         private void ShowAnimationEvent()
         {

@@ -8,11 +8,11 @@ namespace MainMode.Items
     {
         [SerializeField] private float _speedMovement;
         [Header("Reference")]
-        [SerializeField] private Collider2D _collider;
         [SerializeField] private Rigidbody2D _rigidBody;
-        [SerializeField] private SpriteRenderer _spriteBody;
 
         private bool _isFly;
+        private float _progress = 0f;
+        private float _timeDestroy;
 
         public bool IsShoot => _isFly;
 
@@ -21,19 +21,15 @@ namespace MainMode.Items
         public void Shoot(float timeDestory)
         {
             SetMode(true);
-            StartCoroutine(Fly(timeDestory));
+            _timeDestroy = timeDestory;
         }
 
-        private IEnumerator Fly(float timeDestroy)
+        private void Update()
         {
-            var progress = 0f;
-            while (progress < 1f && _isFly)
-            {
-                _rigidBody.MovePosition(_rigidBody.position + (Vector2)transform.up * _speedMovement * Time.fixedDeltaTime);
-                yield return new WaitForFixedUpdate();
-                progress += Time.fixedDeltaTime / timeDestroy;
-            }
-            Destroy(gameObject);
+            _progress += Time.deltaTime/ _timeDestroy;
+            _rigidBody.MovePosition(_rigidBody.position + (Vector2)transform.up * _speedMovement * Time.fixedDeltaTime);
+            if(_progress >=1f)
+                Destroy(gameObject);
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -42,7 +38,7 @@ namespace MainMode.Items
                 if (target.IsReadyExplosion)
                 {
                     target.Explosion();
-                    SetMode(false);
+                    Destroy(gameObject);
                 }
             }
         }
@@ -50,8 +46,7 @@ namespace MainMode.Items
         private void SetMode(bool mode)
         {
             _isFly = mode;
-            _collider.enabled = mode;
-            _spriteBody.enabled = mode;
+            gameObject.SetActive(mode);
         }
     }
 }

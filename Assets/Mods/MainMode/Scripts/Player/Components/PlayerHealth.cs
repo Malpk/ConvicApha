@@ -20,12 +20,12 @@ public class PlayerHealth
     {
         curretHealth = Mathf.Clamp(curretHealth - damage, 0, FullHealth);
     }
-    public void Heal(int value)
+    public bool Heal(int value)
     {
+        if (curretHealth == FullHealth)
+            return false;
         var newHealthPoints = curretHealth + value;
-        if (newHealthPoints > FullHealth)
-            curretHealth = FullHealth;
-        else
-            curretHealth = newHealthPoints;
+        curretHealth = newHealthPoints > FullHealth ? FullHealth : newHealthPoints;
+        return true;
     }
 }

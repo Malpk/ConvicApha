@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3970364347994021375}
+  - component: {fileID: 243120411219900872}
   - component: {fileID: 5679346638912946648}
   - component: {fileID: 1315808205111810758}
-  - component: {fileID: 243120411219900872}
-  - component: {fileID: 6126517494312707834}
   m_Layer: 0
   m_Name: Chromonade
   m_TagString: Untagged
@@ -34,6 +33,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &243120411219900872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765191237170323312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc4868a2ae0ef14ca23a60cc1dbde3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 1
+  _isInfinity: 0
+  _showOnStart: 0
+  _typeUse: 1
+  ItemSprite: {fileID: -371497704670840218, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
+  _spriteBody: {fileID: 5679346638912946648}
+  resistDuration: 0
+  attackResist: {fileID: 0}
+  _healValue: 2
 --- !u!212 &5679346638912946648
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -102,7 +122,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.25}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 1.19, y: 1.4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -111,39 +131,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.595, y: 0.7}
   m_EdgeRadius: 0
---- !u!114 &243120411219900872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765191237170323312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc4868a2ae0ef14ca23a60cc1dbde3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hideOnAwake: 1
-  _typeUse: 1
-  ItemSprite: {fileID: -371497704670840218, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
-  _spriteBody: {fileID: 5679346638912946648}
-  resistDuration: 0
-  attackResist:
-    _timeEffect: 0.5
-    _effect: 0
-    _attack: 0
-  _itemEffect: {fileID: 6126517494312707834}
---- !u!114 &6126517494312707834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765191237170323312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e196d01ad4fbbc49b6ac69ef934f611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _duration: 0
-  _healPoints: 4

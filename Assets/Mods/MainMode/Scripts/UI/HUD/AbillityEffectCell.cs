@@ -25,7 +25,7 @@ public class AbillityEffectCell : MonoBehaviour
         _kdTimer.gameObject.SetActive(!mode);
     }
 
-    public void UpdateTime(int second)
+    public void UpdateTime(float second)
     {
         second = Mathf.Clamp(second, 0, 99);
         _kdTimer.text = second.ToString();

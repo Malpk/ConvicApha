@@ -2,20 +2,25 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public abstract class DeviceV2 : MonoBehaviour
+    public abstract class DeviceV2 : MonoBehaviour, IExplosion
     {
         [Header("Generate")]
         [SerializeField] private bool _playOnStart;
 
-        protected event System.Action OnActivate;
-        public event System.Action OnDeactivate;
+        private bool _isReadyExlosion = true;
 
+        public event System.Action OnExlosion;
+        public event System.Action OnDeactivate;
+        public event System.Action OnCompliteWork;
+
+        protected event System.Action OnActivate;
         public bool IsActive { get; private set; }
 
         public bool IsShow { get; private set; }
         public virtual bool IsCompliteWork => IsActive;
         public abstract TrapType DeviceType { get; }
 
+        public bool IsReadyExplosion => _isReadyExlosion;
 
         private void Start()
         {
@@ -28,6 +33,7 @@ namespace MainMode
         public void Show()
         {
             IsShow = true;
+            _isReadyExlosion = true;
             gameObject.SetActive(true);
             if (_playOnStart)
                 Activate();
@@ -35,6 +41,7 @@ namespace MainMode
         public void Hide()
         {
             IsShow = false;
+            _isReadyExlosion = false;
             gameObject.SetActive(false);
         }
 
@@ -53,6 +60,18 @@ namespace MainMode
             OnDeactivate?.Invoke();
             IsActive = false;
             enabled = false;
+        }
+        public void CompliteWork()
+        {
+            OnCompliteWork?.Invoke();
+        }
+        public void Explosion()
+        {
+            if (_isReadyExlosion)
+            {
+                _isReadyExlosion = false;
+                OnExlosion?.Invoke();
+            }
         }
         #endregion
     }

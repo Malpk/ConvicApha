@@ -1,5 +1,4 @@
 using MainMode.GameInteface;
-using System.Collections;
 using UnityEngine;
 
 namespace PlayerComponent
@@ -11,57 +10,62 @@ namespace PlayerComponent
         [SerializeField] private float _duration = 1;
         [Min(1)]
         [SerializeField] private float _distance = 1;
-        [Min(1)]
-        [SerializeField] private int _timeReload = 1;
         [SerializeField] private float _timeActiveDebaf;
         [SerializeField] private LayerMask _wallLayer;
         [SerializeField] private Sprite _abillityIcon;
         [SerializeField] private MovementEffect _debaf;
+        [SerializeField] private AnimationCurve _jerkCurve;
 
+        private Vector2 _startPosition;
+        private Vector2 _jerkForce;
+
+        public System.Action State;
+
+        private void Awake()
+        {
+            enabled = false; 
+        }
         public override void SetHud(HUDUI hud)
         {
             base.SetHud(hud);
             hud.SetAbilityIcon(_abillityIcon);
         }
+        private void FixedUpdate()
+        {
+            State();
+        }
 
         protected override void UseAbility()
         {
-            var distance = _distance;
-            var hit = Physics2D.Raycast(transform.position, transform.up, distance, _wallLayer);
-            if (hit)
-            {
-                distance = Vector2.Distance(transform.position, hit.point);
-            }
-            StartCoroutine(Jerk(distance, _duration));
-        }
-        private IEnumerator Jerk(float distance, float duration)
-        {
+            user.Block();
+            _progress = 0f;
             SetReloadState(true);
             hud.DisplayStateAbillity(false);
-            yield return JerkUpdate(user.transform.position, user.transform.up * distance, duration);
-            user.AddEffects(_debaf, _timeActiveDebaf);
-            var progress = _timeReload;
-            while (progress != 0)
+                enabled = true;
+            _jerkForce = user.transform.up * _distance;
+            _startPosition = user.transform.position;
+            State = JerkUpdate;
+        }
+        private void JerkUpdate()
+        {
+            _progress += Time.fixedDeltaTime / _duration;
+            var move = _startPosition + _jerkForce * _jerkCurve.Evaluate(_progress);
+            var hit = Physics2D.Raycast(user.transform.position, user.transform.up, 
+                Vector2.Distance(user.transform.position, move), _wallLayer);
+            if (_progress >= 1f || hit)
             {
-                hud.UpdateAbillityKdTimer(progress);
-                yield return new WaitForSeconds(1f);
-                progress--;
+                _progress = 0f;
+                IsActive = false;
+                user.UnBlock();
+                State = ReloadUpdate;
+                user.AddEffects(_debaf, _timeActiveDebaf);
             }
-            SetReloadState(false);
-            hud.DisplayStateAbillity(true);
+            else
+            {
+                user.MoveToPosition(move);
+            }
         }
 
-        private IEnumerator JerkUpdate(Vector2 start, Vector2 move, float duration)
-        {
-            user.Block();
-            var progress = 0f;
-            while (progress < 1f)
-            {
-                progress += Time.deltaTime / duration;
-                user.MoveToPosition(start + move * progress);
-                yield return new WaitForFixedUpdate();
-            }
-            user.UnBlock();
-        }
+
     }
 }

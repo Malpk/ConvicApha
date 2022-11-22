@@ -29,6 +29,10 @@ namespace MainMode.Items
         private void Actvate()
         {
             _jetAir.gameObject.SetActive(true);
+            _jetAir.transform.position = user.transform.position;
+            _jetAir.transform.rotation = user.transform.rotation;
+            user.transform.parent = _jetAir.transform;
+            user.EnterToTransport(_jetAir);
         }
     }
 }

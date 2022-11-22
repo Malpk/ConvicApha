@@ -1,10 +1,9 @@
 using UnityEngine;
 using PlayerComponent;
-using UnityEngine.ParticleSystemJobs;
 
 namespace MainMode.Items
 {
-    public class AirJet : MonoBehaviour, ITransport
+    public class AirJet :Transport
     {
         [Header("General Setting")]
         [Min(1)]
@@ -20,7 +19,8 @@ namespace MainMode.Items
 
         private float _progress;
         private Player _user;
-        private Controller _controller;
+        private Transform _parent;
+        private PCPlayerController _controller;
 
         private void Awake()
         {
@@ -32,39 +32,34 @@ namespace MainMode.Items
             _timeActive = timeActive;
         }
 
-        public void Enter(Player player, Rigidbody2D body, Controller controller)
+        public override void Enter(Player player, Rigidbody2D body, PCPlayerController controller)
         {
             enabled = true;
-            transform.position = player.transform.position;
-            transform.rotation = player.transform.rotation;
-            player.Block();
+            _controller = controller;
+            _controller.SetMovement(this);
             _fixedPoint.connectedBody = body;
             _jet.Play();
             _user = player;
-            if(_controller)
-                 _controller.MovementAction -= Move;
-            _controller = controller;
-            _controller.MovementAction += Move;
+            _parent = transform.parent;
+            transform.parent = null;
         }
-
+        public override void Exit()
+        {
+            enabled = false;
+            _jet.Stop();
+            _user.ExitToTransport();
+            _controller.SetMovement(_user);
+            _fixedPoint.connectedBody = null;
+            gameObject.SetActive(false);
+            transform.parent = _parent;
+        }
         private void Update()
         {
             _progress += Time.deltaTime / _timeActive;
             if (_progress >= 1f)
                 Exit();
         }
-
-        public void Exit()
-        {
-            enabled = false;
-            _user.transform.parent = null;
-            _user.UnBlock();
-            _jet.Stop();
-            _controller.MovementAction -= Move;
-            _fixedPoint.connectedBody = null;
-            gameObject.SetActive(false);
-        }
-        private void Move(Vector2 direction)
+        public override void Move(Vector2 direction)
         {
             if (direction != Vector2.zero)
                 _jet.Play();

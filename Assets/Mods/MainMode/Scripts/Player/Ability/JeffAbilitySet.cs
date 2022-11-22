@@ -6,9 +6,9 @@ namespace PlayerComponent
     {
         [SerializeField] private int _healValue;
 
-        protected override void UseAbility()
+        protected override bool UseAbility()
         {
-            user.Heal(_healValue);
+            return user.Heal(_healValue);
         }
     }
 }

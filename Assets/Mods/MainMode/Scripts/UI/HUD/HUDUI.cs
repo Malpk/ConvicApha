@@ -77,7 +77,7 @@ namespace MainMode.GameInteface
         {
             _abilityCell.SetState(mode);
         }
-        public void UpdateAbillityKdTimer(int second)
+        public void UpdateAbillityKdTimer(float second)
         {
             _abilityCell.UpdateTime(second);
         }
