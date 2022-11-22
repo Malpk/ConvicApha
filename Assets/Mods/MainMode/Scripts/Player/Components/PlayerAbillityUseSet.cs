@@ -18,13 +18,21 @@ namespace PlayerComponent
 
         private System.Action<bool> OnReloadUpdate;
 
+        private void Awake()
+        {
+            enabled = false;
+        }
 
         public virtual void SetHud(HUDUI hud)
         {
             this.hud = hud;
             hud.DisplayStateAbillity(!IsReload);
         }
-
+        private void Start()
+        {
+            enabled = true;
+            SetReloadState(true);
+        }
         public void SetUser(Player player)
         {
             user = player;

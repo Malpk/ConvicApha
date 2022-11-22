@@ -10,7 +10,7 @@ namespace Underworld
         [SerializeField] private Player _player;
         [SerializeField] private TimerDisplay _timer;
 
-        private int _minuteSeconds = 5;
+        private int _minuteSeconds = 60;
         private float _progress = 0f;
 
         public event Action OnCompliteTimer;

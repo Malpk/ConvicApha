@@ -11,6 +11,7 @@ namespace PlayerComponent
         [SerializeField] private Sprite _teleportIcon;
         [SerializeField] private Sprite _setCristalPointIcon;
 
+
         public override void SetHud(HUDUI hud)
         {
             base.SetHud(hud);

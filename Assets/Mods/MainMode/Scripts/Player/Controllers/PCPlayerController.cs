@@ -16,10 +16,12 @@ namespace PlayerComponent
         private void Awake()
         {
             _controlledPlayer = GetComponent<Player>();
+            enabled = false;
         }
         public void SetMovement(IMovement movementSet)
         {
             _movementSet = movementSet;
+            enabled = true;
         }
         private void Update()
         {

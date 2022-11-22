@@ -53,9 +53,11 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
     {
         if (_behaviour != behaviour && _behaviour)
         {
+            _behaviour.DeadAction -= DeadMessange;
             Destroy(_behaviour.gameObject);
         }
         _behaviour = behaviour;
+        _behaviour.DeadAction += DeadMessange;
         _behaviour.Intializate(this, _hud);
         _behaviour.transform.parent = transform;
         _behaviour.transform.localPosition = Vector3.zero;
@@ -224,8 +226,11 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
     #endregion
     public void MoveToPosition(Vector2 position)
     {
-        if(!_seedTransport)
+        if (!_seedTransport)
+        {
             _rigidBody.MovePosition(position);
+            return;
+        }
         _seedTransport.transform.position = position;
     }
     public void Move(Vector2 input)

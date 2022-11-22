@@ -19,15 +19,17 @@ namespace PlayerComponent
 
         private System.Action State;
 
+        private void Awake()
+        {
+            State = ReloadUpdate;
+            enabled = false;
+        }
+
         public void SetHud(HUDUI hud)
         {
             this.hud = hud;
+            enabled = true;
             hud.SetAbilityIcon(_abillityIcon, false);
-        }
-        private void Start()
-        {
-            hud.DisplayStateAbillity(false);
-            State = ReloadUpdate;
         }
 
         private void Update()
