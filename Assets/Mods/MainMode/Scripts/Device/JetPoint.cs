@@ -11,6 +11,14 @@ namespace MainMode
 
         public abstract void SetAttack(DamageInfo info);
 
+        private void OnBecameVisible()
+        {
+            _jetAnimator.enabled = true;
+        }
+        private void OnBecameInvisible()
+        {
+            _jetAnimator.enabled = false;
+        }
         public void Activate()
         {
             SetState(true);

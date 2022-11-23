@@ -42,6 +42,7 @@ namespace MainMode
         {
             IsDestroy = true;
             gameObject.SetActive(false);
+            _rigidbody.velocity = Vector2.zero;
         }
         public void SetAttack(DamageInfo info)
         {

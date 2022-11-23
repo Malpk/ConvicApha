@@ -19,6 +19,14 @@ namespace MainMode
             OnActivate -= Launch;
         }
 
+        private void OnBecameVisible()
+        {
+            gunAnimator.enabled = true;
+        }
+        private void OnBecameInvisible()
+        {
+            gunAnimator.enabled = false;
+        }
         protected abstract void Launch();
 
         private void OnTriggerStay2D(Collider2D collision)

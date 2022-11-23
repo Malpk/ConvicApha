@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5598448970217128645}
   - component: {fileID: 5247633123648545621}
   - component: {fileID: 576074628829848998}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EXTRAChoco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _count: 3
   _isInfinity: 0
-  _showOnStart: 0
+  _showOnStart: 1
   _typeUse: 1
   ItemSprite: {fileID: -8853491759857964706, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 5247633123648545621}

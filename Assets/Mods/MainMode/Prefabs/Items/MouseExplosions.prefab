@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4729995312275301688}
   - component: {fileID: 4729995312275301691}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Myshki_narushka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4729995312956383304}
   - component: {fileID: 4729995312956383310}
   - component: {fileID: 4729995312956383305}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MouseExplosions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _count: 5
   _isInfinity: 0
-  _showOnStart: 0
+  _showOnStart: 1
   _typeUse: 0
   ItemSprite: {fileID: 21300000, guid: d1316c30ceb93b345a6e662a730d5e5f, type: 3}
   _spriteBody: {fileID: 4729995312275301691}

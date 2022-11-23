@@ -16,7 +16,7 @@ namespace MainMode
 
         public TrapType DeviceType => _upDevice.DeviceType;
         public bool IsReadyExplosion { get; private set; } = true;
-        public bool IsShow => _upDevice.IsShow;
+        public bool IsShow { get; private set; }
 
         protected virtual void Awake()
         {
@@ -44,6 +44,7 @@ namespace MainMode
         public void UpDevice()
         {
             _progress = 0f;
+            IsShow = true;
             enabled = _destroyMode;
             IsReadyExplosion = true;
             _animator.SetBool("Show", true);
@@ -67,6 +68,7 @@ namespace MainMode
         private void HideAnimationEvent()
         {
             _upDevice.Hide();
+            IsShow = false;
         }
         private void CompliteUpAnimationEvent()
         {
@@ -78,6 +80,14 @@ namespace MainMode
             if (_upDevice.IsActive)
                 _upDevice.Deactivate();
             _upDevice.Hide();
+        }
+        private void OnBecameVisible()
+        {
+            _animator.enabled = true;
+        }
+        private void OnBecameInvisible()
+        {
+            _animator.enabled = false;
         }
     }
 }

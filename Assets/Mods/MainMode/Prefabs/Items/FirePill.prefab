@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1006243015769520807}
   - component: {fileID: 6110772547576663450}
   - component: {fileID: 4561474570997332264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _count: 1
   _isInfinity: 0
-  _showOnStart: 0
+  _showOnStart: 1
   _typeUse: 1
   ItemSprite: {fileID: -1865053210850470564, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 6110772547576663450}

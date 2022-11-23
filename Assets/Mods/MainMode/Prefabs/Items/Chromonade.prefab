@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 243120411219900872}
   - component: {fileID: 5679346638912946648}
   - component: {fileID: 1315808205111810758}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chromonade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,11 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _count: 1
   _isInfinity: 0
-  _showOnStart: 0
+  _showOnStart: 1
   _typeUse: 1
   ItemSprite: {fileID: -371497704670840218, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 5679346638912946648}
-  resistDuration: 0
+  resistDuration: 2
   attackResist: {fileID: 0}
   _healValue: 2
 --- !u!212 &5679346638912946648

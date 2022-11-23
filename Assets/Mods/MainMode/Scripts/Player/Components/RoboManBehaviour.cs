@@ -25,12 +25,14 @@ namespace PlayerComponent
             _startColor = _spriteRender.color;
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             PlayAction += PlayRobotMan;
         }
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             PlayAction -= PlayRobotMan;
         }
         private void PlayRobotMan()
@@ -58,7 +60,7 @@ namespace PlayerComponent
             if (damgeInfo.Attack == AttackType.Fire)
             {
                 if (ChangeTemaerature(_temperatureSteep * damage))
-                    Debug.Log("Explosion");
+                    Dead();
                 return true;
             }
             return base.TakeDamage(damage, damgeInfo);

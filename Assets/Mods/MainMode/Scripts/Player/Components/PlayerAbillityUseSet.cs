@@ -31,7 +31,7 @@ namespace PlayerComponent
         private void Start()
         {
             enabled = true;
-            SetReloadState(true);
+            SetReloadState(false);
         }
         public void SetUser(Player player)
         {
@@ -43,6 +43,7 @@ namespace PlayerComponent
             if (!IsReload)
             {
                 IsActive = true;
+                _progress = 0f;
                 UseAbility();
             }
         }

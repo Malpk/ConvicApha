@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8108289573350474917}
   - component: {fileID: 5646093357982817819}
   - component: {fileID: 6350070336211171590}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Balonchik
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _count: 1
   _isInfinity: 0
-  _showOnStart: 0
+  _showOnStart: 1
   _typeUse: 1
   ItemSprite: {fileID: 7397371678690673091, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 5646093357982817819}
@@ -128,9 +128,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6858238162431962287}
     m_Modifications:
+    - target: {fileID: 35572160502777315, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 35572160900783757, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_Name
       value: AirJet
+      objectReference: {fileID: 0}
+    - target: {fileID: 35572160900783757, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 35572160900783758, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: _timeActive
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 35572160900783758, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: _speedMovement
@@ -139,6 +151,10 @@ PrefabInstance:
     - target: {fileID: 35572160900783758, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: _speedRotation
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 35572161109363276, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 35572162351270275, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_RootOrder
@@ -154,7 +170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 35572162351270275, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.7554011
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 35572162351270275, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_LocalRotation.w

@@ -33,13 +33,13 @@ namespace PlayerComponent
         public string Name => _name;
         protected bool IsPlay { get; private set; } = false;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _playerDamageEffectContainer.DeleteContentAction += (DamageInfo effect) => HideScreen(effect.Effect);
             _playerEffectContainer.DeleteContentAction += (MovementEffect effect) => HideScreen(effect.Effect);
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _playerDamageEffectContainer.DeleteContentAction -= (DamageInfo effect) => HideScreen(effect.Effect);
             _playerEffectContainer.DeleteContentAction -= (MovementEffect effect) => HideScreen(effect.Effect);

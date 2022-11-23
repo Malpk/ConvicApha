@@ -12,17 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a572c6137ffed34bb26ed7eab6dca29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeReload: 1
-  _radiusAttack: 1
-  _distanceAttack: 3
+  _timeReload: 5
   _amimator: {fileID: 2127917837326306861}
-  _deviceLayer:
-    serializedVersion: 2
-    m_Bits: 1024
   _damage: 1
   _abillityIcon: {fileID: 21300000, guid: 8f26b97cfbb69b1479b92fa441ee0149, type: 3}
   _hitLight: {fileID: 2127917837326306863}
   _damageInfo: {fileID: 11400000, guid: f2edc1e8ea91c9940ad87891766279b9, type: 2}
+--- !u!60 &1847213809
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127917837326306864}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.5727238, y: 0.7827969}
+      - {x: 0.43800437, y: 1.1822301}
+      - {x: 0.04798174, y: 1.3160211}
+      - {x: -0.21315807, y: -0.0309951}
+      - {x: 0.38884515, y: -0.042181373}
 --- !u!1 &6682235142337294998
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,12 +190,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4700615114199669833, guid: b5019503feb14724abe2df7629869de3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700615114199669833, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.079
       objectReference: {fileID: 0}
     - target: {fileID: 4700615114199669833, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.175
       objectReference: {fileID: 0}
     - target: {fileID: 4700615114199669833, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -207,6 +236,22 @@ PrefabInstance:
     - target: {fileID: 4700615114199669846, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_Name
       value: LigthHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700615114199669846, guid: b5019503feb14724abe2df7629869de3, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700615114698155904, guid: b5019503feb14724abe2df7629869de3, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700615114698155906, guid: b5019503feb14724abe2df7629869de3, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5625
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700615114698155906, guid: b5019503feb14724abe2df7629869de3, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5625
       objectReference: {fileID: 0}
     - target: {fileID: 4700615114698155906, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_Sprite

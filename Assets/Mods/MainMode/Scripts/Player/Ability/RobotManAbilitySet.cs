@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using MainMode;
 using MainMode.GameInteface;
@@ -7,10 +7,7 @@ namespace PlayerComponent
 {
     public class RobotManAbilitySet : PlayerAbillityUseSet
     {
-        [SerializeField] private float _radiusAttack;
-        [SerializeField] private float _distanceAttack;
         [SerializeField] private Animator _amimator;
-        [SerializeField] private LayerMask _deviceLayer;
         [Header("Damage")]
         [SerializeField] private int _damage;
         [SerializeField] private Sprite _abillityIcon;
@@ -18,6 +15,8 @@ namespace PlayerComponent
         [SerializeField] private DamageInfo _damageInfo;
 
         private Transform _parent;
+
+        private List<DeviceV2> _devics = new List<DeviceV2>();
 
         private void Awake()
         {
@@ -40,33 +39,33 @@ namespace PlayerComponent
             _hitLight.parent = null;
             _amimator.SetTrigger("Hit");
             user.TakeDamage(_damage, _damageInfo);
-            if (TrakingDevice(out DeviceV2 device))
+            foreach (var device in _devics)
             {
                 device.Deactivate();
                 device.CompliteWork();
             }
+            enabled = true;
         }
         private void ReloadAnimationEvent()
         {
             _hitLight.parent = _parent;
             _hitLight.localPosition = Vector3.zero;
             _hitLight.localRotation = Quaternion.Euler(Vector3.zero);
-            enabled = true;
         }
-        private bool TrakingDevice(out DeviceV2 device)
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            RaycastHit2D hit = new RaycastHit2D();
-            var offset = transform.right * _radiusAttack / 2;
-            var cheakPosition = new Vector3[] { transform.position - offset, transform.position, transform.position + offset };
-            for (int i = 0; i < cheakPosition.Length && !hit; i++)
+            if (collision.TryGetComponent(out DeviceV2 device))
             {
-                hit = Physics2D.Raycast(cheakPosition[i], transform.up, _distanceAttack, _deviceLayer);
-#if UNITY_EDITOR
-                Debug.DrawLine(cheakPosition[i], cheakPosition[i] + transform.up * _distanceAttack, Color.green);
-#endif
+                _devics.Add(device);
             }
-            device = hit ? hit.transform.GetComponent<DeviceV2>() : null;
-            return device;
+        }
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out DeviceV2 device))
+            {
+                _devics.Remove(device);
+            }
         }
     }
 }

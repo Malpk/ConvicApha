@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 522554527939328601}
   - component: {fileID: 522554527939328598}
   - component: {fileID: 522554527939328600}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TransSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,15 +47,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _count: 1
   _isInfinity: 0
-  _hideOnAwake: 1
+  _showOnStart: 1
   _typeUse: 0
   ItemSprite: {fileID: 4621494512207355025, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 522554528885218336}
   resistDuration: 0
-  attackResist:
-    _timeEffect: 0.5
-    _effect: 0
-    _attack: 0
+  attackResist: {fileID: 0}
   _unitDistance: 5
   _point: {fileID: 6874904900451656645, guid: 129f4c908985f2045be7967684a44955, type: 3}
 --- !u!61 &522554527939328600
@@ -94,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522554528885218337}
   - component: {fileID: 522554528885218336}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
