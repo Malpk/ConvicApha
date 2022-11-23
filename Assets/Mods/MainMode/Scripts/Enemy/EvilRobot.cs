@@ -52,29 +52,37 @@ namespace MainMode
             }
             else
             {
+                enabled = false;
                 SetMode(false);
             }
         }
-        public void Activate()
-        {
-#if UNITY_EDITOR
-             if (!IsShow)
-                throw new System.Exception("you can't activate an object while it's hidden");
-#endif
-            if (!IsActive)
-            {
-                IsActive = true;
-                _health = _startHealth;
-            }
-        }
+
         public void SetTarget(Player target)
         {
             _target = target;
         }
+  
+
+        private void Update()
+        {
+            Rotate();
+            MoveToTarget();
+        }
+
+        public void Activate()
+        {
+#if UNITY_EDITOR
+            if (!IsShow)
+                throw new System.Exception("you can't activate an object while it's hidden");
+#endif
+            IsActive = true;
+            enabled = true;
+            _health = _startHealth;
+        }
         public void Deactivate()
         {
-            if (IsActive)
-                IsActive = false;
+            IsActive = false;
+            enabled = false;
         }
         public void Explosion()
         {
@@ -85,7 +93,7 @@ namespace MainMode
 
         public void TakeDamage(int damage, DamageInfo type)
         {
-            if(IsActive && type.Attack != AttackType.Venom)
+            if (IsActive && type.Attack != AttackType.Venom)
             {
                 _health--;
                 if (_health <= 0)
@@ -101,18 +109,9 @@ namespace MainMode
                 _debafList.Add(effect, 1);
                 StartCoroutine(DeleteMovementEffect(timeActive, effect));
             }
-            else if(_debafList.ContainsKey(effect))
+            else if (_debafList.ContainsKey(effect))
             {
                 _debafList[effect]++;
-            }
-        }
-
-        private void Update()
-        {
-            if (IsActive)
-            {
-                Rotate();
-                MoveToTarget();
             }
         }
         private void MoveToTarget()

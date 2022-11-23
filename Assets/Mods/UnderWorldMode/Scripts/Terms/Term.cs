@@ -28,7 +28,6 @@ namespace Underworld
         {
             _termFire.OnDeactivateFire -= () => SetMode(false);
         }
-
         public void Activate(FireState firestate = FireState.Start)
         {
 #if UNITY_EDITOR

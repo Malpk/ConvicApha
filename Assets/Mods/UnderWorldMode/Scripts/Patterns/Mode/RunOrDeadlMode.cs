@@ -63,8 +63,8 @@ namespace Underworld
         protected override void PlayMode()
         {
             _curretState = _startState;
-            transform.rotation *= Quaternion.Euler(Vector3.forward *
-                 DefineStartAngel(player.transform.position) * Time.deltaTime);
+            transform.localRotation = Quaternion.Euler(Vector3.forward *
+                 DefineStartAngel(player.transform.position));
         }
         protected override void StopMode()
         {
@@ -109,10 +109,9 @@ namespace Underworld
         }
         private float DefineStartAngel(Vector2 player)
         {
-            var angel = Vector2.Angle(transform.right, player);
-            if (player.y < transform.position.y)
-                return -angel;
-            return angel;
+            var locale = player - (Vector2)transform.position;
+            var angel = Vector2.Angle(transform.right, locale);
+            return locale.y > 0? angel : -angel;
         }
 
         private List<Term> GetActiveTerms(List<Term> deactiveTerms)

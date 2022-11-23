@@ -38,7 +38,7 @@ namespace MainMode
         private void Update()
         {
             _progress += Time.deltaTime / _workTime;
-            if (_progress >= 1 && !_upDevice.IsCompliteWork)
+            if (_progress >= 1 && _upDevice.IsCompliteWork)
                 DownDevice();
         }
         public void UpDevice()
@@ -48,17 +48,22 @@ namespace MainMode
             enabled = _destroyMode;
             IsReadyExplosion = true;
             _animator.SetBool("Show", true);
+            if (!_animator.enabled)
+                _upDevice.Show();
         }
         public void DownDevice()
         {
             enabled = false;
             IsReadyExplosion = false;
             _animator.SetBool("Show", false);
+            if (!_animator.enabled)
+                HideAnimationEvent();
         }
 
         private void Explosion()
         {
-            _animator.SetTrigger("Explosion");
+            if(_animator.enabled)
+                _animator.SetTrigger("Explosion");
             DownDevice();
         }
         private void ShowAnimationEvent()

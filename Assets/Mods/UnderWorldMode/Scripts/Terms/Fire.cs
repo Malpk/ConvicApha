@@ -19,7 +19,6 @@ namespace Underworld
             if(!_playOnAwake)
                 DeactiveEvent();
         }
-
         public bool Activate(FireState state)
         {
             CurretState = state;

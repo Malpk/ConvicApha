@@ -17,7 +17,7 @@ namespace MainMode
         public bool IsActive { get; private set; }
 
         public bool IsShow { get; private set; }
-        public virtual bool IsCompliteWork => IsActive;
+        public virtual bool IsCompliteWork => !IsActive;
         public abstract TrapType DeviceType { get; }
 
         public bool IsReadyExplosion => _isReadyExlosion;
