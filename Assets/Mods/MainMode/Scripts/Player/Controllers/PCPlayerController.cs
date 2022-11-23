@@ -27,11 +27,11 @@ namespace PlayerComponent
         {
             if (Input.GetKeyDown(_intractive))
                 _controlledPlayer.InteractiveWhithObject();
-            if (Input.GetKeyDown(_useItem)) 
+            if (Input.GetKeyDown(_useItem) || Input.GetKeyDown(KeyCode.Mouse1)) 
                 _controlledPlayer.UseItem();
             if (Input.GetKeyDown(_useAbility)) 
                 _controlledPlayer.UseAbillity();
-            if (Input.GetKeyDown(_useArtifact)) 
+            if (Input.GetKeyDown(_useArtifact) || Input.GetKeyDown(KeyCode.Mouse0)) 
                 _controlledPlayer.UseArtifact();
         }
         private void FixedUpdate()

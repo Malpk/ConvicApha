@@ -18,10 +18,10 @@ namespace MainMode
         [SerializeField] private float _minDistanceToTarget;
         [Header("Reference")]
         [SerializeField] private Player _target;
-        [SerializeField] private Animator _effects;
         [SerializeField] private Collider2D _colliderBody;
         [SerializeField] private Rigidbody2D _rigidBody;
         [SerializeField] private SpriteRenderer _spritebody;
+        [SerializeField] private EnemyAnimator _enemyAnimator;
 
         private int _direction = 1;
         private int _health;
@@ -31,10 +31,13 @@ namespace MainMode
 
         public bool IsActive { get; private set; }
 
+        private IDamage _hitTarget;
+
         public bool IsReadyExplosion => _readyExlosion;
 
         private void OnEnable()
         {
+            _enemyAnimator.OnHit += Hit;
             ShowItemAction += () => SetMode(true);
             HideItemAction += () => SetMode(false);
         }
@@ -61,8 +64,6 @@ namespace MainMode
         {
             _target = target;
         }
-  
-
         private void Update()
         {
             Rotate();
@@ -88,7 +89,7 @@ namespace MainMode
         {
             _readyExlosion = false;
             Deactivate();
-            _effects.SetInteger("State", 2);
+            _enemyAnimator.Effect(2);
         }
 
         public void TakeDamage(int damage, DamageInfo type)
@@ -99,21 +100,10 @@ namespace MainMode
                 if (_health <= 0)
                     Explosion();
                 else
-                    _effects.SetInteger("State", 1);
+                    _enemyAnimator.Effect(1);
             }
         }
-        public void AddEffects(MovementEffect effect, float timeActive)
-        {
-            if (effect.Effect == EffectType.Freez && !_debafList.ContainsKey(effect))
-            {
-                _debafList.Add(effect, 1);
-                StartCoroutine(DeleteMovementEffect(timeActive, effect));
-            }
-            else if (_debafList.ContainsKey(effect))
-            {
-                _debafList[effect]++;
-            }
-        }
+
         private void MoveToTarget()
         {
             if (Vector2.Distance(_rigidBody.position, _target.Position) > _minDistanceToTarget)
@@ -121,6 +111,14 @@ namespace MainMode
                 var move = (Vector2)transform.right * _speedMovement * Time.fixedDeltaTime * GetEffects();
                 _rigidBody.MovePosition(_rigidBody.position + move);
             }
+        }
+
+        private void Rotate()
+        {
+            var localPosition = (Vector3)_target.Position - transform.position;
+            _direction = localPosition.y > 0 ? 1 : -1;
+            angle = Vector3.Angle(Vector3.right, localPosition)  * _direction ;
+            _rigidBody.MoveRotation(angle);
         }
         private float GetEffects()
         {
@@ -134,21 +132,25 @@ namespace MainMode
             }
             return amount > _minSpeedMovement ? amount : _minSpeedMovement;
         }
-        private void Rotate()
+        public void AddEffects(MovementEffect effect, float timeActive)
         {
-            var localPosition = (Vector3)_target.Position - transform.position;
-            _direction = localPosition.y > 0 ? 1 : -1;
-            angle = Vector3.Angle(Vector3.right, localPosition) * _direction;
-            _rigidBody.MoveRotation(angle);
+            if (effect.Effect == EffectType.Freez && !_debafList.ContainsKey(effect))
+            {
+                _debafList.Add(effect, 1);
+                StartCoroutine(DeleteMovementEffect(timeActive, effect));
+            }
+            else if (_debafList.ContainsKey(effect))
+            {
+                _debafList[effect]++;
+            }
         }
-
         private void SetMode(bool mode)
         {
             _readyExlosion = mode;
             _rigidBody.simulated = mode;
             _spritebody.enabled = mode;
             _colliderBody.enabled = mode;
-            _effects.SetInteger("State", 0);
+            _enemyAnimator.Effect(0);
         }
         private IEnumerator DeleteMovementEffect(float timeActive, MovementEffect effect)
         {
@@ -157,13 +159,19 @@ namespace MainMode
             if (_debafList[effect] <= 0)
                 _debafList.Remove(effect);
         }
+        public void Hit()
+        {
+            if(_hitTarget != default(IDamage))
+                _hitTarget.Explosion();
+        }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (IsActive)
             {
                 if (collision.TryGetComponent(out IDamage target))
                 {
-                    target.Explosion();
+                    _enemyAnimator.Hit();
+                    _hitTarget = target;
                 }
                 else if (collision.TryGetComponent(out IExplosion device))
                 {
@@ -172,7 +180,13 @@ namespace MainMode
                 }
             }
         }
-
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out IDamage target))
+            {
+                _hitTarget = default(IDamage);
+            }
+        }
 
     }
 }
