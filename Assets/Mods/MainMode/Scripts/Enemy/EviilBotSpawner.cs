@@ -47,7 +47,7 @@ namespace MainMode
             {
                 _isPlay = false;
                 _evilBot.Deactivate();
-                _evilBot.HideItem();
+                _evilBot.SetMode(false);
             }
         }
         public void Pause()
@@ -87,7 +87,7 @@ namespace MainMode
             {
                 _evilBot.transform.position = points[Random.Range(0, points.Count)].Position;
                 _evilBot.transform.rotation = Quaternion.Euler(Vector3.zero);
-                _evilBot.ShowItem();
+                _evilBot.SetMode(true);
                 _evilBot.Activate();
             }
         }

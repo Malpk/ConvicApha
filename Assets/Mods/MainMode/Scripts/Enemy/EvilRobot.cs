@@ -1,12 +1,11 @@
 using PlayerComponent;
-using MainMode.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode
 {
-    public class EvilRobot : SmartItem, IDamage,IAddEffects, IExplosion
+    public class EvilRobot : MonoBehaviour, IDamage,IAddEffects, IExplosion
     {
         [Header("General")]
         [SerializeField] private bool _playOnStart;
@@ -20,8 +19,8 @@ namespace MainMode
         [SerializeField] private Player _target;
         [SerializeField] private Collider2D _colliderBody;
         [SerializeField] private Rigidbody2D _rigidBody;
-        [SerializeField] private SpriteRenderer _spritebody;
         [SerializeField] private EnemyAnimator _enemyAnimator;
+        [SerializeField] private EffectAnimator _effectAnimator;
 
         private int _direction = 1;
         private int _health;
@@ -38,24 +37,22 @@ namespace MainMode
         private void OnEnable()
         {
             _enemyAnimator.OnHit += Hit;
-            ShowItemAction += () => SetMode(true);
-            HideItemAction += () => SetMode(false);
+            _effectAnimator.OnExplosion +=()=> SetMode(false);
         }
         private void OnDisable()
         {
-            ShowItemAction -= () => SetMode(true);
-            HideItemAction -= () => SetMode(false);
+            _enemyAnimator.OnHit -= Hit;
+            _effectAnimator.OnExplosion -=()=> SetMode(false);
         }
         private void Start()
         {
-            if (_playOnStart)
+            if (_playOnStart && _target)
             {
-                ShowItem();
+                SetMode(true);
                 Activate();
             }
             else
             {
-                enabled = false;
                 SetMode(false);
             }
         }
@@ -63,6 +60,15 @@ namespace MainMode
         public void SetTarget(Player target)
         {
             _target = target;
+            if (_playOnStart)
+            {
+                SetMode(true);
+                Activate();
+            }
+            else
+            {
+                SetMode(false);
+            }
         }
         private void Update()
         {
@@ -72,12 +78,7 @@ namespace MainMode
 
         public void Activate()
         {
-#if UNITY_EDITOR
-            if (!IsShow)
-                throw new System.Exception("you can't activate an object while it's hidden");
-#endif
             IsActive = true;
-            enabled = true;
             _health = _startHealth;
         }
         public void Deactivate()
@@ -89,7 +90,7 @@ namespace MainMode
         {
             _readyExlosion = false;
             Deactivate();
-            _enemyAnimator.Effect(2);
+            _effectAnimator.Effect(2);
         }
 
         public void TakeDamage(int damage, DamageInfo type)
@@ -100,7 +101,7 @@ namespace MainMode
                 if (_health <= 0)
                     Explosion();
                 else
-                    _enemyAnimator.Effect(1);
+                    _effectAnimator.Effect(1);
             }
         }
 
@@ -144,13 +145,14 @@ namespace MainMode
                 _debafList[effect]++;
             }
         }
-        private void SetMode(bool mode)
+        public void SetMode(bool mode)
         {
+            enabled = mode;
             _readyExlosion = mode;
             _rigidBody.simulated = mode;
-            _spritebody.enabled = mode;
             _colliderBody.enabled = mode;
-            _enemyAnimator.Effect(0);
+            _effectAnimator.Effect(0);
+            _enemyAnimator.gameObject.SetActive(mode);
         }
         private IEnumerator DeleteMovementEffect(float timeActive, MovementEffect effect)
         {
