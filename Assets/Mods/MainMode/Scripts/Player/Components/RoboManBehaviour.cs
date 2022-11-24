@@ -42,7 +42,6 @@ namespace PlayerComponent
             ChangeTemaerature();
             _spriteRender.color = _startColor;
         }
-
         public override void AddEffects(MovementEffect effect, float timeActive)
         {
             if (effect.Effect == EffectType.Freez && _bodyTemperature > 0.3f)

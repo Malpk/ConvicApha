@@ -7,6 +7,7 @@ namespace PlayerComponent
     {
         [Min(1)]
         [SerializeField] private int _timeReload = 1;
+        [SerializeField] private bool _isUseRotation = false;
 
         protected Player user;
         protected HUDUI hud;
@@ -15,6 +16,7 @@ namespace PlayerComponent
 
         public bool IsActive { get; protected set; }
         public bool IsReload { get; private set; }
+        public bool IsUseRotation => _isUseRotation;
 
         private System.Action<bool> OnReloadUpdate;
 

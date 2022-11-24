@@ -131,10 +131,9 @@ namespace PlayerComponent
             }
             return false;
         }
-        public void UseAbillity()
+        public PlayerAbillityUseSet UseAbillity()
         {
-            if (playerAbillitySet)
-                playerAbillitySet.Use();
+            return playerAbillitySet;
         }
         public void AddResist(DamageInfo damage, float timeActive)
         {

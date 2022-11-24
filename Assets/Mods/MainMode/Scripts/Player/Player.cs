@@ -213,7 +213,13 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
     }
     public void UseAbillity()
     {
-        _behaviour.UseAbillity();
+        var ability = _behaviour.UseAbillity();
+        if (ability)
+        {
+            if (ability.IsUseRotation)
+                transform.rotation = Quaternion.Euler(Vector3.forward * (_shootMarker.Angel - 90));
+            ability.Use();
+        }
     }
 
     public void InteractiveWhithObject()
