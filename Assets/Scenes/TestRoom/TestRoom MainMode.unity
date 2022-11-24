@@ -596,6 +596,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1433090387}
     m_Modifications:
+    - target: {fileID: 946321335863932218, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.890625
+      objectReference: {fileID: 0}
+    - target: {fileID: 946321335863932218, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.890625
+      objectReference: {fileID: 0}
+    - target: {fileID: 946321335863932218, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612677856882561858, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.890625
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612677856882561858, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.890625
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612677856882561858, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3607033628082124060, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
       propertyPath: _destroyMode
       value: 0
@@ -9385,6 +9409,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocket Launcher
       objectReference: {fileID: 0}
+    - target: {fileID: 7194119081482484999, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: m_Size.x
+      value: 4.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194119081482484999, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: m_Size.y
+      value: 4.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194119081482484999, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
 --- !u!1 &1971839645
@@ -9540,6 +9576,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turel
       objectReference: {fileID: 0}
+    - target: {fileID: 7142385478768023679, guid: 96256595c1535014e8c5e1655211e010, type: 3}
+      propertyPath: m_Size.x
+      value: 4.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7142385478768023679, guid: 96256595c1535014e8c5e1655211e010, type: 3}
+      propertyPath: m_Size.y
+      value: 4.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7142385478768023679, guid: 96256595c1535014e8c5e1655211e010, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8185477693437109602, guid: 96256595c1535014e8c5e1655211e010, type: 3}
       propertyPath: _workTime
       value: 4
@@ -9622,7 +9670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4028051056622449916, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4028051056622449918, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
       propertyPath: _target
@@ -9670,6 +9718,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4028051056622449919, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028051056775695322, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028051056775695322, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028051056775695322, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
