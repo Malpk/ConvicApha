@@ -582,6 +582,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8033671764934702067, guid: 257329797b5855748a30e95133d6167d, type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033671764934702067, guid: 257329797b5855748a30e95133d6167d, type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033671764934702067, guid: 257329797b5855748a30e95133d6167d, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 257329797b5855748a30e95133d6167d, type: 3}
 --- !u!4 &96212142 stripped
@@ -631,6 +643,18 @@ PrefabInstance:
     - target: {fileID: 6670340497542324513, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
       propertyPath: m_Name
       value: SteamIzolator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6670340497542324522, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6670340497542324522, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6670340497542324522, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6670340497542324523, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
       propertyPath: m_RootOrder
@@ -9668,10 +9692,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilRobot
       objectReference: {fileID: 0}
-    - target: {fileID: 4028051056622449916, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4028051056622449918, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
       propertyPath: _target
       value: 
@@ -9718,18 +9738,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4028051056622449919, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4028051056775695322, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4028051056775695322, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
-      propertyPath: m_Size.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4028051056775695322, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
-      propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
