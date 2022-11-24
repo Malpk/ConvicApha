@@ -822,6 +822,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 247699901}
     m_Modifications:
+    - target: {fileID: 642761071, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 1003908299}
     - target: {fileID: 645509586165859885, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.033
@@ -830,6 +834,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.822
       objectReference: {fileID: 0}
+    - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1003908299}
     - target: {fileID: 4972911157752577632, guid: 72d3dfb56ddea5243a752aecae4afaf4, type: 3}
       propertyPath: _timeDelay
       value: 0.2
@@ -2472,8 +2480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d09aef5e22cb7c9429830bd55a2e157b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backGroundSprite: {fileID: 21300000, guid: 2c397c8b95df58147b025cf78128b0a3, type: 3}
-  ownSceneStartPos: {fileID: 1502526930}
+  sceneStartPos: {fileID: 1502526930}
+  SceneName: UnderWorld
 --- !u!61 &994108177
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2500,6 +2508,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.58, y: 1.16}
   m_EdgeRadius: 0
+--- !u!114 &1003908299 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7066461156846254331, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
+  m_PrefabInstance: {fileID: 1396806365}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb551fa50217f14583d446ac553b718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1014843834
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,8 +2797,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d09aef5e22cb7c9429830bd55a2e157b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backGroundSprite: {fileID: 21300000, guid: 61ad5d8c917b2f847bb914d99eab5904, type: 3}
-  ownSceneStartPos: {fileID: 370127327}
+  sceneStartPos: {fileID: 370127327}
+  SceneName: CrystalMode
 --- !u!61 &1094528990
 BoxCollider2D:
   m_ObjectHideFlags: 0

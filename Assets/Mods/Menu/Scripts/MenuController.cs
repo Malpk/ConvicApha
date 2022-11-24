@@ -1,7 +1,9 @@
 using System;
 using MainMode;
 using Underworld;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
@@ -29,6 +31,10 @@ public class MenuController : MonoBehaviour
         if (raycastHit2D && raycastHit2D.transform.gameObject.GetComponent<Banner>())
         {
             banner = raycastHit2D.transform.gameObject.GetComponent<Banner>();
+            if (Input.GetMouseButtonDown(0))
+            {
+                SceneManager.LoadScene(banner.SceneName);
+            }
             if (!bannerChoosed || rememberBanner != banner)
             {
                 bannerChoosed = true;
