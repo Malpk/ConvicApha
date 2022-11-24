@@ -32,7 +32,7 @@ namespace PlayerComponent
             {
                 enabled = true;
                 user.TakeDamage(1, _returnDamage);
-                user.MoveToPosition(_returnPoint.Position);
+                user.transform.position = _returnPoint.Position;
                 _returnPoint.Deactive(user);
                 hud.SetAbilityIcon(_setCristalPointIcon);
             }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 35572160502777340}
   - component: {fileID: 35572160502777342}
   - component: {fileID: 35572160502777341}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4813,10 +4813,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 35572162351270275}
-  - component: {fileID: 35572160900783759}
   - component: {fileID: 35572160900783758}
+  - component: {fileID: 35572160900783759}
   - component: {fileID: 4932251424888737957}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AirJet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4839,6 +4839,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &35572160900783758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35572160900783757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79dc7863b85aa954eb16c273b1fd3eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeActive: 10
+  _speedMovement: 30
+  _speedRotation: 5
+  _jet: {fileID: 35572160502777342}
+  _rigidbody2D: {fileID: 35572160900783759}
+  _fixedPoint: {fileID: 4932251424888737957}
 --- !u!50 &35572160900783759
 Rigidbody2D:
   serializedVersion: 4
@@ -4860,24 +4878,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &35572160900783758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35572160900783757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79dc7863b85aa954eb16c273b1fd3eb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeActive: 1
-  _speedMovement: 3
-  _speedRotation: 3
-  _jet: {fileID: 35572160502777342}
-  _rigidbody2D: {fileID: 35572160900783759}
-  _fixedPoint: {fileID: 4932251424888737957}
 --- !u!255 &4932251424888737957
 FixedJoint2D:
   m_ObjectHideFlags: 0
@@ -4893,7 +4893,7 @@ FixedJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -4.5042458, y: -1.4344496}
+  m_ConnectedAnchor: {x: 15.378049, y: 10.416976}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!1 &35572161109363276
@@ -4906,7 +4906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 35572161109363277}
   - component: {fileID: 35572161109363278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Balonchik
   m_TagString: Untagged
   m_Icon: {fileID: 0}

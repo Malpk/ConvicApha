@@ -1,23 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &6682235142103716450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127917837326306864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a572c6137ffed34bb26ed7eab6dca29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeReload: 5
-  _amimator: {fileID: 2127917837326306861}
-  _damage: 1
-  _abillityIcon: {fileID: 21300000, guid: 8f26b97cfbb69b1479b92fa441ee0149, type: 3}
-  _hitLight: {fileID: 2127917837326306863}
-  _damageInfo: {fileID: 11400000, guid: f2edc1e8ea91c9940ad87891766279b9, type: 2}
 --- !u!60 &1847213809
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -43,11 +25,30 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.5727238, y: 0.7827969}
-      - {x: 0.43800437, y: 1.1822301}
-      - {x: 0.04798174, y: 1.3160211}
+    - - {x: 0.7926635, y: 1.2162073}
+      - {x: 0.5220989, y: 1.8355802}
+      - {x: 0.14501381, y: 2.0340593}
+      - {x: -0.15174675, y: 0.62005615}
       - {x: -0.21315807, y: -0.0309951}
       - {x: 0.38884515, y: -0.042181373}
+--- !u!114 &6682235142103716450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127917837326306864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a572c6137ffed34bb26ed7eab6dca29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeReload: 5
+  _amimator: {fileID: 2127917837326306861}
+  _damage: 1
+  _abillityIcon: {fileID: 21300000, guid: 8f26b97cfbb69b1479b92fa441ee0149, type: 3}
+  _hitLight: {fileID: 2127917837326306863}
+  _damageInfo: {fileID: 11400000, guid: f2edc1e8ea91c9940ad87891766279b9, type: 2}
 --- !u!1 &6682235142337294998
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,11 +268,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4700615114698155907, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.198
+      value: 0.262
       objectReference: {fileID: 0}
     - target: {fileID: 4700615114698155907, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.557
+      value: 0.981
       objectReference: {fileID: 0}
     - target: {fileID: 4700615114698155907, guid: b5019503feb14724abe2df7629869de3, type: 3}
       propertyPath: m_LocalRotation.w
