@@ -1,4 +1,6 @@
-﻿namespace MainMode.Items
+﻿using PlayerComponent;
+
+namespace MainMode.Items
 {
     public interface IPickable
     {

@@ -9,10 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1508249916051657481}
+  - component: {fileID: 7940611501453791253}
+  - component: {fileID: 5248901665804700726}
+  - component: {fileID: 6434691566419111399}
+  - component: {fileID: 3197224859402868958}
   - component: {fileID: 7186994230276123287}
   - component: {fileID: 8457774964675675642}
-  - component: {fileID: 7940611501453791253}
-  - component: {fileID: 3197224859402868958}
   m_Layer: 0
   m_Name: RoboMan
   m_TagString: Player
@@ -36,6 +38,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7940611501453791253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6071200334360681552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb551fa50217f14583d446ac553b718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 1
+  _playOnStart: 1
+  _colliderBody: {fileID: 8457774964675675642}
+  _shootMarker: {fileID: 5286685794489074338}
+  _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
+  _behaviour: {fileID: 4202255454810491820}
+  _contraller: {fileID: 3197224859402868958}
+  _effects: {fileID: 6434691566419111399}
+--- !u!114 &5248901665804700726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6071200334360681552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e28d340e5e2f748baa7fafd783373a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _user: {fileID: 7940611501453791253}
+  _artifact: {fileID: 0}
+  _consumablesItem: {fileID: 0}
+--- !u!114 &6434691566419111399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6071200334360681552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8634fe96883d48748b6cb533057bb792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3197224859402868958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6071200334360681552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _intractive: 32
+  _useItem: 101
+  _useAbility: 114
+  _useArtifact: 113
+  _controlledPlayer: {fileID: 7940611501453791253}
+  _inventory: {fileID: 5248901665804700726}
 --- !u!50 &7186994230276123287
 Rigidbody2D:
   serializedVersion: 4
@@ -73,40 +140,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.72, y: 0.0001}
   m_Direction: 0
---- !u!114 &7940611501453791253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6071200334360681552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb551fa50217f14583d446ac553b718, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 1
-  _colliderBody: {fileID: 8457774964675675642}
-  _shootMarker: {fileID: 5286685794489074338}
-  _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
-  _behaviour: {fileID: 4202255454810491820}
-  _contraller: {fileID: 3197224859402868958}
---- !u!114 &3197224859402868958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6071200334360681552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _intractive: 32
-  _useItem: 101
-  _useAbility: 114
-  _useArtifact: 113
 --- !u!1001 &3059563890951224078
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ namespace MainMode.Items
         }
         private void Actvate()
         {
-            user.AddEffects(_itemEffect, _timeActive);
+            user.GetComponent<PlayerEffectSet>().AddEffects(_itemEffect, _timeActive);
         }
     }
 }

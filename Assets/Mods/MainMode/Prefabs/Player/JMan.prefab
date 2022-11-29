@@ -9,11 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5905855154074085408}
+  - component: {fileID: 17747889282209598}
+  - component: {fileID: 8570854944464327659}
+  - component: {fileID: 5493241858175876540}
+  - component: {fileID: 5636653108542852590}
   - component: {fileID: 4376397878999792657}
   - component: {fileID: 8285418626986176960}
-  - component: {fileID: 17747889282209598}
-  - component: {fileID: 5636653108542852590}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: JMan
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -36,6 +38,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &17747889282209598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878755617544803847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb551fa50217f14583d446ac553b718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 5
+  _playOnStart: 1
+  _colliderBody: {fileID: 8285418626986176960}
+  _shootMarker: {fileID: 8370887693346603453}
+  _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
+  _behaviour: {fileID: 6117454944305359963}
+  _contraller: {fileID: 5636653108542852590}
+  _effects: {fileID: 5493241858175876540}
+--- !u!114 &8570854944464327659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878755617544803847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e28d340e5e2f748baa7fafd783373a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _user: {fileID: 17747889282209598}
+  _artifact: {fileID: 0}
+  _consumablesItem: {fileID: 0}
+--- !u!114 &5493241858175876540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878755617544803847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8634fe96883d48748b6cb533057bb792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5636653108542852590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878755617544803847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _intractive: 32
+  _useItem: 101
+  _useAbility: 114
+  _useArtifact: 113
+  _controlledPlayer: {fileID: 17747889282209598}
+  _inventory: {fileID: 8570854944464327659}
 --- !u!50 &4376397878999792657
 Rigidbody2D:
   serializedVersion: 4
@@ -73,40 +140,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.72, y: 0.0001}
   m_Direction: 0
---- !u!114 &17747889282209598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4878755617544803847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb551fa50217f14583d446ac553b718, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 1
-  _colliderBody: {fileID: 8285418626986176960}
-  _shootMarker: {fileID: 8370887693346603453}
-  _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
-  _behaviour: {fileID: 6117454944305359963}
-  _contraller: {fileID: 5636653108542852590}
---- !u!114 &5636653108542852590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4878755617544803847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _intractive: 32
-  _useItem: 101
-  _useAbility: 114
-  _useArtifact: 113
 --- !u!114 &6117454944305359963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,10 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa9ebc2b8f25364eb4d4aa9de25d808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fullHealth: 0
   _name: "\u0414\u0436\u041C\u044D\u043D"
   _animator: {fileID: 5364907389267234604}
-  _health:
-    _health: 5
   _playerResist:
     _defoutResistAttacks: 
     _defoutResistEffects: 

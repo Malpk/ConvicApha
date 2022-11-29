@@ -65,7 +65,7 @@ namespace MainMode.Items
                 _jet.Play();
             else
                 _jet.Stop();
-            _rigidbody2D.AddForce(direction * _speedMovement * _user.MovementEffect);
+            _rigidbody2D.AddForce(direction * _speedMovement);
             Rotate(direction, _speedRotation);
         }
         private void Rotate(Vector2 direction, float speedRotatoin)

@@ -9,10 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4379118464302002022}
+  - component: {fileID: 6852515643743883968}
+  - component: {fileID: 5236180677899480419}
+  - component: {fileID: 3383525557770925428}
+  - component: {fileID: 698372478}
   - component: {fileID: 2645185065764176851}
   - component: {fileID: 6941613872110041722}
-  - component: {fileID: 6852515643743883968}
-  - component: {fileID: 698372478}
   m_Layer: 8
   m_Name: Jeff
   m_TagString: Player
@@ -36,6 +38,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6852515643743883968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474337354283758499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb551fa50217f14583d446ac553b718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 1
+  _playOnStart: 1
+  _colliderBody: {fileID: 6941613872110041722}
+  _shootMarker: {fileID: 1737861766602982788}
+  _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
+  _behaviour: {fileID: 7723829232404067957}
+  _contraller: {fileID: 698372478}
+  _effects: {fileID: 5236180677899480419}
+--- !u!114 &5236180677899480419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474337354283758499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8634fe96883d48748b6cb533057bb792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3383525557770925428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474337354283758499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e28d340e5e2f748baa7fafd783373a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _user: {fileID: 6852515643743883968}
+  _artifact: {fileID: 0}
+  _consumablesItem: {fileID: 0}
+--- !u!114 &698372478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474337354283758499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _intractive: 32
+  _useItem: 101
+  _useAbility: 114
+  _useArtifact: 113
+  _controlledPlayer: {fileID: 6852515643743883968}
+  _inventory: {fileID: 3383525557770925428}
 --- !u!50 &2645185065764176851
 Rigidbody2D:
   serializedVersion: 4
@@ -73,40 +140,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.72, y: 0.0001}
   m_Direction: 0
---- !u!114 &6852515643743883968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3474337354283758499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb551fa50217f14583d446ac553b718, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 1
-  _colliderBody: {fileID: 6941613872110041722}
-  _shootMarker: {fileID: 1737861766602982788}
-  _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
-  _behaviour: {fileID: 7723829232404067957}
-  _contraller: {fileID: 698372478}
---- !u!114 &698372478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3474337354283758499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81078119024c9624b85572b75079261c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _intractive: 32
-  _useItem: 101
-  _useAbility: 114
-  _useArtifact: 113
 --- !u!1001 &1119300987042559433
 PrefabInstance:
   m_ObjectHideFlags: 0

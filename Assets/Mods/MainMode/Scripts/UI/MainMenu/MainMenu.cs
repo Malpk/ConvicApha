@@ -24,6 +24,7 @@ public sealed class MainMenu : UserInterface
     [SerializeField] private TextMeshProUGUI _desctiption;
 
     private Player _player;
+    private PlayerInventory _playerInventory;
     private Animator _animator;
     private HUDUI _hud;
 
@@ -39,8 +40,9 @@ public sealed class MainMenu : UserInterface
     [Inject]
     public void Construct(Player player, HUDUI hud)
     {
-        _player = player;
         _hud = hud;
+        _player = player;
+        _playerInventory = _player.GetComponent<PlayerInventory>();
     }
 
     private void OnEnable()
@@ -68,10 +70,10 @@ public sealed class MainMenu : UserInterface
             _isRun = true;
             var artifact = _artifactItemScroller.GetSelectItem().Create<Item>();
             var consumable = _consumableItemScroller.GetSelectItem().Create<ConsumablesItem>();
-            _player.PickItem(artifact);
-            _player.PickItem(consumable);
+            _playerInventory.PickItem(artifact);
+            _playerInventory.PickItem(consumable);
             var playerConfig = GetPlayerType();
-            _player.SetBehaviour(playerConfig.Create<PlayerBaseBehaviour>());
+            _player.SetBehaviour(playerConfig.Create<PlayerBaseBehaviour>(), playerConfig.MaxHealth);
             _backGround.enabled = false;
             Hide();
             if (PlayGameAction != null)

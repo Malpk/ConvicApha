@@ -60,13 +60,12 @@ namespace MainMode.GameInteface
         }
         #endregion
         #region ScreenEffect 
-        public void ShowScreenEffect(EffectType effect)
+        public void ShowScreenEffect(EffectType effect, bool mode)
         {
-            _screenSwitcher.Show(effect);
-        }
-        public void HideScreenEffect(EffectType effect)
-        {
-            _screenSwitcher.Hide(effect);
+            if(mode)
+                _screenSwitcher.Show(effect);
+            else
+                _screenSwitcher.Hide(effect);
         }
         #endregion
         public void SetAbilityIcon(Sprite sprite, bool handAbillity = true)

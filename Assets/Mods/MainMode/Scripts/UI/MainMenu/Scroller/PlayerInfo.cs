@@ -6,9 +6,8 @@ namespace MainMode.LoadScene
     [CreateAssetMenu(menuName = "UIConfigs/PlayerInfo")]
     public class PlayerInfo : ScrollItem
     {
-        [SerializeField] private PlayerType _type;
+        [SerializeField] private int _maxHealth;
 
-        public PlayerType Type => _type;
-
+        public int MaxHealth => _maxHealth;
     }
 }
