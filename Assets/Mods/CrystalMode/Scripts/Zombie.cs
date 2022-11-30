@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,6 +6,7 @@ public class Zombie : MonoBehaviour
 {
    private NavMeshAgent agent;
    public GameObject prefab;
+   [SerializeField] private GameObject crashAnimation;
 
    private void Start()
    {
@@ -36,6 +38,9 @@ public class Zombie : MonoBehaviour
    {
       ZombieSpawner zombieSpawner = GameObject.FindGameObjectWithTag("ZombieSpawner").GetComponent<ZombieSpawner>();
       zombieSpawner.SpawnEnemyVoid(20, prefab);
+
+      Instantiate(crashAnimation, transform.position, quaternion.identity);
+      
       Destroy(gameObject);
    }
    

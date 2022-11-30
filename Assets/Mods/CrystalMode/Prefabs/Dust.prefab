@@ -104,9 +104,10 @@ MonoBehaviour:
   _spriteBody: {fileID: 6051488693022938995}
   resistDuration: 0
   attackResist: {fileID: 11400000, guid: d841cb37a3e041847bc74fa737987b9f, type: 2}
-  _wallCrystalPrefab: {fileID: 2780599325777319706, guid: 779647e867d05494ab6c09a421f799ad, type: 3}
+  wallCrystalPrefab: {fileID: 2780599325777319706, guid: 779647e867d05494ab6c09a421f799ad, type: 3}
   dustAnim: {fileID: 1183736774346417609, guid: 0c85a4ccdef41a942ad501503d0b0c54, type: 3}
   blockPutParticle: {fileID: 4286512817860444515, guid: 1b93f5c8e6249754586dbea8c57ca29c, type: 3}
+  crashAnimation: {fileID: 5238043590775374329, guid: 6abade56bcbf5ca41ab31707a7ea39a4, type: 3}
 --- !u!58 &6051488693022938992
 CircleCollider2D:
   m_ObjectHideFlags: 0

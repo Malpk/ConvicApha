@@ -96,17 +96,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83250dc3a8e3da49a5fd73b69d73759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 1
+  _count: 3
   _isInfinity: 0
-  _showOnStart: 0
+  _showOnStart: 1
   _typeUse: 0
   ItemSprite: {fileID: 4858452443649745831, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 2057335158860173925}
   resistDuration: 0
   attackResist: {fileID: 11400000, guid: d841cb37a3e041847bc74fa737987b9f, type: 2}
-  _wallCrystalPrefab: {fileID: 2780599325777319706, guid: 779647e867d05494ab6c09a421f799ad, type: 3}
+  wallCrystalPrefab: {fileID: 0}
   dustAnim: {fileID: 1183736774346417609, guid: 0c85a4ccdef41a942ad501503d0b0c54, type: 3}
   blockPutParticle: {fileID: 4286512817860444515, guid: 1b93f5c8e6249754586dbea8c57ca29c, type: 3}
+  crashAnimation: {fileID: 5238043590775374329, guid: 6abade56bcbf5ca41ab31707a7ea39a4, type: 3}
 --- !u!58 &2057335158860173926
 CircleCollider2D:
   m_ObjectHideFlags: 0

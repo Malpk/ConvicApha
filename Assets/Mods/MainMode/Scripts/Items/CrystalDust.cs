@@ -9,9 +9,10 @@ namespace MainMode.Items
     [RequireComponent(typeof(CircleCollider2D))]
     public class CrystalDust : ConsumablesItem
     {
-        [SerializeField] private CrystalSheild _wallCrystalPrefab;
-        [SerializeField] GameObject dustAnim;
+        [SerializeField] private CrystalSheild wallCrystalPrefab;
+        [SerializeField] private GameObject dustAnim;
         [SerializeField] private GameObject blockPutParticle;
+        [SerializeField] private GameObject crashAnimation;
         private Tilemap wallsTileMap;
         
         private NavMeshSurface2d agentSurface;
@@ -46,6 +47,7 @@ namespace MainMode.Items
             {
                 if (hit2D.collider.gameObject.GetComponent<Zombie>())
                 {
+                    
                     hit2D.collider.gameObject.GetComponent<Zombie>().Kill();
                     return;
                 }
@@ -56,13 +58,13 @@ namespace MainMode.Items
                 fogManager.PutFog(tilePos);
                 
                 wallsTileMap.SetTile(tilePos, null);
-                Instantiate(blockPutParticle, posFrontPlayer, Quaternion.identity);
+                Instantiate(crashAnimation, posFrontPlayer, Quaternion.identity);
                 
                 agentSurface.UpdateNavMesh(agentSurface.navMeshData);
             }
             else
             {
-                Instantiate(_wallCrystalPrefab.gameObject, posFrontPlayer, Quaternion.identity, agentSurface.transform);
+                Instantiate(wallCrystalPrefab.gameObject, posFrontPlayer, Quaternion.identity, agentSurface.transform);
                 Instantiate(blockPutParticle, posFrontPlayer, Quaternion.identity);
             }
         }
