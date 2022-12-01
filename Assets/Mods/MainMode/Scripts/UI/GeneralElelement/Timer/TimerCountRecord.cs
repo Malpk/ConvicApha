@@ -33,7 +33,7 @@ namespace MainMode
         private void Update()
         {
             _progress += Time.deltaTime;
-            _timer.Output(_progress);
+            _timer.Output((int)_progress);
         }
 
     }

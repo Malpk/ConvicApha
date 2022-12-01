@@ -45,14 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc4868a2ae0ef14ca23a60cc1dbde3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 1
-  _isInfinity: 0
   _showOnStart: 1
-  _typeUse: 1
+  _isShoot: 0
   ItemSprite: {fileID: -371497704670840218, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 5679346638912946648}
-  resistDuration: 2
-  attackResist: {fileID: 0}
+  _countUse: 3
   _healValue: 2
 --- !u!212 &5679346638912946648
 SpriteRenderer:
@@ -112,7 +109,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1765191237170323312}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

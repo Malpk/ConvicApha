@@ -14,20 +14,20 @@ namespace MainMode
 
         protected virtual void OnEnable()
         {
-            _player.DeadAction += Stop;
+            _player.OnDead += Stop;
             _deadMenu.RestartAction += Play;
             _mainMenu.PlayGameAction += Play;
-            _player.DeadAction += ShowDeadMenu;
+            _player.OnDead += ShowDeadMenu;
             _deadMenu.RestartAction += ShowHud;
             _mainMenu.PlayGameAction += ShowHud;
             _deadMenu.BackMainMenuAction += BackMainMenu;
         }
         protected virtual void OnDisable()
         {
-            _player.DeadAction -= Stop;
+            _player.OnDead -= Stop;
             _deadMenu.RestartAction -= Play;
             _mainMenu.PlayGameAction -= Play;
-            _player.DeadAction -= ShowDeadMenu;
+            _player.OnDead -= ShowDeadMenu;
             _deadMenu.RestartAction -= ShowHud;
             _mainMenu.PlayGameAction -= ShowHud;
             _deadMenu.BackMainMenuAction -= BackMainMenu;

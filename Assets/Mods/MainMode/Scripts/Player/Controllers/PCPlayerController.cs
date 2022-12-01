@@ -1,16 +1,18 @@
 using UnityEngine;
+using MainMode;
 
 namespace PlayerComponent
 {
-    [RequireComponent(typeof(Player))]
-    public class PCPlayerController : MonoBehaviour, MainMode.IBlock
+    public class PCPlayerController : MonoBehaviour,IBlock
     {
         [SerializeField] private KeyCode _intractive = KeyCode.Space;
         [SerializeField] private KeyCode _useItem = KeyCode.E;
         [SerializeField] private KeyCode _useAbility = KeyCode.R;
         [SerializeField] private KeyCode _useArtifact = KeyCode.Q;
+        [Header("Reference")]
+        [SerializeField] private Player _controlledPlayer;
+        [SerializeField] private PlayerInventory _inventory;
 
-        private Player _controlledPlayer;
         private IMovement _movementSet;
 
         private void Awake()
@@ -27,12 +29,12 @@ namespace PlayerComponent
         {
             if (Input.GetKeyDown(_intractive))
                 _controlledPlayer.InteractiveWhithObject();
-            if (Input.GetKeyDown(_useItem) || Input.GetKeyDown(KeyCode.Mouse1)) 
-                _controlledPlayer.UseItem();
+            if (Input.GetKeyDown(_useItem) || Input.GetKeyDown(KeyCode.Mouse1))
+                _inventory.UseItem();
             if (Input.GetKeyDown(_useAbility)) 
                 _controlledPlayer.UseAbillity();
-            if (Input.GetKeyDown(_useArtifact) || Input.GetKeyDown(KeyCode.Mouse0)) 
-                _controlledPlayer.UseArtifact();
+            if (Input.GetKeyDown(_useArtifact) || Input.GetKeyDown(KeyCode.Mouse0))
+                _inventory.UseArtifact();
         }
         private void FixedUpdate()
         {

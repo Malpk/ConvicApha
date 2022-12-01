@@ -1,28 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-using MainMode.GameInteface;
 
-namespace MainMode
+namespace MainMode.GameInteface
 {
     public class InventoryView : MonoBehaviour,IPointerDownHandler
     {
+
+        [SerializeField] private TypeItem _typeCell;
+        [SerializeField] private Color _colorDeactivate;
+        [Header("Reference")]
         [SerializeField] private Image _imageItem;
         [SerializeField] private TextMeshProUGUI _countItems;
         [SerializeField] private TextMeshProUGUI _hotKey;
-        [SerializeField] private TypeItem _typeCell;
+
+        private Color _colorBase;
 
         public delegate void Click();
         public event Click ClickAction;
-
 
         public TypeItem CellType => _typeCell;
 
         private void Awake()
         {
+            _colorBase = _imageItem.color;
             if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
                 _hotKey.gameObject.SetActive(false);
         }

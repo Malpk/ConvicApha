@@ -2,34 +2,36 @@ using UnityEngine;
 using Zenject;
 using PlayerComponent;
 using MainMode;
-using MainMode.Items;
 using MainMode.GameInteface;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMovement
+public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
 {
+    [Min(1)]
+    [SerializeField] private int _maxHealth = 1;
     [SerializeField] private bool _playOnStart = true;
     [Header("General Setting")]
-    [SerializeField] private Collider2D _colliderBody;
     [SerializeField] private ShootMarkerView _shootMarker;
     [SerializeField] private PlayerState _state;
     [SerializeField] private PlayerBaseBehaviour _behaviour;
     [SerializeField] private PCPlayerController _contraller;
+    [SerializeField] private PlayerEffectSet _effects;
 
     private HUDUI _hud;
     private Rigidbody2D _rigidBody;
     private PlayerMovement _playerMovement = new PlayerMovement();
+
     private IPlayerComponent[] _component;
     private Transport _seedTransport;
     private Vector3 _startPosition;
-    private PlayerInventory _inventory = new PlayerInventory();
 
     private IItemInteractive _interacive = null;
 
-    public event System.Action DeadAction;
+    public event System.Action OnDead;
+    public event System.Action<int> OnSetupMaxHealth;
+    public event System.Action<int> OnUpdateHealth;
 
     public bool IsPlay { get; private set; } = false;
-    public float MovementEffect => _behaviour.MoveEffect;
     public string Name => _behaviour.Name;
     public Vector2 Position => transform.position;
 
@@ -45,26 +47,24 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
     {
         _hud = hud;
         if (_behaviour)
-            _behaviour.Intializate(this, hud);
+            _behaviour.Intializate(this, hud, _maxHealth);
     }
 
-
-    public void SetBehaviour(PlayerBaseBehaviour behaviour)
+    public void SetBehaviour(PlayerBaseBehaviour behaviour, int health)
     {
         if (_behaviour != behaviour && _behaviour)
         {
-            _behaviour.DeadAction -= DeadMessange;
             Destroy(_behaviour.gameObject);
         }
+        _maxHealth = health;
         _behaviour = behaviour;
-        _behaviour.DeadAction += DeadMessange;
-        _behaviour.Intializate(this, _hud);
+        _behaviour.Intializate(this, _hud, health);
         _behaviour.transform.parent = transform;
         _behaviour.transform.localPosition = Vector3.zero;
         _behaviour.transform.localRotation = Quaternion.Euler(Vector3.zero);;
         enabled = true;
     }
-    #region Intilizate
+
     private void OnEnable()
     {
         _behaviour.DeadAction += DeadMessange;
@@ -73,12 +73,12 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
     {
         _behaviour.DeadAction -= DeadMessange;
     }
-    #endregion
     private void Start()
     {
         _contraller.SetMovement(this);
         if (_playOnStart)
         {
+            OnSetupMaxHealth?.Invoke(_maxHealth);
             Play();
         }
     }
@@ -128,10 +128,6 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
         _seedTransport = null;
         transform.parent = null;
     }
-    public void SetImpactDamage(bool mode)
-    {
-        _colliderBody.enabled = mode;
-    }
     #endregion
     #region Change Health
     public void Explosion()
@@ -150,67 +146,35 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
         {
             if (_behaviour.TakeDamage(damage, damgeInfo))
             {
-                _hud.SetHealth(_behaviour.Health);
-                if (_behaviour.Health == 0)
-                    Explosion();
+                _effects.AddEffectDamage(damgeInfo);
+                OnUpdateHealth?.Invoke(_behaviour.Health);
+            }
+            if (_behaviour.Health == 0)
+            {
+                Explosion();
             }
         }
     }
-    public bool Heal(int value)
+    public void Heal(int value)
     {
-        return _behaviour.Heal(value);
+        if (_behaviour.Heal(value))
+            OnUpdateHealth(_behaviour.Health);
     }
     private void DeadMessange()
     {
-        if (DeadAction != null)
-            DeadAction();
+        if (OnDead != null)
+            OnDead();
     }
     #endregion
     #region Add Effects
-    public void AddEffects(MovementEffect effect,float timeActive)
-    {
-        _behaviour.AddEffects(effect, timeActive);
-    }
     public void AddResistAttack(DamageInfo damage, float timeActive)
     {
         _behaviour.AddResist(damage, timeActive);
     }
     #endregion
     #region Interactive and Useble
-    public void PickItem(Item itemUse)
-    {
-        if (itemUse is ConsumablesItem consumablesItem)
-        {
-            itemUse.Pick(this);
-            _hud.DisplayConsumableItem(consumablesItem);
-            _inventory.AddConsumablesItem(consumablesItem);
-        }
-        else
-        {
-            itemUse.Pick(this);
-            _hud.DisplayArtifact(itemUse);
-            _inventory.AddArtifact(itemUse);
-        }
-       
-    }
-    public void UseItem()
-    {
-        if (_inventory.TryGetConsumableItem(out ConsumablesItem item))
-        {
-            if(!item.Use())
-                _hud.DisplayConsumableItem(null);
-        }
-    }
-    public void UseArtifact()
-    {
-        if (_inventory.TryGetArtifact(out Item artifact))
-        {
-            if (artifact.UseType == ItemUseType.Shoot)
-                transform.rotation = Quaternion.Euler(Vector3.forward * (_shootMarker.Angel - 90));
-            if (!artifact.Use())
-                _hud.DisplayArtifact(null);
-        }
-    }
+
+
     public void UseAbillity()
     {
         var ability = _behaviour.UseAbillity();
@@ -243,16 +207,17 @@ public sealed class Player : MonoBehaviour, IAddEffects, IDamage, IResist, IMove
     {
         if (input == Vector2.zero) 
             return;
-        _rigidBody.AddForce(input * _state.SpeedMovement * _behaviour.MoveEffect, ForceMode2D.Force);
-        _rigidBody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, input), _state.SpeedMovement * _behaviour.MoveEffect * Time.deltaTime));
+        _rigidBody.AddForce(input * _state.SpeedMovement * _effects.MoveEffect, ForceMode2D.Force);
+        _rigidBody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, input), _state.SpeedMovement * _effects.MoveEffect * Time.deltaTime));
+    }
+    private void HideScreen(EffectType effect)
+    {
+        //if (effect == EffectType.Freez)
+        //    _animator.SetBool("Freez", false);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Item itemUse))
-        {
-            PickItem(itemUse);
-        }
-        else if (collision.TryGetComponent(out IItemInteractive interactive))
+        if (collision.TryGetComponent(out IItemInteractive interactive))
         {
             _interacive = interactive;
         }

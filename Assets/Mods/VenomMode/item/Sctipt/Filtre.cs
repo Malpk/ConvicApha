@@ -12,22 +12,14 @@ namespace MainMode.Mode1921
 
         public override string Name => "Фильтр";
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            UseAction += Actvate;
-        }
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            UseAction -= Actvate;
-        }
+
         public void Spawn(Vector2 position)
         {
             transform.position = position;
             ShowItem();
         }
-        private void Actvate()
+
+        protected override void UseConsumable()
         {
             if (user.TryGetComponent(out OxyGenSet oxyGen))
             {

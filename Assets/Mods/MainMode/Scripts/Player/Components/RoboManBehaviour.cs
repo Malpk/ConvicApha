@@ -25,14 +25,12 @@ namespace PlayerComponent
             _startColor = _spriteRender.color;
         }
 
-        protected override void OnEnable()
+        private void OnEnable()
         {
-            base.OnEnable();
             PlayAction += PlayRobotMan;
         }
-        protected override void OnDisable()
+        private void OnDisable()
         {
-            base.OnDisable();
             PlayAction -= PlayRobotMan;
         }
         private void PlayRobotMan()

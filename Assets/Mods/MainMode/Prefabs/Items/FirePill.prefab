@@ -46,16 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63212af733adf3342a12ae44f161ae9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 1
-  _isInfinity: 0
   _showOnStart: 1
-  _typeUse: 1
+  _isShoot: 0
   ItemSprite: {fileID: -1865053210850470564, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 6110772547576663450}
-  resistDuration: 5
-  attackResist: {fileID: 0}
-  _itemEffect: {fileID: 1006243015769520807}
+  _countUse: 3
+  _timeActivate: 3
   _fireShield: {fileID: 6580205667365473695, guid: 18a0d4f19475b074191bf01966f31618, type: 3}
+  _attackResist: {fileID: 11400000, guid: 19219e6220884ca43ae180cdaca4077a, type: 2}
 --- !u!114 &1006243015769520807
 MonoBehaviour:
   m_ObjectHideFlags: 0

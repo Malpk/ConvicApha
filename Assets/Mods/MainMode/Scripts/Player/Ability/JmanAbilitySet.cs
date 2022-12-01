@@ -58,7 +58,7 @@ namespace PlayerComponent
                 IsActive = false;
                 user.UnBlock();
                 State = ReloadUpdate;
-                user.AddEffects(_debaf, _timeActiveDebaf);
+                user.GetComponent<PlayerEffectSet>().AddEffects(_debaf, _timeActiveDebaf);
             }
             else
             {

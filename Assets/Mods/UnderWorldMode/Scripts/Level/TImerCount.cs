@@ -33,7 +33,7 @@ namespace Underworld
         private void Update()
         {
             _progress = Mathf.Clamp(_progress - Time.deltaTime, 0, _progress);
-            _timer.Output(_progress);
+            _timer.Output((int)_progress);
             if (_progress == 0 && _player.IsPlay)
             {
                 OnCompliteTimer?.Invoke();

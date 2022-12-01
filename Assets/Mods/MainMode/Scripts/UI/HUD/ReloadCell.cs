@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class AbillityEffectCell : MonoBehaviour
+public class ReloadCell : MonoBehaviour
 {
 
     [SerializeField] private Color _colorActive;
@@ -12,9 +12,10 @@ public class AbillityEffectCell : MonoBehaviour
     [SerializeField] private Animator _effects;
     [SerializeField] private TextMeshProUGUI _hotKey;
     [SerializeField] private TextMeshProUGUI _kdTimer;
-    public void Intializate(Sprite sprite, bool handAbillity)
+    public void Intializate(Sprite sprite, bool handAbillity = true)
     {
         _icon.sprite = sprite;
+        _icon.enabled = sprite;
         _hotKey.gameObject.SetActive(handAbillity);
     }
 
@@ -28,7 +29,7 @@ public class AbillityEffectCell : MonoBehaviour
     public void UpdateTime(float second)
     {
         second = Mathf.Clamp(second, 0, 99);
-        _kdTimer.text = second.ToString();
+        _kdTimer.text = ((int)second).ToString();
     }
 
 

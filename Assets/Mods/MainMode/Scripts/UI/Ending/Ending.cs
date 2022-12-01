@@ -22,13 +22,13 @@ public class Ending : UserInterface
 
     private void OnEnable()
     {
-        _player.DeadAction += Dead;
+        _player.OnDead += Dead;
         ShowAction += ShowEnding;
         HideAction += () => _canvas.enabled = false;
     }
     private void OnDisable()
     {
-        _player.DeadAction -= Dead;
+        _player.OnDead -= Dead;
         ShowAction -= ShowEnding;
         HideAction -= () => _canvas.enabled = false;
     }
@@ -61,7 +61,7 @@ public class Ending : UserInterface
 
     public void Win()
     {
-        _timer.Output(_generalTime);
+        _timer.Output((int)_generalTime);
         _countDeathText.text = ToStringNumber(_countDeadth.ToString());
         _result.text = GetMessange();
     }

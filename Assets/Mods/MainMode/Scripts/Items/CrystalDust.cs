@@ -1,6 +1,4 @@
-﻿using System;
-using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
@@ -20,19 +18,8 @@ namespace MainMode.Items
 
         public override string Name => "Кристальная пыль";
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            UseAction += UseDust;
-        }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            UseAction -= UseDust;
-        }
-
-        private void UseDust()
+        protected override void UseConsumable()
         {
             FindGameObjAtScene();
             
@@ -76,5 +63,6 @@ namespace MainMode.Items
             _player = GameObject.FindWithTag("Player").GetComponent<Player>();
             agentSurface = GameObject.FindWithTag("NavMesh").GetComponent<NavMeshSurface2d>();
         }
+
     }
 }
