@@ -6,16 +6,25 @@ namespace MainMode.Items
     {
         [Min(1)]
         [SerializeField] private int _countUse = 1;
+        [SerializeField] private bool _isInfinity = false;
 
         public int Count { get; private set; } = 1;
 
-        public override bool IsUse => Count > 0;
+        public override bool IsUse => Count > 0 || _isInfinity;
 
         public override bool Use()
         {
-            if (Count > 0)
+            if (!_isInfinity)
             {
-                Count--;
+                if (Count > 0)
+                {
+                    Count--;
+                    UseConsumable();
+                    return true;
+                }
+            }
+            else
+            {
                 UseConsumable();
                 return true;
             }

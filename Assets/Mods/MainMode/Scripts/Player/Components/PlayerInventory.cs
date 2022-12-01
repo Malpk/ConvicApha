@@ -35,7 +35,7 @@ namespace PlayerComponent
         {
             if (_consumablesItem)
             {
-                if (Use(_consumablesItem))
+                if (!Use(_consumablesItem))
                     OnUpdateConsumableItem?.Invoke(null);
             }
         }
