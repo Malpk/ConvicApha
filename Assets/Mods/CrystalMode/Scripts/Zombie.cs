@@ -25,7 +25,7 @@ public class Zombie : MonoBehaviour
    
    private void RotateToDirection()
    {
-      if (agent == null || agent.velocity == new Vector3(0,0,0) )
+      if (agent == null || agent.velocity == Vector3.zero)
       {
          return;
       }

@@ -58,7 +58,7 @@ namespace MainMode.Items
                 fogManager.PutFog(tilePos);
                 
                 wallsTileMap.SetTile(tilePos, null);
-                Instantiate(crashAnimation, posFrontPlayer, Quaternion.identity);
+                Instantiate(crashAnimation,  new Vector3((float) (tilePos.x + 0.5), (float) (tilePos.y + 0.5), 0), Quaternion.identity);
                 
                 agentSurface.UpdateNavMesh(agentSurface.navMeshData);
             }
