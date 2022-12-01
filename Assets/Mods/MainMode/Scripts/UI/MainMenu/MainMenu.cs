@@ -70,6 +70,8 @@ public sealed class MainMenu : UserInterface
             _isRun = true;
             var artifact = _artifactItemScroller.GetSelectItem().Create<Item>();
             var consumable = _consumableItemScroller.GetSelectItem().Create<ConsumablesItem>();
+            artifact.ResetState();
+            consumable.ResetState();
             _playerInventory.PickItem(artifact);
             _playerInventory.PickItem(consumable);
             var playerConfig = GetPlayerType();

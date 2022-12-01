@@ -1,27 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using MainMode.Items;
 
 namespace MainMode.GameInteface
 {
     public class InventroryUI : MonoBehaviour
     {
         [SerializeField] private InventoryView _item;
-        [SerializeField] private InventoryView _artifact;
+        [SerializeField] private ReloadCell _artifact;
 
-        public void DisplayConsumablesItem(Sprite itemIcon, int count = 0)
+        public void DisplayConsumablesItem(ConsumablesItem items)
         {
-            _item.Display(itemIcon, count);
+            if (items)
+                _item.Display(items.Sprite, items.Count);
+            else
+                _item.Display(null, 0);
         }
-        public void DisplayArtifact(Sprite itemIcon, int count = 0)
+        public void DisplayArtifact(Artifact artifact)
         {
-            _artifact.Display(itemIcon, count);
+            if (artifact)
+                _artifact.Intializate(artifact.Sprite);
+            else
+                _artifact.Intializate(null);
         }
-
-        public void DisplayInfinity(Sprite itemIcon)
+        public void DisplayReloadTime(float progress)
         {
-            _artifact.DisplayInfinity(itemIcon);
+            _artifact.UpdateTime(progress);
         }
-
+        public void UpdateStateArtefact(bool state)
+        {
+            _artifact.SetState(state);
+        }
     }
 }

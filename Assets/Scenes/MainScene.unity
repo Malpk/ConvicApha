@@ -263,6 +263,10 @@ PrefabInstance:
     - target: {fileID: 7054730912332841670, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: _scrollItems.Array.data[2]
       value: 
+      objectReference: {fileID: 11400000, guid: 0cfe671041eceac42815b50ac151cf9b, type: 2}
+    - target: {fileID: 7054730913504191838, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _scrollItems.Array.data[1]
+      value: 
       objectReference: {fileID: 11400000, guid: 8358944eb845bc24bb70f3af3f1d0823, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da666bb457dd5af4399e54305d13e342, type: 3}
@@ -800,10 +804,6 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 224122252}
-    - target: {fileID: 7146040110387634809, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ab08c37bfcfb44faf45e74561df812, type: 3}
 --- !u!1 &1132218196

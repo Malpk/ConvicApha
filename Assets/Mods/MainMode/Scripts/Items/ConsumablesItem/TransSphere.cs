@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MainMode.Items
 {
-    public class TransSphere : ConsumablesItem
+    public class TransSphere : Artifact
     {
         [Header("Setting")]
         [SerializeField] private int _unitDistance;
@@ -10,17 +10,7 @@ namespace MainMode.Items
 
         public override string Name => "Транссфера";
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            UseAction += Actvate;
-        }
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            UseAction -= Actvate;
-        }
-        private void Actvate()
+        protected override void UseArtifact()
         {
             var point = Instantiate(_point.gameObject, user.transform.position, user.transform.rotation).
                 GetComponent<TransSpherePoint>();

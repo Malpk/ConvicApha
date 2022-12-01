@@ -11,20 +11,24 @@ public class PlayerUIBinder : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.OnSetupMaxHealth += _hud.SetHealthPoint;
         _player.OnUpdateHealth += _hud.SetHealth;
+        _player.OnSetupMaxHealth += _hud.SetHealthPoint;
         _effectSet.OnUpdateScreen += _hud.ShowScreenEffect;
-        _inventory.OnUpdateArtefacct += _hud.DisplayArtifact;
         _inventory.OnUpdateConsumableItem += _hud.DisplayConsumableItem;
+        _inventory.OnUpdateArtefact += _hud.DisplayArtifact;
+        _inventory.OnUpdateStateArtefact += _hud.UpdateArtifactState;
+        _inventory.OnUpdateReloadArtefact += _hud.UpdateReloadArtifact;
     }
 
     private void OnDisable()
     {
-        _player.OnSetupMaxHealth -= _hud.SetHealthPoint;
         _player.OnUpdateHealth -= _hud.SetHealth;
-        _inventory.OnUpdateArtefacct -= _hud.DisplayArtifact;
-        _inventory.OnUpdateConsumableItem -= _hud.DisplayConsumableItem;
+        _player.OnSetupMaxHealth -= _hud.SetHealthPoint;
         _effectSet.OnUpdateScreen -= _hud.ShowScreenEffect;
+        _inventory.OnUpdateConsumableItem -= _hud.DisplayConsumableItem;
+        _inventory.OnUpdateArtefact -= _hud.DisplayArtifact;
+        _inventory.OnUpdateStateArtefact -= _hud.UpdateArtifactState;
+        _inventory.OnUpdateReloadArtefact -= _hud.UpdateReloadArtifact;
     }
 
 }

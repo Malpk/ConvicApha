@@ -1,44 +1,64 @@
 using UnityEngine;
 using MainMode.Items;
+using MainMode.GameInteface;
 
 namespace PlayerComponent
 {
     public class PlayerInventory : MonoBehaviour
     {
-        [SerializeField] private Player _user;
-        [SerializeField] private Item _artifact;
+        [SerializeField] private Artifact _artifact;
         [SerializeField] private ConsumablesItem _consumablesItem;
+        [Header("Reference")]
+        [SerializeField] private Player _user;
+        [SerializeField] private ShootMarkerView _shootMarker;
 
-        public event System.Action<Item> OnUpdateArtefacct;
+        public System.Func<bool> UpdateState;
+        public event System.Action<Artifact> OnUpdateArtefact;
         public event System.Action<ConsumablesItem> OnUpdateConsumableItem;
+        public event System.Action<float> OnUpdateReloadArtefact;
+        public event System.Action<bool> OnUpdateStateArtefact;
 
+        private void Start()
+        {
+            enabled = false;
+        }
+        private void Update()
+        {
+            OnUpdateReloadArtefact?.Invoke(_artifact.Reloading());
+            if (_artifact.IsUse)
+            {
+                OnUpdateStateArtefact?.Invoke(true);
+                enabled = false;
+            }
+        }
         public void UseItem()
         {
             if (_consumablesItem)
             {
-                if (_consumablesItem.Count > 0)
-                {
-                    _consumablesItem.Use();
-                }
-                else
-                {
+                if (Use(_consumablesItem))
                     OnUpdateConsumableItem?.Invoke(null);
-                }
             }
         }
         public void UseArtifact()
         {
             if (_artifact)
             {
-                if (_artifact.Count > 0)
+                if (!Use(_artifact))
                 {
-                    _artifact.Use();
-                }
-                else
-                {
-                    OnUpdateArtefacct?.Invoke(null);
+                    OnUpdateStateArtefact?.Invoke(false);
+                    enabled = true;
                 }
             }
+        }
+        private bool Use(Item item)
+        {
+            if (item.IsUse)
+            {
+                item.Use();
+                if(item.IsShoot)
+                    _user.transform.rotation = Quaternion.Euler(Vector3.forward * _shootMarker.Angel);
+            }
+            return item.IsUse;
         }
         public void PickItem(Item itemUse)
         {
@@ -46,11 +66,11 @@ namespace PlayerComponent
             {
                 AddConsumablesItem(consumablesItem);
             }
-            else
+            else if(itemUse is Artifact artifact)
             {
-                AddArtifact(itemUse);
+                AddArtifact(artifact);
+                OnUpdateStateArtefact?.Invoke(true);
             }
-
         }
         public void AddConsumablesItem(ConsumablesItem item)
         {
@@ -62,13 +82,13 @@ namespace PlayerComponent
             }
         }
 
-        public void AddArtifact(Item artifact)
+        public void AddArtifact(Artifact artifact)
         {
             if (artifact)
             {
                 artifact.Pick(_user);
                 _artifact = artifact;
-                OnUpdateArtefacct?.Invoke(artifact);
+                OnUpdateArtefact?.Invoke(artifact);
             }
         }
         private void OnTriggerEnter2D(Collider2D collision)

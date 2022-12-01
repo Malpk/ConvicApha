@@ -46,12 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235cb35c8be5eaa41835bd32b71466ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _count: 1
-  _isInfinity: 0
   _showOnStart: 1
-  _typeUse: 1
+  _isShoot: 0
   ItemSprite: {fileID: 7397371678690673091, guid: 6d1114fec9b026649b806df4700d3c65, type: 3}
   _spriteBody: {fileID: 5646093357982817819}
+  _timeReload: 10
   _timeActive: 15
   _jetAir: {fileID: 8301747081831248319}
 --- !u!212 &5646093357982817819
@@ -175,6 +174,14 @@ PrefabInstance:
     - target: {fileID: 35572162351270275, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932251424888737957, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -10.497621
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932251424888737957, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -3.4132688
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 187df87c427c0e842b98ad317ea69630, type: 3}

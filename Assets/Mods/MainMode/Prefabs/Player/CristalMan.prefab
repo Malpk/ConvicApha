@@ -52,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 1
   _playOnStart: 1
-  _colliderBody: {fileID: 3466869167926696637}
   _shootMarker: {fileID: 1723717133399928897}
   _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   _behaviour: {fileID: 3676505154887046409}
@@ -70,9 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e28d340e5e2f748baa7fafd783373a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _user: {fileID: 5141724583961316163}
   _artifact: {fileID: 0}
   _consumablesItem: {fileID: 0}
+  _user: {fileID: 5141724583961316163}
+  _shootMarker: {fileID: 1723717133399928897}
 --- !u!114 &4223389376391528580
 MonoBehaviour:
   m_ObjectHideFlags: 0

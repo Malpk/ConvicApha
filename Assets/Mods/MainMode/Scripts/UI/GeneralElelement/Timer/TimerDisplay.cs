@@ -7,7 +7,7 @@ public class TimerDisplay : MonoBehaviour
 
     private int _minute = 60;
 
-    public void Output(float value)
+    public void Output(int value)
     {
         _text.text = $"{GetValue(value / _minute) }:{GetValue(value % _minute)}";
     }

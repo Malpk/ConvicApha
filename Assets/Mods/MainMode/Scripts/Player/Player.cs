@@ -11,7 +11,6 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
     [SerializeField] private int _maxHealth = 1;
     [SerializeField] private bool _playOnStart = true;
     [Header("General Setting")]
-    [SerializeField] private Collider2D _colliderBody;
     [SerializeField] private ShootMarkerView _shootMarker;
     [SerializeField] private PlayerState _state;
     [SerializeField] private PlayerBaseBehaviour _behaviour;
@@ -28,7 +27,7 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
 
     private IItemInteractive _interacive = null;
 
-    public event System.Action DeadAction;
+    public event System.Action OnDead;
     public event System.Action<int> OnSetupMaxHealth;
     public event System.Action<int> OnUpdateHealth;
 
@@ -66,7 +65,14 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
         enabled = true;
     }
 
-
+    private void OnEnable()
+    {
+        _behaviour.DeadAction += DeadMessange;
+    }
+    private void OnDisable()
+    {
+        _behaviour.DeadAction -= DeadMessange;
+    }
     private void Start()
     {
         _contraller.SetMovement(this);
@@ -122,10 +128,6 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
         _seedTransport = null;
         transform.parent = null;
     }
-    public void SetImpactDamage(bool mode)
-    {
-        _colliderBody.enabled = mode;
-    }
     #endregion
     #region Change Health
     public void Explosion()
@@ -147,7 +149,7 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
                 _effects.AddEffectDamage(damgeInfo);
                 OnUpdateHealth?.Invoke(_behaviour.Health);
             }
-            else if (_behaviour.Health == 0)
+            if (_behaviour.Health == 0)
             {
                 Explosion();
             }
@@ -160,8 +162,8 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
     }
     private void DeadMessange()
     {
-        if (DeadAction != null)
-            DeadAction();
+        if (OnDead != null)
+            OnDead();
     }
     #endregion
     #region Add Effects

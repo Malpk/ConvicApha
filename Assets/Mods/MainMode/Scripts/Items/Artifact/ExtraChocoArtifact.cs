@@ -3,7 +3,7 @@ using PlayerComponent;
 
 namespace MainMode.Items
 {
-    public class ExtraChocoArtifact : Item
+    public class ExtraChocoArtifact : ConsumablesItem
     {
         [Header("Time Active")]
         [Min(1)]
@@ -13,17 +13,7 @@ namespace MainMode.Items
 
         public override string Name => "Шоколадка";
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            UseAction += Actvate;
-        }
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            UseAction -= Actvate;
-        }
-        private void Actvate()
+        protected override void UseConsumable()
         {
             user.GetComponent<PlayerEffectSet>().AddEffects(_itemEffect, _timeActive);
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PlayerComponent
 {
-    public class PlayerEffectSet : MonoBehaviour, IAddEffects
+    public class PlayerEffectSet : MonoBehaviour, IAddEffects, IPlayerComponent
     {
         private PlayerContainer<DamageInfo> _playerDamageEffectContainer = new PlayerContainer<DamageInfo>();
         private MovementEffectContainer _playerEffectContainer = new MovementEffectContainer();
@@ -32,7 +32,11 @@ namespace PlayerComponent
             _playerEffectContainer.Add(effect, timeActive);
             OnUpdateScreen?.Invoke(effect.Effect, true);
         }
-
+        public void Play()
+        {
+            _playerEffectContainer.Reset();
+            _playerDamageEffectContainer.Reset();
+        }
         public void AddEffectDamage(DamageInfo damage)
         {
             _playerDamageEffectContainer.Add(damage, damage.TimeEffect);
@@ -43,5 +47,7 @@ namespace PlayerComponent
         {
             OnUpdateScreen?.Invoke(effect, false);
         }
+
+
     }
 }

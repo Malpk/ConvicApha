@@ -8,7 +8,7 @@ namespace MainMode.GameInteface
         [SerializeField] private Canvas _canvas;
         [SerializeField] private HealthUI _healthUI;
         [SerializeField] private InventroryUI _inventoryUI;
-        [SerializeField] private AbillityEffectCell _abilityCell;
+        [SerializeField] private ReloadCell _abilityCell;
         [SerializeField] private SwitchScreenEffectUI _screenSwitcher;
 
         private void OnEnable()
@@ -33,30 +33,21 @@ namespace MainMode.GameInteface
         }
         #endregion
         #region Invetrory
-        public void DisplayArtifact(Item item)
+        public void DisplayArtifact(Artifact artifact)
         {
-            if (item)
-            {
-                if (!item.IsInfinity)
-                    _inventoryUI.DisplayArtifact(item.Sprite, item.Count);
-                else
-                    _inventoryUI.DisplayInfinity(item.Sprite);
-            }
-            else
-            {
-                _inventoryUI.DisplayArtifact(null);
-            }
+            _inventoryUI.DisplayArtifact(artifact);
         }
-        public void DisplayConsumableItem(Item item)
+        public void UpdateReloadArtifact(float progress)
         {
-            if (item)
-            {
-                _inventoryUI.DisplayConsumablesItem(item.Sprite, item.Count);
-            }
-            else
-            {
-                _inventoryUI.DisplayConsumablesItem(null);
-            }
+            _inventoryUI.DisplayReloadTime(progress);
+        }
+        public void UpdateArtifactState(bool state)
+        {
+            _inventoryUI.UpdateStateArtefact(state);
+        }
+        public void DisplayConsumableItem(ConsumablesItem item)
+        {
+            _inventoryUI.DisplayConsumablesItem(item);
         }
         #endregion
         #region ScreenEffect 
