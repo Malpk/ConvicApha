@@ -26,6 +26,8 @@ public class FlyerAttack : StateMachineBehaviour
         {
             animator.SetBool("Chase", true);
         }
+        
+        animator.transform.LookAt2D(player, -animator.transform.up);
 
         if (timeSinceAttack > attackCoolDown)
         {

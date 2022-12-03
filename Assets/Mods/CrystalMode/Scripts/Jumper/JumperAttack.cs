@@ -48,10 +48,9 @@ public class JumperAttack : StateMachineBehaviour
             animator.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             
             wasDealDamage = true;
-            Debug.Log("attacked");
             player.GetComponent<Player>().TakeDamage(damageValue, attackInfo);
         }
-        
+
         if (wasInPlayer)
         {
             i += Time.deltaTime;

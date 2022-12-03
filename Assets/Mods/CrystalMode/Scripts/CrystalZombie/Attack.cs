@@ -24,7 +24,8 @@ public class Attack : StateMachineBehaviour
         {
             animator.SetBool("Chase", true);
         }
-
+        animator.transform.LookAt2D(player, -animator.transform.up);
+        
         if (time > attackCoolDown)
         {
             time = 0;
