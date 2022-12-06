@@ -10,7 +10,7 @@ namespace MainMode.GameInteface
         [SerializeField] private string _name;
         [SerializeField] private string _desctiption;
 
-        private GameObject _asset;
+        protected GameObject asset;
 
         public Sprite ItemImage => _itemImage;
         public string Name => _name;
@@ -18,18 +18,18 @@ namespace MainMode.GameInteface
 
         public T Create<T>() where T : MonoBehaviour
         {
-            if (_asset)
+            if (asset)
             {
-                _asset.SetActive(true);
-                return _asset.GetComponent<T>();
+                asset.SetActive(true);
+                return asset.GetComponent<T>();
             }
-            _asset = Instantiate(_perfab);
-            return _asset.GetComponent<T>();
+            asset = Instantiate(_perfab);
+            return asset.GetComponent<T>();
         }
 
         public void Delete()
         {
-            _asset.SetActive(false);
+            asset.SetActive(false);
         }
 
     }

@@ -5,12 +5,11 @@ using MainMode.GameInteface;
 
 namespace PlayerComponent
 {
-    public class RobotManAbilitySet : PlayerAbillityUseSet
+    public class RobotManAbilitySet : AbillityActiveSet
     {
         [SerializeField] private Animator _amimator;
         [Header("Damage")]
         [SerializeField] private int _damage;
-        [SerializeField] private Sprite _abillityIcon;
         [SerializeField] private Transform _hitLight;
         [SerializeField] private DamageInfo _damageInfo;
 
@@ -21,17 +20,6 @@ namespace PlayerComponent
         private void Awake()
         {
             _parent = transform.parent;
-        }
-
-        public override void SetHud(HUDUI hud)
-        {
-            base.SetHud(hud);
-            hud.SetAbilityIcon(_abillityIcon);
-        }
-
-        private void Update()
-        {
-            ReloadUpdate();
         }
         protected override void UseAbility()
         {

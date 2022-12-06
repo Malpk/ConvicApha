@@ -252,6 +252,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.338
       objectReference: {fileID: 0}
+    - target: {fileID: 6404714896275012096, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _binderUI
+      value: 
+      objectReference: {fileID: 2133442645}
+    - target: {fileID: 6404714896275012096, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _gameSwitcher
+      value: 
+      objectReference: {fileID: 263747030}
     - target: {fileID: 7054730912332841670, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: _scrollItems.Array.size
       value: 3
@@ -1337,9 +1345,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hud: {fileID: 1447055468}
-  _player: {fileID: 1720424852}
+  _player: {fileID: 0}
   _inventory: {fileID: 103602969}
   _effectSet: {fileID: 103602970}
+  _abillity: {fileID: 0}
 --- !u!4 &2133442646
 Transform:
   m_ObjectHideFlags: 0

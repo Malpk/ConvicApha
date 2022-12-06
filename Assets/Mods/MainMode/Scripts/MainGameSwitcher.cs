@@ -1,6 +1,5 @@
 using UnityEngine;
 using Zenject;
-using MainMode.GameInteface;
 
 namespace MainMode
 {

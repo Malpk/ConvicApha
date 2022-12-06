@@ -1,9 +1,5 @@
-using MainMode.GameInteface;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-
 
 namespace MainMode.Mode1921
 {
@@ -76,8 +72,8 @@ namespace MainMode.Mode1921
                     progress += Time.deltaTime / _hitDelay;
                     yield return null;
                 }
-                if (_curretAirSupply <= 0)
-                    _player.TakeDamage(_damage, _hitAttack);
+                //if (_curretAirSupply <= 0)
+                //    _player.TakeDamage(_damage, _hitAttack);
             }
         }
         public void ChangeFitre(Filtre filltre)
@@ -105,6 +101,11 @@ namespace MainMode.Mode1921
         public void UnBlock()
         {
             _isBlock = false;
+        }
+
+        public void Stop()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

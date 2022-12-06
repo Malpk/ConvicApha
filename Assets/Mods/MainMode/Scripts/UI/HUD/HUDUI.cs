@@ -27,7 +27,7 @@ namespace MainMode.GameInteface
         {
             _healthUI.SetupHelth(health);
         }
-        public void SetHealth(int health)
+        public void UpdateHealth(int health)
         {
             _healthUI.Display(health);
         }
@@ -59,15 +59,15 @@ namespace MainMode.GameInteface
                 _screenSwitcher.Hide(effect);
         }
         #endregion
-        public void SetAbilityIcon(Sprite sprite, bool handAbillity = true)
+        public void UpdateAbilityIcon(Sprite sprite, bool handAbillity = true)
         {
             _abilityCell.Intializate(sprite, handAbillity);
         }
-        public void DisplayStateAbillity(bool mode)
+        public void UpdateStateAbillity(bool mode)
         {
             _abilityCell.SetState(mode);
         }
-        public void UpdateAbillityKdTimer(float second)
+        public void UpdateRelodingAbillity(float second)
         {
             _abilityCell.UpdateTime(second);
         }

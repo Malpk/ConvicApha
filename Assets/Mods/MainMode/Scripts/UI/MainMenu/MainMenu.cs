@@ -8,6 +8,7 @@ using PlayerComponent;
 using MainMode.Items;
 using System;
 using TMPro;
+using MainMode;
 
 public sealed class MainMenu : UserInterface
 {
@@ -22,11 +23,12 @@ public sealed class MainMenu : UserInterface
     [SerializeField] private ItemScroller _consumableItemScroller;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _desctiption;
+    [SerializeField] private GameSwitcher _gameSwitcher;
+    [SerializeField] private PlayerUIBinder _binderUI;
 
     private Player _player;
     private PlayerInventory _playerInventory;
     private Animator _animator;
-    private HUDUI _hud;
 
     private bool _isRun = false;
 
@@ -38,9 +40,8 @@ public sealed class MainMenu : UserInterface
         ShowEvent();
     }
     [Inject]
-    public void Construct(Player player, HUDUI hud)
+    public void Construct(Player player)
     {
-        _hud = hud;
         _player = player;
         _playerInventory = _player.GetComponent<PlayerInventory>();
     }
@@ -75,13 +76,21 @@ public sealed class MainMenu : UserInterface
             _playerInventory.PickItem(artifact);
             _playerInventory.PickItem(consumable);
             var playerConfig = GetPlayerType();
-            _player.SetBehaviour(playerConfig.Create<PlayerBaseBehaviour>(), playerConfig.MaxHealth);
+            var player = playerConfig.Create<PlayerBehaviour>();
+            var abillity = playerConfig.AddAbillity();
+            _binderUI.UnBindAbillityUI();
+            _binderUI.UnBindHealthPlayerUI();
+            _binderUI.BindHealthPlayerUI(player);
+            _binderUI.BindAbillityUI(abillity);
+            _gameSwitcher.SetPlayerBehaviour(player);
+            _player.SetBehaviour(player);
+            _player.SetAbillity(abillity);
             _backGround.enabled = false;
             Hide();
             if (PlayGameAction != null)
                 PlayGameAction();
             if(_ending)
-                _ending.SetUseItems(artifact.Name , consumable.Name, _player.Name);
+                _ending.SetUseItems(artifact.Name , consumable.Name, playerConfig.Name);
         }
     }
 

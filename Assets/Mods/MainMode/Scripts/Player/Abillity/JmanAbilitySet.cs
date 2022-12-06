@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PlayerComponent
 {
-    public class JmanAbilitySet : PlayerAbillityUseSet
+    public class JmanAbilitySet : AbillityActiveSet
     {
         [Header("Ability")]
         [Min(0.1f)]
@@ -12,39 +12,25 @@ namespace PlayerComponent
         [SerializeField] private float _distance = 1;
         [SerializeField] private float _timeActiveDebaf;
         [SerializeField] private LayerMask _wallLayer;
-        [SerializeField] private Sprite _abillityIcon;
         [SerializeField] private MovementEffect _debaf;
         [SerializeField] private AnimationCurve _jerkCurve;
-
+        [Header("Reference")]
+        [SerializeField] private Collider2D _playerBody;
+        
         private Vector2 _startPosition;
         private Vector2 _jerkForce;
-
-        public System.Action State;
-
-        private void Awake()
-        {
-            enabled = false; 
-        }
-        public override void SetHud(HUDUI hud)
-        {
-            base.SetHud(hud);
-            hud.SetAbilityIcon(_abillityIcon);
-        }
-        private void FixedUpdate()
-        {
-            State();
-        }
 
         protected override void UseAbility()
         {
             user.Block();
             _progress = 0f;
+            _playerBody.enabled = false;
             SetReloadState(true);
-            hud.DisplayStateAbillity(false);
-                enabled = true;
+            enabled = true;
             _jerkForce = user.transform.up * _distance;
             _startPosition = user.transform.position;
             State = JerkUpdate;
+            user.Invulnerability(true);
         }
         private void JerkUpdate()
         {
@@ -57,15 +43,15 @@ namespace PlayerComponent
                 _progress = 0f;
                 IsActive = false;
                 user.UnBlock();
-                State = ReloadUpdate;
+                State = Reloading;
                 user.GetComponent<PlayerEffectSet>().AddEffects(_debaf, _timeActiveDebaf);
+                _playerBody.enabled = true;
+                user.Invulnerability(false);
             }
             else
             {
                 user.MoveToPosition(move);
             }
         }
-
-
     }
 }

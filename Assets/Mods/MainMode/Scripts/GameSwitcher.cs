@@ -12,27 +12,36 @@ namespace MainMode
 
         [SerializeField] protected HUDUI hud;
 
+        private PlayerBehaviour _behaviour;
+
         protected virtual void OnEnable()
         {
-            _player.OnDead += Stop;
             _deadMenu.RestartAction += Play;
             _mainMenu.PlayGameAction += Play;
-            _player.OnDead += ShowDeadMenu;
             _deadMenu.RestartAction += ShowHud;
             _mainMenu.PlayGameAction += ShowHud;
             _deadMenu.BackMainMenuAction += BackMainMenu;
         }
         protected virtual void OnDisable()
         {
-            _player.OnDead -= Stop;
             _deadMenu.RestartAction -= Play;
             _mainMenu.PlayGameAction -= Play;
-            _player.OnDead -= ShowDeadMenu;
             _deadMenu.RestartAction -= ShowHud;
             _mainMenu.PlayGameAction -= ShowHud;
             _deadMenu.BackMainMenuAction -= BackMainMenu;
         }
 
+        public void SetPlayerBehaviour(PlayerBehaviour behaviour)
+        {
+            if (_behaviour)
+            {
+                _behaviour.OnDead.RemoveListener(Stop);
+                _behaviour.OnDead.RemoveListener(ShowDeadMenu);
+            }
+            _behaviour = behaviour;
+            _behaviour.OnDead.AddListener(Stop);
+            _behaviour.OnDead.AddListener(ShowDeadMenu);
+        }
         protected void Play()
         {
             _player.Play();

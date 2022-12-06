@@ -4,7 +4,7 @@ using PlayerComponent;
 public class AutoPlayerUIBinder : MonoBehaviour
 {
     [SerializeField] private PlayerUIBinder _binder;
-    [SerializeField] private PlayerBaseBehaviour _playerBehaviour;
+    [SerializeField] private PlayerBehaviour _playerBehaviour;
    
     private void Start()
     {

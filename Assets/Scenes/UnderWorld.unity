@@ -408,6 +408,14 @@ PrefabInstance:
       propertyPath: _ending
       value: 
       objectReference: {fileID: 1492693437}
+    - target: {fileID: 6404714896275012096, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _binderUI
+      value: 
+      objectReference: {fileID: 1727114304}
+    - target: {fileID: 6404714896275012096, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: _gameSwitcher
+      value: 
+      objectReference: {fileID: 1176757498}
     - target: {fileID: 7054730912332841670, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: _scrollItems.Array.size
       value: 3
@@ -1131,9 +1139,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hud: {fileID: 1898406608}
-  _player: {fileID: 1315320885}
+  _player: {fileID: 0}
   _inventory: {fileID: 1064575354}
   _effectSet: {fileID: 1064575353}
+  _abillity: {fileID: 0}
 --- !u!4 &1727114305
 Transform:
   m_ObjectHideFlags: 0

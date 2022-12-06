@@ -22,13 +22,11 @@ public class Ending : UserInterface
 
     private void OnEnable()
     {
-        _player.OnDead += Dead;
         ShowAction += ShowEnding;
         HideAction += () => _canvas.enabled = false;
     }
     private void OnDisable()
     {
-        _player.OnDead -= Dead;
         ShowAction -= ShowEnding;
         HideAction -= () => _canvas.enabled = false;
     }

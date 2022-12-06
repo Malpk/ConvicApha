@@ -18,9 +18,9 @@ namespace MainMode.Items
         [SerializeField] private FixedJoint2D _fixedPoint;
 
         private float _progress;
-        private Player _user;
         private Transform _parent;
-        private PCPlayerController _controller;
+
+        public override bool IsActive => _progress < 1f;
 
         private void Awake()
         {
@@ -32,35 +32,26 @@ namespace MainMode.Items
             _timeActive = timeActive;
         }
 
-        public override void Enter(Player player, Rigidbody2D body, PCPlayerController controller)
+        public override void Enter(Rigidbody2D body)
         {
-            enabled = true;
-            _controller = controller;
-            _controller.SetMovement(this);
-            _fixedPoint.connectedBody = body;
             _jet.Play();
-            _user = player;
+            enabled = true;
+            _fixedPoint.connectedBody = body;
+            _progress = 0f;
             _parent = transform.parent;
             transform.parent = null;
         }
         public override void Exit()
         {
-            enabled = false;
             _jet.Stop();
-            _user.ExitToTransport();
-            _controller.SetMovement(_user);
+            enabled = false;
             _fixedPoint.connectedBody = null;
             gameObject.SetActive(false);
             transform.parent = _parent;
         }
-        private void Update()
-        {
-            _progress += Time.deltaTime / _timeActive;
-            if (_progress >= 1f)
-                Exit();
-        }
         public override void Move(Vector2 direction)
         {
+            _progress += Time.deltaTime / _timeActive;
             if (direction != Vector2.zero)
                 _jet.Play();
             else

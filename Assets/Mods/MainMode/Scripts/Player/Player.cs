@@ -1,86 +1,64 @@
 using UnityEngine;
-using Zenject;
 using PlayerComponent;
-using MainMode;
-using MainMode.GameInteface;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
+public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
 {
-    [Min(1)]
-    [SerializeField] private int _maxHealth = 1;
     [SerializeField] private bool _playOnStart = true;
     [Header("General Setting")]
-    [SerializeField] private ShootMarkerView _shootMarker;
-    [SerializeField] private PlayerState _state;
-    [SerializeField] private PlayerBaseBehaviour _behaviour;
+    [SerializeField] private PlayerBehaviour _behaviour;
     [SerializeField] private PCPlayerController _contraller;
     [SerializeField] private PlayerEffectSet _effects;
+    [SerializeField] private PlayerMovementSet _movement;
 
-    private HUDUI _hud;
-    private Rigidbody2D _rigidBody;
-    private PlayerMovement _playerMovement = new PlayerMovement();
+    private IPlayerComponent[] _components;
 
-    private IPlayerComponent[] _component;
-    private Transport _seedTransport;
-    private Vector3 _startPosition;
-
-    private IItemInteractive _interacive = null;
-
-    public event System.Action OnDead;
-    public event System.Action<int> OnSetupMaxHealth;
-    public event System.Action<int> OnUpdateHealth;
+    private AbilityPassiveSet _pasiveAbillity;
 
     public bool IsPlay { get; private set; } = false;
-    public string Name => _behaviour.Name;
     public Vector2 Position => transform.position;
 
     private void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody2D>();
-        _startPosition = transform.position;
-        _playerMovement.Intializate(this, _rigidBody);
-        _component = GetComponents<IPlayerComponent>();
-    }
-    [Inject]
-    public void Construct(HUDUI hud)
-    {
-        _hud = hud;
-        if (_behaviour)
-            _behaviour.Intializate(this, hud, _maxHealth);
+        _components = GetComponents<IPlayerComponent>();
     }
 
-    public void SetBehaviour(PlayerBaseBehaviour behaviour, int health)
+    public void SetBehaviour(PlayerBehaviour behaviour)
     {
         if (_behaviour != behaviour && _behaviour)
         {
+            _behaviour.OnDead.RemoveListener(Explosion);
             Destroy(_behaviour.gameObject);
         }
-        _maxHealth = health;
         _behaviour = behaviour;
-        _behaviour.Intializate(this, _hud, health);
         _behaviour.transform.parent = transform;
         _behaviour.transform.localPosition = Vector3.zero;
-        _behaviour.transform.localRotation = Quaternion.Euler(Vector3.zero);;
+        _behaviour.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        _behaviour.OnDead.AddListener(Explosion);
         enabled = true;
     }
-
-    private void OnEnable()
+    public void SetAbillity(PlayerBaseAbillitySet set)
     {
-        _behaviour.DeadAction += DeadMessange;
-    }
-    private void OnDisable()
-    {
-        _behaviour.DeadAction -= DeadMessange;
+        set.SetUser(this);
+        if (set is AbillityActiveSet active)
+        {
+            _contraller.SetAbillity(active);
+            _pasiveAbillity = null;
+        }
+        else if (set is AbilityPassiveSet passive)
+        {
+            _pasiveAbillity = passive;
+            _contraller.SetAbillity(null);
+        }
+        else
+        {
+            _pasiveAbillity = null;
+            _contraller.SetAbillity(null);
+        }
     }
     private void Start()
     {
-        _contraller.SetMovement(this);
         if (_playOnStart)
-        {
-            OnSetupMaxHealth?.Invoke(_maxHealth);
             Play();
-        }
     }
     private void Update()
     {
@@ -92,15 +70,15 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
         if (!IsPlay)
         {
             IsPlay = true;
-            transform.position = _startPosition;
-            _rigidBody.rotation = 0;
-            foreach (var component in _component)
+            foreach (var component in _components)
             {
                 component.Play();
             }
             _behaviour.gameObject.SetActive(true);
             _behaviour.Play();
             UnBlock();
+            if(_pasiveAbillity)
+                _pasiveAbillity.Activate();
         }
     }
 
@@ -108,6 +86,8 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
     {
         _behaviour.Stop();
         _behaviour.gameObject.SetActive(false);
+        if (_pasiveAbillity)
+            _pasiveAbillity.Deactivate();
     }
     public void Block()
     {
@@ -118,117 +98,56 @@ public sealed class Player : MonoBehaviour, IDamage, IResist, IMovement
     {
         _contraller.UnBlock();
     }
-    public void EnterToTransport(Transport transport)
+    #endregion
+
+    public void Explosion()
     {
-        _seedTransport = transport;
-        transport.Enter(this, _rigidBody, _contraller);
+        _behaviour.Explosion();
+    }
+    public void Heal(int heal)
+    {
+        _behaviour.Heal(heal);
+    }
+    public void MoveToPosition(Vector2 position)
+    {
+        _movement.MoveToPosition(position);
+    }
+    public void TakeDamage(int damage, DamageInfo damageInfo)
+    {
+        if (_behaviour.TakeDamage(damage, damageInfo))
+        {
+            if (_behaviour.Health > 0)
+                _effects.AddEffectDamage(damageInfo);
+            else
+                Block();
+        }
+    }
+
+    public void AddEffects(MovementEffect effects, float timeActive)
+    {
+        _effects.AddEffects(effects, timeActive);
+    }
+
+    public void AddResistAttack(DamageInfo damage, float timeActive)
+    {
+        _behaviour.AddResistAttack(damage, timeActive);
     }
     public void ExitToTransport()
     {
-        _seedTransport = null;
-        transform.parent = null;
+        _movement.ExitToTransport();
     }
-    #endregion
-    #region Change Health
-    public void Explosion()
+    public void EnterToTransport(Transport transport)
     {
-        if (IsPlay)
-        {
-            IsPlay = false;
-            Block();
-            _behaviour.Dead();
-            _rigidBody.velocity = Vector2.zero;
-        }
-    }
-    public void TakeDamage(int damage, DamageInfo damgeInfo)
-    {
-        if (IsPlay)
-        {
-            if (_behaviour.TakeDamage(damage, damgeInfo))
-            {
-                _effects.AddEffectDamage(damgeInfo);
-                OnUpdateHealth?.Invoke(_behaviour.Health);
-            }
-            if (_behaviour.Health == 0)
-            {
-                Explosion();
-            }
-        }
-    }
-    public void Heal(int value)
-    {
-        if (_behaviour.Heal(value))
-            OnUpdateHealth(_behaviour.Health);
-    }
-    private void DeadMessange()
-    {
-        if (OnDead != null)
-            OnDead();
-    }
-    #endregion
-    #region Add Effects
-    public void AddResistAttack(DamageInfo damage, float timeActive)
-    {
-        _behaviour.AddResist(damage, timeActive);
-    }
-    #endregion
-    #region Interactive and Useble
-
-
-    public void UseAbillity()
-    {
-        var ability = _behaviour.UseAbillity();
-        if (ability)
-        {
-            if (ability.IsUseRotation)
-                transform.rotation = Quaternion.Euler(Vector3.forward * (_shootMarker.Angel - 90));
-            ability.Use();
-        }
+        _movement.EnterToTransport(transport);
     }
 
-    public void InteractiveWhithObject()
+    public void SetState(PlayerState state, bool mode)
     {
-        if (_interacive != null)
-        {
-            _interacive.Interactive(this);
-        }
+        _behaviour.SetAnimation(state, mode);
     }
-    #endregion
-    public void MoveToPosition(Vector2 position)
+    public void Invulnerability(bool mode)
     {
-        if (!_seedTransport)
-        {
-            _rigidBody.MovePosition(position);
-            return;
-        }
-        _seedTransport.transform.position = position;
-    }
-    public void Move(Vector2 input)
-    {
-        if (input == Vector2.zero) 
-            return;
-        _rigidBody.AddForce(input * _state.SpeedMovement * _effects.MoveEffect, ForceMode2D.Force);
-        _rigidBody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, input), _state.SpeedMovement * _effects.MoveEffect * Time.deltaTime));
-    }
-    private void HideScreen(EffectType effect)
-    {
-        //if (effect == EffectType.Freez)
-        //    _animator.SetBool("Freez", false);
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IItemInteractive interactive))
-        {
-            _interacive = interactive;
-        }
-
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IItemInteractive interactive))
-        {
-            _interacive = null;
-        }
+        _behaviour.Invulnerability(mode);
     }
 }
 

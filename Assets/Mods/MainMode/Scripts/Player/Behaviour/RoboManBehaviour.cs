@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PlayerComponent
 {
-    public class RoboManBehaviour : PlayerBaseBehaviour
+    public class RoboManBehaviour : PlayerBehaviour
     {
         [Header("Character Setting")]
         [Min(0)]
@@ -24,44 +24,32 @@ namespace PlayerComponent
         {
             _startColor = _spriteRender.color;
         }
-
-        private void OnEnable()
+        public override void Play()
         {
-            PlayAction += PlayRobotMan;
-        }
-        private void OnDisable()
-        {
-            PlayAction -= PlayRobotMan;
-        }
-        private void PlayRobotMan()
-        {
+            base.Play();
             _bodyTemperature = 0;
             PlaytCooling();
             ChangeTemaerature();
             _spriteRender.color = _startColor;
         }
-        public override void AddEffects(MovementEffect effect, float timeActive)
+
+        public void AddEffects(MovementEffect effect, float timeActive)
         {
             if (effect.Effect == EffectType.Freez && _bodyTemperature > 0.3f)
             {
                 _bodyTemperature = 0;
                 ChangeTemaerature();
             }
-            else
-            {
-                base.AddEffects(effect, timeActive);
-            }
         }
-        public override bool TakeDamage(int damage, DamageInfo damgeInfo)
-        {
-            if (damgeInfo.Attack == AttackType.Fire)
-            {
-                if (ChangeTemaerature(_temperatureSteep * damage))
-                    Dead();
-                return true;
-            }
-            return base.TakeDamage(damage, damgeInfo);
-        }
+        //public override void TakeDamage(int damage, DamageInfo damgeInfo)
+        //{
+        //    if (damgeInfo.Attack == AttackType.Fire)
+        //    {
+        //        if (ChangeTemaerature(_temperatureSteep * damage))
+        //            return;
+        //    }
+        //    base.TakeDamage(damage, damgeInfo);
+        //}
 
         private bool ChangeTemaerature(float temperature = 0)
         {

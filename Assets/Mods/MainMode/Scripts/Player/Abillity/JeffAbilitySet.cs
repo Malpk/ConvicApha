@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PlayerComponent
 {
-    public class JeffAbilitySet : PlayerAbilityPassiveSet
+    public class JeffAbilitySet : AbilityPassiveSet
     {
         [SerializeField] private int _healValue;
 

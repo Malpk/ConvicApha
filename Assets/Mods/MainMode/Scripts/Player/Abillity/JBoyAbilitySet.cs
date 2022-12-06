@@ -1,6 +1,6 @@
 namespace PlayerComponent
 {
-    public class JBoyAbilitySet : PlayerAbilityPassiveSet
+    public class JBoyAbilitySet : AbilityPassiveSet
     { 
 
         protected override bool UseAbility()

@@ -1,13 +1,28 @@
 using UnityEngine;
 using MainMode.GameInteface;
+using PlayerComponent;
 
 namespace MainMode.LoadScene
 {
     [CreateAssetMenu(menuName = "UIConfigs/PlayerInfo")]
     public class PlayerInfo : ScrollItem
     {
-        [SerializeField] private int _maxHealth;
+        [SerializeField] private PlayerBaseAbillitySet _prefabAbilluty;
 
-        public int MaxHealth => _maxHealth;
+        private PlayerBaseAbillitySet _abillityAseet;
+
+        public PlayerBaseAbillitySet AddAbillity()
+        {
+            if (!_abillityAseet)
+            {
+                _abillityAseet = Instantiate(_prefabAbilluty.gameObject, asset.transform).
+                    GetComponent<PlayerBaseAbillitySet>();
+                return _abillityAseet;
+            }
+            else
+            {
+                return _abillityAseet;
+            }
+        }
     }
 }
