@@ -7,6 +7,7 @@ namespace Underworld
     {
         [Range(1, 99)]
         [SerializeField] private float _countMinute = 1;
+        [SerializeField] private string _savePath = "VeryBigBestGameRecordsUN";
         [SerializeField] private Player _player;
         [SerializeField] private TimerDisplay _timer;
 
@@ -28,6 +29,19 @@ namespace Underworld
         public void Stop()
         {
             enabled = false;
+            var bestRecord = GetRecords();
+            var intProgress = (int)_progress;
+            if (intProgress < bestRecord)
+                PlayerPrefs.SetInt(_savePath, intProgress);
+        }
+
+        public int GetRecords()
+        {
+            if (PlayerPrefs.HasKey(_savePath))
+            {
+                return PlayerPrefs.GetInt(_savePath);
+            }
+            return (int)(_minuteSeconds * _countMinute);
         }
 
         private void Update()

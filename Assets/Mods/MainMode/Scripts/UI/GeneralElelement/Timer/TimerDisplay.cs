@@ -3,13 +3,14 @@ using TMPro;
 
 public class TimerDisplay : MonoBehaviour
 {
+    [SerializeField] private string _additionText = "";
     [SerializeField] private TextMeshProUGUI _text;
 
     private int _minute = 60;
 
     public void Output(int value)
     {
-        _text.text = $"{GetValue(value / _minute) }:{GetValue(value % _minute)}";
+        _text.text = _additionText + $" {GetValue(value / _minute) }:{GetValue(value % _minute)}";
     }
     private string GetValue(float value)
     {

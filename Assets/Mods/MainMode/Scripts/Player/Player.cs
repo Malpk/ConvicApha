@@ -134,6 +134,7 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
                 }
                 else
                 {
+                    Block();
                     Explosion();
                 }
             }

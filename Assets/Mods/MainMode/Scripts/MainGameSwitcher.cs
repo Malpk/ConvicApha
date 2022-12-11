@@ -7,7 +7,14 @@ namespace MainMode
     {
         [SerializeField] private MapSpawner _mapSpawner;
         [SerializeField] private EviilBotSpawner _botSpawner;
-        [SerializeField] private TimerCountRecord _timer;
+        [SerializeField] private MainModeGameRecord _saverRecord;
+        [SerializeField] private TimerDisplay _bestRecords;
+        [SerializeField] private MainModeGameRecord _saver;
+
+        private void Awake()
+        {
+            _bestRecords.Output(_saver.GetBestRecord());
+        }
 
         [Inject]
         public void Construct(MapSpawner mapSpawner, EviilBotSpawner eviilBotSpawner)
@@ -20,14 +27,19 @@ namespace MainMode
         {
             _mapSpawner.Play();
             _botSpawner.Play();
-            _timer.Play();
+            _saverRecord.Play();
         }
 
         protected override void StopMessange()
         {
             _mapSpawner.Stop();
             _botSpawner.Stop();
-            _timer.Stop();
+            _saverRecord.Stop();
+        }
+        protected override void BackMainMenu()
+        {
+            base.BackMainMenu();
+            _bestRecords.Output(_saver.GetBestRecord());
         }
     }
 }

@@ -19,10 +19,6 @@ namespace PlayerComponent
             UpdateState(false);
             State = () => Reloading(ComplteReload);
         }
-        private void Update()
-        {
-            State();
-        }
         private void Dealy()
         {
             progress += Time.fixedDeltaTime / 0.5f;

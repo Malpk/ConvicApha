@@ -8,8 +8,13 @@ namespace Underworld
     {
         [SerializeField] private Ending _ending;
         [SerializeField] private TImerCount _timeCounter;
+        [SerializeField] private TimerDisplay _bestRecords;
         [SerializeField] private UnderWorldGameBuilder _builder;
 
+        private void Awake()
+        {
+            _bestRecords.Output(_timeCounter.GetRecords());
+        }
 
         protected override void OnEnable()
         {
@@ -40,6 +45,11 @@ namespace Underworld
             hud.Hide();
             _ending.Win();
             _ending.Show();
+        }
+        protected override void BackMainMenu()
+        {
+            base.BackMainMenu();
+            _bestRecords.Output(_timeCounter.GetRecords());
         }
     }
 }

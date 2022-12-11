@@ -54,8 +54,8 @@ public class PlayerBehaviour : MonoBehaviour, IResist
     {
         if (_health < _maxHealth)
         {
-            OnUpdateHealth.Invoke(_health);
             _health = Mathf.Clamp(_health + healValue, _health, _maxHealth);
+            OnUpdateHealth.Invoke(_health);
             return true;
         }
         return false;
