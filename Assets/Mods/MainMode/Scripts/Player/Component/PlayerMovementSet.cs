@@ -38,7 +38,8 @@ namespace PlayerComponent
         {
             _seedTransport = null;
             transform.parent = null;
-            _seedTransport.Exit();
+            if (_seedTransport != null)
+                _seedTransport.Exit();
             MoveState = Moving;
         }
         public void Move(Vector2 input)

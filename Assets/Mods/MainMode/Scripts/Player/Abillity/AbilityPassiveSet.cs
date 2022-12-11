@@ -7,18 +7,17 @@ namespace PlayerComponent
     {
         public bool IsActive { get; private set; } = false;
 
-        protected float progress;
+       [SerializeField] protected float progress;
 
         private void Awake()
         {
-            State = Reloading;
             enabled = false;
         }
         private void Start()
         {
             UpdateIcon(baseIcon, false);
             UpdateState(false);
-            State = Reloading;
+            State = () => Reloading(ComplteReload);
         }
         private void Update()
         {
@@ -26,15 +25,15 @@ namespace PlayerComponent
         }
         private void Dealy()
         {
-            progress += Time.fixedDeltaTime / 0.1f;
+            progress += Time.fixedDeltaTime / 0.5f;
             if (progress >= 1f)
             {
                 progress = 0f;
                 UpdateState(false);
-                State = Reloading;
+                State = () => Reloading(ComplteReload);
             }
         }
-        protected override void ComplteReload()
+        protected void ComplteReload()
         {
             UpdateState(true);
             if (UseAbility())
@@ -51,7 +50,6 @@ namespace PlayerComponent
             if (UseAbility())
             {
                 progress = 0f;
-                State = Reloading;
             }
         }
         public void Activate()

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4223389376391528580}
   - component: {fileID: 6592750525153685489}
   - component: {fileID: 4120370003428193888}
+  - component: {fileID: 5963004372844451085}
   - component: {fileID: 6875225066552115991}
   - component: {fileID: 3466869167926696637}
   m_Layer: 8
@@ -57,6 +58,8 @@ MonoBehaviour:
   _contraller: {fileID: 6592750525153685489}
   _effects: {fileID: 4223389376391528580}
   _movement: {fileID: 4120370003428193888}
+  _playerInvulnerability: {fileID: 5963004372844451085}
+  _collider: {fileID: 3466869167926696637}
 --- !u!114 &4719050022587389334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +125,19 @@ MonoBehaviour:
   _state: {fileID: 11400000, guid: 2e7b603759990fe4381aad31fa99d8b7, type: 2}
   _rigidBody: {fileID: 6875225066552115991}
   _effectSet: {fileID: 4223389376391528580}
+--- !u!114 &5963004372844451085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5305993950431923028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a4e0c25bc7e5c444ac8ae9e9590f357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeActive: 3
 --- !u!50 &6875225066552115991
 Rigidbody2D:
   serializedVersion: 4

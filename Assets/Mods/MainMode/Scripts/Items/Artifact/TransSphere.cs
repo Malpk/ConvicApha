@@ -14,7 +14,7 @@ namespace MainMode.Items
         {
             var point = Instantiate(_point.gameObject, user.transform.position, user.transform.rotation).
                 GetComponent<TransSpherePoint>();
-            point.Run(user.transform, user.transform.position + point.transform.up * _unitDistance);
+            point.Run(user.transform, user.transform.position + user.transform.up * _unitDistance);
         }
     }
 }

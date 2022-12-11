@@ -54,9 +54,9 @@ namespace PlayerComponent
         {
             if (item.IsUse)
             {
+                if (item.IsShoot)
+                    _user.transform.rotation = Quaternion.Euler(Vector3.forward * (_shootMarker.Angel - 90));
                 item.Use();
-                if(item.IsShoot)
-                    _user.transform.rotation = Quaternion.Euler(Vector3.forward * _shootMarker.Angel);
             }
             return item.IsUse;
         }

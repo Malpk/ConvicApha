@@ -9,9 +9,11 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     [SerializeField] private PCPlayerController _contraller;
     [SerializeField] private PlayerEffectSet _effects;
     [SerializeField] private PlayerMovementSet _movement;
+    [SerializeField] private PlayerInvulnerability _playerInvulnerability;
+    [Header("Reference")]
+    [SerializeField] private Collider2D _collider;
 
     private IPlayerComponent[] _components;
-
     private AbilityPassiveSet _pasiveAbillity;
 
     public bool IsPlay { get; private set; } = false;
@@ -84,10 +86,15 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
 
     public void Stop()
     {
+        IsPlay = false;
         _behaviour.Stop();
         _behaviour.gameObject.SetActive(false);
         if (_pasiveAbillity)
             _pasiveAbillity.Deactivate();
+        foreach (var component in _components)
+        {
+            component.Stop();
+        }
     }
     public void Block()
     {
@@ -102,11 +109,12 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
 
     public void Explosion()
     {
-        _behaviour.Explosion();
+        if(!_playerInvulnerability.IsInvulnerability)
+            _behaviour.Explosion();
     }
-    public void Heal(int heal)
+    public bool Heal(int heal)
     {
-        _behaviour.Heal(heal);
+        return _behaviour.Heal(heal);
     }
     public void MoveToPosition(Vector2 position)
     {
@@ -114,18 +122,28 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     }
     public void TakeDamage(int damage, DamageInfo damageInfo)
     {
-        if (_behaviour.TakeDamage(damage, damageInfo))
+        if (!_playerInvulnerability.IsInvulnerability)
         {
-            if (_behaviour.Health > 0)
-                _effects.AddEffectDamage(damageInfo);
-            else
-                Block();
+            if (_behaviour.TakeDamage(damage, damageInfo))
+            {
+                if (_behaviour.Health > 0)
+                {
+                    _effects.AddEffectDamage(damageInfo);
+                    _behaviour.Invulnerability(true);
+                    _playerInvulnerability.ActivateForWhite(() => _behaviour.Invulnerability(false));
+                }
+                else
+                {
+                    Explosion();
+                }
+            }
         }
     }
 
     public void AddEffects(MovementEffect effects, float timeActive)
     {
-        _effects.AddEffects(effects, timeActive);
+        if (!_playerInvulnerability.IsInvulnerability)
+            _effects.AddEffects(effects, timeActive);
     }
 
     public void AddResistAttack(DamageInfo damage, float timeActive)
@@ -147,7 +165,15 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     }
     public void Invulnerability(bool mode)
     {
+        if(mode)
+            _playerInvulnerability.Activate();
+        else
+            _playerInvulnerability.Deactivate();
         _behaviour.Invulnerability(mode);
+    }
+    public void SetModeCollider(bool mode)
+    {
+        _collider.enabled = mode;
     }
 }
 

@@ -13,7 +13,7 @@ namespace PlayerComponent
         {
             if (!_returnPoint.IsActive)
             {
-                UpdateIcon(baseIcon, true);
+                UpdateIcon(_setCristalPointIcon, true);
                 _returnPoint.ActiveMode(user.transform.position);
             }
             else
@@ -22,7 +22,7 @@ namespace PlayerComponent
                 user.TakeDamage(1, _returnDamage);
                 user.transform.position = _returnPoint.Position;
                 _returnPoint.Deactive(user);
-                UpdateIcon(_setCristalPointIcon,true);
+                UpdateIcon(baseIcon,true);
             }
         }
 

@@ -34,8 +34,6 @@ namespace MainMode
             enabled = true;
             _target = endPoint;
             _user = user;
-            _tpPoint.transform.parent = null;
-            _tpPoint.transform.position = transform.position;
         }
 
         private void Update()
@@ -48,6 +46,8 @@ namespace MainMode
             }
             else
             {
+                _tpPoint.transform.parent = null;
+                _tpPoint.transform.position = _user.transform.position;
                 _tpPoint.gameObject.SetActive(true);
             }
         }

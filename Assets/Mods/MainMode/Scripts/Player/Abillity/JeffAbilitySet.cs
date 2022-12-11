@@ -8,8 +8,7 @@ namespace PlayerComponent
 
         protected override bool UseAbility()
         {
-            user.Heal(_healValue);
-            return true;
+            return user.Heal(_healValue);
         }
     }
 }

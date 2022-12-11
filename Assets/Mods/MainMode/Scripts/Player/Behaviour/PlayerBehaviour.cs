@@ -19,8 +19,6 @@ public class PlayerBehaviour : MonoBehaviour, IResist
     public UnityEvent<int> OnSetupMaxHealth;
     public UnityEvent<int> OnUpdateHealth;
 
-    private bool _IsInvulnerability = false;
-
     public int Health => _health;
     protected bool IsPlay { get; private set; } = false;
 
@@ -54,14 +52,17 @@ public class PlayerBehaviour : MonoBehaviour, IResist
     }
     public bool Heal(int healValue)
     {
-        var previus = _health;
-        OnUpdateHealth.Invoke(_health);
-        _health = Mathf.Clamp(_health + healValue, _health, _maxHealth);
-        return _health > previus;
+        if (_health < _maxHealth)
+        {
+            OnUpdateHealth.Invoke(_health);
+            _health = Mathf.Clamp(_health + healValue, _health, _maxHealth);
+            return true;
+        }
+        return false;
     }
     public bool TakeDamage(int damage, DamageInfo damageInfo)
     {
-        if (!_playerResist.ContainResistAttack(damageInfo.Attack) && !_IsInvulnerability)
+        if (!_playerResist.ContainResistAttack(damageInfo.Attack))
         {
             _health = Mathf.Clamp(_health - damage, 0, _health);
             OnUpdateHealth.Invoke(_health);
@@ -94,7 +95,6 @@ public class PlayerBehaviour : MonoBehaviour, IResist
     }
     public void Invulnerability(bool mode)
     {
-        _IsInvulnerability = mode;
         SetAnimation(PlayerState.Invulnerability, mode);
     }
 }

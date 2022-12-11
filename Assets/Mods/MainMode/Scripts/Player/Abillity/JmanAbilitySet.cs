@@ -14,8 +14,6 @@ namespace PlayerComponent
         [SerializeField] private LayerMask _wallLayer;
         [SerializeField] private MovementEffect _debaf;
         [SerializeField] private AnimationCurve _jerkCurve;
-        [Header("Reference")]
-        [SerializeField] private Collider2D _playerBody;
         
         private Vector2 _startPosition;
         private Vector2 _jerkForce;
@@ -24,7 +22,7 @@ namespace PlayerComponent
         {
             user.Block();
             _progress = 0f;
-            _playerBody.enabled = false;
+            user.SetModeCollider(false);
             SetReloadState(true);
             enabled = true;
             _jerkForce = user.transform.up * _distance;
@@ -43,9 +41,9 @@ namespace PlayerComponent
                 _progress = 0f;
                 IsActive = false;
                 user.UnBlock();
-                State = Reloading;
+                State =()=> Reloading(ComplteReload);
                 user.GetComponent<PlayerEffectSet>().AddEffects(_debaf, _timeActiveDebaf);
-                _playerBody.enabled = true;
+                user.SetModeCollider(true);
                 user.Invulnerability(false);
             }
             else

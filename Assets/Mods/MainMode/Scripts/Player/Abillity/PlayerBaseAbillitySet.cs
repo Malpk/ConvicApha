@@ -26,17 +26,16 @@ namespace PlayerComponent
         {
             this.user = user;
         }
-        protected void Reloading()
+        protected void Reloading(System.Action next)
         {
             _progress += Time.fixedDeltaTime / _timeReload;
             OnReloading?.Invoke(_timeReload - _timeReload * _progress);
             if (_progress >= 1)
             {
                 _progress = 0f;
-                ComplteReload();
+                next();
             }
         }
-        protected abstract void ComplteReload();
 
         protected void UpdateState(bool mode)
         {

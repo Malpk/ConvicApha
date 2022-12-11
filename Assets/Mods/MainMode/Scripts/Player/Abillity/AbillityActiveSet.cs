@@ -15,7 +15,7 @@ namespace PlayerComponent
         {
             UpdateIcon(baseIcon, true);
             UpdateState(false);
-            State = Reloading;
+            State = ()=> Reloading(ComplteReload);
         }
         public void Use()
         {
@@ -33,7 +33,7 @@ namespace PlayerComponent
             UpdateState(!reload);
             IsReload = reload;
         }
-        protected override void ComplteReload()
+        protected void ComplteReload()
         {
             enabled = false;
             SetReloadState(false);
