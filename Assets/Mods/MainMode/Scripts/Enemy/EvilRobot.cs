@@ -133,7 +133,7 @@ namespace MainMode
             }
             return amount > _minSpeedMovement ? amount : _minSpeedMovement;
         }
-        public void AddEffects(MovementEffect effect, float timeActive)
+        public void AddEffect(MovementEffect effect, float timeActive)
         {
             if (effect.Effect == EffectType.Freez && !_debafList.ContainsKey(effect))
             {

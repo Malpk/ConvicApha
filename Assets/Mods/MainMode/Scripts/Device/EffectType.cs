@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public enum EffectType
 { 
     None,
@@ -11,4 +7,5 @@ public enum EffectType
     Flash,
     Stone,
     Fire,
+    Heal
 }

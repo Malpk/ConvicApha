@@ -13,7 +13,7 @@ namespace MainMode.Items
         {
             var shield = Instantiate(_fireShield);
             shield.transform.SetParent(user.transform, false);
-            //user.AddResistAttack(_attackResist, _timeActivate);
+            user.AddResistAttack(_attackResist, _timeActivate);
             Destroy(shield, _timeActivate);
         }
     }

@@ -51,6 +51,7 @@ namespace MainMode
         protected void Stop()
         {
             _player.Stop();
+            ResetState();
             StopMessange();
         }
         private void ShowHud()
@@ -72,5 +73,10 @@ namespace MainMode
         }
         protected abstract void PlayMessange();
         protected abstract void StopMessange();
+        protected virtual void ResetState()
+        {
+            _behaviour.ResetState();
+            _player.ResetState();
+        }
     }
 }

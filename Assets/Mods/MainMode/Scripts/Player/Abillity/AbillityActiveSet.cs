@@ -9,14 +9,9 @@ namespace PlayerComponent
         protected float _progress = 0f;
 
         public bool IsActive { get; protected set; }
-        public bool IsReload { get; private set; }
+        public bool IsReload { get; private set; } = true;
         public bool IsUseRotation => _isUseRotation;
-        private void Start()
-        {
-            UpdateIcon(baseIcon, true);
-            UpdateState(false);
-            State = ()=> Reloading(ComplteReload);
-        }
+
         public void Use()
         {
             if (!IsReload)
@@ -37,6 +32,11 @@ namespace PlayerComponent
         {
             enabled = false;
             SetReloadState(false);
+        }
+        public override void ResetState()
+        {
+            base.ResetState();
+            State = () => Reloading(ComplteReload);
         }
     }
 }

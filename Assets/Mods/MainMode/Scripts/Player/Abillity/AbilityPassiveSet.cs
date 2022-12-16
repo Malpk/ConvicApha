@@ -7,18 +7,6 @@ namespace PlayerComponent
     {
         public bool IsActive { get; private set; } = false;
 
-       [SerializeField] protected float progress;
-
-        private void Awake()
-        {
-            enabled = false;
-        }
-        private void Start()
-        {
-            UpdateIcon(baseIcon, false);
-            UpdateState(false);
-            State = () => Reloading(ComplteReload);
-        }
         private void Dealy()
         {
             progress += Time.fixedDeltaTime / 0.5f;
@@ -48,15 +36,12 @@ namespace PlayerComponent
                 progress = 0f;
             }
         }
-        public void Activate()
+        protected abstract bool UseAbility();
+        public override void ResetState()
         {
-            enabled = true;
+            base.ResetState();
+            State = () => Reloading(ComplteReload);
         }
 
-        public void Deactivate()
-        {
-            enabled = false;
-        }
-        protected abstract bool UseAbility();
     }
 }

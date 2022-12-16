@@ -24,6 +24,7 @@ public class PlayerUIBinder : MonoBehaviour
     }
     public void BindAbillityUI(PlayerBaseAbillitySet abillity)
     {
+        _abillity = abillity;
         UnBindAbillityUI();
         abillity.OnUpdateState += _hud.UpdateStateAbillity;
         abillity.OnUpdateIcon += _hud.UpdateAbilityIcon;
@@ -40,6 +41,7 @@ public class PlayerUIBinder : MonoBehaviour
     }
     public void BindHealthPlayerUI(PlayerBehaviour player)
     {
+        _player = player;
         UnBindHealthPlayerUI();
         player.OnUpdateHealth.AddListener(_hud.UpdateHealth);
         player.OnSetupMaxHealth.AddListener(_hud.SetHealthPoint);

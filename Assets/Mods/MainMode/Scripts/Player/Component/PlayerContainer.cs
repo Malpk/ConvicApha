@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
-using MainMode;
 
 namespace PlayerComponent
 {
-    public class PlayerContainer<T>  : IPlayerTask where T : IEffect
+    public class PlayerContainer<T>  : IPlayerTask 
     {
         protected List<ContainCell<T>> contents = new List<ContainCell<T>>();
 
@@ -18,18 +16,18 @@ namespace PlayerComponent
             contents.Clear();
         }
 
-        public void Add(T content, float timeActive)
+        public void Add(EffectType effect ,T content, float timeActive)
         {
 
             foreach (var movementEffect in contents)
             {
-                if (movementEffect.content.Effect == content.Effect)
+                if (movementEffect.effect == effect)
                 {
                     movementEffect.Start(timeActive);
                     return;
                 }
             }
-            var effectActive = new ContainCell<T>(content);
+            var effectActive = new ContainCell<T>(effect,content);
             effectActive.Start(timeActive);
             contents.Add(effectActive);
         }

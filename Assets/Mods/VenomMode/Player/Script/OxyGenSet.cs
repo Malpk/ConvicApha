@@ -107,5 +107,10 @@ namespace MainMode.Mode1921
         {
             throw new System.NotImplementedException();
         }
+
+        public void ResetState()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

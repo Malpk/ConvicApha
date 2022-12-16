@@ -7,7 +7,7 @@ namespace MainMode
     {
         [Header("Setting")]
         [SerializeField] private float _speedFly;
-        [SerializeField] private LayerMask _deviceLayer;
+        [SerializeField] private LayerMask _wallLayer;
         [SerializeField] private Animator _animator;
         [SerializeField] private TpStartPoint _tpPoint;
 
@@ -39,7 +39,7 @@ namespace MainMode
         private void Update()
         {
             _hit = Physics2D.CircleCast(transform.position, _collider.radius,
-                transform.up, _speedFly * Time.deltaTime, _deviceLayer);
+                transform.up, _speedFly * Time.deltaTime, _wallLayer);
             if (Vector2.Distance(transform.position, _target) > _limitDistance && !_hit)
             {
                 transform.position = Vector3.MoveTowards(transform.position, _target, _speedFly * Time.deltaTime);

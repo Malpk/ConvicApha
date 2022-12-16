@@ -59,6 +59,7 @@ MonoBehaviour:
   _effects: {fileID: 5493241858175876540}
   _movement: {fileID: 1055925096}
   _playerInvulnerability: {fileID: 2053187432}
+  _ability: {fileID: 92380401}
   _collider: {fileID: 8285418626986176960}
 --- !u!114 &1055925096
 MonoBehaviour:
@@ -88,7 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 17747889282209598}
-  _movement: {fileID: 1055925096}
 --- !u!114 &1055925097
 MonoBehaviour:
   m_ObjectHideFlags: 0

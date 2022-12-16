@@ -41,20 +41,23 @@ namespace PlayerComponent
                 ChangeTemaerature();
             }
         }
-        //public override void TakeDamage(int damage, DamageInfo damgeInfo)
-        //{
-        //    if (damgeInfo.Attack == AttackType.Fire)
-        //    {
-        //        if (ChangeTemaerature(_temperatureSteep * damage))
-        //            return;
-        //    }
-        //    base.TakeDamage(damage, damgeInfo);
-        //}
+        public override bool TakeDamage(int damage, DamageInfo damgeInfo)
+        {
+            if (damgeInfo.Attack == AttackType.Fire)
+            {
+                if (ChangeTemaerature(_temperatureSteep * damage))
+                    Explosion();
+                else
+                    return false;
+            }
+            return base.TakeDamage(damage, damgeInfo);
+        }
 
         private bool ChangeTemaerature(float temperature = 0)
         {
             _bodyTemperature = Mathf.Clamp01(_bodyTemperature + temperature);
-            _spriteRender.color = Vector4.MoveTowards(_startColor, Color.red, _bodyTemperature);
+            _spriteRender.color = Color.red;
+
             return _bodyTemperature >= 1f;
         }
         private void PlaytCooling()

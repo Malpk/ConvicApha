@@ -36,10 +36,10 @@ namespace PlayerComponent
         }
         public void ExitToTransport()
         {
-            _seedTransport = null;
-            transform.parent = null;
             if (_seedTransport != null)
                 _seedTransport.Exit();
+            _seedTransport = null;
+            transform.parent = null;
             MoveState = Moving;
         }
         public void Move(Vector2 input)
@@ -74,6 +74,11 @@ namespace PlayerComponent
             _rigidBody.AddForce(input * _state.SpeedMovement * _effectSet.MoveEffect, ForceMode2D.Force);
             _rigidBody.MoveRotation(Quaternion.Lerp(transform.rotation,
                 Quaternion.LookRotation(Vector3.forward, input), _state.SpeedMovement * _effectSet.MoveEffect * Time.deltaTime));
+        }
+
+        public void ResetState()
+        {
+            ExitToTransport();
         }
     }
 }

@@ -16,5 +16,9 @@ namespace MainMode.Items
                 GetComponent<TransSpherePoint>();
             point.Run(user.transform, user.transform.position + user.transform.up * _unitDistance);
         }
+        public override void ResetState()
+        {
+            base.ResetState();
+        }
     }
 }

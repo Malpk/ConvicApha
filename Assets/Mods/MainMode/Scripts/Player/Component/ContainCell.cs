@@ -4,14 +4,16 @@ namespace PlayerComponent
 {
     public class ContainCell<T>
     {
+        public readonly EffectType effect;
         public readonly T content;
 
         private float _progress = 0f;
         private float _timeActive;
 
-        public ContainCell(T effect)
+        public ContainCell(EffectType effect,T content)
         {
-            this.content = effect;
+            this.content = content;
+            this.effect = effect;
         }
 
         public void Start(float timeActive)

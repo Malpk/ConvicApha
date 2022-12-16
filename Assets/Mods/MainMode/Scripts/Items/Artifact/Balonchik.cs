@@ -23,5 +23,11 @@ namespace MainMode.Items
             user.transform.parent = _jetAir.transform;
             user.EnterToTransport(_jetAir);
         }
+        public override void ResetState()
+        {
+            base.ResetState();
+            if(user)
+                user.ExitToTransport();
+        }
     }
 }

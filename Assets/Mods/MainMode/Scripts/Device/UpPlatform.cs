@@ -59,7 +59,14 @@ namespace MainMode
             if (!_animator.enabled)
                 HideAnimationEvent();
         }
-
+        public void ActivateDevices()
+        {
+            _upDevice.Activate();
+        }
+        public void DeactivateDevice()
+        {
+            _upDevice.Deactivate();
+        }
         private void Explosion()
         {
             if(_animator.enabled)

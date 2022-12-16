@@ -163,12 +163,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83cc68e8d76e92e46be34fbb493c2947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedFly: 5
-  _deviceLayer:
+  _speedFly: 10
+  _wallLayer:
     serializedVersion: 2
-    m_Bits: 1024
-  _tpPoint: {fileID: 954531650}
+    m_Bits: 2048
   _animator: {fileID: 6526959664103702989}
+  _tpPoint: {fileID: 954531650}
 --- !u!212 &3970078671181010845
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out IAddEffects target))
             {
-                target.AddEffects(_effect, _timeEffectActive);
+                target.AddEffect(_effect, _timeEffectActive);
             }
         }
     }

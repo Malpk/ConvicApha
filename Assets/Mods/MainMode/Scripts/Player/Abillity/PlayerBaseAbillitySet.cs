@@ -2,37 +2,53 @@ using UnityEngine;
 
 namespace PlayerComponent
 {
-    public abstract class PlayerBaseAbillitySet : MonoBehaviour, IPlayerAbillitySet
+    public abstract class PlayerBaseAbillitySet : MonoBehaviour, IPlayerAbillitySet, IPlayerComponent
     {
         [SerializeField] private float _timeReload;
+
+        [SerializeField] protected float progress;
         [Header("Reference")]
         [SerializeField] protected Player user;
         [SerializeField] protected Sprite baseIcon;
 
         protected System.Action State;
-        
-        private float _progress = 0f;
 
         public event System.Action<bool> OnUpdateState;
         public event System.Action<float> OnReloading;
         public event System.Action<Sprite, bool> OnUpdateIcon;
 
+        private void Start()
+        {
+            ResetState();
+            enabled = user;
+        }
 
         private void FixedUpdate()
         {
             State();
         }
+
+        public void Play()
+        {
+            enabled = true;
+        }
+
+        public void Stop()
+        {
+            enabled = false;
+        }
         public void SetUser(Player user)
         {
             this.user = user;
+            ResetState();
         }
         protected void Reloading(System.Action next)
         {
-            _progress += Time.fixedDeltaTime / _timeReload;
-            OnReloading?.Invoke(_timeReload - _timeReload * _progress);
-            if (_progress >= 1)
+            progress += Time.fixedDeltaTime / _timeReload;
+            OnReloading?.Invoke(_timeReload - _timeReload * progress);
+            if (progress >= 1)
             {
-                _progress = 0f;
+                progress = 0f;
                 next();
             }
         }
@@ -45,6 +61,14 @@ namespace PlayerComponent
         protected void UpdateIcon(Sprite sprite, bool active)
         {
             OnUpdateIcon?.Invoke(sprite, active);
+        }
+
+        public virtual void ResetState()
+        {
+            enabled = false;
+            UpdateIcon(baseIcon, false);
+            UpdateState(false);
+            progress = 0f;
         }
     }
 }

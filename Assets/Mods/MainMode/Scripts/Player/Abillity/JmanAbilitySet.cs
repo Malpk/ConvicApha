@@ -42,7 +42,7 @@ namespace PlayerComponent
                 IsActive = false;
                 user.UnBlock();
                 State =()=> Reloading(ComplteReload);
-                user.GetComponent<PlayerEffectSet>().AddEffects(_debaf, _timeActiveDebaf);
+                user.GetComponent<PlayerEffectSet>().AddEffect(_debaf, _timeActiveDebaf);
                 user.SetModeCollider(true);
                 user.Invulnerability(false);
             }

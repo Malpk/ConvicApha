@@ -10,11 +10,11 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     [SerializeField] private PlayerEffectSet _effects;
     [SerializeField] private PlayerMovementSet _movement;
     [SerializeField] private PlayerInvulnerability _playerInvulnerability;
+    [SerializeField] private PlayerBaseAbillitySet _ability;
     [Header("Reference")]
     [SerializeField] private Collider2D _collider;
 
     private IPlayerComponent[] _components;
-    private AbilityPassiveSet _pasiveAbillity;
 
     public bool IsPlay { get; private set; } = false;
     public Vector2 Position => transform.position;
@@ -41,21 +41,9 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     public void SetAbillity(PlayerBaseAbillitySet set)
     {
         set.SetUser(this);
-        if (set is AbillityActiveSet active)
-        {
-            _contraller.SetAbillity(active);
-            _pasiveAbillity = null;
-        }
-        else if (set is AbilityPassiveSet passive)
-        {
-            _pasiveAbillity = passive;
-            _contraller.SetAbillity(null);
-        }
-        else
-        {
-            _pasiveAbillity = null;
-            _contraller.SetAbillity(null);
-        }
+        _ability = set;
+        if (set is AbillityActiveSet abillity)
+            _contraller.SetAbillity(abillity);
     }
     private void Start()
     {
@@ -78,9 +66,8 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
             }
             _behaviour.gameObject.SetActive(true);
             _behaviour.Play();
+            _ability.Play();
             UnBlock();
-            if(_pasiveAbillity)
-                _pasiveAbillity.Activate();
         }
     }
 
@@ -89,12 +76,11 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
         IsPlay = false;
         _behaviour.Stop();
         _behaviour.gameObject.SetActive(false);
-        if (_pasiveAbillity)
-            _pasiveAbillity.Deactivate();
         foreach (var component in _components)
         {
             component.Stop();
         }
+        _ability.Stop();
     }
     public void Block()
     {
@@ -114,7 +100,16 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     }
     public bool Heal(int heal)
     {
-        return _behaviour.Heal(heal);
+        if (_behaviour.Heal(heal))
+        {
+            _effects.AddEffect(EffectType.Heal, 1f);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
     public void MoveToPosition(Vector2 position)
     {
@@ -141,10 +136,10 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
         }
     }
 
-    public void AddEffects(MovementEffect effects, float timeActive)
+    public void AddEffect(MovementEffect effects, float timeActive)
     {
         if (!_playerInvulnerability.IsInvulnerability)
-            _effects.AddEffects(effects, timeActive);
+            _effects.AddEffect(effects, timeActive);
     }
 
     public void AddResistAttack(DamageInfo damage, float timeActive)
@@ -175,6 +170,15 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     public void SetModeCollider(bool mode)
     {
         _collider.enabled = mode;
+    }
+
+    public void ResetState()
+    {
+        foreach (var component in _components)
+        {
+            component.ResetState();
+        }
+        _ability.ResetState();
     }
 }
 

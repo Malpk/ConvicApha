@@ -59,6 +59,7 @@ MonoBehaviour:
   _effects: {fileID: 5236180677899480419}
   _movement: {fileID: 5477210546257996519}
   _playerInvulnerability: {fileID: 1459861257551500837}
+  _ability: {fileID: 5221368155465037217}
   _collider: {fileID: 6941613872110041722}
 --- !u!114 &5236180677899480419
 MonoBehaviour:
@@ -73,7 +74,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 6852515643743883968}
-  _movement: {fileID: 5477210546257996519}
 --- !u!114 &3383525557770925428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,3 +395,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4421225893732281812, guid: ba7b79c4151ca404a9052e03d9edfa2b, type: 3}
   m_PrefabInstance: {fileID: 8896947419962718898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5221368155465037217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3678957274664210195, guid: ba7b79c4151ca404a9052e03d9edfa2b, type: 3}
+  m_PrefabInstance: {fileID: 8896947419962718898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a4731d961d0ba41a6a18a2fe5760a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -69,31 +69,39 @@ public sealed class MainMenu : UserInterface
         if (!_isRun)
         {
             _isRun = true;
-            var artifact = _artifactItemScroller.GetSelectItem().Create<Item>();
-            var consumable = _consumableItemScroller.GetSelectItem().Create<ConsumablesItem>();
-            artifact.ResetState();
-            consumable.ResetState();
-            _playerInventory.PickItem(artifact);
-            _playerInventory.PickItem(consumable);
+            _backGround.enabled = false;
             var playerConfig = GetPlayerType();
             var player = playerConfig.Create<PlayerBehaviour>();
             var abillity = playerConfig.AddAbillity();
-            _binderUI.UnBindAbillityUI();
-            _binderUI.UnBindHealthPlayerUI();
-            _binderUI.BindHealthPlayerUI(player);
-            _binderUI.BindAbillityUI(abillity);
-            _gameSwitcher.SetPlayerBehaviour(player);
-            _player.SetBehaviour(player);
-            _player.SetAbillity(abillity);
-            _backGround.enabled = false;
-            Hide();
+            Bind(player, abillity);
+            SetItems(playerConfig);
             if (PlayGameAction != null)
                 PlayGameAction();
-            if(_ending)
-                _ending.SetUseItems(artifact.Name , consumable.Name, playerConfig.Name);
+            Hide();
         }
     }
 
+    private void Bind(PlayerBehaviour player, PlayerBaseAbillitySet abillity)
+    {
+        _binderUI.UnBindAbillityUI();
+        _binderUI.UnBindHealthPlayerUI();
+        _binderUI.BindHealthPlayerUI(player);
+        _binderUI.BindAbillityUI(abillity);
+        _player.SetBehaviour(player);
+        _player.SetAbillity(abillity);
+        _gameSwitcher.SetPlayerBehaviour(player);
+    }
+    private void SetItems(PlayerInfo config)
+    {
+        var artifact = _artifactItemScroller.GetSelectItem().Create<Item>();
+        var consumable = _consumableItemScroller.GetSelectItem().Create<ConsumablesItem>();
+        artifact.ResetState();
+        consumable.ResetState();
+        _playerInventory.PickItem(artifact);
+        _playerInventory.PickItem(consumable);
+        if (_ending)
+            _ending.SetUseItems(artifact.Name, consumable.Name, config.Name);
+    }
     private PlayerInfo GetPlayerType()
     {
         if (_characterScroller.GetSelectItem() is PlayerInfo player)

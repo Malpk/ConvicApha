@@ -15,7 +15,7 @@ namespace PlayerComponent
 
         private Transform _parent;
 
-        private List<DeviceV2> _devics = new List<DeviceV2>();
+        private List<UpPlatform> _upPlatform = new List<UpPlatform>();
 
         private void Awake()
         {
@@ -23,18 +23,19 @@ namespace PlayerComponent
         }
         protected override void UseAbility()
         {
+            ResetAbillity();
             SetReloadState(true);
             _hitLight.parent = null;
             _amimator.SetTrigger("Hit");
             user.TakeDamage(_damage, _damageInfo);
-            foreach (var device in _devics)
+            foreach (var platform in _upPlatform)
             {
-                device.Deactivate();
-                device.CompliteWork();
+                platform.DeactivateDevice();
+                platform.DownDevice();
             }
             enabled = true;
         }
-        private void ReloadAnimationEvent()
+        private void ResetAbillity()
         {
             _hitLight.parent = _parent;
             _hitLight.localPosition = Vector3.zero;
@@ -43,16 +44,16 @@ namespace PlayerComponent
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out DeviceV2 device))
+            if (collision.TryGetComponent(out UpPlatform device))
             {
-                _devics.Add(device);
+                _upPlatform.Add(device);
             }
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out DeviceV2 device))
+            if (collision.TryGetComponent(out UpPlatform device))
             {
-                _devics.Remove(device);
+                _upPlatform.Remove(device);
             }
         }
     }

@@ -31,6 +31,7 @@ public class PlayerBehaviour : MonoBehaviour, IResist
     public virtual void Play()
     {
         IsPlay = true;
+        Heal(_maxHealth);
         _animator.ResetAnimator();
     }
 
@@ -48,7 +49,7 @@ public class PlayerBehaviour : MonoBehaviour, IResist
     }
     public void AddResistAttack(DamageInfo damage, float timeActive)
     {
-        _playerResist.Add(damage, timeActive);
+        _playerResist.Add(damage.Effect, damage, timeActive);
     }
     public bool Heal(int healValue)
     {
@@ -60,7 +61,7 @@ public class PlayerBehaviour : MonoBehaviour, IResist
         }
         return false;
     }
-    public bool TakeDamage(int damage, DamageInfo damageInfo)
+    public virtual bool TakeDamage(int damage, DamageInfo damageInfo)
     {
         if (!_playerResist.ContainResistAttack(damageInfo.Attack))
         {
@@ -96,5 +97,10 @@ public class PlayerBehaviour : MonoBehaviour, IResist
     public void Invulnerability(bool mode)
     {
         SetAnimation(PlayerState.Invulnerability, mode);
+    }
+    public void ResetState()
+    {
+        _health = _maxHealth;
+        OnUpdateHealth.Invoke(_health);
     }
 }

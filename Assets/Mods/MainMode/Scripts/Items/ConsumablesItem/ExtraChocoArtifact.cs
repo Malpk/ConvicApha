@@ -15,7 +15,7 @@ namespace MainMode.Items
 
         protected override void UseConsumable()
         {
-            user.GetComponent<PlayerEffectSet>().AddEffects(_itemEffect, _timeActive);
+            user.AddEffect(_itemEffect, _timeActive);
         }
     }
 }

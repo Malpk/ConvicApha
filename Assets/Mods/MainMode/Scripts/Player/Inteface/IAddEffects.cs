@@ -4,7 +4,7 @@ namespace PlayerComponent
 {
     public interface IAddEffects
     {
-        public void AddEffects(MovementEffect effects , float timeActive);
+        public void AddEffect(MovementEffect effects , float timeActive);
     }
 }
 
