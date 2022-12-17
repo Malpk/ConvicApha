@@ -7,6 +7,8 @@ public class CrystalGun : Weapon
 {
     [SerializeField] private GameObject smallCrystal;
     [SerializeField] private float bulletSpeed;
+    [SerializeField] private int bulletsCount;
+    [SerializeField] private int maxBulletCount;
 
     protected override void Shoot()
     {
@@ -15,6 +17,7 @@ public class CrystalGun : Weapon
 
     public override void Reload()
     {
-        throw new System.NotImplementedException();
+        int bulletsToAdd = maxBulletCount - bulletsCount;
+        bulletsCount += bulletsToAdd;
     }
 }

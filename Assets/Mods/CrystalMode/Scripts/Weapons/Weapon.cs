@@ -4,11 +4,9 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    [SerializeField] protected float reloadTime;
-    [SerializeField] protected DamageInfo damageInfo;
     [SerializeField] private float attackCoolDown;
-    private float timeSinceAttack;
     
+    private float timeSinceAttack;
     
     protected abstract void Shoot();
 

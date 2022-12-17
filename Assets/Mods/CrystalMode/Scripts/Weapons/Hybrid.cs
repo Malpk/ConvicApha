@@ -7,10 +7,6 @@ using Random = UnityEngine.Random;
 
 public class Hybrid : Weapon
 {
-    [Header("Start shoot type")]
-    [SerializeField] private ShootType shootType;
-    
-    
     [SerializeField] private float bulletsSpeed;
 
     [Header("Strong shoot")]
@@ -22,6 +18,7 @@ public class Hybrid : Weapon
     [SerializeField] private float timeBetweenShoots;
 
     [Header("Random shoot")] 
+    [SerializeField] private float timeBetweenBullets;
     [SerializeField] private float spreadStrength;
     [SerializeField] private int randomBulletCount;
 
@@ -39,7 +36,7 @@ public class Hybrid : Weapon
                 StartCoroutine(PartShoot());
                 break;
             case ShootType.RandomShoot:
-                RandomShoot();
+                StartCoroutine(RandomShoot());
                 break;
         }
     }
@@ -67,7 +64,7 @@ public class Hybrid : Weapon
         }
     }
 
-    private void RandomShoot()
+    private IEnumerator RandomShoot()
     {
         for (int i = 0; i < randomBulletCount; i++)
         {
@@ -75,6 +72,7 @@ public class Hybrid : Weapon
             Vector2 offset = transform.parent.transform.right * Random.Range(spreadStrength, - spreadStrength);
             Vector2 dir = transform.parent.transform.up +(Vector3) offset;
             bullet.GetComponent<Rigidbody2D>().AddForce(dir * bulletsSpeed);
+            yield return new WaitForSeconds(timeBetweenBullets);
         }
     }
 
