@@ -37,6 +37,8 @@ namespace PlayerComponent
             {
                 if (!Use(_consumablesItem))
                     OnUpdateConsumableItem?.Invoke(null);
+                else
+                    OnUpdateConsumableItem.Invoke(_consumablesItem);
             }
         }
         public void UseArtifact()
