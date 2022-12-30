@@ -19335,6 +19335,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1547220773}
     m_Modifications:
+    - target: {fileID: 2053713079919313062, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3423585139840456465, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_fontSize
       value: 28
@@ -19350,6 +19354,10 @@ PrefabInstance:
     - target: {fileID: 3423585140850362372, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423585140850362373, guid: da666bb457dd5af4399e54305d13e342, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3423585140850362375, guid: da666bb457dd5af4399e54305d13e342, type: 3}
       propertyPath: m_Pivot.x
@@ -27904,6 +27912,7 @@ GameObject:
   - component: {fileID: 1717915014}
   - component: {fileID: 1717915016}
   - component: {fileID: 1717915015}
+  - component: {fileID: 1717915017}
   m_Layer: 0
   m_Name: MiddleFloor
   m_TagString: Untagged
@@ -28199,6 +28208,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1717915017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717915013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!114 &1800485719 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6138426382758569247, guid: 2b9ce0354bf052b4ba15036c66973fd8, type: 3}
