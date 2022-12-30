@@ -12,10 +12,11 @@ public class CrystalPlate : MonoBehaviour
     {
         if (col.gameObject.GetComponent<Player>() && timeSinceActivate > reloadTime)
         {
-            Debug.Log("Add");
             timeSinceActivate = 0;
             col.gameObject.GetComponent<PlayerInventory>().AddConsumablesItem(Instantiate(crystalDust));
-            gameObject.GetComponent<Animator>().Play("CrystalPlateReload");
+            var animator = gameObject.GetComponent<Animator>();
+            animator.Rebind();
+            animator.Play("CrystalPlateReload");
         }
     }
 

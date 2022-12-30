@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8484424047778443707}
   - component: {fileID: 8484424047778443708}
   - component: {fileID: 1473568186653604739}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CrystalPlate (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: -1669597695882107127, guid: 76d21b23d8e694041acbe0673eb664dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reloadTime: 20
+  crystalDust: {fileID: 6051488693022938993, guid: 730a0ec1fe47b8846858795197616cd1, type: 3}
 --- !u!61 &8484424047778443708
 BoxCollider2D:
   m_ObjectHideFlags: 0
