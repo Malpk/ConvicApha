@@ -30,24 +30,29 @@ namespace MainMode
         private void OnEnable()
         {
             _shoot.FireAction += Fire;
-            OnActivate += Launch;
         }
         private void OnDisable()
         {
             _shoot.FireAction -= Fire;
-            OnActivate -= Launch;
         }
         private void Update()
         {
             State();
         }
 
-        protected override void Launch()
+        protected override void ActivateDevice()
+        {
+            base.ActivateDevice();
+            Launch();
+        }
+
+        private void Launch()
         {
             _progress = 0f;
             _target = target.transform;
             State = AimingState;
         }
+
         private void AimingState()
         {
             _progress += Time.deltaTime / _aimTime;

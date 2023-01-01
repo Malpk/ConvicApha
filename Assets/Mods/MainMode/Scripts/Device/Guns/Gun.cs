@@ -7,28 +7,18 @@ namespace MainMode
         [Header("Reference")]
         [SerializeField] protected DamageInfo attackInfo;
         [SerializeField] protected Animator gunAnimator;
+        [SerializeField] protected DeviceSpawner _spawner;
 
         protected Player target;
 
-        private void OnEnable()
+        protected override void ActivateDevice()
         {
-            OnActivate += Launch;
+            _spawner.Play();
         }
-        private void OnDisable()
+        protected override void DeactivateDevice()
         {
-            OnActivate -= Launch;
+            _spawner.Stop();
         }
-
-        private void OnBecameVisible()
-        {
-            gunAnimator.enabled = true;
-        }
-        private void OnBecameInvisible()
-        {
-            gunAnimator.enabled = false;
-        }
-        protected abstract void Launch();
-
         private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out Player target))

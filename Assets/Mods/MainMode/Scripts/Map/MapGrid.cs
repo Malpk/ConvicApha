@@ -82,6 +82,22 @@ namespace MainMode
             return freePoints.Count > 0;
         }
 
+        public bool GetPointInRadius(out List<Point> points, Vector2Int parentPosition, int radius)
+        {
+            points = new List<Point>();
+            var x = Mathf.Clamp(parentPosition.x - radius, 0, _points.GetLength(0));
+            var y = Mathf.Clamp(parentPosition.y - radius, 0, _points.GetLength(1));
+            for (int i = x; i < _points.GetLength(0); i++)
+            {
+                for (int j = y; j < _points.GetLength(1); j++)
+                {
+                    var childPosition = new Vector2Int(i, j);
+                    if (childPosition != parentPosition && Vector2Int.Distance(childPosition, parentPosition) <= radius)
+                        points.Add(_points[i, j]);
+                }
+            }
+            return points.Count > 0;
+        }
         public bool SetItemOnMap(UpPlatform smartItem, float distanceFromPlayer = 0, float minDistance = 0, Transform target = null)
         {
             if (GetFreePoints(out List<Point> points, distanceFromPlayer, minDistance, target))

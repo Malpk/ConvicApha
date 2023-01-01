@@ -43,6 +43,8 @@ namespace MainMode
         }
         public void UpDevice()
         {
+            _animator.enabled = true;
+            gameObject.SetActive(true);
             _progress = 0f;
             IsShow = true;
             enabled = _destroyMode;
@@ -80,6 +82,8 @@ namespace MainMode
         private void HideAnimationEvent()
         {
             _upDevice.Hide();
+            _animator.enabled = false;
+            gameObject.SetActive(false);
             IsShow = false;
         }
         private void CompliteUpAnimationEvent()
@@ -91,15 +95,17 @@ namespace MainMode
         {
             if (_upDevice.IsActive)
                 _upDevice.Deactivate();
+            _animator.enabled = false;
+            gameObject.SetActive(false);
             _upDevice.Hide();
         }
-        private void OnBecameVisible()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            _animator.enabled = true;
-        }
-        private void OnBecameInvisible()
-        {
-            _animator.enabled = false;
+            if (collision.TryGetComponent(out Player player))
+            {
+                if(_upDevice.IsShow)
+                    _upDevice.Activate();
+            }
         }
     }
 }

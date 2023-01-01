@@ -10,10 +10,8 @@ namespace MainMode
         private bool _isReadyExlosion = true;
 
         public event System.Action OnExlosion;
-        public event System.Action OnDeactivate;
         public event System.Action OnCompliteWork;
 
-        protected event System.Action OnActivate;
         public bool IsActive { get; private set; }
 
         public bool IsShow { get; private set; }
@@ -53,14 +51,18 @@ namespace MainMode
 #endif
             IsActive = true;
             enabled = true;
-            OnActivate?.Invoke();
+            ActivateDevice();
         }
         public void Deactivate()
         {
-            OnDeactivate?.Invoke();
             IsActive = false;
             enabled = false;
+            DeactivateDevice();
         }
+
+        protected abstract void ActivateDevice();
+        protected abstract void DeactivateDevice();
+
         public void CompliteWork()
         {
             OnCompliteWork?.Invoke();

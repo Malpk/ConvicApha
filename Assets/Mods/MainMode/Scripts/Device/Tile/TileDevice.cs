@@ -9,18 +9,12 @@ namespace MainMode
 
         private float _progress = 0f;
 
-        private void OnEnable()
-        {
-            OnActivate += ActivateTile;
-        }
-        private void OnDisable()
-        {
-            OnActivate -= ActivateTile;
-        }
-
-        private void ActivateTile()
+        protected override void ActivateDevice()
         {
             _progress = 0f;
+        }
+        protected override void DeactivateDevice()
+        {
         }
         private void Update()
         {

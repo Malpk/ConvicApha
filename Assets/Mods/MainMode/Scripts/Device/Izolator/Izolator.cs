@@ -23,16 +23,7 @@ namespace MainMode
                 jet.Deactivate(false);
             }
         }
-        protected virtual void OnEnable()
-        {
-            OnActivate += ActivateIzolator;
-            OnDeactivate += DeactivateIzolator;
-        }
-        protected virtual void OnDisable()
-        {
-            OnActivate -= ActivateIzolator;
-            OnDeactivate -= DeactivateIzolator;
-        }
+
         private void Update()
         {
             _progress += Time.deltaTime / _activateTime;
@@ -40,7 +31,7 @@ namespace MainMode
                 Deactivate();
         }
 
-        public void ActivateIzolator()
+        protected override void ActivateDevice()
         {
             _progress = 0f;
             foreach (var jet in jets)
@@ -48,7 +39,7 @@ namespace MainMode
                 jet.Activate();
             }
         }
-        public void DeactivateIzolator()
+        protected override void DeactivateDevice()
         {
             foreach (var jet in jets)
             {

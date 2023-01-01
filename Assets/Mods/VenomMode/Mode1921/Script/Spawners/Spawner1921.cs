@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MainMode.Mode1921
 {
-    public class DeviceSpawner : GeneralSpawner
+    public class Spawner1921 : GeneralSpawner
     {
         [Header("Spawner Setting")]
         [SerializeField] private UpPlatform[] _perfab;

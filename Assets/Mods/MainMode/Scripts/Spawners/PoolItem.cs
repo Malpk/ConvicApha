@@ -40,7 +40,7 @@ namespace MainMode
         }
         public bool Create(out UpPlatform item)
         {
-            CheakState();
+            Update();
             if (IsAcces)
             {
                 item = Instantiate();
@@ -66,7 +66,7 @@ namespace MainMode
             _poolActive.Add(newItem);
             return newItem;
         }
-        private void CheakState()
+        public void Update()
         {
             for (int i = 0; i < _poolActive.Count; i++)
             {

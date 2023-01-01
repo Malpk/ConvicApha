@@ -82,6 +82,7 @@ MonoBehaviour:
   _playOnStart: 0
   attackInfo: {fileID: 11400000, guid: 7ad453cbb6eb5734a834fed78eb39bad, type: 2}
   gunAnimator: {fileID: 1942199403927808803}
+  _spawner: {fileID: 4613910580748200203}
   _countShoot: 10
   _shootDelay: 0.3
   _bulletPrefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
@@ -220,6 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7142385478768023675}
   - component: {fileID: 8185477693437109602}
+  - component: {fileID: 4613910580748200203}
   - component: {fileID: 7142385478768023679}
   - component: {fileID: 7142385478768023676}
   - component: {fileID: 7503553255552411850}
@@ -262,6 +264,37 @@ MonoBehaviour:
   _destroyMode: 1
   _workTime: 4
   _upDevice: {fileID: 6823104097201688073}
+--- !u!114 &4613910580748200203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142385478768023678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6314077c3d00e03459295572c6f46db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _spawnRadius: 5
+  _spawnDelay: 0.25
+  _distanceBothDevice: 1.5
+  _pool:
+    _pools:
+    - _maxCount: 1
+      _distanceFormPlayer: 2
+      _isInfinity: 1
+      _spawnProbility: 80
+      _perfab: {fileID: 3509477499350634610, guid: 3d15c65c68157fa49a841f4c26a746f1, type: 3}
+    - _maxCount: 1
+      _distanceFormPlayer: 2
+      _isInfinity: 1
+      _spawnProbility: 20
+      _perfab: {fileID: 5468347696034960752, guid: a06cda8c11fd97c44b3725de91af7586, type: 3}
+  _position: {x: 4, y: 4}
+  _player: {fileID: 0}
+  _mapGrid: {fileID: 0}
 --- !u!212 &7142385478768023679
 SpriteRenderer:
   m_ObjectHideFlags: 0

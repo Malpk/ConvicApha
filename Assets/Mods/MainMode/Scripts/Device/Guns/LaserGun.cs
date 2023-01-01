@@ -30,8 +30,9 @@ namespace MainMode
             _laser.SetAttack(attackInfo);
         }
 
-        protected override void Launch()
+        protected override void ActivateDevice()
         {
+            base.ActivateDevice();
             _count = 0;
             _progress = 0f;
             var directions = new int[] { -1, 1 };
@@ -40,7 +41,7 @@ namespace MainMode
         }
         private void FixedUpdate()
         {
-            State();
+            State?.Invoke();
         }
         private void Reloading()
         {

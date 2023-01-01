@@ -22,19 +22,6 @@ namespace MainMode
             _fireParticale.Pause();
             _fire.SetAttack(attackInfo);
         }
-        private void OnEnable()
-        {
-            OnActivate += ActvateGun;
-        }
-        private void OnDisable()
-        {
-            OnActivate -= ActvateGun;
-        }
-        private void ActvateGun()
-        {
-            _fire.SetMode(true);
-            StartCoroutine(Rotate());
-        }
 
         private IEnumerator Rotate()
         {
@@ -63,9 +50,10 @@ namespace MainMode
                 yield return new WaitForFixedUpdate();
             }
         }
-        protected override void Launch()
+        protected override void ActivateDevice()
         {
-            throw new System.NotImplementedException();
+            base.ActivateDevice();
+            _fire.SetMode(true);
         }
     }
 }

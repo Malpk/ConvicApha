@@ -53,9 +53,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d9ab4c760f8aa4aa0cb70614d4184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnStart: 1
   _maxOffset: 1
-  _timeSmooth: 0
+  _timeSmooth: 0.1
   _speedFollowing: 10
   _camera: {fileID: 6728035425254130376}
   _target: {fileID: 0}
@@ -100,7 +99,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

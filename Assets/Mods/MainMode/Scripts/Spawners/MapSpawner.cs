@@ -13,7 +13,7 @@ namespace MainMode
         [SerializeField] private float _spawnRadius = 1;
         [Range(0.001f, 2)]
         [SerializeField] private float _timeDelay = 0.001f;
-        [SerializeField] private List<PoolItem> _pools;
+        [SerializeField] private PoolDevice _pool;
         [Header("Game Setting")]
         [Min(0)]
         [SerializeField] private int _difficleGame = 0;
@@ -37,7 +37,6 @@ namespace MainMode
             _player = player;
         }
 
-
         public void Play()
         {
             if (!_isPlay)
@@ -51,10 +50,7 @@ namespace MainMode
             if (_isPlay)
             {
                 _isPlay = false;
-                foreach (var pool in _pools)
-                {
-                    pool.ClearPool();
-                }
+                _pool.ClearPool();
             }
         }
 
@@ -74,7 +70,7 @@ namespace MainMode
 
         private void SpawnItem()
         {
-            if (GetPool(out PoolItem pool))
+            if (_pool.GetPool(out PoolItem pool))
             {
                 if (pool.Create(out UpPlatform item))
                 {
@@ -95,45 +91,6 @@ namespace MainMode
                 yield return null;
             }
         }
-        private bool GetPool(out PoolItem pool)
-        {
-            pool = null;
-            var pools = GeneralProbility(out float amount);
-            var choosee = Random.Range(0, 1.000f);
-            if (pools.Count > 1)
-            {
-                var curretProbillity = 0f;
-                for (int i = 0; i < pools.Count; i++)
-                {
-                    curretProbillity += pools[i].SpawnProbility / amount;
-                    if (choosee <= curretProbillity)
-                    {
-                        pool = pools[i];
-                        return true;
-                    }
-                }
-            }
-            else if (pools.Count > 0)
-            {
-                pool = pools[0];
-                return true;
-            }
-            return false;
-        }
-
-        public List<PoolItem> GeneralProbility(out float amount)
-        {
-            amount = 0f;
-            var list = new List<PoolItem>();
-            for (int i = 0; i < _pools.Count; i++)
-            {
-                if (_pools[i].SpawnProbility > 0)
-                {
-                    amount += _pools[i].SpawnProbility;
-                    list.Add(_pools[i]);
-                }
-            }
-            return list;
-        }
+     
     }
 }

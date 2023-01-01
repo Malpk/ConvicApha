@@ -8,19 +8,6 @@ namespace MainMode
 
         public override TrapType DeviceType => TrapType.VenomIsolator;
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            OnActivate += ActivateVenomCloud;
-            OnDeactivate += DeactivateVenomCloud;
-        }
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            OnActivate -= ActivateVenomCloud;
-            OnDeactivate -= DeactivateVenomCloud;
-        }
-
         public void ActivateVenomCloud()
         {
             _cloud.Show();

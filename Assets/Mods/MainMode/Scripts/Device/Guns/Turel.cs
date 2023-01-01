@@ -29,8 +29,9 @@ namespace MainMode
             _angleSteep = 360 / _countShoot;
         }
 
-        protected override void Launch()
+        protected override void ActivateDevice()
         {
+            base.ActivateDevice();
             DropProgress();
             _curretShootCount = 0;
             _rotateSteep = _angleSteep * _directions[Random.Range(0, _directions.Length)];
