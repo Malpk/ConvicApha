@@ -7,22 +7,33 @@ namespace MainMode
     public class DeviceSpawner : MonoBehaviour
     {
         [SerializeField] private bool _playOnStart;
-        [SerializeField] private int _spawnRadius;
+        [Header("Spawn Setting")]
+        [Min(2)]
+        [SerializeField] private int _spawnRadius = 2;
         [SerializeField] private float _spawnDelay;
-        [SerializeField] private float _distanceBothDevice;
+        [Min(0)]
+        [SerializeField] private float _deviceDensity;
         [SerializeField] private PoolDevice _pool;
         [SerializeField] private Vector2Int _position = Vector2Int.zero;
+        [Header("Border Setting")]
+        [Min(0)]
+        [SerializeField] private float _borderDensity = 1;
+        [SerializeField] private PoolItem _borderDevice;
         [Header("Reference")]
         [SerializeField] private Player _player;
         [SerializeField] private MapGrid _mapGrid;
 
         private float _progress = 0f;
+        private List<Point> _borderPoint = new List<Point>();
         private List<Point> _spawnPoints = new List<Point>();
 
         private void Start()
         {
             if (_mapGrid)
+            {
                 _mapGrid.GetPointInRadius(out _spawnPoints, _position, _spawnRadius);
+                _mapGrid.GetCirculBorder(out _borderPoint, _position, _spawnRadius);
+            }
             if (_playOnStart)
                 Play();
             else
@@ -49,12 +60,14 @@ namespace MainMode
         public void Play()
         {
             _progress = 0f;
+            CreateBorder();
             enabled = true;
         }
 
         public void Stop()
         {
             enabled = false;
+            _borderDevice.ClearPool();
         }
 
         private void Spawn()
@@ -91,24 +104,46 @@ namespace MainMode
             {
                 if (!point.IsBusy)
                 {
-                    if(CheakPosition(point))
+                    if(CheakPosition(point, _spawnPoints))
                         points.Add(point);
                 }
             }
             return points.Count > 0;
         }
 
-        private bool CheakPosition(Point selectPoint)
+        private void CreateBorder()
         {
-            foreach (var point in _spawnPoints)
+            var border = new List<Point>();
+            border.AddRange(_borderPoint);
+            while (border.Count > 0)
+            {
+                var point = border[Random.Range(0, border.Count)];
+                _borderDevice.Create(out UpPlatform device);
+                device.transform.parent = transform;
+                point.SetItem(device);
+                device.UpDevice();
+                var newList = new List<Point>();
+                for (int i = 0; i < border.Count; i++)
+                {
+                    if (Vector2.Distance(border[i].Position, point.Position) > _borderDensity)
+                        newList.Add(border[i]);
+                }
+                border = newList;
+            }
+        }
+
+        private bool CheakPosition(Point selectPoint, List<Point> points)
+        {
+            foreach (var point in points)
             {
                 if (point.IsBusy)
                 {
-                    if (Vector2.Distance(selectPoint.Position, point.Position) <= _distanceBothDevice)
+                    if (Vector2.Distance(selectPoint.Position, point.Position) <= _deviceDensity)
                         return false;
                 }
             }
             return true;
         }
+
     }
 }

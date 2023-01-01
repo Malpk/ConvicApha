@@ -87,13 +87,36 @@ namespace MainMode
             points = new List<Point>();
             var x = Mathf.Clamp(parentPosition.x - radius, 0, _points.GetLength(0));
             var y = Mathf.Clamp(parentPosition.y - radius, 0, _points.GetLength(1));
-            for (int i = x; i < _points.GetLength(0); i++)
+            var xEnd = Mathf.Clamp(parentPosition.x + radius, parentPosition.x, _points.GetLength(0));
+            var yEnd = Mathf.Clamp(parentPosition.y + radius, parentPosition.y, _points.GetLength(1));
+            for (int i = x; i < xEnd; i++)
             {
-                for (int j = y; j < _points.GetLength(1); j++)
+                for (int j = y; j < yEnd; j++)
                 {
                     var childPosition = new Vector2Int(i, j);
                     if (childPosition != parentPosition && Vector2Int.Distance(childPosition, parentPosition) <= radius)
                         points.Add(_points[i, j]);
+                }
+            }
+            return points.Count > 0;
+        }
+        public bool GetCirculBorder(out List<Point> points, Vector2Int parentPosition, int radius)
+        {
+            points = new List<Point>();
+            var x = Mathf.Clamp(parentPosition.x - radius, 0, _points.GetLength(0));
+            var y = Mathf.Clamp(parentPosition.y - radius, 0, _points.GetLength(1));
+            var xEnd = Mathf.Clamp(parentPosition.x + radius, parentPosition.x, _points.GetLength(0));
+            var yEnd = Mathf.Clamp(parentPosition.y + radius, parentPosition.y, _points.GetLength(1));
+            for (int i = x; i < xEnd; i++)
+            {
+                for (int j = y; j < yEnd; j++)
+                {
+                    var childPosition = new Vector2Int(i, j);
+                    var rate = Mathf.Clamp(radius - Vector2Int.Distance(childPosition, parentPosition), 0, radius);
+                    if (rate < 1.1f && rate > 0)
+                    {
+                        points.Add(_points[i, j]);
+                    }
                 }
             }
             return points.Count > 0;

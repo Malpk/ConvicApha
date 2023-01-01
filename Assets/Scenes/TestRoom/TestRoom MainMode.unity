@@ -8642,6 +8642,18 @@ PrefabInstance:
       propertyPath: _position.y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 122320315, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
+      propertyPath: _borderDevice._perfab
+      value: 
+      objectReference: {fileID: 6228421749787143620, guid: ee93799ba406c1343aec05c71fa75805, type: 3}
+    - target: {fileID: 122320315, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
+      propertyPath: _borderDevice._isInfinity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 122320315, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
+      propertyPath: _borderDevice._distanceFormPlayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1649655687290942287, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
       propertyPath: _playOnStart
       value: 0
@@ -8649,6 +8661,10 @@ PrefabInstance:
     - target: {fileID: 1876974867802433553, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
       propertyPath: m_Name
       value: LaserGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876974867802433553, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1876974867802433566, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
       propertyPath: m_RootOrder
@@ -10675,15 +10691,27 @@ PrefabInstance:
       objectReference: {fileID: 835173824}
     - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
       propertyPath: _position.x
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
       propertyPath: _position.y
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
       propertyPath: _spawnDelay
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: _spawnRadius
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: _borderDensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: _deviceDensity
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
       propertyPath: _pools.Array.size
@@ -10694,8 +10722,16 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: _borderDevice._perfab
+      value: 
+      objectReference: {fileID: 3607033628082124060, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
+    - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
       propertyPath: _pool._pools.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
+      propertyPath: _borderDevice._isInfinity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8345449028527598094, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
       propertyPath: _pools.Array.data[1]._perfab
@@ -10840,6 +10876,18 @@ PrefabInstance:
       propertyPath: _position.y
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 4613910580748200203, guid: 96256595c1535014e8c5e1655211e010, type: 3}
+      propertyPath: _borderDevice._perfab
+      value: 
+      objectReference: {fileID: 5702531047929057932, guid: 257329797b5855748a30e95133d6167d, type: 3}
+    - target: {fileID: 4613910580748200203, guid: 96256595c1535014e8c5e1655211e010, type: 3}
+      propertyPath: _borderDevice._isInfinity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613910580748200203, guid: 96256595c1535014e8c5e1655211e010, type: 3}
+      propertyPath: _borderDevice._distanceFormPlayer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7142385478768023675, guid: 96256595c1535014e8c5e1655211e010, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -10887,6 +10935,10 @@ PrefabInstance:
     - target: {fileID: 7142385478768023678, guid: 96256595c1535014e8c5e1655211e010, type: 3}
       propertyPath: m_Name
       value: Turel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7142385478768023678, guid: 96256595c1535014e8c5e1655211e010, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8185477693437109602, guid: 96256595c1535014e8c5e1655211e010, type: 3}
       propertyPath: _destroyMode
