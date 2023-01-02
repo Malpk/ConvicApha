@@ -18,8 +18,7 @@ namespace MainMode
 
         private Point[,] _points;
 
-        public Point[,] PointsArray => _points;
-        public List<Point> Points { get; private set; }
+        public Point[,] Points => _points;
         public Vector2 MapSize => new Vector2(_mapSize.x * _unitSize.x, _mapSize.y * _unitSize.y);
         private void Awake()
         {
@@ -143,8 +142,9 @@ namespace MainMode
             {
                 for (int j = -x; j < x; j++)
                 {
-                    map[y + i, x + j] = new Point(transform.position + 
-                        new Vector3(j * unity.x, i * unity.y) + (Vector3)unity/2);
+                    var position = transform.position +
+                        new Vector3(j * unity.x, i * unity.y) + (Vector3)unity / 2;
+                    map[y + i, x + j] = new Point(position, new Vector2Int(y + i, x + j));
 #if UNITY_EDITOR
                     if (_marker && _showMarker)
                     {

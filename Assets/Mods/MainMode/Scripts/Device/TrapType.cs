@@ -18,6 +18,7 @@ namespace MainMode
         SteamIsolator,
         RocketLauncher,
         DaimondIzolator,
-        TileHeal
+        TileHeal,
+        RocketFollowingLauncher
     }
 }

@@ -10,6 +10,7 @@ namespace MainMode
         [SerializeField] private int _maxCount;
         [Min(0)]
         [SerializeField] private int _distanceFormPlayer;
+        [SerializeField] private int _requaredSize;
         [SerializeField] private bool _isInfinity;
         [Min(1f)]
         [SerializeField] private float _spawnProbility = 1f;
@@ -20,12 +21,23 @@ namespace MainMode
         private List<UpPlatform> _poolDeactive = new List<UpPlatform>();
 
         public int DistanceFromPlayer => _distanceFormPlayer;
+        public int SizePoint => _requaredSize;
         public bool IsAcces => _poolActive.Count < _maxCount || _isInfinity;
         public float SpawnProbility => GetProbility();
 
-        public void ClearPool()
+        public void ClearPool(bool waitComplite)
         {
-            Clear(_poolActive);
+            if (!waitComplite)
+            {
+                Clear(_poolActive);
+            }
+            else
+            {
+                foreach (var device in _poolActive)
+                {
+                    device.DownDevice();
+                }
+            }
             Clear(_poolDeactive);
         }
 

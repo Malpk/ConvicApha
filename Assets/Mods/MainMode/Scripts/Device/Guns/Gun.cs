@@ -10,14 +10,17 @@ namespace MainMode
         [SerializeField] protected DeviceSpawner _spawner;
 
         protected Player target;
+        protected Player lastTarget;
 
         protected override void ActivateDevice()
         {
-            _spawner.Play();
+            if(_spawner)
+                _spawner.Play();
         }
         protected override void DeactivateDevice()
         {
-            _spawner.Stop();
+            if (_spawner)
+                _spawner.Stop();
         }
         private void OnTriggerStay2D(Collider2D collision)
         {
@@ -32,6 +35,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out Player target))
             {
+                lastTarget = target;
                 this.target = null;
             }
         }

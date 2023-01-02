@@ -12,7 +12,7 @@ namespace MainMode
         {
             foreach (var pool in _pools)
             {
-                pool.ClearPool();
+                pool.ClearPool(true);
             }
         }
 

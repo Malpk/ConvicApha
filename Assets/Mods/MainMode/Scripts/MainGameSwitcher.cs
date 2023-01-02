@@ -5,7 +5,7 @@ namespace MainMode
 {
     public class MainGameSwitcher : GameSwitcher
     {
-        [SerializeField] private MapSpawner _mapSpawner;
+        [SerializeField] private MainSpawner _mapSpawner;
         [SerializeField] private EviilBotSpawner _botSpawner;
         [SerializeField] private MainModeGameRecord _saverRecord;
         [SerializeField] private TimerDisplay _bestRecords;
@@ -17,7 +17,7 @@ namespace MainMode
         }
 
         [Inject]
-        public void Construct(MapSpawner mapSpawner, EviilBotSpawner eviilBotSpawner)
+        public void Construct(MainSpawner mapSpawner, EviilBotSpawner eviilBotSpawner)
         {
             _mapSpawner = mapSpawner;
             _botSpawner = eviilBotSpawner;

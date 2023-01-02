@@ -50,11 +50,13 @@ namespace MainMode
             }
         }
 
-        public void Intializate(MapGrid mapGrid, Player player)
+        public void Intializate(MapGrid mapGrid, Player player, Vector2Int position)
         {
             _player = player;
             _mapGrid = mapGrid;
-            mapGrid.GetPointInRadius(out _spawnPoints, _position, _spawnRadius);
+            _position = position;
+            mapGrid.GetPointInRadius(out _spawnPoints, position, _spawnRadius);
+            mapGrid.GetCirculBorder(out _borderPoint, position, _spawnRadius);
         }
 
         public void Play()
@@ -67,7 +69,7 @@ namespace MainMode
         public void Stop()
         {
             enabled = false;
-            _borderDevice.ClearPool();
+            _borderDevice.ClearPool(true);
         }
 
         private void Spawn()

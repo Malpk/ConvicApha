@@ -85,8 +85,8 @@ MonoBehaviour:
   _spawner: {fileID: 4613910580748200203}
   _countShoot: 10
   _shootDelay: 0.3
-  _bulletPrefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
   _spawnTransform: {fileID: 7580191188881006170}
+  _smartProject: {fileID: 3460674728820398579, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
   _rigidbody: {fileID: 272777404876066745}
 --- !u!212 &950298437821178296
 SpriteRenderer:
@@ -210,7 +210,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 3.5
 --- !u!1 &7142385478768023678
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +224,6 @@ GameObject:
   - component: {fileID: 4613910580748200203}
   - component: {fileID: 7142385478768023679}
   - component: {fileID: 7142385478768023676}
-  - component: {fileID: 7503553255552411850}
   m_Layer: 10
   m_Name: Turel
   m_TagString: Untagged
@@ -259,9 +258,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed4c20d547fc47c4d93fa2b22e6f885f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showOnStart: 0
-  _playOnStart: 1
-  _destroyMode: 1
+  _showOnStart: 1
+  _playOnStart: 0
+  _destroyMode: 0
   _workTime: 4
   _upDevice: {fileID: 6823104097201688073}
 --- !u!114 &4613910580748200203
@@ -279,20 +278,30 @@ MonoBehaviour:
   _playOnStart: 0
   _spawnRadius: 5
   _spawnDelay: 0.25
-  _distanceBothDevice: 1.5
+  _deviceDensity: 1.5
   _pool:
     _pools:
     - _maxCount: 1
       _distanceFormPlayer: 2
+      _requaredSize: 0
       _isInfinity: 1
       _spawnProbility: 80
       _perfab: {fileID: 3509477499350634610, guid: 3d15c65c68157fa49a841f4c26a746f1, type: 3}
     - _maxCount: 1
       _distanceFormPlayer: 2
+      _requaredSize: 0
       _isInfinity: 1
       _spawnProbility: 20
       _perfab: {fileID: 5468347696034960752, guid: a06cda8c11fd97c44b3725de91af7586, type: 3}
-  _position: {x: 4, y: 4}
+  _position: {x: 4, y: 15}
+  _borderDensity: 2.5
+  _borderDevice:
+    _maxCount: 0
+    _distanceFormPlayer: 2
+    _requaredSize: 0
+    _isInfinity: 1
+    _spawnProbility: 1
+    _perfab: {fileID: 5702531047929057932, guid: 257329797b5855748a30e95133d6167d, type: 3}
   _player: {fileID: 0}
   _mapGrid: {fileID: 0}
 --- !u!212 &7142385478768023679
@@ -365,19 +374,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!58 &7503553255552411850
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7142385478768023678}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5

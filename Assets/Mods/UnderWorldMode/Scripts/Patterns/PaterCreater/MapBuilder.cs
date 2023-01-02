@@ -69,7 +69,7 @@ namespace Underworld
                 for (int j = 0; j < sideSize; j++)
                 {
                     var position = start + new Vector2(unitSize.x * j, -unitSize.y * i);
-                    Points.Add(new Point(position));
+                    Points.Add(new Point(position,new Vector2Int(i, j)));
                     terms[i, j] = Instantiate(_perfab.gameObject).GetComponent<Term>();
                     terms[i, j].transform.parent = holder;
                     terms[i, j].transform.localPosition = position;

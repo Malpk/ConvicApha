@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] private MapSpawner mapSpawnerMain;
+    [SerializeField] private MainSpawner mapSpawnerMain;
     [SerializeField] private Camera camera;
     [SerializeField] private UnderWorldGameBuilder underWorldGameBuilder;
     [SerializeField] private int translationSpeed;

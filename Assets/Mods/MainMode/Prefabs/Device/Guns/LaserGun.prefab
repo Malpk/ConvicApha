@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 122320315}
   - component: {fileID: 1876974867802433554}
   - component: {fileID: 1876974867802433555}
-  - component: {fileID: 2723504321659802538}
   m_Layer: 10
   m_Name: LaserGun
   m_TagString: Untagged
@@ -49,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showOnStart: 1
-  _playOnStart: 1
+  _playOnStart: 0
   _destroyMode: 0
   _workTime: 10
   _upDevice: {fileID: 7855207298649285496}
@@ -68,20 +67,30 @@ MonoBehaviour:
   _playOnStart: 0
   _spawnRadius: 4
   _spawnDelay: 0.25
-  _distanceBothDevice: 1.5
+  _deviceDensity: 1.5
   _pool:
     _pools:
     - _maxCount: 1
       _distanceFormPlayer: 2
+      _requaredSize: 0
       _isInfinity: 1
       _spawnProbility: 80
       _perfab: {fileID: 3509477499350634610, guid: 3d15c65c68157fa49a841f4c26a746f1, type: 3}
     - _maxCount: 1
       _distanceFormPlayer: 2
+      _requaredSize: 0
       _isInfinity: 1
       _spawnProbility: 20
       _perfab: {fileID: 5468347696034960752, guid: a06cda8c11fd97c44b3725de91af7586, type: 3}
-  _position: {x: 4, y: 4}
+  _position: {x: 4, y: 5}
+  _borderDensity: 2.5
+  _borderDevice:
+    _maxCount: 0
+    _distanceFormPlayer: 2
+    _requaredSize: 0
+    _isInfinity: 1
+    _spawnProbility: 1
+    _perfab: {fileID: 6228421749787143620, guid: ee93799ba406c1343aec05c71fa75805, type: 3}
   _player: {fileID: 0}
   _mapGrid: {fileID: 0}
 --- !u!212 &1876974867802433554
@@ -154,22 +163,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!58 &2723504321659802538
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876974867802433553}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5
 --- !u!1 &3448409012663447914
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +177,7 @@ GameObject:
   - component: {fileID: 2615284599592323783}
   - component: {fileID: 3368431852008653553}
   - component: {fileID: 2806639764111167684}
+  - component: {fileID: 1914769647}
   m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
@@ -335,6 +329,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!58 &1914769647
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448409012663447914}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.46
 --- !u!1 &4958611335313551895
 GameObject:
   m_ObjectHideFlags: 0

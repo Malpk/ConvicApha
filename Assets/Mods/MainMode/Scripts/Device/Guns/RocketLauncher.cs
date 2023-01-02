@@ -5,10 +5,11 @@ namespace MainMode
     public class RocketLauncher : Gun
     {
         [Header("Geneeral Setting")]
+        [SerializeField] private bool _smartRocket;
         [SerializeField] private float _aimTime = 1f;
         [SerializeField] private float _speedRotation;
         [Header("Reference")]
-        [SerializeField] private Rocket _rocket;
+        [SerializeField] private SmartProjectale _rocket;
         [SerializeField] private FireWave _wave;
         [SerializeField] private Transform _spawnProjectelePosition;
         [SerializeField] private ShootPoint _shoot;
@@ -95,12 +96,9 @@ namespace MainMode
         }
         private void Fire()
         {
-            if (_wave != null)
-                _wave.Explosion();
             _rocket.transform.position = _spawnProjectelePosition.position;
             _rocket.transform.rotation = Quaternion.Euler(Vector3.forward * _rotateBody.rotation);
-            _rocket.SetMode(true);
-            _rocket.SetTarget(_lostTargetPosition);
+            _rocket.Activate(target ? target : lastTarget);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace MainMode
         [Min(1)]
         [SerializeField] private int _countShoot = 1;
         [SerializeField] protected float _shootDelay = 1f;
-        [SerializeField] protected Bullet _bulletPrefab;
         [SerializeField] protected Transform _spawnTransform;
+        [SerializeField] protected SmartProjectale _smartProject;
         [Header("Move properties")]
         [SerializeField] protected Rigidbody2D _rigidbody;
 
@@ -20,7 +20,7 @@ namespace MainMode
         private float _startAngle;
         private float _rotateSteep;
         private int[] _directions = new int[] { -1, 1 };
-        private List<Bullet> _pool = new List<Bullet>();
+        private List<SmartProjectale> _pool = new List<SmartProjectale>();
 
         public override TrapType DeviceType => TrapType.Turel;
 
@@ -46,7 +46,7 @@ namespace MainMode
                 var bullet = CreateProjectale();
                 bullet.transform.position = _spawnTransform.position;
                 bullet.transform.rotation = _spawnTransform.rotation;
-                bullet.Shoot();
+                bullet.Activate(target);
                 DropProgress();
                 _curretShootCount++;
                 gunAnimator.SetTrigger("Shoot");
@@ -64,16 +64,17 @@ namespace MainMode
             _progress = 0f;
             _startAngle = _rigidbody.rotation;
         }
-        private Bullet CreateProjectale()
+        private SmartProjectale CreateProjectale()
         {
             foreach (var poolBullet in _pool)
             {
-                if (poolBullet.IsDestroy)
+                if (!poolBullet.IsActivate)
                 {
                     return poolBullet;
                 }
             }
-            var bullet = Instantiate(_bulletPrefab.gameObject, transform.parent).GetComponent<Bullet>();
+            var bullet = Instantiate(_smartProject.gameObject, transform.parent).
+                GetComponent<SmartProjectale>();
             bullet.SetAttack(attackInfo);
             _pool.Add(bullet);
             return bullet;

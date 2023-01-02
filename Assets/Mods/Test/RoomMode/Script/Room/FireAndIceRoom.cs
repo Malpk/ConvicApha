@@ -6,7 +6,7 @@ namespace MainMode.Room
     public class FireAndIceRoom : RoomBehaviour
     {
         [SerializeField] private MapGrid _mapGrid;
-        [SerializeField] private MapSpawner _mapSpawner;
+        [SerializeField] private MainSpawner _mapSpawner;
         [SerializeField] private UpPlatform _prefabRocketLaunch;
 
         private bool _isPlay;
@@ -27,8 +27,8 @@ namespace MainMode.Room
                         transform).GetComponent<UpPlatform>();
                     asset.UpDevice();
                     _assets.Add(asset);
-                    _mapGrid.PointsArray[mask.x * (_mapGrid.PointsArray.GetLength(0) - 1),
-                        mask.y * (_mapGrid.PointsArray.GetLength(1) - 1)].SetItem(asset);
+                    _mapGrid.Points[mask.x * (_mapGrid.Points.GetLength(0) - 1),
+                        mask.y * (_mapGrid.Points.GetLength(1) - 1)].SetItem(asset);
                 }
                 _mapSpawner.Play();
             }

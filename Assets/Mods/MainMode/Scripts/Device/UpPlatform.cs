@@ -99,13 +99,5 @@ namespace MainMode
             gameObject.SetActive(false);
             _upDevice.Hide();
         }
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.TryGetComponent(out Player player))
-            {
-                if(_upDevice.IsShow)
-                    _upDevice.Activate();
-            }
-        }
     }
 }
