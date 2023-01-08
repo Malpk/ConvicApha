@@ -131,6 +131,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: AirJet
       objectReference: {fileID: 0}
+    - target: {fileID: 35572160900783758, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: _timeActive
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 35572160900783758, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: _speedMovement
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 35572160900783758, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
+      propertyPath: _speedRotation
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 35572162351270275, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -177,11 +189,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4932251424888737957, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: -10.497621
+      value: 15.378049
       objectReference: {fileID: 0}
     - target: {fileID: 4932251424888737957, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: -3.4132688
+      value: 10.416976
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 187df87c427c0e842b98ad317ea69630, type: 3}
