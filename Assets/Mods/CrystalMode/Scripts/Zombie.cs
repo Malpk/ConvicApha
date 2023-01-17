@@ -2,7 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Zombie : MonoBehaviour
+public class Zombie : MonoBehaviour, IDamage
 {
    private NavMeshAgent agent;
    public GameObject prefab;
@@ -43,5 +43,14 @@ public class Zombie : MonoBehaviour
       
       Destroy(gameObject);
    }
-   
+
+   public void Explosion()
+   {
+      throw new System.NotImplementedException();
+   }
+
+   public void TakeDamage(int damage, DamageInfo type)
+   {
+      Kill();
+   }
 }

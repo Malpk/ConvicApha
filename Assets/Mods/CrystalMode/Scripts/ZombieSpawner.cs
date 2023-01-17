@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class ZombieSpawner : MonoBehaviour
 {
     List<Transform> points = new List<Transform>();
+    [SerializeField] private NavMeshSurface2d navMeshSurface2d;
     private void Start()
     {
+        navMeshSurface2d.BuildNavMesh();
         GameObject[] pointsObj = GameObject.FindGameObjectsWithTag("Point");
         foreach (var point in pointsObj)
         {
