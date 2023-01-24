@@ -15,6 +15,8 @@ namespace MainMode.GameInteface
         [SerializeField] private ScrollItem[] _scrollItems;
 
         private int _offset = 0;
+        private float _progress = 0f;
+        
         private ScrollPoint[] _points;
         private Coroutine _curretCommand;
 
@@ -47,6 +49,15 @@ namespace MainMode.GameInteface
             }
         }
 
+        //private void Update()
+        //{
+        //    _progress = Mathf.Clamp01(_progress += Time.deltaTime);
+        //    if (_progress >= 1)
+        //    {
+        //        _progress = 0f;
+        //        enabled = false;
+        //    }
+        //}
         public ScrollItem GetSelectItem()
         {
             var point = _points[0];

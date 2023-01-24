@@ -297,7 +297,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6138426382758569240}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -366,7 +366,6 @@ MonoBehaviour:
   _showOnStart: 0
   _canvas: {fileID: 6138426382758569244}
   _backGroundVideo: {fileID: 6138426382955657377}
-  _underWorldLoader: {fileID: 0}
 --- !u!1 &6138426382955657389
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +447,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6138426382955657389}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: d33feb7603849054ca897dd950e96bf9, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 5baa3fb9ec1ea284588ca2d1caafedc2, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
