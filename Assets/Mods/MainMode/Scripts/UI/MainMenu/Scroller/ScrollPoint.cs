@@ -9,14 +9,18 @@ namespace MainMode.GameInteface
         [SerializeField] private Image _iconItem;
         [SerializeField] private RectTransform _rectTransform;
 
-        private Vector3 _target;
         private ScrollItem _item;
+        private Vector3 _startPosition;
 
         public System.Action<string,string> OnSelectItem;
 
         public ScrollItem Content => _item;
         public Vector3 Position => _rectTransform.localPosition;
 
+        private void Awake()
+        {
+            _startPosition = _rectTransform.localPosition;
+        }
         public void OnPointerEnter(PointerEventData eventData)
         {
             OnSelectItem?.Invoke(_item.Description, _item.Name);
@@ -31,15 +35,13 @@ namespace MainMode.GameInteface
         {
             _rectTransform.localPosition = position;
         }
-        public void SetTarget(Vector3 offset)
+        public void MoveTo(Vector3 offseet)
         {
-            _target = _rectTransform.localPosition + offset;
+            _rectTransform.localPosition = _startPosition + offseet;
         }
-
-        public bool UpdatePosition(float move)
+        public void SetStartPosition()
         {
-            _rectTransform.localPosition = Vector3.MoveTowards(_rectTransform.localPosition, _target, move);
-            return _rectTransform.localPosition.x != _target.x;
+            _startPosition = _rectTransform.localPosition;
         }
     }
 }
