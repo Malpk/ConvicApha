@@ -14,7 +14,7 @@ namespace MainMode
         [Header("Move properties")]
         [SerializeField] protected Rigidbody2D _rigidbody;
 
-        private int _curretShootCount;
+        private int _currentShootCount;
         private float _progress = 0f;
         private float _angleSteep;
         private float _startAngle;
@@ -32,7 +32,7 @@ namespace MainMode
         protected override void Launch()
         {
             DropProgress();
-            _curretShootCount = 0;
+            _currentShootCount = 0;
             _rotateSteep = _angleSteep * _directions[Random.Range(0, _directions.Length)];
         }
 
@@ -47,9 +47,9 @@ namespace MainMode
                 bullet.transform.rotation = _spawnTransform.rotation;
                 bullet.Shoot();
                 DropProgress();
-                _curretShootCount++;
+                _currentShootCount++;
                 gunAnimator.SetTrigger("Shoot");
-                if (_countShoot == _curretShootCount)
+                if (_countShoot == _currentShootCount)
                 {
                     if (target == null)
                         Deactivate();
