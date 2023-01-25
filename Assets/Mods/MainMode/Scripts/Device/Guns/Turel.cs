@@ -39,7 +39,6 @@ namespace MainMode
         private void Update()
         {
             _progress = Mathf.Clamp01(_progress + Time.deltaTime / _shootDelay);
-            _rigidbody.rotation = _startAngle + _rotateSteep * _progress;
             if (_progress >= 1)
             {
                 var bullet = CreateProjectale();

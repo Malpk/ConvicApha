@@ -7,8 +7,10 @@ public class RotatingWeapon : MonoBehaviour
 {
     [Header("If want rotate to other way add '-' to number")]
     [SerializeField] private float rotateSpeed;
+    
+    [SerializeField] protected Rigidbody2D rigidbody;
     private void Update()
     {
-        gameObject.transform.Rotate(transform.forward, rotateSpeed * Time.deltaTime);
+        rigidbody.MoveRotation(rotateSpeed * Time.deltaTime);
     }
 }
