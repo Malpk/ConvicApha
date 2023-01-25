@@ -13,6 +13,7 @@ public class DeathTimer : MonoBehaviour
 
     private void Update()
     {
+        lifeTime += Time.deltaTime;
         if (workFinished)
         {
             OnWorkFinished?.Invoke();
