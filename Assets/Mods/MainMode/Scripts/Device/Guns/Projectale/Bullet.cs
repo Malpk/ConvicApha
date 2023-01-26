@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace MainMode
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(CapsuleCollider2D))]
-    public class Bullet : MonoBehaviour,ISetAttack
+    public class Bullet : MonoBehaviour,ISetAttack,IPoolItem
     {
         [Min(1)]
         [SerializeField] private int _damage = 1;
@@ -19,7 +18,11 @@ namespace MainMode
         private DamageInfo _attackInfo;
         private Rigidbody2D _rigidbody;
 
+        public event Action<IPoolItem> OnDelete;
+
         public bool IsDestroy { get; private set; } = false;
+
+        public GameObject PoolItem => gameObject;
 
         private void Awake()
         {
@@ -35,7 +38,6 @@ namespace MainMode
         {
             _progress = 0f;
             IsDestroy = false;
-            gameObject.SetActive(true);
             _rigidbody.velocity = _speed * transform.up;
         }
         public void Delete()
@@ -43,6 +45,7 @@ namespace MainMode
             IsDestroy = true;
             gameObject.SetActive(false);
             _rigidbody.velocity = Vector2.zero;
+            OnDelete?.Invoke(this);
         }
         public void SetAttack(DamageInfo info)
         {

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingWeapon : MonoBehaviour
@@ -27,7 +24,6 @@ public class MovingWeapon : MonoBehaviour
             target = Vector2.Distance(transform.position, initialPos) < 0.01 ? initialPos + secondPosOffset : initialPos;
             timeSinceLastMove = 0;
         }
-
         if (timeSinceLastMove > stopCoolDown)
         {
             var dir = (target - (Vector2)transform.position).normalized * (moveSpeed * Time.deltaTime);

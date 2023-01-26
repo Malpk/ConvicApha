@@ -11,7 +11,6 @@ namespace MainMode
         [SerializeField] private Rigidbody2D _fireGun;
         [SerializeField] private ParticleSystem _fireParticale;
 
-        private bool _particaleMode;
 
         private int[] _directions = new int[] { -1, 1 };
 

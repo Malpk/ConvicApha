@@ -6,13 +6,11 @@ namespace MainMode
     [RequireComponent(typeof(CircleCollider2D))]
     public class DetectDeviceSet : MonoBehaviour
     {
-        [SerializeField] protected Izolator izolator;
-
-        [SerializeField] private UnityEvent _detect;
+        [SerializeField] private UnityEvent<Player> _onDetect;
 
         private CircleCollider2D _collider;
 
-        protected virtual void Awake()
+        protected void Awake()
         {
             _collider = GetComponent<CircleCollider2D>();
             _collider.isTrigger = true;
@@ -22,14 +20,15 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out Player player))
             {
-                SendMessange(player);
+                _onDetect.Invoke(player);
             }
         }
-        protected virtual void SendMessange(Player player)
+
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            if (izolator.IsShow && !izolator.IsActive)
+            if (collision.TryGetComponent(out Player player))
             {
-                _detect.Invoke();
+                _onDetect.Invoke(null);
             }
         }
     }
