@@ -90,18 +90,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4179998817302418067}
-        m_TargetAssemblyTypeName: DeathTimer, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &4179998817302418067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  _timeActive: 10
+  _timeActive: 5
   _onCompliteWork:
     m_PersistentCalls:
       m_Calls:
@@ -191,13 +179,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnAwake: 0
-  _onDetect:
+  _onTrigerEnter:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4179998817302418067}
+        m_TargetAssemblyTypeName: DeathTimer, Assembly-CSharp
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 6651594916533401001}
-        m_TargetAssemblyTypeName: DamageAttackSet, Assembly-CSharp
+        m_TargetAssemblyTypeName: DeviceAttackSet, Assembly-CSharp
         m_MethodName: SetAttack
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onTrigerExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4179998817302418067}
+        m_TargetAssemblyTypeName: DeathTimer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

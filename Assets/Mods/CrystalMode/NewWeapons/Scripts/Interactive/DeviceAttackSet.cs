@@ -13,4 +13,12 @@ public class DeviceAttackSet : MonoBehaviour
             player.TakeDamage(_damage, _attackInfo);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Player player))
+        {
+            SetAttack(player);
+        }
+    }
 }

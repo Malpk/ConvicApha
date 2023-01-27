@@ -25,6 +25,7 @@ public class DeathTimer : MonoBehaviour
         if (_progress >= 1f)
         {
             _onCompliteWork.Invoke();
+            Stop();
         }
     }
 

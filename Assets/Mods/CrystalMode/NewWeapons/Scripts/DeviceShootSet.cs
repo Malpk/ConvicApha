@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class ShootDeviceSet : MonoBehaviour
+    public class DeviceShootSet : MonoBehaviour
     {
         [SerializeField] private int _countShootInSecond;
         [SerializeField] private float _spread;

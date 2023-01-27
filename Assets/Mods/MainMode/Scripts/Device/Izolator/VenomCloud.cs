@@ -1,25 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode
 {
-    public class VenomCloud : DetectDeviceSet
+    public class VenomCloud : MonoBehaviour
     {
         [Header("Damage Setting")]
         [SerializeField] private DamageInfo _damageInfo;
         [Header("Reference")]
-        [SerializeField] private Collider2D _triger;
         [SerializeField] private SpriteRenderer _cloudSprite;
 
         protected void Awake()
         {
             Hide();
-        }
-
-        public void SetMode(bool mode)
-        {
-            _triger.enabled = mode;
         }
         public void Show()
         {
@@ -30,11 +22,11 @@ namespace MainMode
             _cloudSprite.enabled = false;
         }
 
-        private void OnTriggerStay2D(Collider2D collision)
+        public void SetDamage(Player player)
         {
-            if (collision.TryGetComponent(out IDamage target))
+            if (player && _cloudSprite.enabled)
             {
-                target.TakeDamage(0, _damageInfo);
+                player.TakeDamage(0, _damageInfo);
             }
         }
     }

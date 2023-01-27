@@ -3,11 +3,12 @@ using UnityEngine.Events;
 
 namespace MainMode
 {
-    public class DetectDeviceSet : MonoBehaviour
+    public class DeviceDetectSet : MonoBehaviour
     {
         [SerializeField] private bool _playOnAwake;
         [Header("Events")]
-        [SerializeField] private UnityEvent<Player> _onDetect;
+        [SerializeField] private UnityEvent<Player> _onTrigerEnter;
+        [SerializeField] private UnityEvent<Player> _onTrigerExit;
         [Header("Reference")]
         [SerializeField] private Collider2D _collider;
 
@@ -32,7 +33,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out Player player))
             {
-                _onDetect.Invoke(player);
+                _onTrigerEnter.Invoke(player);
             }
         }
 
@@ -40,7 +41,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out Player player))
             {
-                _onDetect.Invoke(null);
+                _onTrigerExit.Invoke(player);
             }
         }
     }
