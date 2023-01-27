@@ -61,6 +61,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8524624540259070708}
+        m_TargetAssemblyTypeName: DeathTimer, Assembly-CSharp
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onTrigerExit:
     m_PersistentCalls:
       m_Calls:
@@ -76,7 +88,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _collider: {fileID: 0}
+  _collider: {fileID: 1586812640513091821}
 --- !u!212 &1837608996
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -156,7 +168,7 @@ GameObject:
   - component: {fileID: 8524624540259070709}
   - component: {fileID: 8524624540259070708}
   m_Layer: 0
-  m_Name: Rocket_laucher
+  m_Name: Rocket_laucher_rotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  _timeActive: 10
+  _timeActive: 5
   _onCompliteWork:
     m_PersistentCalls:
       m_Calls:

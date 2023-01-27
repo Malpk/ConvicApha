@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1106440656532970301}
   - component: {fileID: 1106440656532970303}
-  - component: {fileID: 1106440656532970300}
   m_Layer: 0
   m_Name: TI81
   m_TagString: Untagged
@@ -63,52 +62,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1106440656532970300}
-        m_TargetAssemblyTypeName: DeathTimer, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   _onStop:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1106440657332077244}
         m_TargetAssemblyTypeName: MainMode.DetectDeviceSet, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1106440656532970300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106440656532970296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a1c62b28cee0d45a11b976d6c2212e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _timeActive: 5
-  _onCompliteWork:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1106440656532970303}
-        m_TargetAssemblyTypeName: Device, Assembly-CSharp
         m_MethodName: Stop
         m_Mode: 1
         m_Arguments:
@@ -182,18 +140,6 @@ MonoBehaviour:
   _onTrigerEnter:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1106440656532970300}
-        m_TargetAssemblyTypeName: DeathTimer, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 7572729624202574854}
         m_TargetAssemblyTypeName: DeviceAttackSet, Assembly-CSharp
         m_MethodName: SetAttack
@@ -208,19 +154,7 @@ MonoBehaviour:
         m_CallState: 2
   _onTrigerExit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1106440657332077244}
-        m_TargetAssemblyTypeName: MainMode.DeviceDetectSet, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _collider: {fileID: 1106440657332077245}
 --- !u!61 &1106440657332077245
 BoxCollider2D:

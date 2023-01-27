@@ -2,32 +2,39 @@ using UnityEngine;
 
 public class MovingWeapon : MonoBehaviour
 {
-    [SerializeField] private float stopCoolDown;
-    [SerializeField] private float moveSpeed;
+    [Min(1f)]
+    [SerializeField] private float _moveDuration = 1f;
+    [SerializeField] private float _moveDistance;
+    [SerializeField] private Vector2 _directon;
+    [Header("Reference")]
+    [SerializeField] private Rigidbody2D _rigidBody;
 
-    [SerializeField] private Vector2 secondPosOffset;
-   
-    private Vector2 initialPos;
-    private Vector2 target;
-    private float timeSinceLastMove;
+    private float _progress = 0f;
+    private Vector2 _startPosition;
 
     private void Start()
     {
-        initialPos = transform.position;
+        _startPosition = transform.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        timeSinceLastMove += Time.deltaTime;
-        if (Vector2.Distance(transform.position, target) < 0.001)
+        _progress = Mathf.Clamp01(_progress + Time.fixedDeltaTime / _moveDuration);
+        _rigidBody.MovePosition(_startPosition + _directon * _moveDistance * _progress);
+        if (_progress == 1)
         {
-            target = Vector2.Distance(transform.position, initialPos) < 0.01 ? initialPos + secondPosOffset : initialPos;
-            timeSinceLastMove = 0;
+            _directon = -_directon;
+            _progress = 0f;
+            _startPosition = _rigidBody.position;
         }
-        if (timeSinceLastMove > stopCoolDown)
-        {
-            var dir = (target - (Vector2)transform.position).normalized * (moveSpeed * Time.deltaTime);
-            transform.position += (Vector3)dir;
-        }
+    }
+
+    public void Play()
+    {
+        enabled = true;
+    }
+    public void Stop()
+    {
+        enabled = false;
     }
 }
