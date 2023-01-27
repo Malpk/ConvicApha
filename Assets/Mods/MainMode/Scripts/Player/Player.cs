@@ -124,8 +124,11 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
                 if (_behaviour.Health > 0)
                 {
                     _effects.AddEffectDamage(damageInfo);
-                    _behaviour.Invulnerability(true);
-                    _playerInvulnerability.ActivateForWhite(() => _behaviour.Invulnerability(false));
+                    if (damage > 0)
+                    {
+                        _behaviour.Invulnerability(true);
+                        _playerInvulnerability.ActivateForWhite(() => _behaviour.Invulnerability(false));
+                    }
                 }
                 else
                 {

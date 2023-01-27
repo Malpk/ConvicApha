@@ -3,17 +3,29 @@ using UnityEngine.Events;
 
 namespace MainMode
 {
-    [RequireComponent(typeof(CircleCollider2D))]
     public class DetectDeviceSet : MonoBehaviour
     {
+        [SerializeField] private bool _playOnAwake;
+        [Header("Events")]
         [SerializeField] private UnityEvent<Player> _onDetect;
-
-        private CircleCollider2D _collider;
+        [Header("Reference")]
+        [SerializeField] private Collider2D _collider;
 
         protected void Awake()
         {
-            _collider = GetComponent<CircleCollider2D>();
             _collider.isTrigger = true;
+            if (_playOnAwake)
+                Play();
+            else
+                Stop();
+        }
+        public void Play()
+        {
+            _collider.enabled = true;
+        }
+        public void Stop()
+        {
+            _collider.enabled = false;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

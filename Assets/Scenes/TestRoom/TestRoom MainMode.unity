@@ -1152,6 +1152,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4202255454810491820, guid: 1263cbcf207d4394283104521f08e9e6, type: 3}
+      propertyPath: _playerResist._defoutResistAttacks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6071200334360681552, guid: 1263cbcf207d4394283104521f08e9e6, type: 3}
       propertyPath: m_Name
       value: RoboMan
@@ -1218,7 +1222,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bf463f1f687118341ad4ec17615b5488, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7480,6 +7484,11 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
+--- !u!58 &1389074523 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1586812640513091821, guid: 941e78878b27ef5498154a56af96746d, type: 3}
+  m_PrefabInstance: {fileID: 8524624540633386012}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1402090479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10006,6 +10015,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7493703173758215482, guid: 941e78878b27ef5498154a56af96746d, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 1389074523}
     - target: {fileID: 8524624540259070714, guid: 941e78878b27ef5498154a56af96746d, type: 3}
       propertyPath: m_Name
       value: Rocket_laucher
