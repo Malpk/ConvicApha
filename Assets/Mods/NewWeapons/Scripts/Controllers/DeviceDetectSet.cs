@@ -41,7 +41,7 @@ namespace MainMode
         {
             if (collision.TryGetComponent(out Player player))
             {
-                _onTrigerExit.Invoke(player);
+                _onTrigerExit.Invoke(null);
             }
         }
     }
