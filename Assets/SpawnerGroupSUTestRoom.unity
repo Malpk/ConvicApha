@@ -298,12 +298,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3709de54b9ed741a0233aad90ea277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1839838599}
   distance: 10
   Borders:
-  - {fileID: 131468887451412223, guid: d7cff9f56f751f049bc35c5b162f0578, type: 3}
-  - {fileID: 1670929252940908882, guid: a1cebfbabe81c1e488abb6493ef00ae4, type: 3}
-  - {fileID: 6373448328052178472, guid: f9da591cdff6cae4e905a95cfb9a4bc1, type: 3}
+  - {fileID: 5404704853427713220, guid: dcc952086daa11a4ca4b019db2b964dc, type: 3}
+  - {fileID: 1473670411213246897, guid: b2f0d8a5113a25e4eb988e0d960965f1, type: 3}
+  - {fileID: 3808183341021184926, guid: a9049a98168cf0142a811b59bf7e6ba7, type: 3}
+  - {fileID: 8641513487917159107, guid: 317eaeea5e06c44408b9a5c690f10332, type: 3}
+  - {fileID: 4312126747295359378, guid: 4321612c904e2d64f82658b2324a2d14, type: 3}
+  - {fileID: 3191862822626829771, guid: 65e36a63ac59f154b9bcf70eaef38fb9, type: 3}
+  - {fileID: 4031385079240686796, guid: c707dce2cc56c6743b3feeede2a96a2d, type: 3}
+  - {fileID: 7778119773132042034, guid: ff3b7a6c93fbc444595af3676028960c, type: 3}
 --- !u!1 &1052158075
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,5 +474,10 @@ PrefabInstance:
 --- !u!4 &1616429038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4379118464302002022, guid: 691aa6f7c680de241983393056272d9c, type: 3}
+  m_PrefabInstance: {fileID: 1616429037}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1839838599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3474337354283758499, guid: 691aa6f7c680de241983393056272d9c, type: 3}
   m_PrefabInstance: {fileID: 1616429037}
   m_PrefabAsset: {fileID: 0}
