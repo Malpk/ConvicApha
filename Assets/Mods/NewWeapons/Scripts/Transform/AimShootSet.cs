@@ -38,20 +38,17 @@ namespace MainMode
         public void SetTarget(Player target)
         {
             _target = target;
-            if (_playOnStart)
-                Play();
+            _curretTarget = target;
+            enabled = _isPlay && _curretTarget;
         }
 
         public void Play()
         {
-            if (_target)
-            {
-                _curretTarget = _target;
-                _isPlay = true;
-                _progress = 0f;
-                enabled = _isPlay && _curretTarget;
-                State = AimingState;
-            }
+            _curretTarget = _target;
+            _isPlay = true;
+            _progress = 0f;
+            enabled = _isPlay && _curretTarget;
+            State = AimingState;
         }
 
         public void Stop()

@@ -49,8 +49,8 @@ MonoBehaviour:
   _onPlay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7219064780361893501}
-        m_TargetAssemblyTypeName: MainMode.ShootDeviceSet, Assembly-CSharp
+      - m_Target: {fileID: 3698192721006226588}
+        m_TargetAssemblyTypeName: MainMode.AimShootSet, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -64,8 +64,8 @@ MonoBehaviour:
   _onStop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7219064780361893501}
-        m_TargetAssemblyTypeName: MainMode.ShootDeviceSet, Assembly-CSharp
+      - m_Target: {fileID: 3698192721006226588}
+        m_TargetAssemblyTypeName: MainMode.AimShootSet, Assembly-CSharp
         m_MethodName: Stop
         m_Mode: 1
         m_Arguments:
@@ -204,7 +204,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7219064780361893503}
-  - component: {fileID: 7219064780361893501}
   - component: {fileID: 7219064780361893502}
   m_Layer: 0
   m_Name: Gun
@@ -227,24 +226,6 @@ Transform:
   m_Father: {fileID: 7219064780764986195}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7219064780361893501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7219064780361893440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9390687fcd1d8408ec848f100a857a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _countShootInSecond: 10
-  _spread: 1
-  _spreadDistance: 20
-  _damage: {fileID: 11400000, guid: 7ad453cbb6eb5734a834fed78eb39bad, type: 2}
-  _pool: {fileID: 7219064780361893502}
-  _prefab: {fileID: 4086498186800703025, guid: 2a768cb1b85cfe24c9ff2a164a4cba50, type: 3}
 --- !u!114 &7219064780361893502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,11 +287,11 @@ MonoBehaviour:
   _playOnStart: 0
   _returnTime: 1
   _maxTimeAiming: 1
-  _speedAimingDelta: 1
+  _speedAimingDelta: 3
   _damageType: {fileID: 11400000, guid: 7ad453cbb6eb5734a834fed78eb39bad, type: 2}
   _pool: {fileID: 7219064780361893502}
   _target: {fileID: 0}
-  _projectile: {fileID: 0}
+  _projectile: {fileID: 1885146776332357702, guid: 5e9c7ffbe78fd5e48978b1f7b5e2c286, type: 3}
   _shootPoint: {fileID: 7219064780361893503}
 --- !u!50 &7219064780764986192
 Rigidbody2D:

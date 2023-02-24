@@ -18,13 +18,6 @@ namespace MainMode
 
         public bool IsWork { get; private set; } = false;
 
-        private void Start()
-        {
-            if (_playOnStart)
-                Play();
-            else
-                Stop();
-        }
 
         public void Play()
         {

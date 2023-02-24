@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33bd1b2c09c4ed544a6b318a9f7181fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playOnStart: 0
   _timeActive: 10
   _devices:
   - {fileID: 3718879710104094497}
@@ -63,6 +64,12 @@ MonoBehaviour:
   - {fileID: 6436066834750783636}
   - {fileID: 5139129777742380644}
   - {fileID: 2661652508655915300}
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &6254626559003805318
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -646,7 +653,7 @@ PrefabInstance:
     - target: {fileID: 875493692, guid: 32c807b336a454b43bf93ce11ff7a332, type: 3}
       propertyPath: _collider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6254626559003805318}
     - target: {fileID: 4107781391615468678, guid: 32c807b336a454b43bf93ce11ff7a332, type: 3}
       propertyPath: m_Name
       value: Turel_rotation
