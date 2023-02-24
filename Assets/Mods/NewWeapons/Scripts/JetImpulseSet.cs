@@ -7,9 +7,12 @@ public class JetImpulseSet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Rigidbody2D body))
+        if (collision.TryGetComponent(out Player player))
         {
-            body.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
+            if (player.TryGetComponent(out Rigidbody2D body))
+            {
+                body.AddForce((Vector2)collision.transform.up * (-_force), ForceMode2D.Impulse);
+            }
         }
     }
 }
