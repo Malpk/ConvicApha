@@ -157,8 +157,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9098462911223060404}
   - component: {fileID: 8433923078936876685}
-  - component: {fileID: 2890994592429719927}
   - component: {fileID: 472170516359287736}
+  - component: {fileID: 2890994592429719927}
   m_Layer: 0
   m_Name: SteamIzolator
   m_TagString: Untagged
@@ -250,6 +250,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &472170516359287736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9098462911223060407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677d9832544c3f648aa98407d3cd2ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveDuration: 1
+  _moveDistance: 1
+  _directon: {x: 0, y: 1}
+  _rigidBody: {fileID: 2890994592429719927}
 --- !u!50 &2890994592429719927
 Rigidbody2D:
   serializedVersion: 4
@@ -270,23 +286,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &472170516359287736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9098462911223060407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 677d9832544c3f648aa98407d3cd2ad4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveDuration: 1
-  _moveDistance: 1
-  _directon: {x: 0, y: 1}
-  _rigidBody: {fileID: 2890994592429719927}
+  m_Constraints: 4
 --- !u!1001 &1806853544705832724
 PrefabInstance:
   m_ObjectHideFlags: 0

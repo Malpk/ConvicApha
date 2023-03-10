@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  _timeActive: 1
+  _timeActive: 10
   _devices:
   - {fileID: 7646351310318873615}
   - {fileID: 8889396870636823105}
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  _spawnDelay: 0.5
+  _spawnDelay: 1
   _pools:
   - _prefab: {fileID: 7516446615267472494, guid: 24db065a593d823419ff760952f6eb34, type: 3}
   _grid: {fileID: 2040342681255031171}
@@ -349,6 +349,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2040342681255031170}
     m_Modifications:
+    - target: {fileID: 3329304328423971253, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
+      propertyPath: _timeActive
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3329304328423971258, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -433,6 +437,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2040342681255031170}
     m_Modifications:
+    - target: {fileID: 3329304328423971253, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
+      propertyPath: _timeActive
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3329304328423971258, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -517,6 +525,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2040342681255031170}
     m_Modifications:
+    - target: {fileID: 3329304328423971253, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
+      propertyPath: _timeActive
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3329304328423971258, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -601,6 +613,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2040342681255031170}
     m_Modifications:
+    - target: {fileID: 3329304328423971253, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
+      propertyPath: _timeActive
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3329304328423971258, guid: 4c092ba9ca117c043b3b071d01f559e2, type: 3}
       propertyPath: m_RootOrder
       value: 1

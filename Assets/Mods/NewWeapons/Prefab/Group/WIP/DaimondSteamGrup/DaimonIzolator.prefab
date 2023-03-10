@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 484047839594504279}
   - component: {fileID: 1006771563222491502}
-  - component: {fileID: 4784485939570351339}
   m_Layer: 0
   m_Name: DaimonIzolator
   m_TagString: Untagged
@@ -68,35 +67,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 198648852083084774}
         m_TargetAssemblyTypeName: JetsController, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &4784485939570351339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484047839594504276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a1c62b28cee0d45a11b976d6c2212e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _timeActive: 5
-  _onCompliteWork:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1006771563222491502}
-        m_TargetAssemblyTypeName: MainMode.Device, Assembly-CSharp
         m_MethodName: Stop
         m_Mode: 1
         m_Arguments:
