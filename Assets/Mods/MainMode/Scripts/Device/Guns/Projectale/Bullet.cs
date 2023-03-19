@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MainMode
 {
@@ -13,7 +14,8 @@ namespace MainMode
         [SerializeField] protected float _speed = 1;
         [Min(1)]
         [SerializeField] private float _delayDestroy = 1;
-        
+        [SerializeField] private UnityEvent _onHit;
+
         private float _progress = 0f;
         private DamageInfo _attackInfo;
         private Rigidbody2D _rigidbody;
@@ -45,6 +47,7 @@ namespace MainMode
             IsDestroy = true;
             gameObject.SetActive(false);
             _rigidbody.velocity = Vector2.zero;
+            _onHit.Invoke();
             OnDelete?.Invoke(this);
         }
         public void SetAttack(DamageInfo info)

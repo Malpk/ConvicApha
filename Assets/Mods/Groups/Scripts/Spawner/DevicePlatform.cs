@@ -54,7 +54,6 @@ namespace MainMode
         {
             SetMode(false);
         }
-
         private void SetMode(bool mode)
         {
             _animator.SetBool("Show", mode);

@@ -13,6 +13,8 @@ namespace MainMode
         [Header("Zone Setting")]
         [Min(0)]
         [SerializeField] private float _minSpawnDistance = 1;
+        [SerializeField] private MapGrid _mapGrid;
+        [SerializeField] private MapSpawner _mapSpawn;
         [SerializeField] private GroupPool[] _pools;
         [SerializeField] private BoxCollider2D _collider;
 
@@ -30,11 +32,14 @@ namespace MainMode
         {
             enabled = _player;
         }
-
+        private void OnValidate()
+        {
+            if(_mapGrid)
+                _mapGrid.SetSize(new Vector2Int((int)_collider.size.x, (int)_collider.size.y));
+        }
         private void Update()
         {
             var distance = Vector2.Distance(_player.transform.position, transform.position);
-            Debug.Log(distance);
             if (distance < _minSpawnDistance)
             {
                 Spawn();
@@ -56,6 +61,8 @@ namespace MainMode
                     group.transform.rotation = transform.rotation;
                     group.OnComplite += DeactivateGroup;
                     _activeGroup.Add(group);
+                    _mapSpawn.Stop();
+                    _mapSpawn.Clear();
                 }
             }
         }
@@ -109,7 +116,16 @@ namespace MainMode
             {
                 enabled = true;
                 _player = player;
+                _mapSpawn.Construct(player);
+                if (!IsActive)
+                    _mapSpawn.Play();
             }
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (!IsActive && !_mapSpawn.enabled)
+                _mapSpawn.Play();
         }
 
         private void OnTriggerExit2D(Collider2D collision)
@@ -118,8 +134,10 @@ namespace MainMode
             {
                 enabled = false;
                 _player = null;
+                _mapSpawn.Stop();
             }
         }
+
 
         private float GetLengh()
         {

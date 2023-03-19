@@ -6,7 +6,7 @@ namespace MainMode
     public class MapGrid : MonoBehaviour
     {
         [Header("General")]
-        [SerializeField] private Vector2 _unitSize;
+        [SerializeField] private Vector2 _unitSize = Vector2.one;
         [SerializeField] private Vector2Int _mapSize;
 #if UNITY_EDITOR
         [Header("Debug")]
@@ -25,6 +25,12 @@ namespace MainMode
         {
             _points = CreateMap(_unitSize, _mapSize);
         }
+
+        public void SetSize(Vector2Int size)
+        {
+            _mapSize = size;
+        }
+
         public void Intilizate()
         {
             GetFreePoints(out List<Point> Points);
@@ -82,13 +88,11 @@ namespace MainMode
             return freePoints.Count > 0;
         }
 
-        public bool SetItemOnMap(UpPlatform smartItem, float distanceFromPlayer = 0, float minDistance = 0, Transform target = null)
+        public bool SetItemOnMap(DevicePlatform smartItem, float distanceFromPlayer = 0, float minDistance = 0, Transform target = null)
         {
             if (GetFreePoints(out List<Point> points, distanceFromPlayer, minDistance, target))
             {
                 var index = Random.Range(0, points.Count);
-                if(!smartItem.IsShow)
-                    smartItem.UpDevice();
                 points[index].SetItem(smartItem);
                 return true;
             }

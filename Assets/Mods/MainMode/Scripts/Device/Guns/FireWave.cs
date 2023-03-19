@@ -1,20 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode
 {
-    public class FireWave : MonoBehaviour, ISetAttack
+    public class FireWave : MonoBehaviour, ISetAttack,IPoolItem
     {
         [Min(1)]
         [SerializeField] private int _damage;
-        [Min(0)]
-        [SerializeField] private float _fireEffect;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private Collider2D _colider;
         [SerializeField] private Animator _animator;
 
         private DamageInfo _attackInfo;
+
+        public GameObject PoolItem => gameObject;
+
+        public event Action<IPoolItem> OnDelete;
 
         private void Awake()
         {
@@ -27,6 +30,7 @@ namespace MainMode
         }
         public void DestroyObject()
         {
+            OnDelete?.Invoke(this);
             SetMode(false);
         }
         public void SetMode(bool mode)

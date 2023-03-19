@@ -30,10 +30,10 @@ namespace MainMode.Mode1921
             int count = Random.Range(_deviceCount.x, _deviceCount.y) - _devices.Count;
             if (count < 0)
                 DeleteDevice(Mathf.Abs(count));
-            foreach (var device in _devices)
-            {
-                mapGrid.SetItemOnMap(device);
-            }
+            //foreach (var device in _devices)
+            //{
+            //    mapGrid.SetItemOnMap(device);
+            //}
             if(count > 0)
                 SpawnDevice(count);
         }
@@ -57,7 +57,7 @@ namespace MainMode.Mode1921
                 var index = Random.Range(0, _perfab.Length);
                 var device = Instantiate(_perfab[index].gameObject).GetComponent<UpPlatform>();
                 device.transform.parent = transform;
-                mapGrid.SetItemOnMap(device);
+                //mapGrid.SetItemOnMap(device);
                 _devices.Add(device);
             }
         }

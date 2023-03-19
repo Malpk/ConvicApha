@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8666405893373824231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8666405893373824226}
+  - component: {fileID: 8666405893373824229}
+  - component: {fileID: 8666405893373824228}
+  m_Layer: 0
+  m_Name: SuSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8666405893373824226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8666405893373824231}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8666405893373824229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8666405893373824231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499b0d5efd95b0b40adba40ec7956714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitSize: {x: 1, y: 1}
+  _mapSize: {x: 11, y: 7}
+  _showMarker: 0
+  _marker: {fileID: 0}
+--- !u!114 &8666405893373824228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8666405893373824231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30d37cda126453449af4a3752ae4da0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _spawnRadius: 5
+  _timeDelay: 0.38
+  _pools:
+  - _distanceFormPlayer: 1
+    _perfab: {fileID: 7516446615267472494, guid: 24db065a593d823419ff760952f6eb34, type: 3}
+  - _distanceFormPlayer: 1
+    _perfab: {fileID: 6934250543831126064, guid: 584ce01ffcde73f45a375bb9674c5487, type: 3}
+  _player: {fileID: 0}
+  _mapGrid: {fileID: 8666405893373824229}

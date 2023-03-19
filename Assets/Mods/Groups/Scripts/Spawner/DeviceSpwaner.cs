@@ -13,18 +13,6 @@ namespace MainMode
 
         private float _progress = 0f;
 
-
-        private void Start()
-        {
-            if (_playOnStart)
-            {
-                Play();
-            }
-            else
-            {
-                Stop();
-            }
-        }
         public void Play()
         {
             enabled = true;
@@ -36,6 +24,8 @@ namespace MainMode
         }
         private void OnValidate()
         {
+            enabled = _playOnStart;
+            _spawnDelay = _spawnDelay <= Time.fixedDeltaTime ? Time.fixedDeltaTime : _spawnDelay;
             foreach (var pool in _pools)
             {
                 pool.SetHolder(transform);

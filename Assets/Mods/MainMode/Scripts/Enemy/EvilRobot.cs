@@ -34,6 +34,11 @@ namespace MainMode
 
         public bool IsReadyExplosion => _readyExlosion;
 
+        private void OnValidate()
+        {
+            SetMode(_playOnStart);
+        }
+
         private void OnEnable()
         {
             _enemyAnimator.OnHit += Hit;
@@ -44,30 +49,13 @@ namespace MainMode
             _enemyAnimator.OnHit -= Hit;
             _effectAnimator.OnExplosion -=()=> SetMode(false);
         }
-        private void Start()
-        {
-            if (_playOnStart && _target)
-            {
-                SetMode(true);
-                Activate();
-            }
-            else
-            {
-                SetMode(false);
-            }
-        }
 
         public void SetTarget(Player target)
         {
             _target = target;
-            if (_playOnStart)
+            if (IsActive)
             {
-                SetMode(true);
                 Activate();
-            }
-            else
-            {
-                SetMode(false);
             }
         }
         private void Update()
@@ -79,6 +67,7 @@ namespace MainMode
         public void Activate()
         {
             IsActive = true;
+            enabled = true;
             _health = _startHealth;
         }
         public void Deactivate()
@@ -147,7 +136,6 @@ namespace MainMode
         }
         public void SetMode(bool mode)
         {
-            enabled = mode;
             _readyExlosion = mode;
             _rigidBody.simulated = mode;
             _colliderBody.enabled = mode;

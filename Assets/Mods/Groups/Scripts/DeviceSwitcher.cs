@@ -14,12 +14,14 @@ public class DeviceSwitcher : MonoBehaviour
     private float _progress = 0f;
     private System.Action State;
 
-    private void Start()
+    private void OnValidate()
     {
+        SetMode(_playOnStart);
+        enabled = _playOnStart;
         if (_playOnStart)
-            Play();
+            State = ActiveState;
         else
-            Stop();
+            State = DeactiveState;
     }
 
     private void Update()
