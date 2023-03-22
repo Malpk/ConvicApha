@@ -62,140 +62,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e30d37cda126453449af4a3752ae4da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playOnStart: 0
   _spawnRadius: 10
   _timeDelay: 0.5
   _pools:
-  - _maxCount: 0
-    _distanceFormPlayer: 8
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 1649655687290942287, guid: 1ce4bb09f7cabbc43afa8cd4f4d37e42, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 8
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 6982655636821400602, guid: 023bf1d6370ded14e91a1ab8681ccbe7, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 8
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 8185477693437109602, guid: 96256595c1535014e8c5e1655211e010, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 6
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 6228421749787143620, guid: ee93799ba406c1343aec05c71fa75805, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 6
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 5702531047929057932, guid: 257329797b5855748a30e95133d6167d, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 6
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 3607033628082124060, guid: 3160c8ea198ec524fa1d689d127e377a, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 3
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 2597166850172448655, guid: 516ef06bf632941419ab3969b7eea7de, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 3
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 3509477499350634610, guid: 3d15c65c68157fa49a841f4c26a746f1, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 3
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 1092773666708947122, guid: 5b5a1af5e92da9843826e0ecf417cf16, type: 3}
-  - _maxCount: 0
-    _distanceFormPlayer: 3
-    _isInfinity: 1
-    _spawnProbility: 1
-    _perfab: {fileID: 5468347696034960752, guid: a06cda8c11fd97c44b3725de91af7586, type: 3}
-  _difficleGame: 25
-  _difficleTimeLimite: 600
-  _curveDificle:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.20331782
-      value: 0.3487755
-      inSlope: 1.2242458
-      outSlope: 1.2242458
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.40156502
-      value: 0.23854622
-      inSlope: 0.5104989
-      outSlope: 0.5104989
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.51079124
-      value: 0.6658459
-      inSlope: 1.1080756
-      outSlope: 1.1080756
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.73669666
-      value: 0.5157601
-      inSlope: 0.5350676
-      outSlope: 0.5350676
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.8631209
-      value: 0.9184963
-      inSlope: 1.8397292
-      outSlope: 1.8397292
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.96881956
-      value: 0.7432943
-      inSlope: 0.25628948
-      outSlope: 0.25628948
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  - _distanceFormPlayer: 8
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 8
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 8
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 6
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 6
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 6
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 3
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 3
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 3
+    _perfab: {fileID: 0}
+  - _distanceFormPlayer: 3
+    _perfab: {fileID: 0}
   _player: {fileID: 0}
+  _mapGrid: {fileID: 0}
 --- !u!114 &642761071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,10 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playOnStart: 0
-  _spawnDelay: 2
-  _spawnDistance: {x: 7, y: 4}
   _target: {fileID: 0}
-  _mapGrid: {fileID: 5222877457415629917}
   _evilBot: {fileID: 645509586355763464}
 --- !u!1001 &4545201386430008822
 PrefabInstance:

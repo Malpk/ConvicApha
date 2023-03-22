@@ -51,7 +51,7 @@ namespace MainMode
         {
             _curretEndurance = _endurance;
         }
-        public void Explosion()
+        public void Explosion(AttackType attack = AttackType.None)
         {
             if (IsShow)
                 HideItem();

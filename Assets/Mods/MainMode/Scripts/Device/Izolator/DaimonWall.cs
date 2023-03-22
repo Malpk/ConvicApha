@@ -18,7 +18,7 @@ namespace MainMode
             _curretHealht = _healhtWall;
         }
 
-        public void Explosion()
+        public void Explosion(AttackType attack = AttackType.None)
         {
             Activate();
         }

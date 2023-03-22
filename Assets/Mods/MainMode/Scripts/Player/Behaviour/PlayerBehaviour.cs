@@ -76,12 +76,13 @@ public class PlayerBehaviour : MonoBehaviour, IResist
             return false;
         }
     }
-    public void Explosion()
+    public void Explosion(AttackType attack = AttackType.None)
     {
         if (IsPlay)
         {
             IsPlay = false;
-            _animator.SetAnimation(PlayerState.Dead, true);
+            if (!_playerResist.ContainResistAttack(attack))
+                _animator.SetAnimation(PlayerState.Dead, true);
         }
     }
 

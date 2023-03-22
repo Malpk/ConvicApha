@@ -28,14 +28,12 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     {
         if (_behaviour != behaviour && _behaviour)
         {
-            _behaviour.OnDead.RemoveListener(Explosion);
             Destroy(_behaviour.gameObject);
         }
         _behaviour = behaviour;
         _behaviour.transform.parent = transform;
         _behaviour.transform.localPosition = Vector3.zero;
         _behaviour.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        _behaviour.OnDead.AddListener(Explosion);
         enabled = true;
     }
     public void SetAbillity(PlayerBaseAbillitySet set)
@@ -92,12 +90,6 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
         _contraller.UnBlock();
     }
     #endregion
-
-    public void Explosion()
-    {
-        if(!_playerInvulnerability.IsInvulnerability)
-            _behaviour.Explosion();
-    }
     public bool Heal(int heal)
     {
         if (_behaviour.Heal(heal))
@@ -138,7 +130,11 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
             }
         }
     }
-
+    public void Explosion(AttackType attack = AttackType.None)
+    {
+        if (!_playerInvulnerability.IsInvulnerability)
+            _behaviour.Explosion(attack);
+    }
     public void AddEffect(MovementEffect effects, float timeActive)
     {
         if (!_playerInvulnerability.IsInvulnerability)

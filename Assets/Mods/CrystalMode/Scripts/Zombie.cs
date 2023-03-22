@@ -44,9 +44,8 @@ public class Zombie : MonoBehaviour, IDamage
       Destroy(gameObject);
    }
 
-   public void Explosion()
+   public void Explosion(AttackType attack = AttackType.None)
    {
-      throw new System.NotImplementedException();
    }
 
    public void TakeDamage(int damage, DamageInfo type)

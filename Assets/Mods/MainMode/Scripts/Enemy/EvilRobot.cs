@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MainMode
 {
-    public class EvilRobot : MonoBehaviour, IDamage,IAddEffects, IExplosion
+    public class EvilRobot : MonoBehaviour, IDamage,IAddEffects
     {
         [Header("General")]
         [SerializeField] private bool _playOnStart;
@@ -75,7 +75,7 @@ namespace MainMode
             IsActive = false;
             enabled = false;
         }
-        public void Explosion()
+        public void Explosion(AttackType attack = AttackType.None)
         {
             _readyExlosion = false;
             Deactivate();
