@@ -127,6 +127,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7249493576991788702}
     m_Modifications:
+    - target: {fileID: 2243456555665052397, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3690621016070540843, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3690621016494232384, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}
       propertyPath: m_Name
       value: DamimondLaserGroup
@@ -191,6 +199,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 6241513800312017561, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8113292712090832745, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}
       propertyPath: _timeActive
       value: 30
@@ -222,6 +234,10 @@ PrefabInstance:
     - target: {fileID: 8113292712090832745, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}
       propertyPath: _onStop.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830340752029371999, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 480e65c77a502624092c52c0198ef2fd, type: 3}

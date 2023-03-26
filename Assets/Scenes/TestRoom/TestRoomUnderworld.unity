@@ -772,6 +772,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 336707109628682435, guid: 1c9bc42890edf7e4293c75dfd7d7bad4, type: 3}
+      propertyPath: _playOnStart
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 336707111408024134, guid: 1c9bc42890edf7e4293c75dfd7d7bad4, type: 3}
       propertyPath: m_Name
       value: ModeSwitch
@@ -1020,7 +1024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7157729359993501832, guid: 1884a4ca7215a8a45acda59417d0cab8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 339.70703
+      value: 0.00006031207
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1884a4ca7215a8a45acda59417d0cab8, type: 3}

@@ -6,7 +6,7 @@ namespace MainMode
     public class MapGrid : MonoBehaviour
     {
         [Header("General")]
-        [SerializeField] private Vector2 _unitSize = Vector2.one;
+        [SerializeField] private float _unitSize = 1f;
         [SerializeField] private Vector2Int _mapSize;
 #if UNITY_EDITOR
         [Header("Debug")]
@@ -20,7 +20,8 @@ namespace MainMode
 
         public Point[,] PointsArray => _points;
         public List<Point> Points { get; private set; }
-        public Vector2 MapSize => new Vector2(_mapSize.x * _unitSize.x, _mapSize.y * _unitSize.y);
+        public Vector2 MapSize => new Vector2(_mapSize.x, _mapSize.y) * _unitSize;
+
         private void Awake()
         {
             _points = CreateMap(_unitSize, _mapSize);
@@ -98,22 +99,20 @@ namespace MainMode
             }
             return false;
         }
-        private Point[,] CreateMap(Vector2 unity, Vector2Int mapSize)
+        private Point[,] CreateMap(float unity, Vector2Int mapSize)
         {
-            mapSize = (mapSize / 2) * 2;
             var map = new Point[mapSize.y, mapSize.x];
-            var y = mapSize.y / 2;
-            var x = mapSize.x / 2;
-            for (int i = -y; i < y; i++)
+            for (int i = 0; i < mapSize.y; i++)
             {
-                for (int j = -x; j < x; j++)
+                for (int j = 0; j < mapSize.x; j++)
                 {
-                    map[y + i, x + j] = new Point(transform.position + 
-                        new Vector3(j * unity.x, i * unity.y) + (Vector3)unity/2);
+                    var x = transform.right * (-mapSize.x / 2 + j) * unity;
+                    var y = transform.up * (-mapSize.y / 2 + i) * unity;
+                    map[i, j] = new Point(transform.position + x + y);
 #if UNITY_EDITOR
                     if (_marker && _showMarker)
                     {
-                        _markers.Add(Instantiate(_marker, map[y + i, x + j].Position, Quaternion.identity));
+                        _markers.Add(Instantiate(_marker, map[i, j].Position, Quaternion.identity));
                         _markers[_markers.Count-1].transform.parent = transform;
                     }
 #endif

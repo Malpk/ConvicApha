@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MainMode
@@ -13,7 +11,7 @@ namespace MainMode
         [SerializeField] private Collider2D _colider;
         [SerializeField] private Animator _animator;
 
-        private DamageInfo _attackInfo;
+        [SerializeField] private DamageInfo _attackInfo;
 
         public GameObject PoolItem => gameObject;
 

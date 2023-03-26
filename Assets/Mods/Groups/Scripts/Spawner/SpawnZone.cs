@@ -32,11 +32,16 @@ namespace MainMode
         {
             enabled = _player;
         }
+        private void Start()
+        {
+            _mapGrid.Intilizate();
+        }
         private void OnValidate()
         {
             if(_mapGrid)
                 _mapGrid.SetSize(new Vector2Int((int)_collider.size.x, (int)_collider.size.y));
         }
+
         private void Update()
         {
             var distance = Vector2.Distance(_player.transform.position, transform.position);

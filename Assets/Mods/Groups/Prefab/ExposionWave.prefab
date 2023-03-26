@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 1
-  _fireEffect: 0.5
   _sprite: {fileID: 8122593118100056646}
   _colider: {fileID: 8122593118100056664}
   _animator: {fileID: 8122593118100056647}
+  _attackInfo: {fileID: 11400000, guid: 9e13c5131bf28474199de9ac77f99786, type: 2}
 --- !u!212 &8122593118100056646
 SpriteRenderer:
   m_ObjectHideFlags: 0
