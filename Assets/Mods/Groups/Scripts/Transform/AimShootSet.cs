@@ -75,7 +75,6 @@ namespace MainMode
                     Play();
                 }
             }
-
         }
 
         private Vector2 GetDirection()
