@@ -54,7 +54,7 @@ namespace MainMode
 
         public void Spawn()
         {
-            if (_activeGroup.Count < 2)
+            if (_activeGroup.Count == 0)
             {
                 var pool = GetPool();
                 if (GetLengh() + pool.GroupSize.x <= _collider.size.x)

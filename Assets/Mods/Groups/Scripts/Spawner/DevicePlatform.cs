@@ -19,6 +19,16 @@ namespace MainMode
 
         public bool IsShow { get; private set;}
 
+        private void OnValidate()
+        {
+            if (_upDevice)
+            {
+                _upDevice.transform.parent = transform;
+                _upDevice.transform.localPosition = Vector3.zero;
+            }
+            name = "UpPlatform" + (_upDevice ? _upDevice.name : "");
+        }
+
         private void Awake()
         {
             _upDevice.gameObject.SetActive(false);
