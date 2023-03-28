@@ -60,11 +60,7 @@ namespace MainMode
         private void AimingState()
         {
             _progress += Time.deltaTime / _maxTimeAiming;
-            var curretTarget = transform.up * Vector2.Distance(transform.position,
-                _curretTarget.transform.position);
-            curretTarget = Vector3.MoveTowards(curretTarget.normalized, _curretTarget.transform.position -
-                transform.position, _speedAimingDelta * Time.fixedDeltaTime);
-            transform.up = curretTarget;
+            transform.up = GetDirection();
             if (_progress >= 1f)
             {
                 Shoot();
@@ -80,6 +76,16 @@ namespace MainMode
                 }
             }
 
+        }
+
+        private Vector2 GetDirection()
+        {
+            var localPosition = (Vector2)(_curretTarget.transform.position - transform.position);
+            var curretTarget = transform.up *
+                Vector2.Distance(transform.position, _curretTarget.transform.position);
+            curretTarget = Vector2.MoveTowards(curretTarget, localPosition,
+                _speedAimingDelta * Time.fixedDeltaTime);
+            return curretTarget;
         }
 
         private void ReturnState()

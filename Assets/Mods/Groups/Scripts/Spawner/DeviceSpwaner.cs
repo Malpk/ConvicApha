@@ -12,6 +12,7 @@ namespace MainMode
         [SerializeField] private MapGrid _grid;
 
         private float _progress = 0f;
+        private List<DevicePlatform> _activeList = new List<DevicePlatform>();
 
         public void Play()
         {
@@ -21,6 +22,10 @@ namespace MainMode
         public void Stop()
         {
             enabled = false;
+            foreach (var device in _activeList)
+            {
+                device.Hide();
+            }
         }
         private void OnValidate()
         {
@@ -43,10 +48,17 @@ namespace MainMode
                     var device = pool.Create();
                     device.Show();
                     point.SetItem(device);
+                    _activeList.Add(device);
+                    device.OnDelete += Delete;
                 }
                 _progress = 0f;
             }
         }
 
+        public void Delete(DevicePlatform device)
+        {
+            device.OnDelete -= Delete;
+            _activeList.Remove(device);
+        }
     }
 }
