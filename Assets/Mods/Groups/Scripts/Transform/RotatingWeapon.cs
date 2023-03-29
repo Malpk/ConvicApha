@@ -10,7 +10,7 @@ public class RotatingWeapon : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.MoveRotation(_rigidbody.rotation + _rotateSpeed);
+        _rigidbody.MoveRotation(_rigidbody.rotation + _rotateSpeed * Time.fixedDeltaTime);
     }
 
     public void Play()

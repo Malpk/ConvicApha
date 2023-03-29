@@ -55,7 +55,7 @@ namespace MainMode
             _target = target;
             if (IsActive)
             {
-                Activate();
+                enabled = true;
             }
         }
         private void Update()
@@ -67,7 +67,7 @@ namespace MainMode
         public void Activate()
         {
             IsActive = true;
-            enabled = true;
+            enabled = _target;
             _health = _startHealth;
         }
         public void Deactivate()

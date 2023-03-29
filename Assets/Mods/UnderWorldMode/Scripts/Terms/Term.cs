@@ -40,7 +40,7 @@ namespace Underworld
                 SetMode(true);
                 _termFire.Activate(firestate);
                 if (_target != null)
-                    _target.Explosion();
+                    _target.Explosion(AttackType.Fire);
             }
         }
 
@@ -79,11 +79,11 @@ namespace Underworld
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out IDamage target))
+            if (collision.TryGetComponent(out Player target))
             {
                 _target = target;
                 if (_isActive)
-                    _target.Explosion();
+                    _target.Explosion(AttackType.Fire);
             }
         }
         private void OnTriggerExit2D(Collider2D collision)

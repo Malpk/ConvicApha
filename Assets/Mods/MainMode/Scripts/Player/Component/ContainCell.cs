@@ -10,6 +10,8 @@ namespace PlayerComponent
         private float _progress = 0f;
         private float _timeActive;
 
+        public event System.Action<ContainCell<T>> OnDelete;
+
         public ContainCell(EffectType effect,T content)
         {
             this.content = content;
@@ -28,6 +30,8 @@ namespace PlayerComponent
         public bool Update()
         {
             _progress += Time.deltaTime / _timeActive;
+            if (_progress >= 1f)
+                OnDelete?.Invoke(this);
             return _progress < 1f;
         }
     }

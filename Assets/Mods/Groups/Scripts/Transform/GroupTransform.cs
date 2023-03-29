@@ -56,7 +56,7 @@ public class GroupTransform : MonoBehaviour
     {
         State = Move;
         _curretDiration = GetDiractions();
-        _startPosition = Vector2.zero;
+        _startPosition = transform.parent ? transform.parent.position : transform.position;
     }
 
     private Vector2 GetDiractions()

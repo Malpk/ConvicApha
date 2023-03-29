@@ -5,6 +5,7 @@ namespace MainMode
 {
     public class Chank : MonoBehaviour
     {
+        [SerializeField] private bool _spawnOnStart;
         [SerializeField] private SchemePool[] _schems;
 
         private Vector3[] _directions = new Vector3[] { Vector3.up, Vector3.right, Vector3.left, Vector3.down};
@@ -21,9 +22,10 @@ namespace MainMode
             }
         }
 
-        private void Awake()
+        private void Start()
         {
-            Spawn();
+            if(_spawnOnStart)
+                Spawn();
         }
 
         public void Spawn()
@@ -32,29 +34,44 @@ namespace MainMode
             {
                 _prevouslPool = GetPool();
                 _activeScheme = _prevouslPool.GetScheme(transform);
+                _activeScheme.Intializate();
                 _activeScheme.transform.up = _directions[Random.Range(0, _directions.Length)];
                 _activeScheme.OnDeactivate += Deactivate;
             }
         }
 
+        public void DeleteScheme()
+        {
+            Deactivate(_activeScheme);
+        }
+
         private void Deactivate(GroupScheme scheme)
         {
             scheme.OnDeactivate -= Deactivate;
+            _activeScheme.DeleteZone();
             _activeScheme.gameObject.SetActive(false);
             _activeScheme = null;
+
         }
 
         private SchemePool GetPool()
         {
-            var list = new List<SchemePool>();
-            foreach (var pool in _schems)
+            if (_schems.Length > 1)
             {
-                if (_prevouslPool != pool)
+                var list = new List<SchemePool>();
+                foreach (var pool in _schems)
                 {
-                    list.Add(pool);
+                    if (_prevouslPool != pool)
+                    {
+                        list.Add(pool);
+                    }
                 }
+                return list[Random.Range(0, list.Count)];
             }
-            return list[Random.Range(0, list.Count)];
+            else
+            {
+                return _schems[0];
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

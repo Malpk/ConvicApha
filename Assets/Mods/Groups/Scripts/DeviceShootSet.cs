@@ -11,6 +11,7 @@ namespace MainMode
         [Header("Reference")]
         [SerializeField] private Pool _pool;
         [SerializeField] private Bullet _prefab;
+        [SerializeField] private Animator _animator;
 
         private float _progress = 0f;
         private float _shootDelay = 1f;
@@ -49,6 +50,7 @@ namespace MainMode
                 bullet.transform.up = transform.up * _spreadDistance + spread;
                 bullet.SetAttack(_damage);
                 bullet.Shoot();
+                _animator.SetTrigger("shoot");
             }
         }
 

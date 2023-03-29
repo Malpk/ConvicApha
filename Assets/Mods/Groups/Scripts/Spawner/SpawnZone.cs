@@ -20,12 +20,12 @@ namespace MainMode
 
         private Player _player;
         private GroupPool _previusGroup;
-        private List<UpGroupSet> _activeGroup = new List<UpGroupSet>();
+        private UpGroupSet _activeGroup;
 
         public event System.Action OnActivate;
         public event System.Action OnDectivate;
 
-        public bool IsActive => _activeGroup.Count > 0;
+        public bool IsActive => _activeGroup;
         public Vector2 Size => _collider.size;
 
         private void Awake()
@@ -34,8 +34,24 @@ namespace MainMode
         }
         private void Start()
         {
+            Initializate();
+        }
+
+        public void Initializate()
+        {
             _mapGrid.Intilizate();
         }
+
+        public void Play()
+        {
+            enabled = true;
+        }
+
+        public void Stop()
+        {
+            _activeGroup.Hide();
+        }
+
         private void OnValidate()
         {
             if(_mapGrid)
@@ -54,40 +70,25 @@ namespace MainMode
 
         public void Spawn()
         {
-            if (_activeGroup.Count == 0)
+            if (!_activeGroup)
             {
                 var pool = GetPool();
-                if (GetLengh() + pool.GroupSize.x <= _collider.size.x)
-                {
-                    _previusGroup = pool;
-                    var group = _previusGroup.Create();
-                    group.transform.parent = transform;
-                    group.transform.localPosition = GetPosition(group.GroupSize.x);
-                    group.transform.rotation = transform.rotation;
-                    group.OnComplite += DeactivateGroup;
-                    _activeGroup.Add(group);
-                    _mapSpawn.Stop();
-                    _mapSpawn.Clear();
-                }
+                _previusGroup = pool;
+                var group = _previusGroup.Create();
+                group.transform.parent = transform;
+                group.transform.localPosition = Vector2.zero;
+                group.transform.rotation = transform.rotation;
+                group.OnComplite += DeactivateGroup;
+                _activeGroup = group;
+                _mapSpawn.Stop();
+                _mapSpawn.Clear();
             }
-        }
-
-        private Vector2 GetPosition(float offset)
-        {
-            if (_activeGroup.Count > 0)
-            {
-                var position = _activeGroup[0].transform.localPosition;
-                var direction = position.x > 0 ? Vector3.left : Vector3.right;
-                position += direction * (_activeGroup[0].GroupSize.x + offset);
-                return position;
-            }
-            return Vector3.zero;
         }
 
         private void DeactivateGroup(UpGroupSet group)
         {
             group.OnComplite -= DeactivateGroup;
-            _activeGroup.Remove(group);
+            _activeGroup.Hide(false);
         }
 
         private GroupPool GetPool()
@@ -129,8 +130,11 @@ namespace MainMode
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (!IsActive && !_mapSpawn.enabled)
-                _mapSpawn.Play();
+            if (collision.GetComponent<Player>())
+            {
+                if (!IsActive && !_mapSpawn.enabled)
+                    _mapSpawn.Play();
+            }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
@@ -144,14 +148,5 @@ namespace MainMode
         }
 
 
-        private float GetLengh()
-        {
-            var amount = 0f;
-            foreach (var group in _activeGroup)
-            {
-                amount += group.GroupSize.x;
-            }
-            return amount;
-        }
     }
 }

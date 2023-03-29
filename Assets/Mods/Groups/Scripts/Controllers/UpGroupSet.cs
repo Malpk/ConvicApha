@@ -32,6 +32,15 @@ namespace MainMode
             _animator.SetBool("show", true);
         }
 
+        public void Hide(bool waitAnimation)
+        {
+            if (!waitAnimation)
+            {
+                HideAnimationEvent();
+            }
+            _animator.SetBool("show", false);
+        }
+
         public void Hide()
         {
             _animator.SetBool("show", false);

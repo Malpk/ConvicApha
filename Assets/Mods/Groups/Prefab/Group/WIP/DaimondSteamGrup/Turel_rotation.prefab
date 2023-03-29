@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7219064779217435897}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 7219064779705534067}
   - component: {fileID: 7219064779705534068}
   - component: {fileID: 7219064779705534066}
+  - component: {fileID: 756119464187590638}
   m_Layer: 0
   m_Name: ShitSprite
   m_TagString: Untagged
@@ -195,6 +196,25 @@ PolygonCollider2D:
       - {x: 0.15246353, y: -0.06986922}
       - {x: 0.09526268, y: 0.089276075}
       - {x: 0.10021335, y: 0.44037443}
+--- !u!95 &756119464187590638
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219064779705534069}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 13c03921f94a44d4085b2c696ba4b365, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7219064780361893440
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +313,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _projectile: {fileID: 1885146776332357702, guid: 5e9c7ffbe78fd5e48978b1f7b5e2c286, type: 3}
   _shootPoint: {fileID: 7219064780361893503}
+  _animator: {fileID: 756119464187590638}
 --- !u!50 &7219064780764986192
 Rigidbody2D:
   serializedVersion: 4
