@@ -412,6 +412,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7723829232404067957, guid: 691aa6f7c680de241983393056272d9c, type: 3}
+      propertyPath: _playerResist._defoutResistAttacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723829232404067957, guid: 691aa6f7c680de241983393056272d9c, type: 3}
+      propertyPath: _playerResist._defoutResistAttacks.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723829232404067957, guid: 691aa6f7c680de241983393056272d9c, type: 3}
+      propertyPath: OnUpdateHealth.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723829232404067957, guid: 691aa6f7c680de241983393056272d9c, type: 3}
+      propertyPath: OnSetupMaxHealth.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 691aa6f7c680de241983393056272d9c, type: 3}
 --- !u!4 &1036064228 stripped
@@ -1024,7 +1040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7157729359993501832, guid: 1884a4ca7215a8a45acda59417d0cab8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00006031207
+      value: -0.000030517578
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1884a4ca7215a8a45acda59417d0cab8, type: 3}

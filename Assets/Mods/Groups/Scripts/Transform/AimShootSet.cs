@@ -19,6 +19,7 @@ namespace MainMode
         [SerializeField] private Player _target;
         [SerializeField] private Bullet _projectile;
         [SerializeField] private Transform _shootPoint;
+        [SerializeField] private Animator _animator;
 
         private bool _isPlay;
         private float _progress = 0f;
@@ -64,6 +65,7 @@ namespace MainMode
             if (_progress >= 1f)
             {
                 Shoot();
+                _animator.SetTrigger("shoot");
                 _progress = 0f;
                 _curretTarget = null;
                 if (!_target)

@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &7268359873447059607
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345252758163512836}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e0c97f7d754ec724390039dcd11aed6c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9164466207835231649
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +278,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4855946001784091705, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 7268359873447059607}
     - target: {fileID: 4855946002761862834, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
       propertyPath: _onPlay.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -313,3 +336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a13dda2f53097240807297928e5c185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4345252758163512836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4855946003249984561, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
+  m_PrefabInstance: {fileID: 9164466208096791093}
+  m_PrefabAsset: {fileID: 0}

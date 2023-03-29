@@ -10,6 +10,7 @@ namespace MainMode
         [SerializeField] private MainModeGameRecord _saverRecord;
         [SerializeField] private TimerDisplay _bestRecords;
         [SerializeField] private MainModeGameRecord _saver;
+        [SerializeField] private ChankGroup _chanks;
 
         private void Awake()
         {
@@ -28,6 +29,7 @@ namespace MainMode
             _mapSpawner.Play();
             _botSpawner.Play();
             _saverRecord.Play();
+            _chanks.SpawnGroup();
         }
 
         protected override void StopMessange()
@@ -35,6 +37,7 @@ namespace MainMode
             _mapSpawner.Stop();
             _botSpawner.Stop();
             _saverRecord.Stop();
+            _chanks.ClearDelete();
         }
         protected override void BackMainMenu()
         {

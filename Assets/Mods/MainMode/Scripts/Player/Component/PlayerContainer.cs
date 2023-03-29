@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace PlayerComponent
 {
     public class PlayerContainer<T>  : IPlayerTask 
     {
         protected List<ContainCell<T>> contents = new List<ContainCell<T>>();
+
+        private List<ContainCell<T>> _delteList = new List<ContainCell<T>>();
 
         protected System.Action changeContainerAction;
 
@@ -18,7 +21,6 @@ namespace PlayerComponent
 
         public void Add(EffectType effect ,T content, float timeActive)
         {
-
             foreach (var movementEffect in contents)
             {
                 if (movementEffect.effect == effect)
@@ -29,32 +31,27 @@ namespace PlayerComponent
             }
             var effectActive = new ContainCell<T>(effect,content);
             effectActive.Start(timeActive);
+            effectActive.OnDelete += Delete;
             contents.Add(effectActive);
         }
 
         public void Update()
         {
-            var delete = new List<ContainCell<T>>();
             foreach (var update in contents)
             {
-                if (!update.Update())
-                    delete.Add(update);
+                update.Update();
             }
-            Delete(delete);
-            Change();
+            while (_delteList.Count > 0)
+            {
+                contents.Remove(_delteList[0]);
+                _delteList.Remove(_delteList[0]);
+            }
         }
 
-        private void Delete(List<ContainCell<T>> delete)
+        private void Delete(ContainCell<T> delete)
         {
-            if (delete.Count > 0)
-            {
-                foreach (var effect in delete)
-                {
-                    contents.Remove(effect);
-                    if (DeleteContentAction != null)
-                        DeleteContentAction(effect.content);
-                }
-            }
+            delete.OnDelete -= Delete;
+            _delteList.Add(delete);
             Change();
         }
 

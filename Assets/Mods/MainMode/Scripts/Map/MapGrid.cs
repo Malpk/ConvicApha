@@ -34,6 +34,7 @@ namespace MainMode
 
         public void Intilizate()
         {
+            _points = CreateMap(_unitSize, _mapSize);
             GetFreePoints(out List<Point> Points);
         }
         #region SearchPoint

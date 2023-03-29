@@ -76,6 +76,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4746342673486724810}
+        m_TargetAssemblyTypeName: MainMode.EviilBotSpawner, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onStop:
     m_PersistentCalls:
       m_Calls:
@@ -103,6 +115,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4746342673486724810}
+        m_TargetAssemblyTypeName: MainMode.EviilBotSpawner, Assembly-CSharp
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4746342673486724810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playOnStart: 0
   _target: {fileID: 0}
-  _evilBot: {fileID: 0}
+  _evilBot: {fileID: 1525682153563773083}
 --- !u!1 &5746715572932185577
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +214,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1525682153563773083}
+        m_TargetAssemblyTypeName: MainMode.EvilRobot, Assembly-CSharp
+        m_MethodName: SetTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onTrigerExit:
     m_PersistentCalls:
       m_Calls:
@@ -212,6 +248,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1525682153563773081}
+        m_TargetAssemblyTypeName: MainMode.AimShootSet, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -268,6 +316,10 @@ PrefabInstance:
       value: EvilRobot
       objectReference: {fileID: 0}
     - target: {fileID: 4028051056622449918, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028051056622449918, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
       propertyPath: _playOnStart
       value: 0
       objectReference: {fileID: 0}
@@ -317,11 +369,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
+--- !u!1 &1525682153563773081 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4028051056622449916, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
+  m_PrefabInstance: {fileID: 2507041327658331237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1525682153563773082 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4028051056622449919, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
   m_PrefabInstance: {fileID: 2507041327658331237}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1525682153563773083 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4028051056622449918, guid: 1b50923bc8cf2c74e9a993055d36641f, type: 3}
+  m_PrefabInstance: {fileID: 2507041327658331237}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525682153563773081}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32835628c810a5448b967593c84c3943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2573268294253178346
 PrefabInstance:
   m_ObjectHideFlags: 0

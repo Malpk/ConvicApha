@@ -41,11 +41,26 @@ namespace MainMode
             }
         }
 
+        public void Intializate()
+        {
+            foreach (var zone in _zones)
+            {
+                zone.Initializate();
+            }
+        }
+
         private void ActivateZone()
         {
             _countActiveZone++;
         }
-
+        public void DeleteZone()
+        {
+            foreach (var zone in _zones)
+            {
+                if (zone.IsActive)
+                    zone.Stop();
+            }
+        }
         private void DeactivateZone()
         {
             _countActiveZone = Mathf.Clamp(_countActiveZone--, 0, _countActiveZone);
