@@ -65,7 +65,8 @@ namespace MainMode
             if (_progress >= 1f)
             {
                 Shoot();
-                _animator.SetTrigger("shoot");
+                if(_animator)
+                    _animator.SetTrigger("shoot");
                 _progress = 0f;
                 _curretTarget = null;
                 if (!_target)

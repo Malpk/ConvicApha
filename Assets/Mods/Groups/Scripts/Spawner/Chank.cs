@@ -42,7 +42,8 @@ namespace MainMode
 
         public void DeleteScheme()
         {
-            Deactivate(_activeScheme);
+            if(_activeScheme)
+                Deactivate(_activeScheme);
         }
 
         private void Deactivate(GroupScheme scheme)

@@ -39,6 +39,7 @@ namespace MainMode
 
         public void Initializate()
         {
+            if(_mapGrid)
             _mapGrid.Intilizate();
         }
 
@@ -80,8 +81,11 @@ namespace MainMode
                 group.transform.rotation = transform.rotation;
                 group.OnComplite += DeactivateGroup;
                 _activeGroup = group;
-                _mapSpawn.Stop();
-                _mapSpawn.Clear();
+                if (_mapSpawn)
+                {
+                    _mapSpawn.Stop();
+                    _mapSpawn.Clear();
+                }
             }
         }
 
@@ -122,9 +126,12 @@ namespace MainMode
             {
                 enabled = true;
                 _player = player;
-                _mapSpawn.Construct(player);
-                if (!IsActive)
-                    _mapSpawn.Play();
+                if (_mapSpawn)
+                {
+                    _mapSpawn.Construct(player);
+                    if (!IsActive)
+                        _mapSpawn.Play();
+                }
             }
         }
 
@@ -132,8 +139,11 @@ namespace MainMode
         {
             if (collision.GetComponent<Player>())
             {
-                if (!IsActive && !_mapSpawn.enabled)
-                    _mapSpawn.Play();
+                if (_mapSpawn)
+                {
+                    if (!IsActive && !_mapSpawn.enabled)
+                        _mapSpawn.Play();
+                }
             }
         }
 
@@ -143,7 +153,8 @@ namespace MainMode
             {
                 enabled = false;
                 _player = null;
-                _mapSpawn.Stop();
+                if (_mapSpawn)
+                    _mapSpawn.Stop();
             }
         }
 
