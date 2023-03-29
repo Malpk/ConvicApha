@@ -128,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 5736102198189098482}
     m_Modifications:
     - target: {fileID: 72654551186702214, guid: 920935a5d9c5c5e4fa52dace8ab0691d, type: 3}
+      propertyPath: _projectile
+      value: 
+      objectReference: {fileID: 6978292715836534188, guid: a8b88c814383aa8499b21dcfafab4460, type: 3}
+    - target: {fileID: 72654551186702214, guid: 920935a5d9c5c5e4fa52dace8ab0691d, type: 3}
       propertyPath: _speedAimingDelta
       value: 6
       objectReference: {fileID: 0}
@@ -215,6 +219,10 @@ PrefabInstance:
       propertyPath: _onStop.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8195556806248235218, guid: 920935a5d9c5c5e4fa52dace8ab0691d, type: 3}
+      propertyPath: _projectile
+      value: 
+      objectReference: {fileID: 6978292715836534188, guid: a8b88c814383aa8499b21dcfafab4460, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 920935a5d9c5c5e4fa52dace8ab0691d, type: 3}
 --- !u!4 &1824418059649921588 stripped

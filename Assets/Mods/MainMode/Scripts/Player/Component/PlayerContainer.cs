@@ -11,12 +11,16 @@ namespace PlayerComponent
 
         protected System.Action changeContainerAction;
 
-        public delegate void DeleteContent(T content);
-        public event DeleteContent DeleteContentAction;
+        public event System.Action<T> DeleteContentAction;
 
         public void Reset()
         {
-            contents.Clear();
+            while (contents.Count > 0)
+            {
+                DeleteContentAction?.Invoke(contents[0].content);
+                contents.Remove(contents[0]);
+            }
+            Change();
         }
 
         public void Add(EffectType effect ,T content, float timeActive)
@@ -41,10 +45,15 @@ namespace PlayerComponent
             {
                 update.Update();
             }
-            while (_delteList.Count > 0)
+            if (_delteList.Count > 0)
             {
-                contents.Remove(_delteList[0]);
-                _delteList.Remove(_delteList[0]);
+                while (_delteList.Count > 0)
+                {
+                    contents.Remove(_delteList[0]);
+                    DeleteContentAction?.Invoke(_delteList[0].content);
+                    _delteList.Remove(_delteList[0]);
+                }
+                Change();
             }
         }
 
@@ -52,7 +61,6 @@ namespace PlayerComponent
         {
             delete.OnDelete -= Delete;
             _delteList.Add(delete);
-            Change();
         }
 
         private void Change()
