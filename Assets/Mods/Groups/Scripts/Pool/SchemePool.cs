@@ -14,7 +14,8 @@ namespace MainMode
 
         public void OnValidate()
         {
-            Name = _schemePrefab.name;
+            if(_schemePrefab)
+                Name = _schemePrefab.name;
         }
 
         public GroupScheme GetScheme(Transform transform)

@@ -30,7 +30,7 @@ namespace MainMode
 
         public void Spawn()
         {
-            if (!IsActive)
+            if (!IsActive && _schems.Length > 0)
             {
                 _prevouslPool = GetPool();
                 _activeScheme = _prevouslPool.GetScheme(transform);
