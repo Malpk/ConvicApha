@@ -50,7 +50,8 @@ namespace MainMode
                 bullet.transform.up = transform.up * _spreadDistance + spread;
                 bullet.SetAttack(_damage);
                 bullet.Shoot();
-                _animator.SetTrigger("shoot");
+                if(_animator)
+                    _animator.SetTrigger("shoot");
             }
         }
 

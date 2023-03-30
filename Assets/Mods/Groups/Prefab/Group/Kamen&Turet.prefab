@@ -1,24 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!95 &7268359873447059607
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4345252758163512836}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e0c97f7d754ec724390039dcd11aed6c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9164466207835231649
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 9164466207835231648}
     m_Modifications:
     - target: {fileID: 636172602193618356, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
+      propertyPath: _devices.Array.data[1]
+      value: 
+      objectReference: {fileID: 2589202431129023378}
+    - target: {fileID: 636172602193618356, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
       propertyPath: _onStop.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -173,11 +158,11 @@ PrefabInstance:
     - target: {fileID: 636172602193618356, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
       propertyPath: _onStop.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 4345252758718735495}
+      objectReference: {fileID: 2589202431129023378}
     - target: {fileID: 636172602193618356, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
       propertyPath: _onStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4345252758718735495}
+      objectReference: {fileID: 2589202431129023378}
     - target: {fileID: 636172602193618356, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
       propertyPath: _onStop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -281,7 +266,7 @@ PrefabInstance:
     - target: {fileID: 4855946001784091705, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
       propertyPath: _animator
       value: 
-      objectReference: {fileID: 7268359873447059607}
+      objectReference: {fileID: 0}
     - target: {fileID: 4855946002187094283, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
       propertyPath: _rotateSpeed
       value: 30
@@ -329,9 +314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33bd1b2c09c4ed544a6b318a9f7181fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4345252758718735495 stripped
+--- !u!114 &2589202431129023378 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4855946002761862834, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6683351267737852327, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
   m_PrefabInstance: {fileID: 9164466208096791093}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -340,8 +325,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a13dda2f53097240807297928e5c185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4345252758163512836 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4855946003249984561, guid: 940eb7618ae20b84d994817fdc030f45, type: 3}
-  m_PrefabInstance: {fileID: 9164466208096791093}
-  m_PrefabAsset: {fileID: 0}
