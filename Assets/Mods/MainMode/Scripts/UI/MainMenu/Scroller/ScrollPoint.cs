@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace MainMode.GameInteface
 {
-    public class ScrollPoint : MonoBehaviour,IPointerEnterHandler
+    public class ScrollPoint : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image _iconItem;
         [SerializeField] private RectTransform _rectTransform;
@@ -12,7 +12,9 @@ namespace MainMode.GameInteface
         private ScrollItem _item;
         private Vector3 _startPosition;
 
-        public System.Action<string,string> OnSelectItem;
+        public System.Action<Sprite> OnSelectItem;
+        public System.Action OnExit;
+
 
         public ScrollItem Content => _item;
         public Vector3 Position => _rectTransform.localPosition;
@@ -23,7 +25,7 @@ namespace MainMode.GameInteface
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
-            OnSelectItem?.Invoke(_item.Description, _item.Name);
+            OnSelectItem?.Invoke(_item.Description);
         }
 
         public void SetItem(ScrollItem item)
@@ -42,6 +44,11 @@ namespace MainMode.GameInteface
         public void SetStartPosition()
         {
             _startPosition = _rectTransform.localPosition;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            OnExit?.Invoke();
         }
     }
 }

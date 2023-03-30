@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 0, g: 1, b: 0.0408051, a: 0.45490196}
+  _distanceTriger: 0
   _minSpawnDistance: 2
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}
@@ -258,6 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 0.6886792, g: 0, b: 0.14890057, a: 0.8}
+  _distanceTriger: 0
   _minSpawnDistance: 7
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}
@@ -432,7 +434,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 1, g: 0.66526496, b: 0, a: 0.7019608}
-  _minSpawnDistance: 1
+  _distanceTriger: 1
+  _minSpawnDistance: 2
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}
   _pools:
@@ -555,6 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 0.6886792, g: 0, b: 0.14890057, a: 0.8}
+  _distanceTriger: 0
   _minSpawnDistance: 7
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}
@@ -634,6 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 0, g: 1, b: 0.0408051, a: 0.45490196}
+  _distanceTriger: 0
   _minSpawnDistance: 2
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}

@@ -13,6 +13,7 @@ using MainMode;
 public sealed class MainMenu : UserInterface
 {
     [Header("Reference")]
+    [SerializeField] private Transform _description;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private RawImage _backGround;
     [SerializeField] private VideoPlayer _videoPlayer;
@@ -21,8 +22,7 @@ public sealed class MainMenu : UserInterface
     [SerializeField] private ItemScroller _characterScroller;
     [SerializeField] private ItemScroller _artifactItemScroller;
     [SerializeField] private ItemScroller _consumableItemScroller;
-    [SerializeField] private TextMeshProUGUI _name;
-    [SerializeField] private TextMeshProUGUI _desctiption;
+    [SerializeField] private Image _desctiption;
     [SerializeField] private GameSwitcher _gameSwitcher;
     [SerializeField] private PlayerUIBinder _binderUI;
     [SerializeField] private Animator _animator;
@@ -52,6 +52,9 @@ public sealed class MainMenu : UserInterface
         _characterScroller.OnSelectItem += SetDescription;
         _artifactItemScroller.OnSelectItem += SetDescription;
         _consumableItemScroller.OnSelectItem += SetDescription;
+        _characterScroller.OnExit += HideDescription;
+        _artifactItemScroller.OnExit += HideDescription;
+        _consumableItemScroller.OnExit += HideDescription;
     }
 
     private void OnDisable()
@@ -61,6 +64,9 @@ public sealed class MainMenu : UserInterface
         _characterScroller.OnSelectItem -= SetDescription;
         _artifactItemScroller.OnSelectItem -= SetDescription;
         _consumableItemScroller.OnSelectItem -= SetDescription;
+        _characterScroller.OnExit -= HideDescription;
+        _artifactItemScroller.OnExit -= HideDescription;
+        _consumableItemScroller.OnExit -= HideDescription;
     }
 
     public void CreateNewConfig()
@@ -124,9 +130,14 @@ public sealed class MainMenu : UserInterface
         _videoPlayer.Stop();
     }
 
-    private void SetDescription(string description, string name)
+    private void SetDescription(Sprite description)
     {
-        _desctiption.text = description;
-        _name.text = name;
+        _desctiption.sprite = description;
+        _description.gameObject.SetActive(description != null);
+    }
+
+    private void HideDescription()
+    {
+        _description.gameObject.SetActive(false);
     }
 }

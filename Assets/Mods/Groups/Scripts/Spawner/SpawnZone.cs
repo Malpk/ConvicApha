@@ -11,6 +11,7 @@ namespace MainMode
         [SerializeField] private Color _gismoColor;
 #endif
         [Header("Zone Setting")]
+        [SerializeField] private bool _distanceTriger;
         [Min(0)]
         [SerializeField] private float _minSpawnDistance = 1;
         [SerializeField] private MapGrid _mapGrid;
@@ -62,7 +63,7 @@ namespace MainMode
         private void Update()
         {
             var distance = Vector2.Distance(_player.transform.position, transform.position);
-            if (distance < _minSpawnDistance)
+            if (distance < _minSpawnDistance || !_distanceTriger)
             {
                 Spawn();
                 enabled = false;

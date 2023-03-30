@@ -14,7 +14,8 @@ namespace MainMode.GameInteface
         private float _progress = 0f;
         private Vector3 _curretOffset;
 
-        public System.Action<string, string> OnSelectItem;
+        public System.Action<Sprite> OnSelectItem;
+        public System.Action OnExit;
 
         private void Awake()
         {
@@ -24,14 +25,16 @@ namespace MainMode.GameInteface
             }
             foreach (var point in _points)
             {
-                point.OnSelectItem += (string text, string name) => OnSelectItem?.Invoke(text, name);
+                point.OnSelectItem += (Sprite des) => OnSelectItem?.Invoke(des);
+                point.OnExit += () => OnExit?.Invoke();
             }
         }
         private void OnDestroy()
         {
             foreach (var point in _points)
             {
-                point.OnSelectItem -= (string text, string name) => OnSelectItem?.Invoke(text, name);
+                point.OnSelectItem -= (Sprite sprite) => OnSelectItem?.Invoke(sprite);
+                point.OnExit -= () => OnExit?.Invoke();
             }
         }
 

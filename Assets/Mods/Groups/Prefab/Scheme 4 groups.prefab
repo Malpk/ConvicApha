@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 0, g: 1, b: 0.0408051, a: 0.45490196}
+  _distanceTriger: 0
   _minSpawnDistance: 3
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}
@@ -126,7 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 0, g: 1, b: 0.9007921, a: 0.65882355}
-  _minSpawnDistance: 2
+  _distanceTriger: 1
+  _minSpawnDistance: 4
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}
   _pools:
@@ -342,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showGismo: 1
   _gismoColor: {r: 0, g: 1, b: 0.0408051, a: 0.45490196}
+  _distanceTriger: 0
   _minSpawnDistance: 3
   _mapGrid: {fileID: 0}
   _mapSpawn: {fileID: 0}
