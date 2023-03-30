@@ -93,6 +93,7 @@ namespace MainMode
         {
             group.OnComplite -= DeactivateGroup;
             _activeGroup.Hide(false);
+            _activeGroup = null;
         }
 
         private GroupPool GetPool()
