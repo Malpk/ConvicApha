@@ -21,6 +21,7 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
 
     private void Awake()
     {
+        _collider.enabled = false;
         _components = GetComponents<IPlayerComponent>();
     }
 
@@ -55,6 +56,7 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     #region Controller
     public void Play()
     {
+        _collider.enabled = true;
         if (!IsPlay)
         {
             IsPlay = true;
@@ -72,6 +74,7 @@ public sealed class Player : MonoBehaviour, IDamage, IAddEffects, IResist
     public void Stop()
     {
         IsPlay = false;
+        _collider.enabled = false;
         _behaviour.Stop();
         _behaviour.gameObject.SetActive(false);
         foreach (var component in _components)

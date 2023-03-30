@@ -76,6 +76,7 @@ namespace MainMode
                 var pool = GetPool();
                 _previusGroup = pool;
                 var group = _previusGroup.Create();
+                group.Show();
                 group.transform.parent = transform;
                 group.transform.localPosition = Vector2.zero;
                 group.transform.rotation = transform.rotation;
