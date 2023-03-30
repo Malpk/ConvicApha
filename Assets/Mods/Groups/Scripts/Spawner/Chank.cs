@@ -93,6 +93,7 @@ namespace MainMode
             }
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (_showSizeChank)
@@ -101,5 +102,6 @@ namespace MainMode
                 Gizmos.DrawCube(transform.position, transform.right * _size.x + transform.up * _size.y);
             }
         }
+#endif
     }
 }

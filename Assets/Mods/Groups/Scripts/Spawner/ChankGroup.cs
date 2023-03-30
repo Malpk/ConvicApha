@@ -5,6 +5,7 @@ namespace MainMode
     public class ChankGroup : MonoBehaviour
     {
         [SerializeField] private Transform _chankHolder;
+        [SerializeField] private GroupScheme _begin;
 
         private Chank[] _chanks;
 
@@ -12,6 +13,11 @@ namespace MainMode
         {
             if(_chankHolder)
                 _chanks = _chankHolder.GetComponentsInChildren<Chank>();
+        }
+
+        private void Awake()
+        {
+            _chanks = _chankHolder.GetComponentsInChildren<Chank>();
         }
 
         public void SpawnGroup()
@@ -24,6 +30,7 @@ namespace MainMode
 
         public void ClearDelete()
         {
+            _begin.DeleteZone();
             foreach (var chank in _chanks)
             {
                 chank.DeleteScheme();

@@ -69,7 +69,7 @@ namespace MainMode
                 OnDeactivate?.Invoke(this);
             }
         }
-
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (_showSizeChank)
@@ -78,5 +78,6 @@ namespace MainMode
                 Gizmos.DrawCube(transform.position, Vector2.one * _size);
             }
         }
+#endif
     }
 }

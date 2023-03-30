@@ -25,10 +25,10 @@ public sealed class MainMenu : UserInterface
     [SerializeField] private TextMeshProUGUI _desctiption;
     [SerializeField] private GameSwitcher _gameSwitcher;
     [SerializeField] private PlayerUIBinder _binderUI;
+    [SerializeField] private Animator _animator;
 
     private Player _player;
     private PlayerInventory _playerInventory;
-    private Animator _animator;
 
     private bool _isRun = false;
 
@@ -36,7 +36,6 @@ public sealed class MainMenu : UserInterface
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
         ShowEvent();
     }
     [Inject]
